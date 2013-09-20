@@ -19,3 +19,12 @@ int main()
   printf("is: %d\n",evalEXP(theexpression));
   return(1);
 }
+
+int test_main()
+{ lineno = 1;
+	yyparse();
+	prettyEXP(theexpression);
+	printf(" : ");
+	printf("%d \n", evalEXP(theexpression));
+	return(1);
+}

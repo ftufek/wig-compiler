@@ -14,10 +14,17 @@ typedef enum
   true
 } bool;
 
-#define HIPRI(cpri, parent) if (pri > cpri){printf(parent);} \
-		else if(pri == cpri && leftChild == false){printf(parent);}
+#define HIPRI(cpri, parenthesis) if (pri > cpri){printf(parenthesis);} \
+		else if(pri == cpri && leftChild == false){printf(parenthesis);}
 #define OPEN_PAREN(cpri) HIPRI(cpri, "(");
 #define CLOSE_PAREN(cpri) HIPRI(cpri, ")");
+
+#define BINOP(type, eType, priority) \
+		 OPEN_PAREN(priority) \
+		 _prettyEXP(e->val.eType.left, priority, true); \
+		 printf(type); \
+		 _prettyEXP(e->val.eType.right, priority, false); \
+		 CLOSE_PAREN(priority)
 
 static void _prettyEXP(EXP *e, priority pri, bool leftChild)
 { switch (e->kind) {
@@ -28,46 +35,22 @@ static void _prettyEXP(EXP *e, priority pri, bool leftChild)
          printf("%i",e->val.intconstE);
          break;
     case timesK:
-         OPEN_PAREN(mult_div_mod)
-         _prettyEXP(e->val.timesE.left, mult_div_mod, true);
-         printf("*");
-         _prettyEXP(e->val.timesE.right, mult_div_mod, false);
-         CLOSE_PAREN(mult_div_mod)
+    	 BINOP("*", timesE, mult_div_mod)
          break;
     case divK:
-    	 OPEN_PAREN(mult_div_mod)
-         _prettyEXP(e->val.divE.left, mult_div_mod, true);
-         printf("/");
-         _prettyEXP(e->val.divE.right, mult_div_mod, false);
-         CLOSE_PAREN(mult_div_mod)
+    	 BINOP("/", divE, mult_div_mod)
          break;
     case moduloK:
-    	 OPEN_PAREN(mult_div_mod)
-    	 _prettyEXP(e->val.moduloE.left, mult_div_mod, true);
-    	 printf("%%");
-    	 _prettyEXP(e->val.moduloE.right, mult_div_mod, false);
-    	 CLOSE_PAREN(mult_div_mod)
+    	 BINOP("%%", moduloE, mult_div_mod)
     	 break;
     case plusK:
-    	 OPEN_PAREN(plus_minus)
-         _prettyEXP(e->val.plusE.left, plus_minus, true);
-         printf("+");
-         _prettyEXP(e->val.plusE.right, plus_minus, false);
-         CLOSE_PAREN(plus_minus)
+    	 BINOP("+", plusE, plus_minus)
          break;
     case minusK:
-         OPEN_PAREN(plus_minus)
-         _prettyEXP(e->val.minusE.left, plus_minus, true);
-         printf("-");
-         _prettyEXP(e->val.minusE.right, plus_minus, false);
-         CLOSE_PAREN(plus_minus)
+    	 BINOP("-", minusE, plus_minus)
          break;
     case powerK:
-    	 OPEN_PAREN(power)
-		 _prettyEXP(e->val.powerE.left, power, true);
-		 printf("**");
-		 _prettyEXP(e->val.powerE.right, power, false);
-		 CLOSE_PAREN(power)
+    	 BINOP("**", powerE, power)
     	 break;
     case absoluteK:
     	 printf("abs(");
@@ -80,6 +63,7 @@ static void _prettyEXP(EXP *e, priority pri, bool leftChild)
 #undef HIPRI
 #undef OPEN_PAREN
 #undef CLOSE_PAREN
+#undef BINOP
 
 void prettyEXP(EXP *e){
 	_prettyEXP(e, min, true);
