@@ -4,9 +4,9 @@
 typedef enum
 { min,
   abs,
-  plus_minus, /* +, - */
-  mult_div_mod, /* *, /, % */
-  power /* ** */
+  plus_minus,
+  mult_div_mod,
+  power
 } priority;
 
 typedef enum
@@ -16,15 +16,13 @@ typedef enum
 
 #define HIPRI(cpri, parenthesis) if (pri > cpri){printf(parenthesis);} \
 		else if(pri == cpri && leftChild == false){printf(parenthesis);}
-#define OPEN_PAREN(cpri) HIPRI(cpri, "(");
-#define CLOSE_PAREN(cpri) HIPRI(cpri, ")");
 
 #define BINOP(type, eType, priority) \
-		 OPEN_PAREN(priority) \
+		HIPRI(priority, "("); \
 		 _prettyEXP(e->val.eType.left, priority, true); \
 		 printf(type); \
 		 _prettyEXP(e->val.eType.right, priority, false); \
-		 CLOSE_PAREN(priority)
+		 HIPRI(priority, ")");
 
 static void _prettyEXP(EXP *e, priority pri, bool leftChild)
 { switch (e->kind) {
@@ -61,8 +59,6 @@ static void _prettyEXP(EXP *e, priority pri, bool leftChild)
 }
 
 #undef HIPRI
-#undef OPEN_PAREN
-#undef CLOSE_PAREN
 #undef BINOP
 
 void prettyEXP(EXP *e){
