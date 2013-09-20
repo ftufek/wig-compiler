@@ -26,6 +26,7 @@ void yyerror() {
 
 %left '+' '-'
 %left '*' '/' '%'
+%right "**"
 
 %% 
 program: exp

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "eval.h"
 
 int evalEXP(EXP *e)
