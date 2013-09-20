@@ -27,6 +27,7 @@ void yyerror() {
 
 %left '+' '-'
 %left '*' '/' '%'
+%left UMINUS
 %right tPOWER
 
 %% 
@@ -48,6 +49,8 @@ exp : tIDENTIFIER
       { $$ = makeEXPplus ($1, $3); }
     | exp '-' exp
       { $$ = makeEXPminus ($1, $3); }
+    | '-' exp %prec UMINUS
+      { $$ = makeEXPminus(makeEXPintconst(0), $2); }
     | exp tPOWER exp
       { $$ = makeEXPpower ($1, $3);}
     | tABSOLUTE '(' exp ')'
