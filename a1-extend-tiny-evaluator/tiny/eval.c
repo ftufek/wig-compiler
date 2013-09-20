@@ -29,7 +29,10 @@ int evalEXP(EXP *e)
     case minusK:
 	 return(evalEXP(e->val.minusE.left) -
 	         evalEXP(e->val.minusE.right));
-         break;  
+         break;
+    case absoluteK:
+     return(abs(evalEXP(e->val.absoluteE.inside)));
+     	 break;
     default: 
 	 printf("ERROR: Impossible type for an expression node.");
 	 return(0);

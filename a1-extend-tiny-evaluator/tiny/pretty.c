@@ -44,5 +44,9 @@ void prettyEXP(EXP *e)
          prettyEXP(e->val.minusE.right);
          printf(")");
          break;
+    case absoluteK:
+    	 printf("abs");
+    	 prettyEXP(e->val.absoluteE.inside);
+    	 break;
   }
 }

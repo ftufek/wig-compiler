@@ -17,7 +17,8 @@ void yyerror() {
 }
 
 %token <intconst> tINTCONST
-%token <stringconst> tIDENTIFIER 
+%token <stringconst> tIDENTIFIER
+%token tABSOLUTE
 
 %type <exp> program exp
 
@@ -45,7 +46,9 @@ exp : tIDENTIFIER
       { $$ = makeEXPplus ($1, $3); }
     | exp '-' exp
       { $$ = makeEXPminus ($1, $3); }
+    | tABSOLUTE '(' exp ')'
+      { $$ = makeEXPabsolute ($3); }
     | '(' exp ')'
-      { $$ = $2; } 
+      { $$ = $2; }
 ;
 %%

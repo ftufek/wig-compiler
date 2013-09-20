@@ -17,6 +17,7 @@ extern int lineno;
 "-"       return '-';
 "("       return '(';
 ")"       return ')';
+"abs"     return tABSOLUTE;
 
 0|([1-9][0-9]*) {
   yylval.intconst = atoi (yytext);

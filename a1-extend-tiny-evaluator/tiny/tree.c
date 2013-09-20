@@ -70,3 +70,12 @@ EXP *makeEXPminus(EXP *left, EXP *right)
   e->val.minusE.right = right;
   return e;
 }
+
+EXP *makeEXPabsolute(EXP *inside)
+{ EXP *e;
+  e = NEW(EXP);
+  e->lineno = lineno;
+  e->kind = absoluteK;
+  e->val.absoluteE.inside = inside;
+  return e;
+}
