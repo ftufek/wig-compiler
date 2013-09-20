@@ -44,6 +44,13 @@ void prettyEXP(EXP *e)
          prettyEXP(e->val.minusE.right);
          printf(")");
          break;
+    case powerK:
+    	 printf("(");
+		 prettyEXP(e->val.powerE.left);
+		 printf("**");
+		 prettyEXP(e->val.powerE.right);
+		 printf(")");
+    	 break;
     case absoluteK:
     	 printf("abs");
     	 prettyEXP(e->val.absoluteE.inside);

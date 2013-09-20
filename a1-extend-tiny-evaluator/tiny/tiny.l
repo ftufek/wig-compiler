@@ -17,7 +17,7 @@ extern int lineno;
 "-"       return '-';
 "("       return '(';
 ")"       return ')';
-"**"      return "**";
+"**"      return tPOWER;
 "abs"     return tABSOLUTE;
 
 0|([1-9][0-9]*) {

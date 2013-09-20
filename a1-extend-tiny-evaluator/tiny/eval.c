@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> /* for: abs */
+#include <math.h> /* for: pow */
 #include "eval.h"
 
 int evalEXP(EXP *e)
@@ -31,6 +32,10 @@ int evalEXP(EXP *e)
 	 return(evalEXP(e->val.minusE.left) -
 	         evalEXP(e->val.minusE.right));
          break;
+    case powerK:
+     return(pow(evalEXP(e->val.powerE.left),
+    		 evalEXP(e->val.powerE.right)));
+    	 break;
     case absoluteK:
      return(abs(evalEXP(e->val.absoluteE.inside)));
      	 break;
