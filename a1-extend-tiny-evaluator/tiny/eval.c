@@ -16,10 +16,17 @@ int evalEXP(EXP *e)
 	 return(evalEXP(e->val.timesE.left) * 
 	        evalEXP(e->val.timesE.right));
          break;
-    case divK:
-     return (evalEXP(e->val.divE.left)/
-             evalEXP(e->val.divE.right));
-         break;
+    case divK:{
+		 int rExpr = evalEXP(e->val.divE.right);
+		 if(rExpr == 0){
+			 printf("ERROR: Cannot divide by 0!");
+			 return(0);
+			 break;
+		 }
+		 return (evalEXP(e->val.divE.left)/
+				 rExpr);
+			 break;
+    }
     case moduloK:
      return (evalEXP(e->val.moduloE.left)%
     		 evalEXP(e->val.moduloE.right));
