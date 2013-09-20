@@ -12,6 +12,7 @@ extern int lineno;
 
 "*"       return '*';
 "/"       return '/';
+"%"       return '%';
 "+"       return '+';
 "-"       return '-';
 "("       return '(';

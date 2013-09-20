@@ -18,6 +18,10 @@ int evalEXP(EXP *e)
      return (evalEXP(e->val.divE.left)/
              evalEXP(e->val.divE.right));
          break;
+    case moduloK:
+     return (evalEXP(e->val.moduloE.left)%
+    		 evalEXP(e->val.moduloE.right));
+    	 break;
     case plusK:
 	 return(evalEXP(e->val.plusE.left) + 
 	        evalEXP(e->val.plusE.right));

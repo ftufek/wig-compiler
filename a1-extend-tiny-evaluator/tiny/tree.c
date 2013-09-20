@@ -41,6 +41,16 @@ EXP *makeEXPdiv(EXP *left, EXP *right)
   return e; 
 }
 
+EXP *makeEXPmodulo(EXP *left, EXP *right)
+{ EXP *e;
+  e = NEW(EXP);
+  e->lineno = lineno;
+  e->kind = moduloK;
+  e->val.divE.left = left;
+  e->val.divE.right = right;
+  return e;
+}
+
 EXP *makeEXPplus(EXP *left, EXP *right)
 { EXP *e;
   e = NEW(EXP);

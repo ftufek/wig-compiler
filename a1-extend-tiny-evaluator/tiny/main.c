@@ -1,7 +1,7 @@
 #include "tree.h"
 #include "pretty.h"
 #include "eval.h"
-#include "stdio.h"
+#include <stdio.h>
 
 void yyparse();
 

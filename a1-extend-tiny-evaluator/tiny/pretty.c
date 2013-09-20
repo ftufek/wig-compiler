@@ -23,6 +23,13 @@ void prettyEXP(EXP *e)
          prettyEXP(e->val.divE.right);
          printf(")");
          break;
+    case moduloK:
+    	 printf("(");
+    	 prettyEXP(e->val.moduloE.left);
+    	 printf("%%");
+    	 prettyEXP(e->val.moduloE.right);
+    	 printf(")");
+    	 break;
     case plusK:
          printf("(");
          prettyEXP(e->val.plusE.left);

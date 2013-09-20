@@ -24,7 +24,7 @@ void yyerror() {
 %start program
 
 %left '+' '-'
-%left '*' '/'
+%left '*' '/' '%'
 
 %% 
 program: exp
@@ -39,6 +39,8 @@ exp : tIDENTIFIER
       { $$ = makeEXPtimes ($1, $3); }
     | exp '/' exp
       { $$ = makeEXPdiv ($1, $3); }
+    | exp '%' exp
+      { $$ = makeEXPmodulo($1, $3); }
     | exp '+' exp
       { $$ = makeEXPplus ($1, $3); }
     | exp '-' exp
