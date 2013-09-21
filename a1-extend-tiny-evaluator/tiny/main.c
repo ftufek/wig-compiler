@@ -9,22 +9,22 @@ EXP *theexpression;
 
 int lineno;
 
-int main()
+int amain()
 { lineno = 1;
   printf("Type in a tiny exp folowed by one or two Ctrl-d's:\n");
   yyparse();
   printf("\nThe result of evaluating:\n");
   prettyEXP(theexpression);
   printf("\n");
-  printf("is: %d\n",evalEXP(theexpression));
+  printf("is: %g\n",evalEXP(theexpression));
   return(1);
 }
 
-int test_main()
+int main()
 { lineno = 1;
 	yyparse();
 	prettyEXP(theexpression);
 	printf(" : ");
-	printf("%d \n", evalEXP(theexpression));
+	printf("%g \n", evalEXP(theexpression));
 	return(1);
 }
