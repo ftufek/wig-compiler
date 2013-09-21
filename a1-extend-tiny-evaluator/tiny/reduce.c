@@ -15,12 +15,54 @@ EXP* reduceEXP(EXP *e){
 	    case idK:
 	    case intconstK:
 	    	return e;
-	    case timesK:
+	    case timesK:{
+	    	EXP *left = e->val.timesE.left;
+	    	EXP *right = e->val.timesE.right;
+
+	    	/* Basic times arithmetic simplification */
+	    	if(!containsId(left) && evalEXP(left) == 0){
+	    		/* 0*something */
+	    		return makeEXPintconst(0);
+	    	}else if(!containsId(left) && evalEXP(left) == 1){
+	    		/* 1*something */
+	    		return reduceEXP(right);
+	    	}else if(!containsId(right) && evalEXP(right) == 0){
+	    		/* something*0 */
+	    		return makeEXPintconst(0);
+	    	}else if(!containsId(right) && evalEXP(right) == 1){
+	    		/* something*1 */
+	    		return reduceEXP(left);
+	    	}
+
+	    	/* Advanced arithmetic simplification for cases like:
+	    	 *  a*2*3*4*b
+	    	 */
+	    	if(left->kind == timesK && !containsId(left->val.timesE.right)){
+	    		if(!containsId(right)){
+					return reduceEXP(makeEXPtimes(reduceEXP(left->val.timesE.left),
+										reduceEXP(makeEXPtimes(left->val.timesE.right,
+																right))));
+	    		}
+	    	}
+
+	    	/* Default case */
 			return makeEXPtimes(reduceEXP(e->val.timesE.left),
 								reduceEXP(e->val.timesE.right));
-	    case divK:
-			return makeEXPdiv(reduceEXP(e->val.divE.left),
-							  reduceEXP(e->val.divE.right));
+	    }
+	    case divK:{
+	    	EXP *left = e->val.divE.left;
+			EXP *right = e->val.divE.right;
+			if(!containsId(right) && evalEXP(right) == 1){
+				/* something/1 */
+				return reduceEXP(left);
+			}else if(!containsId(left) && evalEXP(left) == 0){
+				/* 0/something */
+				return makeEXPintconst(0);
+			}else{
+				return makeEXPdiv(reduceEXP(e->val.divE.left),
+								  reduceEXP(e->val.divE.right));
+			}
+	    }
 	    case moduloK:
 			return makeEXPmodulo(reduceEXP(e->val.moduloE.left),
 								 reduceEXP(e->val.moduloE.right));

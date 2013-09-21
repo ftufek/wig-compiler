@@ -10,7 +10,7 @@ EXP *theexpression;
 
 int lineno;
 
-int main()
+int a_main()
 { lineno = 1;
   printf("Type in a tiny exp folowed by one or two Ctrl-d's:\n");
   yyparse();
@@ -23,7 +23,7 @@ int main()
   return(1);
 }
 
-int test_main()
+int main()
 { lineno = 1;
 	yyparse();
 	prettyEXP(theexpression);
