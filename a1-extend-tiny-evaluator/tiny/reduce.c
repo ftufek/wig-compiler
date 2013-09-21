@@ -7,6 +7,13 @@
 
 #include "reduce.h"
 
+/* It's not very efficient in the sense
+ * that the helper methods (containsId
+ * and evalEXP) also traverse the tree.
+ * But was easier to code and understand
+ * than the alternative of modifying
+ * evalEXP directly.
+ */
 EXP* reduceEXP(EXP *e){
 	if(!containsId(e)){
 		return makeEXPintconst(evalEXP(e));
@@ -34,7 +41,7 @@ EXP* reduceEXP(EXP *e){
 	    		return reduceEXP(left);
 	    	}
 
-	    	/* Advanced arithmetic simplification for cases like:
+	    	/* Advanced times simplification for cases like:
 	    	 *  a*2*3*4*b
 	    	 */
 	    	if(left->kind == timesK && !containsId(left->val.timesE.right)){
@@ -66,15 +73,54 @@ EXP* reduceEXP(EXP *e){
 	    case moduloK:
 			return makeEXPmodulo(reduceEXP(e->val.moduloE.left),
 								 reduceEXP(e->val.moduloE.right));
-	    case plusK:
+	    case plusK:{
+	    	EXP *left = e->val.plusE.left;
+	    	EXP *right = e->val.plusE.right;
+
+	    	/* Basic addition simplification */
+	    	if(!containsId(left) && evalEXP(left) == 0){
+	    		/* 0+something = something */
+	    		return reduceEXP(right);
+	    	}else if(!containsId(right) && evalEXP(right) == 0){
+	    		/* something+0 = something */
+	    		return reduceEXP(left);
+	    	}
+
+	    	/* Advanced addition simplification for cases like:
+	    	 * a+2+3+4+b
+	    	 */
+	    	if(left->kind == plusK && !containsId(left->val.plusE.right)){
+				if(!containsId(right)){
+					return reduceEXP(makeEXPplus(reduceEXP(left->val.plusE.left),
+										reduceEXP(makeEXPplus(left->val.plusE.right,
+																right))));
+				}
+			}
 			return makeEXPplus(reduceEXP(e->val.plusE.left),
 								reduceEXP(e->val.plusE.right));
-	    case minusK:
+	    }
+	    case minusK:{
+	    	EXP *left = e->val.minusE.left;
+	    	EXP *right = e->val.minusE.right;
+
+	    	/* Basic substraction simplification */
+	    	if(!containsId(right) && evalEXP(right) == 0){
+	    		/* something-0 = something */
+	    		return reduceEXP(left);
+	    	}
+
 	    	return makeEXPminus(reduceEXP(e->val.minusE.left),
 	    						reduceEXP(e->val.minusE.right));
-	    case powerK:
+	    }
+	    case powerK:{
+	    	EXP *right = e->val.powerE.right;
+	    	if(!containsId(right) && evalEXP(right) == 0){
+	    		/* something**0 = 1 */
+	    		return makeEXPintconst(1);
+	    	}
 	    	return makeEXPpower(reduceEXP(e->val.powerE.left),
-	    						reduceEXP(e->val.powerE.right));
+	    						reduceEXP(right));
+	    }
 	    case absoluteK:
 	    	return makeEXPabsolute(reduceEXP(e->val.absoluteE.inside));
 	    default:
