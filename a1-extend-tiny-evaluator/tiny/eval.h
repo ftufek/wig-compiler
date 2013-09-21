@@ -3,6 +3,6 @@
 
 #include "tree.h"
 
-double evalEXP(EXP *e);
+int evalEXP(EXP *e);
 
 #endif /* !EVAL_H */

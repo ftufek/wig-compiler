@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h> /* for: abs */
-#include <math.h> /* for: pow */
+#include <math.h> /* for: pow, fmod */
 #include "eval.h"
 
-double evalEXP(EXP *e)
+int evalEXP(EXP *e)
 { switch (e->kind) {
     case idK:
          printf("I can't evaluate the value of an identifier!");
@@ -28,8 +28,8 @@ double evalEXP(EXP *e)
 			 break;
     }
     case moduloK:
-     return (fmod(evalEXP(e->val.moduloE.left),
-    		 evalEXP(e->val.moduloE.right)));
+     return (evalEXP(e->val.moduloE.left)%
+    		 evalEXP(e->val.moduloE.right));
     	 break;
     case plusK:
 	 return(evalEXP(e->val.plusE.left) + 

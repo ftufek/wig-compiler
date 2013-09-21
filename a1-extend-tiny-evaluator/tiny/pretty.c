@@ -1,19 +1,6 @@
 #include <stdio.h>
 #include "pretty.h"
 
-typedef enum
-{ min,
-  abs,
-  plus_minus,
-  mult_div_mod,
-  power
-} priority;
-
-typedef enum
-{ false,
-  true
-} bool;
-
 #define HIPRI(cpri, parenthesis) if (pri > cpri){printf(parenthesis);} \
 		else if(pri == cpri && leftChild == false){printf(parenthesis);}
 
@@ -52,7 +39,7 @@ static void _prettyEXP(EXP *e, priority pri, bool leftChild)
     	 break;
     case absoluteK:
     	 printf("abs(");
-    	 _prettyEXP(e->val.absoluteE.inside, abs, true);
+    	 _prettyEXP(e->val.absoluteE.inside, abs_pri, true);
     	 printf(")");
     	 break;
   }
