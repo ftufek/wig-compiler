@@ -1,6 +1,6 @@
 %{
-  #include "y.tab.h"
   extern "C" int yylex();
+  #include "y.tab.h"
 %}
 
 %%

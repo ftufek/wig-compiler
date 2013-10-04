@@ -1,5 +1,11 @@
 %{
 #include <iostream>
+
+extern "C" int yylex();
+
+void yyerror(const char* str){
+  std::cout<<"Error happened!\n";
+}
 %}
 
 %token tSERVICE
@@ -12,4 +18,4 @@ service: exp
        { };
 
 exp: tSERVICE
-   { std::cout<<"HELLO!"<<endl; }
+   { std::cout<<"HELLO!"<<std::endl; }

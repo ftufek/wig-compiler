@@ -1,15 +1,15 @@
 CC = g++
 CFLAGS = -Wall
 
-code: parser lexer
+code: y.tab.o lex.yy.o main.o
+	$(CC) lex.yy.o y.tab.o main.o -o fwig -lfl
 
 
 y.tab.c y.tab.h: wig.y
 	bison --yacc --defines wig.y
 
-lexer: wig.l y.tab.h
+lex.yy.c: wig.l y.tab.h
 	flex wig.l
-	$(CC) lex.yy.c 
 
 clean:
-	rm -f y.tab.* lex.yy.* *.o;
+	rm -f y.tab.* lex.yy.* *.o fwig;
