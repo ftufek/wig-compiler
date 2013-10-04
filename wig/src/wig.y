@@ -1,6 +1,6 @@
 %{
 #include <iostream>
-#include "tree.h"
+#include "ast.h"
 
 extern "C" int yylex();
 extern Expression *EXP;

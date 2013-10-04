@@ -1,5 +1,5 @@
 #include <iostream>
-#include "tree.h"
+#include "ast.h"
 #include "y.tab.h"
 
 int yyparse();

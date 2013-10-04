@@ -3,14 +3,14 @@
 
 class Expression{
 public:
-  void pretty(){};
+  Expression();
+  virtual ~Expression();
+  void pretty();
 };
 
 class ServiceExpression : public Expression {
 public:
-  ServiceExpression(){
-  }
-
+  ServiceExpression();
   void pretty();
 };
 
