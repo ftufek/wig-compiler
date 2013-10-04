@@ -5,7 +5,7 @@ class Expression{
 public:
   Expression();
   virtual ~Expression();
-  void pretty();
+  virtual void pretty();
 };
 
 class ServiceExpression : public Expression {

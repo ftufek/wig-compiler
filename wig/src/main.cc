@@ -2,8 +2,9 @@
 #include "ast.h"
 #include "y.tab.h"
 
-int yyparse();
+using namespace std;
 
+int yyparse();
 Expression *EXP;
 
 int main(void){

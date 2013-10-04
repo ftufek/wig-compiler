@@ -3,6 +3,8 @@
 
 using namespace std;
 
+ServiceExpression::ServiceExpression(){
+}
+
 void ServiceExpression::pretty(){
-  cout<<"In service"<<endl;
 }
