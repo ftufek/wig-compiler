@@ -1,6 +1,8 @@
 CC = g++
 CFLAGS = -Wall
 
+BUILD_DIR = build/
+
 code: y.tab.o lex.yy.o main.o
 	$(CC) lex.yy.o y.tab.o main.o -o fwig -lfl
 

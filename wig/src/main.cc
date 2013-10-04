@@ -1,5 +1,12 @@
 #include <iostream>
+#include "tree.h"
+#include "y.tab.h"
+
+int yyparse();
+
+Expression *EXP;
 
 int main(void){
-  std::cout<<"Hello world!";
+  yyparse();
+  EXP->pretty();
 }
