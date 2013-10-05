@@ -6,8 +6,11 @@ using namespace std;
 
 int yyparse();
 Expression *EXP;
+bool success = true;
 
 int main(void){
   yyparse();
-  EXP->pretty();
+  if(success){
+    EXP->prettyPrint();
+  }
 }

@@ -7,7 +7,8 @@ CFLAGS = -Wall
 INC = -lfl
 
 OBJ_FILES = y.tab.o lex.yy.o main.o \
-						ast/ast.o ast/ast_service.o
+						ast/ast.o ast/ast_service.o ast/ast_empty.o \
+						ast/ast_variable.o
 OBJS = $(patsubst %,$(BDIR)/%,$(OBJ_FILES))
 
 code: bf $(OBJS)

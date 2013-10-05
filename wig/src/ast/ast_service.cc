@@ -6,5 +6,7 @@ using namespace std;
 ServiceExpression::ServiceExpression(){
 }
 
-void ServiceExpression::pretty(){
+void ServiceExpression::prettyPrint(){
+  cout<<"service {"<<endl;
+  cout<<"}"<<endl;
 }

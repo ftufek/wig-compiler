@@ -8,7 +8,3 @@ Expression::Expression(){
 
 Expression::~Expression(){
 }
-
-void Expression::pretty(){
-};
-
