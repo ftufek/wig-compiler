@@ -37,7 +37,7 @@
 %%
 
 service: tSERVICE '{' htmls '}'
-       { EXP = new ServiceExpression($3); };
+       { EXP = new ServiceExpression($3); }
      | { EXP = new EmptyExpression(); }
 
 htmls : /* empty */
@@ -55,3 +55,10 @@ html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
                                       "html", 
                                       true,
                                       new EmptyExpression()); }
+      tCONST ttHTML tID '=' tHtmlOpen htmlbody tHtmlClose ';'
+       { $$ = new VariableExpression(*$3, 
+                                      "html", 
+                                      true,
+                                      $6); }
+
+htmlbody: "<" ">"

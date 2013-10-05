@@ -17,5 +17,5 @@ void VariableExpression::prettyPrint(){
   }
   cout<<type<<" "<<name<<" = ";
   value->prettyPrint();
-  cout<<endl;
+  cout<<";"<<endl;
 }

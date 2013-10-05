@@ -43,4 +43,10 @@ protected:
   Expression *value;
 };
 
+class HtmlTagExpression : public Expression {
+public:
+  HtmlTagExpression();
+  void prettyPrint();
+}
+
 #endif
