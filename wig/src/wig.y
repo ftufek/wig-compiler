@@ -51,4 +51,7 @@ htmls : /* empty */
          $$ = $1; }
 
 html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
-       { $$ = new VariableExpression($3); }
+       { $$ = new VariableExpression(*$3, 
+                                      "html", 
+                                      true,
+                                      new EmptyExpression()); }

@@ -30,11 +30,17 @@ protected:
 
 class VariableExpression : public Expression {
 public:
-  VariableExpression(string *name);
+  VariableExpression(string name, 
+                     string type,
+                     bool isConst,
+                     Expression *value);
   void prettyPrint();
 
 protected:
-  string *name;
+  string name;
+  string type;
+  bool isConst;
+  Expression *value;
 };
 
 #endif
