@@ -2,6 +2,7 @@
 #define __TREE_H
 
 #include <string>
+#include <list>
 #include <iostream>
 using namespace std;
 
@@ -20,8 +21,11 @@ public:
 
 class ServiceExpression : public Expression {
 public:
-  ServiceExpression();
+  ServiceExpression(list<Expression *> *htmls);
   void prettyPrint();
+
+protected:
+  list<Expression *> *htmls;
 };
 
 class VariableExpression : public Expression {

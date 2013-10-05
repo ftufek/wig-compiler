@@ -25,9 +25,11 @@ ID {ALFA}{IDAUX}*
 
 <SERVICE>{
   "const" return tCONST;
-  "html" return tHTML;
+  "html" return ttHTML;
   "=" return '=';
   ";" return ';';
+  "<html>" return tHtmlOpen;
+  "</html>" return tHtmlClose;
 }
 
 {ID} { yylval.str = new std::string(yytext);

@@ -1,0 +1,5 @@
+service {
+
+  const html aba = <html></html>;
+
+}

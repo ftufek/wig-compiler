@@ -7,5 +7,5 @@ VariableExpression::VariableExpression(string *name){
 }
 
 void VariableExpression::prettyPrint(){
-  cout<<"Variable "<<name<<endl;
+  cout<<"Variable "<<*name<<endl;
 }
