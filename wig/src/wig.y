@@ -3,10 +3,13 @@
   #include <string>
   #include <list>
   #include "ast.h"
+  #include "ast_helpers.h"
 
   extern "C" int yylex();
   extern Expression *EXP;
   extern bool success;
+
+  using namespace std;
 
   void yyerror(const char* str){
     std::cout<<"Error happened: "<<str<<std::endl;
@@ -16,8 +19,8 @@
 
 %union{
   std::string *str;
-  std::list<Expression *> *list;
   Expression *exp;
+  ExpressionList *listExp;
 }
 
 %token tSERVICE
@@ -29,8 +32,8 @@
 %token tHtmlOpen
 %token tHtmlClose
 
-%type <exp> service html
-%type <list> htmls
+%type <exp> service html htmlbody 
+%type <listExp> htmls
 
 %start service
 
@@ -41,13 +44,13 @@ service: tSERVICE '{' htmls '}'
      | { EXP = new EmptyExpression(); }
 
 htmls : /* empty */
-        { $$ = new list<Expression *>; }
+        { $$ = new ExpressionList(); }
       | html
-       { list<Expression *> *l = new list<Expression *>;
-         l->push_front($1);
+       { ExpressionList *l = new ExpressionList();
+         l->getList()->push_front($1);
          $$ = l; }
       | htmls html
-       { $1->push_back($2);
+       { $1->getList()->push_back($2);
          $$ = $1; }
 
 html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
@@ -55,10 +58,11 @@ html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
                                       "html", 
                                       true,
                                       new EmptyExpression()); }
-      tCONST ttHTML tID '=' tHtmlOpen htmlbody tHtmlClose ';'
+    | tCONST ttHTML tID '=' tHtmlOpen htmlbody tHtmlClose ';'
        { $$ = new VariableExpression(*$3, 
                                       "html", 
                                       true,
                                       $6); }
 
-htmlbody: "<" ">"
+htmlbody: '<' tID '>' 
+        { $$ = new HtmlTagExpression(*$2);}

@@ -11,6 +11,7 @@ IDAUX {ALFANUM}|(_{ALFANUM})
 ID {ALFA}{IDAUX}*
 
 %s SERVICE
+%x HTML
 
 %option noyywrap
 %option never-interactive
@@ -28,11 +29,18 @@ ID {ALFA}{IDAUX}*
   "html" return ttHTML;
   "=" return '=';
   ";" return ';';
-  "<html>" return tHtmlOpen;
-  "</html>" return tHtmlClose;
+  "<html>" { BEGIN(HTML); return tHtmlOpen; }
 }
 
-{ID} { yylval.str = new std::string(yytext);
-       return tID; }
+<HTML>{
+  "<" return '<';
+  ">" return '>';
+  "</html>" { BEGIN(SERVICE); return tHtmlClose; }
+}
+
+<HTML,INITIAL,SERVICE>{
+  {ID} { yylval.str = new std::string(yytext);
+         return tID; }
+}
 
 .|\n /* do nothing */
