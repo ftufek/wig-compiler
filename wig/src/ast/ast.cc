@@ -8,3 +8,9 @@ Expression::Expression()
 
 Expression::~Expression(){
 }
+
+string typeToStr(Type type){
+  return (char *[]){"int","bool","string","void"}[type];
+}
+
+

@@ -25,6 +25,7 @@
   map<string, string> *dict;
   Expression *exp;
   ExpressionList *listExp;
+  Type type;
 }
 
 %token tSERVICE
@@ -33,6 +34,8 @@
 %token ttHTML
 %token <str> tID tWHATEVER tSTR tInputType
 
+
+/* HTML RELATED TOKENS */
 %token tHtmlOpen /* "<html>" */
 %token tHtmlClose /* "</html>" */
 %token tTagClose /* "</" */
@@ -44,26 +47,31 @@
 %token tSelect
 %token tName
 %token tType
+/* END OF HTML RELATED TOKENS */
 
-%type <exp> service html htmlbody 
-%type <listExp> htmls nehtmlbodies
+%token tSchema
+%token tInt
+%token tBool
+%token tString
+%token tVoid
+
+%type <exp> service html htmlbody schema field
+%type <listExp> htmls nehtmlbodies schemas neschemas fields nefields
 %type <dict> attributes neattributes attribute inputattr inputattrs
 %type <str> attr
+%type <type> simpletype
 
 %start service
 %%
 
-service: tSERVICE '{' htmls '}'
-       { EXP = new ServiceExpression($3); }
+service: tSERVICE '{' htmls schemas '}'
+       { EXP = new ServiceExpression($3, $4); }
      | { EXP = new EmptyExpression(); }
 
 htmls : html
-       { ExpressionList *l = new ExpressionList();
-         l->getList()->push_front($1);
-         $$ = l; }
+       { $$ = initList($1); }
       | htmls html
-       { $1->getList()->push_back($2);
-         $$ = $1; }
+       { $$ = addBack($1, $2); }
 
 html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
        {$$ = new VariableExpression(*$3, "html", true,
@@ -130,3 +138,38 @@ attr: tID
     { $$ = $1; }
     | tSTR
     { $$ = $1; }
+
+schemas: /* empty */
+       { $$ = new ExpressionList(); }
+       | neschemas
+       { $$ = $1; }
+
+neschemas: schema
+         { $$ = initList($1); }
+         | neschemas schema
+         { $$ = addBack($1, $2); }
+
+schema: tSchema tID '{' fields '}'
+      { $$ = new SchemaExpression(*$2, $4); }
+
+fields: /* empty */
+      { $$ = new ExpressionList(); }
+      | nefields
+      { $$ = $1; }
+
+nefields: field
+        { $$ = initList($1); }
+        | nefields field
+        { $$ = addBack($1, $2); }
+
+field: simpletype tID ';'
+     { $$ = new FieldExpression($1, *$2); }
+
+simpletype: tInt
+           { $$ = INT; }
+           | tBool
+           { $$ = BOOL; }
+           | tString
+           { $$ = STRING; }
+           | tVoid
+           { $$ = VOID; }

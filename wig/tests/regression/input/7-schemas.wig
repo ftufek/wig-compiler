@@ -8,8 +8,11 @@ asd
 -->
 as</html>;
 
-schema{
-
+schema item{
+int price;
+string title;
+bool available;
+void whatisthis;
 }
 
 }

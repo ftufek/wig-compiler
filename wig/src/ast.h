@@ -9,6 +9,12 @@
 using namespace std;
 extern int yylineno;
 
+enum Type{
+  INT, BOOL, STRING, VOID
+};
+
+string typeToStr(Type type);
+
 /* EXPRESSION AST CLASSES */
 class Expression{
 public:
@@ -39,11 +45,13 @@ protected:
 
 class ServiceExpression : public Expression {
 public:
-  ServiceExpression(ExpressionList *htmls);
+  ServiceExpression(ExpressionList *htmls,
+                    ExpressionList *schemas);
   void prettyPrint();
 
 protected:
   ExpressionList *htmls;
+  ExpressionList *schemas;
 };
 
 class VariableExpression : public Expression {
@@ -101,6 +109,27 @@ public:
   
 protected:
   string whatever;
+};
+
+class SchemaExpression : public Expression {
+public:
+  SchemaExpression(string id,
+                   ExpressionList *fields = new ExpressionList());
+  void prettyPrint();
+  
+protected:
+  string id;
+  ExpressionList *fields;
+};
+
+class FieldExpression : public Expression {
+public:
+  FieldExpression(Type type, string id);
+  void prettyPrint();
+  
+protected:
+  Type type;
+  string id;
 };
 
 #endif

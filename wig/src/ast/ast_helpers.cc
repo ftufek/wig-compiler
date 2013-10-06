@@ -32,3 +32,13 @@ map<string, string> *mergeMap(map<string, string> *m1,
   return m1;
 }
 
+ExpressionList *initList(Expression *e){
+  ExpressionList *l = new ExpressionList();
+  l->getList()->push_front(e);
+  return l;
+}
+
+ExpressionList *addBack(ExpressionList *list, Expression *exp){
+  list->getList()->push_back(exp);
+  return list;
+}

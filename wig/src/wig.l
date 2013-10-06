@@ -33,6 +33,11 @@ STR				\"((\\\")|([^\"\n\t]))*\"
   "=" return '=';
   ";" return ';';
   "<html>" { BEGIN(HTML); return tHtmlOpen; }
+  "schema" return tSchema;
+  "int" return tInt;
+  "bool" return tBool;
+  "string" return tString;
+  "void" return tVoid;
 }
 
 <HTML>{

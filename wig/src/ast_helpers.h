@@ -11,4 +11,6 @@ map<string, string> *initMap(string key, string val);
 map<string, string> *mergeMap(map<string, string> *m1,
                            map<string, string> *m2);
 
+ExpressionList *initList(Expression *e);
+ExpressionList *addBack(ExpressionList *list, Expression *exp);
 #endif
