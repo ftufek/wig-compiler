@@ -3,8 +3,6 @@
   #include "ast.h"
   #include <string>
   #include "y.tab.h"
-
-  extern int lineno;
 %}
 
 ALFA [a-zA-Z]
@@ -19,6 +17,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 
 %option noyywrap
 %option never-interactive
+%option yylineno
 %%
 
 "{" return '{';
@@ -73,6 +72,6 @@ STR				\"((\\\")|([^\"\n\t]))*\"
          return tID; }
   {STR} { yylval.str = new string(yytext);
          return tSTR; }
-  \n lineno++;
+  \n /* do nothing */
   . /* do nothing for now*/
 }

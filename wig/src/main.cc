@@ -7,7 +7,7 @@ using namespace std;
 int yyparse();
 Expression *EXP;
 bool success = true;
-int lineno = 1;
+extern int yylineno;
 
 int main(void){
   yyparse();

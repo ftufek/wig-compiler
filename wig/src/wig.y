@@ -10,12 +10,12 @@
   extern Expression *EXP;
   extern char* yytext;
   extern bool success;
-  extern int lineno;
+  extern int yylineno;
 
   using namespace std;
 
   void yyerror(const char* str){
-    cout<<"Error happened on line "<<lineno<<" before: "<<yytext<<endl;
+    cout<<"Error happened on line "<<yylineno<<" before: "<<yytext<<endl;
     success = false;
   }
 %}
@@ -51,7 +51,6 @@
 %type <str> attr
 
 %start service
-
 %%
 
 service: tSERVICE '{' htmls '}'

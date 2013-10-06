@@ -4,7 +4,7 @@
 using namespace std;
 
 Expression::Expression()
-  :atLine(lineno){}
+  :atLine(yylineno){}
 
 Expression::~Expression(){
 }

@@ -7,7 +7,7 @@
 #include <iostream>
 
 using namespace std;
-extern int lineno;
+extern int yylineno;
 
 /* EXPRESSION AST CLASSES */
 class Expression{
