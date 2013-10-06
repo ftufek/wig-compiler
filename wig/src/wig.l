@@ -57,6 +57,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 }
 
 <HTMLCODE>{
+  "=" return '=';
   ">" { BEGIN(HTML); return '>'; }
   "]>" { BEGIN(HTML); return tGapClose;}
 }

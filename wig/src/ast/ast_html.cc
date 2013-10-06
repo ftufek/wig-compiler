@@ -14,6 +14,16 @@ void HtmlTagExpression::prettyPrint(){
 
   cout<<id;
 
+  if(attrs->size() > 0){
+    for(map<string,string>::const_iterator it = attrs->begin();
+        it != attrs->end(); ++it){
+      cout<<" "<<it->first;
+      if(it->second.length() > 0){
+        cout<<"="<<it->second;
+      }
+    }
+  }
+
   if(isGap)
     cout<<"]>";
   else

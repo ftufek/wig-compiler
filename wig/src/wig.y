@@ -43,7 +43,8 @@
 
 %type <exp> service html htmlbody 
 %type <listExp> htmls nehtmlbodies
-%type <dict> attributes
+%type <dict> attributes neattributes attribute
+%type <str> attr
 
 %start service
 
@@ -53,9 +54,7 @@ service: tSERVICE '{' htmls '}'
        { EXP = new ServiceExpression($3); }
      | { EXP = new EmptyExpression(); }
 
-htmls : /* empty */
-        { $$ = new ExpressionList(); }
-      | html
+htmls : html
        { ExpressionList *l = new ExpressionList();
          l->getList()->push_front($1);
          $$ = l; }
@@ -63,15 +62,16 @@ htmls : /* empty */
        { $1->getList()->push_back($2);
          $$ = $1; }
 
-html: tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
+html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
+       {$$ = new VariableExpression(*$3, "html", true,
+                                    wrapHtml(new ExpressionList())); }
+    | tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
        { $$ = new VariableExpression(*$3, 
                                       "html", 
                                       true,
                                       wrapHtml($6)); }
 
-nehtmlbodies: /* empty */
-            { $$ = new ExpressionList(); }
-            |  htmlbody
+nehtmlbodies: htmlbody
             { ExpressionList *l = new ExpressionList();
               l->getList()->push_front($1);
               $$ = l; }
@@ -80,15 +80,37 @@ nehtmlbodies: /* empty */
               $$ = $1; }
 
 htmlbody: '<' tID attributes '>' 
-        { $$ = new HtmlTagExpression(*$2);}
+        { $$ = new HtmlTagExpression(*$2, $3);}
         | tTagClose tID '>' /* "</tID>" */
         { $$ = new HtmlTagExpression(*$2, emptyMap(), true); }
         | tGapOpen tID tGapClose
         { $$ = new HtmlTagExpression(*$2, emptyMap(), false, true); }
-        | tWHATEVER
-        { $$ = new WhateverExpression(*$1); }
         | tMetaOpen tWHATEVER tMetaClose
         { $$ = new MetaTagExpression(*$2); }
+        | tWHATEVER
+        { $$ = new WhateverExpression(*$1); }
 
 attributes: /* emtpy */
           { $$ = emptyMap(); }
+          | neattributes
+          { $$ = $1; }
+
+neattributes: attribute
+            { $$ = $1; }
+            | neattributes attribute
+            { $1->insert($2->begin(), $2->end());
+              $$ = $1; }
+
+attribute: attr
+         { map<string, string> *a = emptyMap();
+           a->insert(pair<string, string>(*$1, ""));
+           $$ = a; }
+         | attr '=' attr
+         { map<string, string> *a = emptyMap();
+           a->insert(pair<string, string>(*$1, *$3));
+           $$ = a; }
+
+attr: tID
+    { $$ = $1; }
+    | tSTR
+    { $$ = $1; }
