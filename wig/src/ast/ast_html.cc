@@ -1,8 +1,8 @@
 #include "../ast.h"
 
 HtmlTagExpression::HtmlTagExpression
-    (string id, bool isClosing, bool isGap)
-    :id(id), isClosing(isClosing), isGap(isGap) {}
+    (string id, map<string, string> *attrs, bool isClosing, bool isGap)
+    :id(id), attrs(attrs), isClosing(isClosing), isGap(isGap) {}
 
 void HtmlTagExpression::prettyPrint(){
   if(isClosing)

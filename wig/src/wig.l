@@ -12,6 +12,7 @@ ALFANUM {ALFA}|[0-9]
 IDAUX {ALFANUM}|(_{ALFANUM})
 ID {ALFA}{IDAUX}*
 WHATEVER [^<>]*
+STR				\"((\\\")|([^\"\n\t]))*\"
 
 %s SERVICE
 %x HTML HTMLCODE METACODE
@@ -63,6 +64,8 @@ WHATEVER [^<>]*
 <HTMLCODE,INITIAL,SERVICE>{
   {ID} { yylval.str = new std::string(yytext);
          return tID; }
+  {STR} { yylval.str = new string(yytext);
+         return tSTR; }
   \n lineno++;
   . /* do nothing for now*/
 }

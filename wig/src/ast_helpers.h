@@ -4,5 +4,6 @@
 #include "ast.h"
 
 Expression *wrapHtml(ExpressionList *exp);
+map<string, string> *emptyMap();
 
 #endif

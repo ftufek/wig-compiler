@@ -2,6 +2,7 @@
   #include <iostream>
   #include <string>
   #include <list>
+  #include <map>
   #include "ast.h"
   #include "ast_helpers.h"
 
@@ -20,7 +21,8 @@
 %}
 
 %union{
-  std::string *str;
+  string *str;
+  map<string, string> *dict;
   Expression *exp;
   ExpressionList *listExp;
 }
@@ -29,7 +31,7 @@
 %token tCONST
 
 %token ttHTML
-%token <str> tID tWHATEVER
+%token <str> tID tWHATEVER tSTR
 
 %token tHtmlOpen /* "<html>" */
 %token tHtmlClose /* "</html>" */
@@ -41,6 +43,7 @@
 
 %type <exp> service html htmlbody 
 %type <listExp> htmls nehtmlbodies
+%type <dict> attributes
 
 %start service
 
@@ -76,13 +79,16 @@ nehtmlbodies: /* empty */
             { $1->getList()->push_back($2);
               $$ = $1; }
 
-htmlbody: '<' tID '>' 
+htmlbody: '<' tID attributes '>' 
         { $$ = new HtmlTagExpression(*$2);}
         | tTagClose tID '>' /* "</tID>" */
-        { $$ = new HtmlTagExpression(*$2, true); }
+        { $$ = new HtmlTagExpression(*$2, emptyMap(), true); }
         | tGapOpen tID tGapClose
-        { $$ = new HtmlTagExpression(*$2, false, true); }
+        { $$ = new HtmlTagExpression(*$2, emptyMap(), false, true); }
         | tWHATEVER
         { $$ = new WhateverExpression(*$1); }
         | tMetaOpen tWHATEVER tMetaClose
         { $$ = new MetaTagExpression(*$2); }
+
+attributes: /* emtpy */
+          { $$ = emptyMap(); }

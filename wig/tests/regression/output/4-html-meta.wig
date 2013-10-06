@@ -1,8 +1,10 @@
 service {
-const html ba_2 = 4<html>
+const html ba_2 = <html>
 Cool html!
-Test 2<[number]>;
+Test <[number]>;
 <!--  hmm maybe this is a meta,
-does it work ??  -->3<[yep]>
-      <!--  looks like it does!  -->4</html>;
+does it work ??  -->
+<[yep]>
+      <!--  looks like it does!  -->
+</html>;
 }

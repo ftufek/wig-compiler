@@ -1,8 +1,9 @@
 service {
-const html a = 5<html>5<div>maybe this 
-  is it!5<[name]> test 1 2 
+const html a = <html>
+<div>maybe this 
+  is it!<[name]> test 1 2 
 
-35</div>
+3</div>
 
-5</html>;
+</html>;
 }

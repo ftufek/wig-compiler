@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <map>
 #include <iostream>
 
 using namespace std;
@@ -63,12 +64,14 @@ protected:
 class HtmlTagExpression : public Expression {
 public:
   HtmlTagExpression(string id,
+                    map<string, string> *attrs = new map<string,string>,
                     bool isClosing = false,
                     bool isGap = false);
   void prettyPrint();
 
 protected:
   string id;
+  map<string, string> *attrs;
   bool isClosing;
   bool isGap;
 };
@@ -76,6 +79,15 @@ protected:
 class MetaTagExpression : public Expression {
 public:
   MetaTagExpression(string content);
+  void prettyPrint();
+
+protected:
+  string content;
+};
+
+class StringExpression : public Expression {
+public:
+  StringExpression(string content);
   void prettyPrint();
 
 protected:
