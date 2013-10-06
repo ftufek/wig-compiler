@@ -3,7 +3,6 @@
 
 #include "ast.h"
 
-Expression *emptyHtml();
-Expression *wrapHtml(Expression *exp);
+Expression *wrapHtml(ExpressionList *exp);
 
 #endif

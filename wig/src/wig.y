@@ -33,7 +33,7 @@
 %token tHtmlClose
 
 %type <exp> service html htmlbody 
-%type <listExp> htmls
+%type <listExp> htmls nehtmlbodies
 
 %start service
 
@@ -53,16 +53,21 @@ htmls : /* empty */
        { $1->getList()->push_back($2);
          $$ = $1; }
 
-html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
+html: tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
        { $$ = new VariableExpression(*$3, 
                                       "html", 
                                       true,
-                                      new EmptyExpression()); }
-    | tCONST ttHTML tID '=' tHtmlOpen htmlbody tHtmlClose ';'
-       { $$ = new VariableExpression(*$3, 
-                                      "html", 
-                                      true,
-                                      $6); }
+                                      wrapHtml($6)); }
+
+nehtmlbodies: /* empty */
+            { $$ = new ExpressionList(); }
+            |  htmlbody
+            { ExpressionList *l = new ExpressionList();
+              l->getList()->push_front($1);
+              $$ = l; }
+            | nehtmlbodies htmlbody
+            { $1->getList()->push_back($2);
+              $$ = $1; }
 
 htmlbody: '<' tID '>' 
         { $$ = new HtmlTagExpression(*$2);}
