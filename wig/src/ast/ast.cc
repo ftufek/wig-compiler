@@ -3,8 +3,8 @@
 
 using namespace std;
 
-Expression::Expression(){
-}
+Expression::Expression()
+  :atLine(lineno){}
 
 Expression::~Expression(){
 }

@@ -3,15 +3,18 @@
   #include "ast.h"
   #include <string>
   #include "y.tab.h"
+
+  extern int lineno;
 %}
 
 ALFA [a-zA-Z]
 ALFANUM {ALFA}|[0-9]
 IDAUX {ALFANUM}|(_{ALFANUM})
 ID {ALFA}{IDAUX}*
+WHATEVER [^<>]*
 
 %s SERVICE
-%x HTML
+%x HTML HTMLCODE METACODE
 
 %option noyywrap
 %option never-interactive
@@ -33,14 +36,33 @@ ID {ALFA}{IDAUX}*
 }
 
 <HTML>{
-  "<" return '<';
-  ">" return '>';
+  "<!--" { BEGIN(METACODE); return tMetaOpen; }
+  "</" { BEGIN(HTMLCODE); return tTagClose; }
+  "<[" { BEGIN(HTMLCODE); return tGapOpen; }
+  "<" { BEGIN(HTMLCODE); return '<'; }
   "</html>" { BEGIN(SERVICE); return tHtmlClose; }
 }
 
-<HTML,INITIAL,SERVICE>{
-  {ID} { yylval.str = new std::string(yytext);
-         return tID; }
+<METACODE>{
+  "-->" { BEGIN(HTML); return tMetaClose; }
+  "-" return '-';
+  [^->]* {yylval.str = new string(yytext);
+          return tWHATEVER; }
 }
 
-.|\n /* do nothing */
+<HTML>{
+  {WHATEVER} { yylval.str = new std::string(yytext);
+               return tWHATEVER; }
+}
+
+<HTMLCODE>{
+  ">" { BEGIN(HTML); return '>'; }
+  "]>" { BEGIN(HTML); return tGapClose;}
+}
+
+<HTMLCODE,INITIAL,SERVICE>{
+  {ID} { yylval.str = new std::string(yytext);
+         return tID; }
+  \n lineno++;
+  . /* do nothing for now*/
+}

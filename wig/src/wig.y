@@ -7,12 +7,14 @@
 
   extern "C" int yylex();
   extern Expression *EXP;
+  extern char* yytext;
   extern bool success;
+  extern int lineno;
 
   using namespace std;
 
   void yyerror(const char* str){
-    std::cout<<"Error happened: "<<str<<std::endl;
+    cout<<"Error happened on line "<<lineno<<" before: "<<yytext<<endl;
     success = false;
   }
 %}
@@ -27,10 +29,15 @@
 %token tCONST
 
 %token ttHTML
-%token <str> tID
+%token <str> tID tWHATEVER
 
-%token tHtmlOpen
-%token tHtmlClose
+%token tHtmlOpen /* "<html>" */
+%token tHtmlClose /* "</html>" */
+%token tTagClose /* "</" */
+%token tGapOpen /* "<[" */
+%token tGapClose /* "]>" */
+%token tMetaOpen
+%token tMetaClose
 
 %type <exp> service html htmlbody 
 %type <listExp> htmls nehtmlbodies
@@ -71,3 +78,11 @@ nehtmlbodies: /* empty */
 
 htmlbody: '<' tID '>' 
         { $$ = new HtmlTagExpression(*$2);}
+        | tTagClose tID '>' /* "</tID>" */
+        { $$ = new HtmlTagExpression(*$2, true); }
+        | tGapOpen tID tGapClose
+        { $$ = new HtmlTagExpression(*$2, false, true); }
+        | tWHATEVER
+        { $$ = new WhateverExpression(*$1); }
+        | tMetaOpen tWHATEVER tMetaClose
+        { $$ = new MetaTagExpression(*$2); }

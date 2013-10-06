@@ -4,8 +4,9 @@
 #include <string>
 #include <list>
 #include <iostream>
-using namespace std;
 
+using namespace std;
+extern int lineno;
 
 /* EXPRESSION AST CLASSES */
 class Expression{
@@ -13,6 +14,9 @@ public:
   Expression();
   virtual ~Expression();
   virtual void prettyPrint() = 0;
+
+protected:
+  int atLine;
 };
 
 class EmptyExpression : public Expression {
@@ -59,12 +63,32 @@ protected:
 class HtmlTagExpression : public Expression {
 public:
   HtmlTagExpression(string id,
-                    bool closing = false);
+                    bool isClosing = false,
+                    bool isGap = false);
   void prettyPrint();
 
 protected:
   string id;
-  bool closing;
+  bool isClosing;
+  bool isGap;
+};
+
+class MetaTagExpression : public Expression {
+public:
+  MetaTagExpression(string content);
+  void prettyPrint();
+
+protected:
+  string content;
+};
+
+class WhateverExpression : public Expression {
+public:
+  WhateverExpression(string whatever);
+  void prettyPrint();
+  
+protected:
+  string whatever;
 };
 
 #endif
