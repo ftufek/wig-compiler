@@ -58,6 +58,12 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 
 <HTMLCODE>{
   "=" return '=';
+  "input" return tInput;
+  "select" return tSelect;
+  "name" return tName;
+  "type" return tType;
+  "\"text\""|"\"radio\"" { yylval.str = new string(yytext);
+               return tInputType; }
   ">" { BEGIN(HTML); return '>'; }
   "]>" { BEGIN(HTML); return tGapClose;}
 }

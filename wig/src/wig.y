@@ -31,7 +31,7 @@
 %token tCONST
 
 %token ttHTML
-%token <str> tID tWHATEVER tSTR
+%token <str> tID tWHATEVER tSTR tInputType
 
 %token tHtmlOpen /* "<html>" */
 %token tHtmlClose /* "</html>" */
@@ -40,10 +40,14 @@
 %token tGapClose /* "]>" */
 %token tMetaOpen
 %token tMetaClose
+%token tInput
+%token tSelect
+%token tName
+%token tType
 
 %type <exp> service html htmlbody 
 %type <listExp> htmls nehtmlbodies
-%type <dict> attributes neattributes attribute
+%type <dict> attributes neattributes attribute inputattr inputattrs
 %type <str> attr
 
 %start service
@@ -85,10 +89,28 @@ htmlbody: '<' tID attributes '>'
         { $$ = new HtmlTagExpression(*$2, emptyMap(), true); }
         | tGapOpen tID tGapClose
         { $$ = new HtmlTagExpression(*$2, emptyMap(), false, true); }
-        | tMetaOpen tWHATEVER tMetaClose
-        { $$ = new MetaTagExpression(*$2); }
         | tWHATEVER
         { $$ = new WhateverExpression(*$1); }
+        | tMetaOpen tWHATEVER tMetaClose
+        { $$ = new MetaTagExpression(*$2); }
+        | '<' tInput inputattrs '>'
+        { $$ = new HtmlTagExpression("input", $3); }
+        | '<' tSelect inputattrs '>' nehtmlbodies tTagClose tSelect '>'
+        { $$ = wrapAround("select", $3, $5); }         
+        | '<' tSelect inputattrs '>' tTagClose tSelect '>'
+        { $$ = wrapAround("select", $3, new ExpressionList()); }
+
+inputattrs: inputattr
+        { $$ = $1; }
+        | inputattrs inputattr
+        { $$ = mergeMap($1, $2); }
+
+inputattr: tName '=' attr
+         { $$ = initMap("name", *$3); }
+         | tType '=' tInputType
+         { $$ = initMap("type", *$3); }
+         | attribute
+         { $$ = $1; }
 
 attributes: /* emtpy */
           { $$ = emptyMap(); }
@@ -98,17 +120,12 @@ attributes: /* emtpy */
 neattributes: attribute
             { $$ = $1; }
             | neattributes attribute
-            { $1->insert($2->begin(), $2->end());
-              $$ = $1; }
+            { $$ = mergeMap($1, $2); }
 
 attribute: attr
-         { map<string, string> *a = emptyMap();
-           a->insert(pair<string, string>(*$1, ""));
-           $$ = a; }
+         { $$ = initMap(*$1, ""); }
          | attr '=' attr
-         { map<string, string> *a = emptyMap();
-           a->insert(pair<string, string>(*$1, *$3));
-           $$ = a; }
+         { $$ = initMap(*$1, *$3); }
 
 attr: tID
     { $$ = $1; }
