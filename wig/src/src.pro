@@ -22,15 +22,16 @@ HEADERS += \
     ast_helpers.h \
     ast.h
 
+OTHER_FILES += wig.l \
+    wig.y
+
 LIBS += -lfl -ly
 
 #CONFIG += lex
 #LEXSOURCES += wig.l
-
 #QMAKE_YACC=bison
 #CONFIG += yacc
 #YACCSOURCES += wig.y
-
 #lex.CONFIG += target_predeps
 #yacc_impl.CONFIG += target_predeps
 #yacc_decl.CONFIG += target_predeps
@@ -58,5 +59,5 @@ bisonheader.input = BISONSOURCES
 bisonheader.output = y.tab.h
 bisonheader.variable_out = HEADERS
 bisonheader.name = bison header
-bisonheader.depends = y.tab.c
+bisonheader.depends = y.tab.cc
 QMAKE_EXTRA_COMPILERS += bisonheader

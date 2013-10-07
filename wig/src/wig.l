@@ -18,6 +18,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 %option noyywrap
 %option never-interactive
 %option yylineno
+%option nounput
 %%
 
 "{" return '{';

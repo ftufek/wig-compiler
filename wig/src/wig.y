@@ -15,7 +15,8 @@
   using namespace std;
 
   void yyerror(const char* str){
-    cout<<"Error happened on line "<<yylineno<<" before: "<<yytext<<endl;
+    cout<<"Error happened on line "<<yylineno<<" : "<<str<<endl;
+    cout<<" before: "<<str<<endl;
     success = false;
   }
 %}
