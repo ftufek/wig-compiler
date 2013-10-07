@@ -17,20 +17,46 @@ SOURCES += \
     ast/ast_field.cc \
     ast/ast_empty.cc \
     ast/ast.cc \
-    y.tab.cc \
-    lex.yy.cc
-
 
 HEADERS += \
     ast_helpers.h \
-    ast.h \
-    y.tab.hh
+    ast.h
 
 LIBS += -lfl -ly
+
+#CONFIG += lex
+#LEXSOURCES += wig.l
+
+#QMAKE_YACC=bison
+#CONFIG += yacc
+#YACCSOURCES += wig.y
+
+#lex.CONFIG += target_predeps
+#yacc_impl.CONFIG += target_predeps
+#yacc_decl.CONFIG += target_predeps
 
 FLEXSOURCES = wig.l
 BISONSOURCES = wig.y
 
-OTHER_FILES +=  \
-    $$FLEXSOURCES \
-    $$BISONSOURCES
+flex.commands = flex ${QMAKE_FILE_IN} && mv lex.yy.c lex.yy.cc
+flex.input = FLEXSOURCES
+flex.output = lex.yy.cc
+flex.variable_out = SOURCES
+flex.depends = y.tab.h
+flex.name = flex
+QMAKE_EXTRA_COMPILERS += flex
+
+bison.commands = bison -d -t -y ${QMAKE_FILE_IN} && mv y.tab.c y.tab.cc
+bison.input = BISONSOURCES
+bison.output = y.tab.cc
+bison.variable_out = SOURCES
+bison.name = bison
+QMAKE_EXTRA_COMPILERS += bison
+
+bisonheader.commands = @true
+bisonheader.input = BISONSOURCES
+bisonheader.output = y.tab.h
+bisonheader.variable_out = HEADERS
+bisonheader.name = bison header
+bisonheader.depends = y.tab.c
+QMAKE_EXTRA_COMPILERS += bisonheader
