@@ -12,7 +12,7 @@ public:
                                          new std::map<std::string,std::string>,
                     bool is_closing_ = false,
                     bool is_gap_ = false);
-  void PrettyPrint();
+  void PrettyPrint() override;
 
 protected:
   std::string id;

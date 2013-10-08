@@ -7,7 +7,7 @@
 class ExpressionList : public Expression{
 public:
   ExpressionList(std::list<Expression *> *exps_ = new std::list<Expression *>);
-  void PrettyPrint();
+  void PrettyPrint() override;
   std::list<Expression *> *getList();
 
 protected:

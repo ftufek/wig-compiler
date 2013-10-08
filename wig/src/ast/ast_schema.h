@@ -9,7 +9,7 @@ class SchemaExpression : public Expression {
 public:
   SchemaExpression(std::string id_,
                    ExpressionList *fields_ = new ExpressionList());
-  void PrettyPrint();
+  void PrettyPrint() override;
 
 protected:
   std::string id_;

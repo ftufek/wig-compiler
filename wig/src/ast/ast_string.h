@@ -7,7 +7,7 @@
 class StringExpression : public Expression {
 public:
   StringExpression(std::string content_);
-  void PrettyPrint();
+  void PrettyPrint() override;
 
 protected:
   std::string content_;

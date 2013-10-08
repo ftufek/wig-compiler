@@ -9,7 +9,7 @@ public:
   ServiceExpression(ExpressionList *htmls_,
                     ExpressionList *schemas_,
                     ExpressionList *global_variables_ = new ExpressionList());
-  void PrettyPrint();
+  void PrettyPrint() override;
 
 protected:
   ExpressionList *htmls_;

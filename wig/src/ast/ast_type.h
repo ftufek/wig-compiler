@@ -12,7 +12,7 @@ class TypeExpression : public Expression
 {
 public:
     TypeExpression(Type type_, std::string tuple_id_ = "");
-    void PrettyPrint();
+    void PrettyPrint() override;
 
 protected:
     Type type_;

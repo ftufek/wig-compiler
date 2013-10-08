@@ -16,7 +16,7 @@ public:
                      TypeExpression *type_,
                      bool is_const_,
                      Expression *value_);
-  void PrettyPrint();
+  void PrettyPrint() override;
 
 protected:
   std::string name_;

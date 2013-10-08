@@ -8,7 +8,7 @@
 class FieldExpression : public Expression {
 public:
   FieldExpression(TypeExpression *type, std::string id);
-  void PrettyPrint();
+  void PrettyPrint() override;
 
 protected:
   TypeExpression *type;

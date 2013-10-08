@@ -7,7 +7,7 @@
 class WhateverExpression : public Expression {
 public:
   WhateverExpression(std::string whatever_);
-  void PrettyPrint();
+  void PrettyPrint() override;
 
 protected:
   std::string whatever_;

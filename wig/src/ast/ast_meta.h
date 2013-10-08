@@ -7,7 +7,7 @@
 class MetaTagExpression : public Expression {
 public:
   MetaTagExpression(std::string content_);
-  void PrettyPrint();
+  void PrettyPrint() override;
 
 protected:
   std::string content_;
