@@ -1,10 +1,10 @@
 #include "../ast.h"
 
-MetaTagExpression::MetaTagExpression(string content)
+MetaTagExpression::MetaTagExpression(std::string content)
   :content(content){}
 
 void MetaTagExpression::prettyPrint(){
-  cout<<"<!-- ";
-  cout<<content;
-  cout<<" -->";
+  std::cout<<"<!-- ";
+  std::cout<<content;
+  std::cout<<" -->";
 }

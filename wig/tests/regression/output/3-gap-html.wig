@@ -1,1 +1,2 @@
-Error happened on line 6 before: name
+Error happened on line 6 : syntax error
+ before: name

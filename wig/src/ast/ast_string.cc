@@ -1,8 +1,8 @@
 #include "../ast.h"
 
-StringExpression::StringExpression(string content)
+StringExpression::StringExpression(std::string content)
   :content(content){}
 
 void StringExpression::prettyPrint(){
-  cout<<"\""<<content<<"\"";
+  std::cout<<"\""<<content<<"\"";
 }

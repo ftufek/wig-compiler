@@ -1,31 +1,31 @@
 #include "../ast.h"
 
 HtmlTagExpression::HtmlTagExpression
-    (string id, map<string, string> *attrs, bool isClosing, bool isGap)
+    (std::string id, std::map<std::string, std::string> *attrs, bool isClosing, bool isGap)
     :id(id), attrs(attrs), isClosing(isClosing), isGap(isGap) {}
 
 void HtmlTagExpression::prettyPrint(){
   if(isClosing)
-    cout<<"</";
+    std::cout<<"</";
   else if(isGap)
-    cout<<"<[";
+    std::cout<<"<[";
   else
-    cout<<"<";
+    std::cout<<"<";
 
-  cout<<id;
+  std::cout<<id;
 
   if(attrs->size() > 0){
-    for(map<string,string>::const_iterator it = attrs->begin();
+    for(std::map<std::string,std::string>::const_iterator it = attrs->begin();
         it != attrs->end(); ++it){
-      cout<<" "<<it->first;
+      std::cout<<" "<<it->first;
       if(it->second.length() > 0){
-        cout<<"="<<it->second;
+        std::cout<<"="<<it->second;
       }
     }
   }
 
   if(isGap)
-    cout<<"]>";
+    std::cout<<"]>";
   else
-    cout<<">";
+    std::cout<<">";
 }

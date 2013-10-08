@@ -1,8 +1,8 @@
 #include "../ast.h"
 
-WhateverExpression::WhateverExpression(string whatever)
+WhateverExpression::WhateverExpression(std::string whatever)
   :whatever(whatever) {}
 
 void WhateverExpression::prettyPrint(){
-  cout<<whatever;
+  std::cout<<whatever;
 }

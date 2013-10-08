@@ -52,7 +52,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 <METACODE>{
   "-->" { BEGIN(HTML); return tMetaClose; }
   "-" return '-';
-  [^->]* {yylval.str = new string(yytext);
+  [^->]* {yylval.str = new std::string(yytext);
           return tWHATEVER; }
 }
 
@@ -67,7 +67,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
   "select" return tSelect;
   "name" return tName;
   "type" return tType;
-  "\"text\""|"\"radio\"" { yylval.str = new string(yytext);
+  "\"text\""|"\"radio\"" { yylval.str = new std::string(yytext);
                return tInputType; }
   ">" { BEGIN(HTML); return '>'; }
   "]>" { BEGIN(HTML); return tGapClose;}
@@ -76,7 +76,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 <HTMLCODE,INITIAL,SERVICE>{
   {ID} { yylval.str = new std::string(yytext);
          return tID; }
-  {STR} { yylval.str = new string(yytext);
+  {STR} { yylval.str = new std::string(yytext);
          return tSTR; }
   \n /* do nothing */
   . /* do nothing for now*/

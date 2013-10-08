@@ -1,5 +1,7 @@
 #include "../ast_helpers.h"
 
+using namespace std;
+
 Expression *wrapAround(string name, map<string, string> *attrs,
                        ExpressionList *exp){
   Expression *opening = new HtmlTagExpression(name, attrs);

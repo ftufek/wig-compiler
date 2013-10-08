@@ -12,18 +12,16 @@
   extern bool success;
   extern int yylineno;
 
-  using namespace std;
-
   void yyerror(const char* str){
-    cout<<"Error happened on line "<<yylineno<<" : "<<str<<endl;
-    cout<<" before: "<<str<<endl;
+    std::cout<<"Error happened on line "<<yylineno<<" : "<<str<<std::endl;
+    std::cout<<" before: "<<yytext<<std::endl;
     success = false;
   }
 %}
 
 %union{
-  string *str;
-  map<string, string> *dict;
+  std::string *str;
+  std::map<std::string, std::string> *dict;
   Expression *exp;
   ExpressionList *listExp;
   Type type;

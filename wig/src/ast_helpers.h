@@ -3,13 +3,13 @@
 
 #include "ast.h"
 
-Expression *wrapAround(string name, map<string, string> *attrs,
+Expression *wrapAround(std::string name, std::map<std::string, std::string> *attrs,
                        ExpressionList *exp);
 Expression *wrapHtml(ExpressionList *exp);
-map<string, string> *emptyMap();
-map<string, string> *initMap(string key, string val);
-map<string, string> *mergeMap(map<string, string> *m1,
-                           map<string, string> *m2);
+std::map<std::string, std::string> *emptyMap();
+std::map<std::string, std::string> *initMap(std::string key, std::string val);
+std::map<std::string, std::string> *mergeMap(std::map<std::string, std::string> *m1,
+                           std::map<std::string, std::string> *m2);
 
 ExpressionList *initList(Expression *e);
 ExpressionList *addBack(ExpressionList *list, Expression *exp);
