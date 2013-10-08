@@ -73,8 +73,13 @@ STR				\"((\\\")|([^\"\n\t]))*\"
   "name" return tName;
   "type" return tType;
   "\"text\""|"\"radio\"" { yylval.str = new std::string(yytext);
-               return tInputType; }
+                           return tInputType; }
   ">" { BEGIN(HTML); return '>'; }
+    {IDAUX}* { /* this is for the case where the html attribute is like:
+                      size=2 border=2,
+                  integers are not recognized as ID... */
+               yylval.str = new std::string(yytext);
+               return tID; }
 }
 
 <HTMLCODE,GAPCODE,INITIAL,SERVICE>{

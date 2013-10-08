@@ -5,6 +5,7 @@
 #include <map>
 #include "ast.h"
 #include "ast_list.h"
+#include "ast_html.h"
 
 Expression *wrapAround(std::string name,
                        std::map<std::string, std::string> *attrs,
