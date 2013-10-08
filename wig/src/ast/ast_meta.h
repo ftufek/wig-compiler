@@ -4,13 +4,17 @@
 #include <string>
 #include "ast.h"
 
-class MetaTagExpression : public Expression {
+namespace ast {
+
+class MetaTag : public Base {
 public:
-  MetaTagExpression(std::string content_);
+  MetaTag(std::string content_);
   void PrettyPrint() override;
 
 protected:
   std::string content_;
 };
+
+}
 
 #endif // AST_META_H

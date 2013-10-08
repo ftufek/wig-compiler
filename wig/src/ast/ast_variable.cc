@@ -3,16 +3,18 @@
 
 using namespace std;
 
-VariableExpression::VariableExpression(string name,
-                   TypeExpression *type,
+namespace ast {
+
+Variable::Variable(string name,
+                   Type *type,
                    bool isConst,
-                   Expression *value):
+                   Base *value):
                    name_(name),
                    type_(type),
                    is_const_(isConst),
                    value_(value){}
 
-void VariableExpression::PrettyPrint(){
+void Variable::PrettyPrint(){
   if(is_const_){
     cout<<"const ";
   }
@@ -23,4 +25,6 @@ void VariableExpression::PrettyPrint(){
     value_->PrettyPrint();
   }
   cout<<";"<<endl;
+}
+
 }

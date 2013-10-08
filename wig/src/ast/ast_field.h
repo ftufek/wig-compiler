@@ -5,14 +5,18 @@
 #include "ast.h"
 #include "ast_type.h"
 
-class FieldExpression : public Expression {
+namespace ast{
+
+class Field : public Base {
 public:
-  FieldExpression(TypeExpression *type, std::string id);
+  Field(Type *type, std::string id);
   void PrettyPrint() override;
 
 protected:
-  TypeExpression *type;
+  Type *type;
   std::string id;
 };
+
+}
 
 #endif // AST_FIELD_H

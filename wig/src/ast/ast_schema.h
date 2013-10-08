@@ -5,15 +5,19 @@
 #include "ast.h"
 #include "ast_list.h"
 
-class SchemaExpression : public Expression {
+namespace ast {
+
+class Schema : public Base {
 public:
-  SchemaExpression(std::string id_,
-                   ExpressionList *fields_ = new ExpressionList());
+  Schema(std::string id_,
+         List *fields_ = new List());
   void PrettyPrint() override;
 
 protected:
   std::string id_;
-  ExpressionList *fields_;
+  List *fields_;
 };
+
+}
 
 #endif // AST_SCHEMA_H

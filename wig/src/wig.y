@@ -6,7 +6,7 @@
   #include "ast.h"
 
   extern "C" int yylex();
-  extern Expression *EXP;
+  extern ast::Base *EXP;
   extern char* yytext;
   extern bool success;
   extern int yylineno;
@@ -22,12 +22,12 @@
   std::string *str;
   std::map<std::string, std::string> *dict;
   std::list<std::string> *strList;
-  std::list<ArgumentExpression*> *argList;
-  Expression *exp;
-  ExpressionList *listExp;
-  TypeExpression *typeExp;
-  ArgumentExpression *argExp;
-  Type type;
+  std::list<ast::Argument*> *argList;
+  ast::Base *exp;
+  ast::List *listExp;
+  ast::Type *typeExp;
+  ast::Argument *argExp;
+  ast::kType type;
 }
 
 %token tSERVICE
@@ -73,11 +73,11 @@
 %%
 
 service: tSERVICE '{' htmls schemas nevariables functions '}'
-       { EXP = new ServiceExpression($3, $4, $6, $5); }
+       { EXP = new ast::Service($3, $4, $6, $5); }
      | tSERVICE '{' htmls schemas functions '}'
-       { EXP = new ServiceExpression($3, $4, $5); }
+       { EXP = new ast::Service($3, $4, $5); }
      | /* empty */
-       { EXP = new EmptyExpression(); }
+       { EXP = new ast::Empty(); }
 
 htmls : html
        { $$ = ast::initList($1); }
@@ -85,16 +85,16 @@ htmls : html
        { $$ = ast::addBack($1, $2); }
 
 html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
-       {$$ = new VariableExpression(*$3, new TypeExpression(Type::HTML), kConstVar,
-                                    ast::wrapHtml(new ExpressionList())); }
+       {$$ = new ast::Variable(*$3, new ast::Type(ast::kType::HTML), ast::kConstVar,
+                                    ast::wrapHtml(new ast::List())); }
     | tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
-       { $$ = new VariableExpression(*$3, 
-                                      new TypeExpression(Type::HTML),
-                                      kConstVar,
+       { $$ = new ast::Variable(*$3,
+                                      new ast::Type(ast::kType::HTML),
+                                      ast::kConstVar,
                                       ast::wrapHtml($6)); }
 
 nehtmlbodies: htmlbody
-            { ExpressionList *l = new ExpressionList();
+            { ast::List *l = new ast::List();
               l->getList()->push_front($1);
               $$ = l; }
             | nehtmlbodies htmlbody
@@ -102,21 +102,21 @@ nehtmlbodies: htmlbody
               $$ = $1; }
 
 htmlbody: '<' tID attributes '>' 
-        { $$ = new HtmlTagExpression(*$2, $3);}
+        { $$ = new ast::HtmlTag(*$2, $3);}
         | tTagClose tID '>' /* "</tID>" */
-        { $$ = new HtmlTagExpression(*$2, ast::emptyMap(), true); }
+        { $$ = new ast::HtmlTag(*$2, ast::emptyMap(), true); }
         | tGapOpen tID tGapClose
-        { $$ = new HtmlTagExpression(*$2, ast::emptyMap(), false, true); }
+        { $$ = new ast::HtmlTag(*$2, ast::emptyMap(), false, true); }
         | tWHATEVER
-        { $$ = new WhateverExpression(*$1); }
+        { $$ = new ast::Whatever(*$1); }
         | tMetaOpen tWHATEVER tMetaClose
-        { $$ = new MetaTagExpression(*$2); }
+        { $$ = new ast::MetaTag(*$2); }
         | '<' tInput inputattrs '>'
-        { $$ = new HtmlTagExpression("input", $3); }
+        { $$ = new ast::HtmlTag("input", $3); }
         | '<' tSelect inputattrs '>' nehtmlbodies tTagClose tSelect '>'
         { $$ = ast::wrapAround("select", $3, $5); }
         | '<' tSelect inputattrs '>' tTagClose tSelect '>'
-        { $$ = ast::wrapAround("select", $3, new ExpressionList()); }
+        { $$ = ast::wrapAround("select", $3, new ast::List()); }
 
 inputattrs: inputattr
         { $$ = $1; }
@@ -151,7 +151,7 @@ attr: tID
     { $$ = $1; }
 
 schemas: /* empty */
-       { $$ = new ExpressionList(); }
+       { $$ = new ast::List(); }
        | neschemas
        { $$ = $1; }
 
@@ -161,10 +161,10 @@ neschemas: schema
          { $$ = ast::addBack($1, $2); }
 
 schema: tSchema tID '{' fields '}'
-      { $$ = new SchemaExpression(*$2, $4); }
+      { $$ = new ast::Schema(*$2, $4); }
 
 fields: /* empty */
-      { $$ = new ExpressionList(); }
+      { $$ = new ast::List(); }
       | nefields
       { $$ = $1; }
 
@@ -174,21 +174,21 @@ nefields: field
         { $$ = ast::addBack($1, $2); }
 
 field: simpletype tID ';'
-     { $$ = new FieldExpression(new TypeExpression($1), *$2); }
+     { $$ = new ast::Field(new ast::Type($1), *$2); }
 
 simpletype: tInt
-           { $$ = Type::INT; }
+           { $$ = ast::kType::INT; }
            | tBool
-           { $$ = Type::BOOL; }
+           { $$ = ast::kType::BOOL; }
            | tString
-           { $$ = Type::STRING; }
+           { $$ = ast::kType::STRING; }
            | tVoid
-           { $$ = Type::VOID; }
+           { $$ = ast::kType::VOID; }
 
 type: simpletype
-    { $$ = new TypeExpression($1); }
+    { $$ = new ast::Type($1); }
     | tTuple tID
-    { $$ = new TypeExpression(Type::TUPLE, *$2); }
+    { $$ = new ast::Type(ast::kType::TUPLE, *$2); }
 
 nevariables: variable
     { $$ = $1; }
@@ -196,13 +196,13 @@ nevariables: variable
     { $$ = ast::addBack($1, $2); }
 
 variable: type identifiers ';'
-    { $$ = new ExpressionList();
+    { $$ = new ast::List();
       std::list<std::string>::const_iterator it;
       for(it = $2->begin(); it != $2->end(); ++it){
-        $$ = ast::addBack($$, new VariableExpression(*it,
+        $$ = ast::addBack($$, new ast::Variable(*it,
                          $1,
-                         kNoConstVar,
-                         kNoVal));
+                         ast::kNoConstVar,
+                         ast::kNoVal));
       }
      }
 
@@ -213,7 +213,7 @@ identifiers: tID
       $$ = $1; }
 
 functions: /* empty */
-    { $$ = ast::initList(new EmptyExpression()); }
+    { $$ = ast::initList(new ast::Empty()); }
     | nefunctions
     { $$ = $1; }
 
@@ -223,17 +223,17 @@ nefunctions: function
     { $$ = ast::addBack($1, $2); }
 
 function: type tID '(' arguments ')'
-    { $$ = new FunctionExpression($1, *$2, $4);}
+    { $$ = new ast::Function($1, *$2, $4);}
 
 arguments: /* empty */
-    { $$ = new std::list<ArgumentExpression*>; }
+    { $$ = new std::list<ast::Argument*>; }
     | nearguments
     { $$ = $1; }
 
 nearguments: argument
-    { $$ = new std::list<ArgumentExpression*>{$1}; }
+    { $$ = new std::list<ast::Argument*>{$1}; }
     | nearguments ',' argument
     { $1->push_back($3); $$ = $1; }
 
 argument: type tID
-    { $$ = new ArgumentExpression($1, *$2); }
+    { $$ = new ast::Argument($1, *$2); }

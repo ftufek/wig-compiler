@@ -1,33 +1,37 @@
 #include <iostream>
 #include "ast_type.h"
 
-TypeExpression::TypeExpression(Type type, std::string tupleID)
+namespace ast {
+
+Type::Type(kType type, std::string tupleID)
     :type_(type), tuple_id_(tupleID) {}
 
-void TypeExpression::PrettyPrint() {
+void Type::PrettyPrint() {
     switch(type_){
-    case Type::INT:
+    case kType::INT:
         std::cout<<"int";
         break;
 
-    case Type::BOOL:
+    case kType::BOOL:
         std::cout<<"bool";
         break;
 
-    case Type::STRING:
+    case kType::STRING:
         std::cout<<"string";
         break;
 
-    case Type::VOID:
+    case kType::VOID:
         std::cout<<"void";
         break;
 
-    case Type::TUPLE:
+    case kType::TUPLE:
         std::cout<<"tuple "<<tuple_id_;
         break;
 
-    case Type::HTML:
+    case kType::HTML:
         std::cout<<"html";
         break;
     }
+}
+
 }

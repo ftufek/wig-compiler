@@ -4,19 +4,23 @@
 #include <string>
 #include "ast.h"
 
-enum class Type{
+namespace ast {
+
+enum class kType{
   INT, BOOL, STRING, VOID, TUPLE, HTML
 };
 
-class TypeExpression : public Expression
+class Type : public Base
 {
 public:
-    TypeExpression(Type type_, std::string tuple_id_ = "");
+    Type(kType type_, std::string tuple_id_ = "");
     void PrettyPrint() override;
 
 protected:
-    Type type_;
+    kType type_;
     std::string tuple_id_;
 };
+
+}
 
 #endif // AST_TYPE_H

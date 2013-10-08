@@ -3,15 +3,21 @@
 
 extern int yylineno;
 
+namespace ast {
+
 /* The Base Interface for all AST classes */
-class Expression{
+class Base{
 public:
-  Expression();
-  virtual ~Expression();
+  Base();
+  virtual ~Base();
   virtual void PrettyPrint() = 0;
 
 protected:
   int at_line_;
 };
+
+}
+
+
 
 #endif // AST_H

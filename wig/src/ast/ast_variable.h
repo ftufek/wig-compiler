@@ -6,23 +6,27 @@
 #include "ast.h"
 #include "ast_type.h"
 
+namespace ast {
+
 const bool kConstVar = true;
 const bool kNoConstVar = false;
 const std::nullptr_t kNoVal = nullptr;
 
-class VariableExpression : public Expression {
+class Variable : public Base {
 public:
-  VariableExpression(std::string name_,
-                     TypeExpression *type_,
-                     bool is_const_,
-                     Expression *value_);
+  Variable(std::string name_,
+           Type *type_,
+           bool is_const_,
+           Base *value_);
   void PrettyPrint() override;
 
 protected:
   std::string name_;
-  TypeExpression *type_;
+  ast::Type *type_;
   bool is_const_;
-  Expression *value_;
+  ast::Base *value_;
 };
+
+}
 
 #endif // AST_VARIABLE_H

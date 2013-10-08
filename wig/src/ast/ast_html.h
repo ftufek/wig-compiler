@@ -5,9 +5,11 @@
 #include <map>
 #include "ast.h"
 
-class HtmlTagExpression : public Expression {
+namespace ast {
+
+class HtmlTag : public Base {
 public:
-  HtmlTagExpression(std::string id,
+  HtmlTag(std::string id,
                     std::map<std::string, std::string> *attrs =
                                          new std::map<std::string,std::string>,
                     bool is_closing_ = false,
@@ -20,5 +22,7 @@ protected:
   bool is_closing_;
   bool is_gap_;
 };
+
+}
 
 #endif // AST_HTML_H

@@ -2,10 +2,14 @@
 
 using namespace std;
 
-FieldExpression::FieldExpression(TypeExpression *type, string id)
+namespace ast {
+
+Field::Field(Type *type, string id)
   :type(type), id(id){}
 
-void FieldExpression::PrettyPrint(){
+void Field::PrettyPrint(){
   type->PrettyPrint();
   cout<<" "<<id<<";"<<endl;
+}
+
 }

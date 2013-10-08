@@ -4,10 +4,10 @@ using namespace std;
 
 namespace ast {
 
-Expression *wrapAround(string name, map<string, string> *attrs,
-                       ExpressionList *exp){
-  Expression *opening = new HtmlTagExpression(name, attrs);
-  Expression *closing = new HtmlTagExpression(name, 
+ast::Base *wrapAround(string name, map<string, string> *attrs,
+                       List *exp){
+  ast::Base *opening = new HtmlTag(name, attrs);
+  ast::Base *closing = new HtmlTag(name,
                                               emptyMap(),
                                               true);
   exp->getList()->push_front(opening);
@@ -16,7 +16,7 @@ Expression *wrapAround(string name, map<string, string> *attrs,
 }
 
 
-Expression *wrapHtml(ExpressionList *exp){
+ast::Base *wrapHtml(List *exp){
   return wrapAround("html", emptyMap(), exp);
 }
 
@@ -36,13 +36,13 @@ map<string, string> *mergeMap(map<string, string> *m1,
   return m1;
 }
 
-ExpressionList *initList(Expression *e){
-  ExpressionList *l = new ExpressionList();
+List *initList(ast::Base *e){
+  List *l = new List();
   l->getList()->push_front(e);
   return l;
 }
 
-ExpressionList *addBack(ExpressionList *list, Expression *exp){
+List *addBack(List *list, ast::Base *exp){
   list->getList()->push_back(exp);
   return list;
 }

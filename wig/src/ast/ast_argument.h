@@ -4,16 +4,20 @@
 #include "ast.h"
 #include "ast_type.h"
 
-class ArgumentExpression : public Expression
+namespace ast{
+
+class Argument : public Base
 {
 public:
-    ArgumentExpression(TypeExpression *type,
+    Argument(Type *type,
                        std::string id);
     void PrettyPrint() override;
 
 protected:
-    TypeExpression *type_;
+    Type *type_;
     std::string id_;
 };
+
+}
 
 #endif // AST_ARGUMENT_H

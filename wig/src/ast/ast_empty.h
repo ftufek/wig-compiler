@@ -3,10 +3,14 @@
 
 #include "ast.h"
 
-class EmptyExpression : public Expression {
+namespace ast {
+
+class Empty : public Base {
 public:
-  EmptyExpression();
+  Empty();
   void PrettyPrint() override;
 };
+
+}
 
 #endif // AST_EMPTY_H

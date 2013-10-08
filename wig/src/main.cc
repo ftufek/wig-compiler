@@ -5,7 +5,7 @@
 using namespace std;
 
 int yyparse();
-Expression *EXP;
+ast::Base *EXP;
 bool success = true;
 extern int yylineno;
 

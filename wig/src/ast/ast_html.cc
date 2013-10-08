@@ -3,11 +3,13 @@
 
 using namespace std;
 
-HtmlTagExpression::HtmlTagExpression
+namespace ast {
+
+HtmlTag::HtmlTag
     (string id, map<string, string> *attrs, bool isClosing, bool isGap)
     :id(id), attrs(attrs), is_closing_(isClosing), is_gap_(isGap) {}
 
-void HtmlTagExpression::PrettyPrint(){
+void HtmlTag::PrettyPrint(){
   if(is_closing_)
     std::cout<<"</";
   else if(is_gap_)
@@ -30,4 +32,6 @@ void HtmlTagExpression::PrettyPrint(){
     std::cout<<"]>";
   else
     std::cout<<">";
+}
+
 }

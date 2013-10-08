@@ -1,9 +1,13 @@
 #include <iostream>
 #include "ast_string.h"
 
-StringExpression::StringExpression(std::string content)
+namespace ast {
+
+String::String(std::string content)
   :content_(content){}
 
-void StringExpression::PrettyPrint(){
+void String::PrettyPrint(){
   std::cout<<"\""<<content_<<"\"";
+}
+
 }

@@ -1,11 +1,15 @@
 #include <iostream>
 #include "ast_meta.h"
 
-MetaTagExpression::MetaTagExpression(std::string content)
+namespace ast {
+
+MetaTag::MetaTag(std::string content)
   :content_(content){}
 
-void MetaTagExpression::PrettyPrint(){
+void MetaTag::PrettyPrint(){
   std::cout<<"<!-- ";
   std::cout<<content_;
   std::cout<<" -->";
+}
+
 }

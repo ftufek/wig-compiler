@@ -6,17 +6,21 @@
 #include "ast_type.h"
 #include "ast_argument.h"
 
-class FunctionExpression : public Expression{
+namespace ast {
+
+class Function : public Base{
 public:
-    FunctionExpression(TypeExpression *type,
+    Function(Type *type,
                        std::string id,
-                       std::list<ArgumentExpression *> *args);
+                       std::list<ast::Argument *> *args);
     void PrettyPrint() override;
 
 protected:
-    TypeExpression *type_;
+    Type *type_;
     std::string id_;
-    std::list<ArgumentExpression *> *args_;
+    std::list<ast::Argument *> *args_;
 };
+
+}
 
 #endif // AST_FUNCTION_H

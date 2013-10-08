@@ -4,13 +4,17 @@
 #include <string>
 #include "ast.h"
 
-class StringExpression : public Expression {
+namespace ast {
+
+class String : public Base {
 public:
-  StringExpression(std::string content_);
+  String(std::string content_);
   void PrettyPrint() override;
 
 protected:
   std::string content_;
 };
+
+}
 
 #endif // AST_STRING_H

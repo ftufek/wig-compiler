@@ -3,12 +3,14 @@
 
 using namespace std;
 
-FunctionExpression::FunctionExpression(TypeExpression *type,
+namespace ast {
+
+Function::Function(Type *type,
                                        std::string id,
-                                       std::list<ArgumentExpression *> *args)
+                                       std::list<ast::Argument *> *args)
     :type_(type), id_(id), args_(args){}
 
-void FunctionExpression::PrettyPrint(){
+void Function::PrettyPrint(){
     type_->PrettyPrint();
     cout<<" "<<id_<<"(";
     auto iter = args_->begin();
@@ -22,4 +24,6 @@ void FunctionExpression::PrettyPrint(){
     }
     cout<<") {"<<endl;
     cout<<"}"<<endl;
+}
+
 }

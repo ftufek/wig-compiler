@@ -4,19 +4,23 @@
 #include <iostream>
 #include "ast.h"
 
-class StmExpression : public Expression
+namespace ast {
+
+class Stm : public Base
 {
 public:
-    StmExpression();
+    Stm();
 };
 
-class EmptyStmExpression : public StmExpression
+class EmptyStm : public Stm
 {
 public:
-    EmptyStmExpression();
+    EmptyStm();
     void PrettyPrint() override{
         std::cout<<";"<<std::endl;
     }
 };
+
+}
 
 #endif // AST_STM_H

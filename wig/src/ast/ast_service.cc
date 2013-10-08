@@ -2,16 +2,14 @@
 
 using namespace std;
 
-ServiceExpression::ServiceExpression(ExpressionList *htmls,
-                                     ExpressionList *schemas,
-                                     ExpressionList *functions,
-                                     ExpressionList *globalVariables)
-                                    :htmls_(htmls),
-                                     schemas_(schemas),
-                                     functions_(functions),
-                                     global_variables_(globalVariables){}
+namespace ast {
 
-void ServiceExpression::PrettyPrint(){
+Service::Service(List *htmls, List *schemas, List *functions,
+                 List *globalVariables)
+                :htmls_(htmls), schemas_(schemas),functions_(functions),
+                 global_variables_(globalVariables){}
+
+void Service::PrettyPrint(){
   cout<<"service {"<<endl;
   htmls_->PrettyPrint();
   cout<<endl;
@@ -23,3 +21,4 @@ void ServiceExpression::PrettyPrint(){
   cout<<"}"<<endl;
 }
 
+}

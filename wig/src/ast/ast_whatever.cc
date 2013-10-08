@@ -1,9 +1,13 @@
 #include <iostream>
 #include "ast_whatever.h"
 
-WhateverExpression::WhateverExpression(std::string whatever)
+namespace ast {
+
+Whatever::Whatever(std::string whatever)
   :whatever_(whatever) {}
 
-void WhateverExpression::PrettyPrint(){
+void Whatever::PrettyPrint(){
   std::cout<<whatever_;
+}
+
 }

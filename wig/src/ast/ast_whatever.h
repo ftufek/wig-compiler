@@ -4,13 +4,17 @@
 #include <string>
 #include "ast.h"
 
-class WhateverExpression : public Expression {
+namespace ast {
+
+class Whatever : public Base {
 public:
-  WhateverExpression(std::string whatever_);
+  Whatever(std::string whatever_);
   void PrettyPrint() override;
 
 protected:
   std::string whatever_;
 };
+
+}
 
 #endif // AST_WHATEVER_H

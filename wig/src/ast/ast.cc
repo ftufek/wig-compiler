@@ -1,7 +1,7 @@
 #include "ast.h"
 
-Expression::Expression() :at_line_(yylineno){}
+namespace ast{
+Base::Base() :at_line_(yylineno){}
 
-Expression::~Expression(){}
-
-
+Base::~Base(){}
+}

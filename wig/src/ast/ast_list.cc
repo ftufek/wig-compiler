@@ -1,13 +1,17 @@
 #include "ast_list.h"
 
-ExpressionList::ExpressionList(std::list<Expression *> *exps):exps_(exps){}
+namespace ast {
 
-void ExpressionList::PrettyPrint(){
+List::List(std::list<Base *> *exps):exps_(exps){}
+
+void List::PrettyPrint(){
   for(auto const &exp : *exps_){
       exp->PrettyPrint();
   }
 }
 
-std::list<Expression *> *ExpressionList::getList(){
+std::list<Base *> *List::getList(){
   return exps_;
+}
+
 }

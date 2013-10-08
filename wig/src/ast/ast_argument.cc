@@ -1,11 +1,15 @@
 #include <iostream>
 #include "ast_argument.h"
 
-ArgumentExpression::ArgumentExpression(TypeExpression *type,
+namespace ast {
+
+Argument::Argument(Type *type,
                                        std::string id)
     :type_(type), id_(id){}
 
-void ArgumentExpression::PrettyPrint(){
+void Argument::PrettyPrint(){
     type_->PrettyPrint();
     std::cout<<" "<<id_;
+}
+
 }

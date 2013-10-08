@@ -4,14 +4,18 @@
 #include <list>
 #include "ast.h"
 
-class ExpressionList : public Expression{
+namespace ast {
+
+class List : public Base{
 public:
-  ExpressionList(std::list<Expression *> *exps_ = new std::list<Expression *>);
+  List(std::list<Base *> *exps_ = new std::list<Base *>);
   void PrettyPrint() override;
-  std::list<Expression *> *getList();
+  std::list<Base *> *getList();
 
 protected:
-  std::list<Expression *> *exps_;
+  std::list<Base *> *exps_;
 };
+
+}
 
 #endif // AST_LIST_H

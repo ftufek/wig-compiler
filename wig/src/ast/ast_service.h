@@ -4,19 +4,23 @@
 #include "ast.h"
 #include "ast_list.h"
 
-class ServiceExpression : public Expression {
+namespace ast {
+
+class Service : public Base {
 public:
-  ServiceExpression(ExpressionList *htmls_,
-                    ExpressionList *schemas_,
-                    ExpressionList *functions_,
-                    ExpressionList *global_variables_ = new ExpressionList());
+  Service(List *htmls_,
+            List *schemas_,
+            List *functions_,
+            List *global_variables_ = new List());
   void PrettyPrint() override;
 
 protected:
-  ExpressionList *htmls_;
-  ExpressionList *schemas_;
-  ExpressionList *functions_;
-  ExpressionList *global_variables_;
+  List *htmls_;
+  List *schemas_;
+  List *functions_;
+  List *global_variables_;
 };
+
+}
 
 #endif // AST_SERVICE_H
