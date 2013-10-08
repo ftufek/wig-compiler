@@ -3,8 +3,8 @@
 ExpressionList::ExpressionList(std::list<Expression *> *exps):exps_(exps){}
 
 void ExpressionList::PrettyPrint(){
-  for(auto iterator = exps_->begin(); iterator != exps_->end(); ++iterator){
-    (*iterator)->PrettyPrint();
+  for(auto const &exp : *exps_){
+      exp->PrettyPrint();
   }
 }
 

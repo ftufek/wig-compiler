@@ -22,9 +22,11 @@
   std::string *str;
   std::map<std::string, std::string> *dict;
   std::list<std::string> *strList;
+  std::list<ArgumentExpression*> *argList;
   Expression *exp;
   ExpressionList *listExp;
   TypeExpression *typeExp;
+  ArgumentExpression *argExp;
   Type type;
 }
 
@@ -56,22 +58,24 @@
 %token tVoid
 %token tTuple
 
-%type <exp> service html htmlbody schema field
+%type <exp> service html htmlbody schema field function
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
-%type <listExp> variable
+%type <listExp> variable functions nefunctions
 %type <typeExp> type
 %type <dict> attributes neattributes attribute inputattr inputattrs
 %type <str> attr
 %type <type> simpletype
 %type <strList> identifiers
+%type <argList> arguments nearguments
+%type <argExp> argument
 
 %start service
 %%
 
-service: tSERVICE '{' htmls schemas nevariables '}'
+service: tSERVICE '{' htmls schemas nevariables functions '}'
+       { EXP = new ServiceExpression($3, $4, $6, $5); }
+     | tSERVICE '{' htmls schemas functions '}'
        { EXP = new ServiceExpression($3, $4, $5); }
-     | tSERVICE '{' htmls schemas '}'
-       { EXP = new ServiceExpression($3, $4); }
      | /* empty */
        { EXP = new EmptyExpression(); }
 
@@ -203,8 +207,33 @@ variable: type identifiers ';'
      }
 
 identifiers: tID
-    { $$ = new std::list<std::string>();
-      $$->push_front(*$1); }
+    { $$ = new std::list<std::string>{*$1}; }
     | identifiers tID
     { $1->push_back(*$2);
       $$ = $1; }
+
+functions: /* empty */
+    { $$ = initList(new EmptyExpression()); }
+    | nefunctions
+    { $$ = $1; }
+
+nefunctions: function
+    { $$ = initList($1); }
+    | nefunctions function
+    { $$ = addBack($1, $2); }
+
+function: type tID '(' arguments ')'
+    { $$ = new FunctionExpression($1, *$2, $4);}
+
+arguments: /* empty */
+    { $$ = new std::list<ArgumentExpression*>; }
+    | nearguments
+    { $$ = $1; }
+
+nearguments: argument
+    { $$ = new std::list<ArgumentExpression*>{$1}; }
+    | nearguments ',' argument
+    { $1->push_back($3); $$ = $1; }
+
+argument: type tID
+    { $$ = new ArgumentExpression($1, *$2); }

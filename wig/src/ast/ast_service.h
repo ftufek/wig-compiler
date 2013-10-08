@@ -8,12 +8,14 @@ class ServiceExpression : public Expression {
 public:
   ServiceExpression(ExpressionList *htmls_,
                     ExpressionList *schemas_,
+                    ExpressionList *functions_,
                     ExpressionList *global_variables_ = new ExpressionList());
   void PrettyPrint() override;
 
 protected:
   ExpressionList *htmls_;
   ExpressionList *schemas_;
+  ExpressionList *functions_;
   ExpressionList *global_variables_;
 };
 

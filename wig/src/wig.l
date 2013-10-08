@@ -23,6 +23,9 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 
 "{" return '{';
 "}" return '}';
+"(" return '(';
+")" return ')';
+"," return ',';
 
 <INITIAL>{
   "service" { BEGIN(SERVICE); return tSERVICE; }
