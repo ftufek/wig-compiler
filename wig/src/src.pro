@@ -17,6 +17,7 @@ SOURCES += \
     ast/ast_field.cc \
     ast/ast_empty.cc \
     ast/ast.cc \
+    ast/ast_type.cc
 
 HEADERS += \
     ast.h \
