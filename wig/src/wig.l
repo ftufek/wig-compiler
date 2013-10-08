@@ -13,7 +13,7 @@ WHATEVER [^<>]*
 STR				\"((\\\")|([^\"\n\t]))*\"
 
 %s SERVICE
-%x HTML HTMLCODE METACODE
+%x HTML HTMLCODE METACODE GAPCODE
 
 %option noyywrap
 %option never-interactive
@@ -44,7 +44,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 <HTML>{
   "<!--" { BEGIN(METACODE); return tMetaOpen; }
   "</" { BEGIN(HTMLCODE); return tTagClose; }
-  "<[" { BEGIN(HTMLCODE); return tGapOpen; }
+  "<[" { BEGIN(GAPCODE); return tGapOpen; }
   "<" { BEGIN(HTMLCODE); return '<'; }
   "</html>" { BEGIN(SERVICE); return tHtmlClose; }
 }
@@ -61,6 +61,10 @@ STR				\"((\\\")|([^\"\n\t]))*\"
                return tWHATEVER; }
 }
 
+<GAPCODE>{
+    "]>" { BEGIN(HTML); return tGapClose;}
+}
+
 <HTMLCODE>{
   "=" return '=';
   "input" return tInput;
@@ -70,10 +74,9 @@ STR				\"((\\\")|([^\"\n\t]))*\"
   "\"text\""|"\"radio\"" { yylval.str = new std::string(yytext);
                return tInputType; }
   ">" { BEGIN(HTML); return '>'; }
-  "]>" { BEGIN(HTML); return tGapClose;}
 }
 
-<HTMLCODE,INITIAL,SERVICE>{
+<HTMLCODE,GAPCODE,INITIAL,SERVICE>{
   {ID} { yylval.str = new std::string(yytext);
          return tID; }
   {STR} { yylval.str = new std::string(yytext);
