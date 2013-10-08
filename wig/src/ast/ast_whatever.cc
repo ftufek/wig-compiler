@@ -3,11 +3,10 @@
 
 namespace ast {
 
-Whatever::Whatever(std::string whatever)
-  :whatever_(whatever) {}
+Whatever::Whatever(std::string whatever) :whatever_(whatever) {}
 
 void Whatever::PrettyPrint(){
-  std::cout<<whatever_;
+    std::cout<<whatever_;
 }
 
 }

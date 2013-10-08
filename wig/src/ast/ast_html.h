@@ -9,18 +9,18 @@ namespace ast {
 
 class HtmlTag : public Base {
 public:
-  HtmlTag(std::string id,
-                    std::map<std::string, std::string> *attrs =
-                                         new std::map<std::string,std::string>,
-                    bool is_closing_ = false,
-                    bool is_gap_ = false);
-  void PrettyPrint() override;
+    HtmlTag(std::string id,
+            std::map<std::string, std::string> *attrs =
+            new std::map<std::string,std::string>,
+            bool is_closing_ = false,
+            bool is_gap_ = false);
+    void PrettyPrint() override;
 
 protected:
-  std::string id;
-  std::map<std::string, std::string> *attrs;
-  bool is_closing_;
-  bool is_gap_;
+    std::string id;
+    std::map<std::string, std::string> *attrs;
+    bool is_closing_;
+    bool is_gap_;
 };
 
 }

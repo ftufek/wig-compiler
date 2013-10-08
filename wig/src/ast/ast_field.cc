@@ -5,11 +5,11 @@ using namespace std;
 namespace ast {
 
 Field::Field(Type *type, string id)
-  :type(type), id(id){}
+    :type(type), id(id){}
 
 void Field::PrettyPrint(){
-  type->PrettyPrint();
-  cout<<" "<<id<<";"<<endl;
+    type->PrettyPrint();
+    cout<<" "<<id<<";"<<endl;
 }
 
 }

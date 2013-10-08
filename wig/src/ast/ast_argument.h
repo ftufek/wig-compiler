@@ -10,7 +10,7 @@ class Argument : public Base
 {
 public:
     Argument(Type *type,
-                       std::string id);
+             std::string id);
     void PrettyPrint() override;
 
 protected:

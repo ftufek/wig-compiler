@@ -8,12 +8,12 @@ namespace ast {
 
 class List : public Base{
 public:
-  List(std::list<Base *> *exps_ = new std::list<Base *>);
-  void PrettyPrint() override;
-  std::list<Base *> *getList();
+    List(std::list<Base *> *exps_ = new std::list<Base *>);
+    void PrettyPrint() override;
+    std::list<Base *> *getList();
 
 protected:
-  std::list<Base *> *exps_;
+    std::list<Base *> *exps_;
 };
 
 }

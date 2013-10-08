@@ -8,11 +8,11 @@ namespace ast {
 
 class Whatever : public Base {
 public:
-  Whatever(std::string whatever_);
-  void PrettyPrint() override;
+    Whatever(std::string whatever_);
+    void PrettyPrint() override;
 
 protected:
-  std::string whatever_;
+    std::string whatever_;
 };
 
 }

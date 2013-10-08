@@ -7,7 +7,7 @@
 namespace ast {
 
 enum class kType{
-  INT, BOOL, STRING, VOID, TUPLE, HTML
+    INT, BOOL, STRING, VOID, TUPLE, HTML
 };
 
 class Type : public Base

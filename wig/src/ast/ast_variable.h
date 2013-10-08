@@ -14,17 +14,17 @@ const std::nullptr_t kNoVal = nullptr;
 
 class Variable : public Base {
 public:
-  Variable(std::string name_,
-           Type *type_,
-           bool is_const_,
-           Base *value_);
-  void PrettyPrint() override;
+    Variable(std::string name_,
+             Type *type_,
+             bool is_const_,
+             Base *value_);
+    void PrettyPrint() override;
 
 protected:
-  std::string name_;
-  ast::Type *type_;
-  bool is_const_;
-  ast::Base *value_;
+    std::string name_;
+    Type *type_;
+    bool is_const_;
+    Base *value_;
 };
 
 }

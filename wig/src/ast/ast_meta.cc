@@ -4,12 +4,12 @@
 namespace ast {
 
 MetaTag::MetaTag(std::string content)
-  :content_(content){}
+    :content_(content){}
 
 void MetaTag::PrettyPrint(){
-  std::cout<<"<!-- ";
-  std::cout<<content_;
-  std::cout<<" -->";
+    std::cout<<"<!-- ";
+    std::cout<<content_;
+    std::cout<<" -->";
 }
 
 }

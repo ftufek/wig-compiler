@@ -4,10 +4,10 @@
 namespace ast {
 
 String::String(std::string content)
-  :content_(content){}
+    :content_(content){}
 
 void String::PrettyPrint(){
-  std::cout<<"\""<<content_<<"\"";
+    std::cout<<"\""<<content_<<"\"";
 }
 
 }

@@ -1,8 +1,8 @@
 %{
-  extern "C" int yylex();
-  #include "ast.h"
-  #include <string>
-  #include "y.tab.h"
+extern "C" int yylex();
+#include "ast.h"
+#include <string>
+#include "y.tab.h"
 %}
 
 ALFA [a-zA-Z]
@@ -28,41 +28,41 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 "," return ',';
 
 <INITIAL>{
-  "service" { BEGIN(SERVICE); return tSERVICE; }
+    "service" { BEGIN(SERVICE); return tSERVICE; }
 }
 
 <SERVICE>{
-  "const" return tCONST;
-  "html" return ttHTML;
-  "=" return '=';
-  ";" return ';';
-  "<html>" { BEGIN(HTML); return tHtmlOpen; }
-  "schema" return tSchema;
-  "int" return tInt;
-  "bool" return tBool;
-  "string" return tString;
-  "void" return tVoid;
-  "tuple" return tTuple;
+    "const" return tCONST;
+    "html" return ttHTML;
+    "=" return '=';
+    ";" return ';';
+    "<html>" { BEGIN(HTML); return tHtmlOpen; }
+    "schema" return tSchema;
+    "int" return tInt;
+    "bool" return tBool;
+    "string" return tString;
+    "void" return tVoid;
+    "tuple" return tTuple;
 }
 
 <HTML>{
-  "<!--" { BEGIN(METACODE); return tMetaOpen; }
-  "</" { BEGIN(HTMLCODE); return tTagClose; }
-  "<[" { BEGIN(GAPCODE); return tGapOpen; }
-  "<" { BEGIN(HTMLCODE); return '<'; }
-  "</html>" { BEGIN(SERVICE); return tHtmlClose; }
+    "<!--" { BEGIN(METACODE); return tMetaOpen; }
+    "</" { BEGIN(HTMLCODE); return tTagClose; }
+    "<[" { BEGIN(GAPCODE); return tGapOpen; }
+    "<" { BEGIN(HTMLCODE); return '<'; }
+    "</html>" { BEGIN(SERVICE); return tHtmlClose; }
 }
 
 <METACODE>{
-  "-->" { BEGIN(HTML); return tMetaClose; }
-  "-" return '-';
-  [^->]* {yylval.str = new std::string(yytext);
-          return tWHATEVER; }
+    "-->" { BEGIN(HTML); return tMetaClose; }
+    "-" return '-';
+    [^->]* {yylval.str = new std::string(yytext);
+        return tWHATEVER; }
 }
 
 <HTML>{
-  {WHATEVER} { yylval.str = new std::string(yytext);
-               return tWHATEVER; }
+    {WHATEVER} { yylval.str = new std::string(yytext);
+        return tWHATEVER; }
 }
 
 <GAPCODE>{
@@ -70,26 +70,26 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 }
 
 <HTMLCODE>{
-  "=" return '=';
-  "input" return tInput;
-  "select" return tSelect;
-  "name" return tName;
-  "type" return tType;
-  "\"text\""|"\"radio\"" { yylval.str = new std::string(yytext);
-                           return tInputType; }
-  ">" { BEGIN(HTML); return '>'; }
+    "=" return '=';
+    "input" return tInput;
+    "select" return tSelect;
+    "name" return tName;
+    "type" return tType;
+    "\"text\""|"\"radio\"" { yylval.str = new std::string(yytext);
+        return tInputType; }
+    ">" { BEGIN(HTML); return '>'; }
     {IDAUX}* { /* this is for the case where the html attribute is like:
                       size=2 border=2,
                   integers are not recognized as ID... */
-               yylval.str = new std::string(yytext);
-               return tID; }
+        yylval.str = new std::string(yytext);
+        return tID; }
 }
 
 <HTMLCODE,GAPCODE,INITIAL,SERVICE>{
-  {ID} { yylval.str = new std::string(yytext);
-         return tID; }
-  {STR} { yylval.str = new std::string(yytext);
-         return tSTR; }
-  \n /* do nothing */
-  . /* do nothing for now*/
+    {ID} { yylval.str = new std::string(yytext);
+        return tID; }
+    {STR} { yylval.str = new std::string(yytext);
+        return tSTR; }
+    \n /* do nothing */
+             . /* do nothing for now*/
 }

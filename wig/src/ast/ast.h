@@ -8,12 +8,12 @@ namespace ast {
 /* The Base Interface for all AST classes */
 class Base{
 public:
-  Base();
-  virtual ~Base();
-  virtual void PrettyPrint() = 0;
+    Base();
+    virtual ~Base();
+    virtual void PrettyPrint() = 0;
 
 protected:
-  int at_line_;
+    int at_line_;
 };
 
 }

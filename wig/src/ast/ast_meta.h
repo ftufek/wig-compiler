@@ -8,11 +8,11 @@ namespace ast {
 
 class MetaTag : public Base {
 public:
-  MetaTag(std::string content_);
-  void PrettyPrint() override;
+    MetaTag(std::string content_);
+    void PrettyPrint() override;
 
 protected:
-  std::string content_;
+    std::string content_;
 };
 
 }

@@ -11,14 +11,14 @@ namespace ast {
 class Function : public Base{
 public:
     Function(Type *type,
-                       std::string id,
-                       std::list<ast::Argument *> *args);
+             std::string id,
+             std::list<Argument *> *args);
     void PrettyPrint() override;
 
 protected:
     Type *type_;
     std::string id_;
-    std::list<ast::Argument *> *args_;
+    std::list<Argument *> *args_;
 };
 
 }

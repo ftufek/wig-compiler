@@ -9,12 +9,12 @@ namespace ast{
 
 class Field : public Base {
 public:
-  Field(Type *type, std::string id);
-  void PrettyPrint() override;
+    Field(Type *type, std::string id);
+    void PrettyPrint() override;
 
 protected:
-  Type *type;
-  std::string id;
+    Type *type;
+    std::string id;
 };
 
 }

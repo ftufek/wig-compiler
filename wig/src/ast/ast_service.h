@@ -8,17 +8,17 @@ namespace ast {
 
 class Service : public Base {
 public:
-  Service(List *htmls_,
+    Service(List *htmls_,
             List *schemas_,
             List *functions_,
             List *global_variables_ = new List());
-  void PrettyPrint() override;
+    void PrettyPrint() override;
 
 protected:
-  List *htmls_;
-  List *schemas_;
-  List *functions_;
-  List *global_variables_;
+    List *htmls_;
+    List *schemas_;
+    List *functions_;
+    List *global_variables_;
 };
 
 }

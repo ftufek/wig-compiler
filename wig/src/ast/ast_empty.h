@@ -7,8 +7,8 @@ namespace ast {
 
 class Empty : public Base {
 public:
-  Empty();
-  void PrettyPrint() override;
+    Empty();
+    void PrettyPrint() override;
 };
 
 }

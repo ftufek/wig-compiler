@@ -16,8 +16,8 @@ Base *wrapHtml(List *exp);
 std::map<std::string, std::string> *emptyMap();
 std::map<std::string, std::string> *initMap(std::string key, std::string val);
 std::map<std::string, std::string> *mergeMap(
-                           std::map<std::string, std::string> *m1,
-                           std::map<std::string, std::string> *m2);
+        std::map<std::string, std::string> *m1,
+        std::map<std::string, std::string> *m2);
 
 List *initList(Base *e);
 List *addBack(List *list, Base *exp);
