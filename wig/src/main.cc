@@ -12,6 +12,6 @@ extern int yylineno;
 int main(void){
   yyparse();
   if(success){
-    EXP->prettyPrint();
+    EXP->PrettyPrint();
   }
 }

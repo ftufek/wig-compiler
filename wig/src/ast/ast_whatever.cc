@@ -1,8 +1,9 @@
-#include "../ast.h"
+#include <iostream>
+#include "ast_whatever.h"
 
 WhateverExpression::WhateverExpression(std::string whatever)
-  :whatever(whatever) {}
+  :whatever_(whatever) {}
 
-void WhateverExpression::prettyPrint(){
-  std::cout<<whatever;
+void WhateverExpression::PrettyPrint(){
+  std::cout<<whatever_;
 }

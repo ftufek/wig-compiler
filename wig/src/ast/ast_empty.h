@@ -6,7 +6,7 @@
 class EmptyExpression : public Expression {
 public:
   EmptyExpression();
-  void prettyPrint();
+  void PrettyPrint();
 };
 
 #endif // AST_EMPTY_H

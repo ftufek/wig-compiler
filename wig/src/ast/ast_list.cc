@@ -1,14 +1,13 @@
-#include "../ast.h"
+#include "ast_list.h"
 
-ExpressionList::ExpressionList(std::list<Expression *> *exps):exps(exps){}
+ExpressionList::ExpressionList(std::list<Expression *> *exps):exps_(exps){}
 
-void ExpressionList::prettyPrint(){
-  std::list<Expression *>::const_iterator iterator;
-  for(iterator = exps->begin(); iterator != exps->end(); ++iterator){
-    (*iterator)->prettyPrint();
+void ExpressionList::PrettyPrint(){
+  for(auto iterator = exps_->begin(); iterator != exps_->end(); ++iterator){
+    (*iterator)->PrettyPrint();
   }
 }
 
 std::list<Expression *> *ExpressionList::getList(){
-  return exps;
+  return exps_;
 }

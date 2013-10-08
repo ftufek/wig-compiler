@@ -1,10 +1,11 @@
-#include "../ast.h"
+#include <iostream>
+#include "ast_schema.h"
 
 SchemaExpression::SchemaExpression(std::string id, ExpressionList *fields)
-  :id(id), fields(fields){}
+  :id_(id), fields_(fields){}
 
-void SchemaExpression::prettyPrint(){
-  std::cout<<"schema "<<id<<" {"<<std::endl;
-  fields->prettyPrint();
+void SchemaExpression::PrettyPrint(){
+  std::cout<<"schema "<<id_<<" {"<<std::endl;
+  fields_->PrettyPrint();
   std::cout<<"}"<<std::endl;
 }

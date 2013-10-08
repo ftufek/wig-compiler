@@ -8,7 +8,7 @@ class Expression{
 public:
   Expression();
   virtual ~Expression();
-  virtual void prettyPrint() = 0;
+  virtual void PrettyPrint() = 0;
 
 protected:
   int at_line_;

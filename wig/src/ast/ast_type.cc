@@ -2,10 +2,10 @@
 #include "ast_type.h"
 
 TypeExpression::TypeExpression(Type type, std::string tupleID)
-    :type(type), tupleID(tupleID) {}
+    :type_(type), tuple_id_(tupleID) {}
 
-void TypeExpression::prettyPrint() {
-    switch(type){
+void TypeExpression::PrettyPrint() {
+    switch(type_){
     case Type::INT:
         std::cout<<"int";
         break;
@@ -23,7 +23,7 @@ void TypeExpression::prettyPrint() {
         break;
 
     case Type::TUPLE:
-        std::cout<<"tuple "<<tupleID;
+        std::cout<<"tuple "<<tuple_id_;
         break;
 
     case Type::HTML:

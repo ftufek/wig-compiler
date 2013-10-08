@@ -5,7 +5,7 @@ using namespace std;
 FieldExpression::FieldExpression(TypeExpression *type, string id)
   :type(type), id(id){}
 
-void FieldExpression::prettyPrint(){
-  type->prettyPrint();
+void FieldExpression::PrettyPrint(){
+  type->PrettyPrint();
   cout<<" "<<id<<";"<<endl;
 }

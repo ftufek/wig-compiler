@@ -1,13 +1,16 @@
-#include "../ast.h"
+#include <iostream>
+#include "ast_html.h"
+
+using namespace std;
 
 HtmlTagExpression::HtmlTagExpression
-    (std::string id, std::map<std::string, std::string> *attrs, bool isClosing, bool isGap)
-    :id(id), attrs(attrs), isClosing(isClosing), isGap(isGap) {}
+    (string id, map<string, string> *attrs, bool isClosing, bool isGap)
+    :id(id), attrs(attrs), is_closing_(isClosing), is_gap_(isGap) {}
 
-void HtmlTagExpression::prettyPrint(){
-  if(isClosing)
+void HtmlTagExpression::PrettyPrint(){
+  if(is_closing_)
     std::cout<<"</";
-  else if(isGap)
+  else if(is_gap_)
     std::cout<<"<[";
   else
     std::cout<<"<";
@@ -23,7 +26,7 @@ void HtmlTagExpression::prettyPrint(){
     }
   }
 
-  if(isGap)
+  if(is_gap_)
     std::cout<<"]>";
   else
     std::cout<<">";

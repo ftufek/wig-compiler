@@ -1,4 +1,5 @@
-#include "../ast.h"
+#include <iostream>
+#include "ast_variable.h"
 
 using namespace std;
 
@@ -6,20 +7,20 @@ VariableExpression::VariableExpression(string name,
                    TypeExpression *type,
                    bool isConst,
                    Expression *value):
-                   name(name), 
-                   type(type), 
-                   isConst(isConst),
-                   value(value){}
+                   name_(name),
+                   type_(type),
+                   is_const_(isConst),
+                   value_(value){}
 
-void VariableExpression::prettyPrint(){
-  if(isConst){
+void VariableExpression::PrettyPrint(){
+  if(is_const_){
     cout<<"const ";
   }
-  type->prettyPrint();
-  cout<<" "<<name;
-  if(value){
+  type_->PrettyPrint();
+  cout<<" "<<name_;
+  if(value_){
     cout<<" = ";
-    value->prettyPrint();
+    value_->PrettyPrint();
   }
   cout<<";"<<endl;
 }

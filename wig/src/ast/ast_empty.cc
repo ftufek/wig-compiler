@@ -1,4 +1,4 @@
 #include "ast_empty.h"
 
 EmptyExpression::EmptyExpression (){}
-void EmptyExpression::prettyPrint (){}
+void EmptyExpression::PrettyPrint (){}

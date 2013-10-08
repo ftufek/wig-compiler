@@ -8,16 +8,17 @@
 class HtmlTagExpression : public Expression {
 public:
   HtmlTagExpression(std::string id,
-                    std::map<std::string, std::string> *attrs = new std::map<std::string,std::string>,
-                    bool isClosing = false,
-                    bool isGap = false);
-  void prettyPrint();
+                    std::map<std::string, std::string> *attrs =
+                                         new std::map<std::string,std::string>,
+                    bool is_closing_ = false,
+                    bool is_gap_ = false);
+  void PrettyPrint();
 
 protected:
   std::string id;
   std::map<std::string, std::string> *attrs;
-  bool isClosing;
-  bool isGap;
+  bool is_closing_;
+  bool is_gap_;
 };
 
 #endif // AST_HTML_H

@@ -5,15 +5,15 @@ using namespace std;
 ServiceExpression::ServiceExpression(ExpressionList *htmls,
                                      ExpressionList *schemas,
                                      ExpressionList *globalVariables)
-    :htmls(htmls), schemas(schemas), globalVariables(globalVariables){}
+    :htmls_(htmls), schemas_(schemas), global_variables_(globalVariables){}
 
-void ServiceExpression::prettyPrint(){
+void ServiceExpression::PrettyPrint(){
   cout<<"service {"<<endl;
-  htmls->prettyPrint();
+  htmls_->PrettyPrint();
   cout<<endl;
-  schemas->prettyPrint();
+  schemas_->PrettyPrint();
   cout<<endl;
-  globalVariables->prettyPrint();
+  global_variables_->PrettyPrint();
   cout<<"}"<<endl;
 }
 
