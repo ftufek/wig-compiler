@@ -4,7 +4,6 @@
   #include <list>
   #include <map>
   #include "ast.h"
-  #include "ast_helpers.h"
 
   extern "C" int yylex();
   extern Expression *EXP;

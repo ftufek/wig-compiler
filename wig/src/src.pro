@@ -19,7 +19,6 @@ SOURCES += \
     ast/ast.cc \
 
 HEADERS += \
-    ast_helpers.h \
     ast.h \
     ast/ast.h \
     ast/ast_empty.h \
@@ -31,7 +30,8 @@ HEADERS += \
     ast/ast_string.h \
     ast/ast_whatever.h \
     ast/ast_schema.h \
-    ast/ast_field.h
+    ast/ast_field.h \
+    ast/ast_helpers.h
 
 OTHER_FILES += wig.l \
     wig.y

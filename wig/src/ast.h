@@ -17,5 +17,6 @@ extern int yylineno;
 #include "ast/ast_whatever.h"
 #include "ast/ast_schema.h"
 #include "ast/ast_field.h"
+#include "ast/ast_helpers.h"
 
 #endif

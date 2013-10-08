@@ -1,7 +1,7 @@
-#ifndef __AST_HELPERS_H
-#define __AST_HELPERS_H
+#ifndef AST_HELPERS_H
+#define AST_HELPERS_H
 
-#include "ast.h"
+#include "../ast.h"
 
 Expression *wrapAround(std::string name, std::map<std::string, std::string> *attrs,
                        ExpressionList *exp);
@@ -13,4 +13,5 @@ std::map<std::string, std::string> *mergeMap(std::map<std::string, std::string> 
 
 ExpressionList *initList(Expression *e);
 ExpressionList *addBack(ExpressionList *list, Expression *exp);
-#endif
+
+#endif // AST_HELPERS_H
