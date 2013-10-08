@@ -3,13 +3,7 @@
 
 #include <string>
 
-enum Type{
-  INT, BOOL, STRING, VOID
-};
-
-std::string typeToStr(Type type);
-
-/* EXPRESSION AST CLASSES */
+/* The Base Interface for all AST classes */
 class Expression{
 public:
   Expression();

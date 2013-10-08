@@ -31,7 +31,8 @@ HEADERS += \
     ast/ast_whatever.h \
     ast/ast_schema.h \
     ast/ast_field.h \
-    ast/ast_helpers.h
+    ast/ast_helpers.h \
+    ast/ast_type.h
 
 OTHER_FILES += wig.l \
     wig.y

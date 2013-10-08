@@ -7,6 +7,7 @@ extern int yylineno;
 #include <map>
 #include <iostream>
 #include "ast/ast.h"
+#include "ast/ast_type.h"
 #include "ast/ast_empty.h"
 #include "ast/ast_list.h"
 #include "ast/ast_service.h"

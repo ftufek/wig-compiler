@@ -1,13 +1,15 @@
 #ifndef AST_FIELD_H
 #define AST_FIELD_H
 
+#include "ast_type.h"
+
 class FieldExpression : public Expression {
 public:
-  FieldExpression(Type type, std::string id);
+  FieldExpression(TypeExpression *type, std::string id);
   void prettyPrint();
 
 protected:
-  Type type;
+  TypeExpression *type;
   std::string id;
 };
 

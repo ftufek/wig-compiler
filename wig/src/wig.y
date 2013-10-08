@@ -161,7 +161,7 @@ nefields: field
         { $$ = addBack($1, $2); }
 
 field: simpletype tID ';'
-     { $$ = new FieldExpression($1, *$2); }
+     { $$ = new FieldExpression(new TypeExpression($1), *$2); }
 
 simpletype: tInt
            { $$ = INT; }
