@@ -80,18 +80,18 @@ service: tSERVICE '{' htmls schemas nevariables functions '}'
        { EXP = new EmptyExpression(); }
 
 htmls : html
-       { $$ = initList($1); }
+       { $$ = ast::initList($1); }
       | htmls html
-       { $$ = addBack($1, $2); }
+       { $$ = ast::addBack($1, $2); }
 
 html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
        {$$ = new VariableExpression(*$3, new TypeExpression(Type::HTML), kConstVar,
-                                    wrapHtml(new ExpressionList())); }
+                                    ast::wrapHtml(new ExpressionList())); }
     | tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
        { $$ = new VariableExpression(*$3, 
                                       new TypeExpression(Type::HTML),
                                       kConstVar,
-                                      wrapHtml($6)); }
+                                      ast::wrapHtml($6)); }
 
 nehtmlbodies: htmlbody
             { ExpressionList *l = new ExpressionList();
@@ -104,9 +104,9 @@ nehtmlbodies: htmlbody
 htmlbody: '<' tID attributes '>' 
         { $$ = new HtmlTagExpression(*$2, $3);}
         | tTagClose tID '>' /* "</tID>" */
-        { $$ = new HtmlTagExpression(*$2, emptyMap(), true); }
+        { $$ = new HtmlTagExpression(*$2, ast::emptyMap(), true); }
         | tGapOpen tID tGapClose
-        { $$ = new HtmlTagExpression(*$2, emptyMap(), false, true); }
+        { $$ = new HtmlTagExpression(*$2, ast::emptyMap(), false, true); }
         | tWHATEVER
         { $$ = new WhateverExpression(*$1); }
         | tMetaOpen tWHATEVER tMetaClose
@@ -114,36 +114,36 @@ htmlbody: '<' tID attributes '>'
         | '<' tInput inputattrs '>'
         { $$ = new HtmlTagExpression("input", $3); }
         | '<' tSelect inputattrs '>' nehtmlbodies tTagClose tSelect '>'
-        { $$ = wrapAround("select", $3, $5); }         
+        { $$ = ast::wrapAround("select", $3, $5); }
         | '<' tSelect inputattrs '>' tTagClose tSelect '>'
-        { $$ = wrapAround("select", $3, new ExpressionList()); }
+        { $$ = ast::wrapAround("select", $3, new ExpressionList()); }
 
 inputattrs: inputattr
         { $$ = $1; }
         | inputattrs inputattr
-        { $$ = mergeMap($1, $2); }
+        { $$ = ast::mergeMap($1, $2); }
 
 inputattr: tName '=' attr
-         { $$ = initMap("name", *$3); }
+         { $$ = ast::initMap("name", *$3); }
          | tType '=' tInputType
-         { $$ = initMap("type", *$3); }
+         { $$ = ast::initMap("type", *$3); }
          | attribute
          { $$ = $1; }
 
 attributes: /* emtpy */
-          { $$ = emptyMap(); }
+          { $$ = ast::emptyMap(); }
           | neattributes
           { $$ = $1; }
 
 neattributes: attribute
             { $$ = $1; }
             | neattributes attribute
-            { $$ = mergeMap($1, $2); }
+            { $$ = ast::mergeMap($1, $2); }
 
 attribute: attr
-         { $$ = initMap(*$1, ""); }
+         { $$ = ast::initMap(*$1, ""); }
          | attr '=' attr
-         { $$ = initMap(*$1, *$3); }
+         { $$ = ast::initMap(*$1, *$3); }
 
 attr: tID
     { $$ = $1; }
@@ -156,9 +156,9 @@ schemas: /* empty */
        { $$ = $1; }
 
 neschemas: schema
-         { $$ = initList($1); }
+         { $$ = ast::initList($1); }
          | neschemas schema
-         { $$ = addBack($1, $2); }
+         { $$ = ast::addBack($1, $2); }
 
 schema: tSchema tID '{' fields '}'
       { $$ = new SchemaExpression(*$2, $4); }
@@ -169,9 +169,9 @@ fields: /* empty */
       { $$ = $1; }
 
 nefields: field
-        { $$ = initList($1); }
+        { $$ = ast::initList($1); }
         | nefields field
-        { $$ = addBack($1, $2); }
+        { $$ = ast::addBack($1, $2); }
 
 field: simpletype tID ';'
      { $$ = new FieldExpression(new TypeExpression($1), *$2); }
@@ -193,13 +193,13 @@ type: simpletype
 nevariables: variable
     { $$ = $1; }
     | nevariables variable
-    { $$ = addBack($1, $2); }
+    { $$ = ast::addBack($1, $2); }
 
 variable: type identifiers ';'
     { $$ = new ExpressionList();
       std::list<std::string>::const_iterator it;
       for(it = $2->begin(); it != $2->end(); ++it){
-        $$ = addBack($$, new VariableExpression(*it,
+        $$ = ast::addBack($$, new VariableExpression(*it,
                          $1,
                          kNoConstVar,
                          kNoVal));
@@ -213,14 +213,14 @@ identifiers: tID
       $$ = $1; }
 
 functions: /* empty */
-    { $$ = initList(new EmptyExpression()); }
+    { $$ = ast::initList(new EmptyExpression()); }
     | nefunctions
     { $$ = $1; }
 
 nefunctions: function
-    { $$ = initList($1); }
+    { $$ = ast::initList($1); }
     | nefunctions function
-    { $$ = addBack($1, $2); }
+    { $$ = ast::addBack($1, $2); }
 
 function: type tID '(' arguments ')'
     { $$ = new FunctionExpression($1, *$2, $4);}

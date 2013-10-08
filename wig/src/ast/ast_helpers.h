@@ -7,6 +7,8 @@
 #include "ast_list.h"
 #include "ast_html.h"
 
+namespace ast{
+
 Expression *wrapAround(std::string name,
                        std::map<std::string, std::string> *attrs,
                        ExpressionList *exp);
@@ -19,5 +21,7 @@ std::map<std::string, std::string> *mergeMap(
 
 ExpressionList *initList(Expression *e);
 ExpressionList *addBack(ExpressionList *list, Expression *exp);
+
+}
 
 #endif // AST_HELPERS_H

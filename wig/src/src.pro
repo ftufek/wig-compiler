@@ -38,7 +38,8 @@ HEADERS += \
     ast/ast_helpers.h \
     ast/ast_type.h \
     ast/ast_function.h \
-    ast/ast_argument.h
+    ast/ast_argument.h \
+    ast/ast_stm.h
 
 OTHER_FILES += wig.l \
     wig.y

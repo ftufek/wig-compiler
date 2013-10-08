@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace ast {
+
 Expression *wrapAround(string name, map<string, string> *attrs,
                        ExpressionList *exp){
   Expression *opening = new HtmlTagExpression(name, attrs);
@@ -43,4 +45,6 @@ ExpressionList *initList(Expression *e){
 ExpressionList *addBack(ExpressionList *list, Expression *exp){
   list->getList()->push_back(exp);
   return list;
+}
+
 }
