@@ -1,0 +1,13 @@
+service {
+
+const html a = <html></html>;
+
+schema item{
+  int price;
+  string title;
+}
+
+string a, b, s;
+int i1, i2, i3;
+
+}

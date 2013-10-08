@@ -4,7 +4,7 @@
 #include "ast.h"
 
 enum Type{
-  INT, BOOL, STRING, VOID, TUPLE
+  INT, BOOL, STRING, VOID, TUPLE, HTML
 };
 
 class TypeExpression : public Expression
@@ -32,6 +32,10 @@ public:
 
         case TUPLE:
             std::cout<<"tuple "<<tupleID;
+            break;
+
+        case HTML:
+            std::cout<<"html";
             break;
         }
     }

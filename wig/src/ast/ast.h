@@ -2,6 +2,7 @@
 #define AST_H
 
 #include <string>
+#include <map>
 
 /* The Base Interface for all AST classes */
 class Expression{

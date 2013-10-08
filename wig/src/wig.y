@@ -21,8 +21,10 @@
 %union{
   std::string *str;
   std::map<std::string, std::string> *dict;
+  std::list<std::string> *strList;
   Expression *exp;
   ExpressionList *listExp;
+  TypeExpression *typeExp;
   Type type;
 }
 
@@ -52,19 +54,26 @@
 %token tBool
 %token tString
 %token tVoid
+%token tTuple
 
 %type <exp> service html htmlbody schema field
-%type <listExp> htmls nehtmlbodies schemas neschemas fields nefields
+%type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
+%type <listExp> variable
+%type <typeExp> type
 %type <dict> attributes neattributes attribute inputattr inputattrs
 %type <str> attr
 %type <type> simpletype
+%type <strList> identifiers
 
 %start service
 %%
 
-service: tSERVICE '{' htmls schemas '}'
+service: tSERVICE '{' htmls schemas nevariables '}'
+       { EXP = new ServiceExpression($3, $4, $5); }
+     | tSERVICE '{' htmls schemas '}'
        { EXP = new ServiceExpression($3, $4); }
-     | { EXP = new EmptyExpression(); }
+     | /* empty */
+       { EXP = new EmptyExpression(); }
 
 htmls : html
        { $$ = initList($1); }
@@ -72,12 +81,12 @@ htmls : html
        { $$ = addBack($1, $2); }
 
 html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
-       {$$ = new VariableExpression(*$3, "html", true,
+       {$$ = new VariableExpression(*$3, new TypeExpression(HTML), kConstVar,
                                     wrapHtml(new ExpressionList())); }
     | tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
        { $$ = new VariableExpression(*$3, 
-                                      "html", 
-                                      true,
+                                      new TypeExpression(HTML),
+                                      kConstVar,
                                       wrapHtml($6)); }
 
 nehtmlbodies: htmlbody
@@ -171,3 +180,31 @@ simpletype: tInt
            { $$ = STRING; }
            | tVoid
            { $$ = VOID; }
+
+type: simpletype
+    { $$ = new TypeExpression($1); }
+    | tTuple tID
+    { $$ = new TypeExpression(TUPLE, *$2); }
+
+nevariables: variable
+    { $$ = $1; }
+    | nevariables variable
+    { $$ = addBack($1, $2); }
+
+variable: type identifiers ';'
+    { $$ = new ExpressionList();
+      std::list<std::string>::const_iterator it;
+      for(it = $2->begin(); it != $2->end(); ++it){
+        $$ = addBack($$, new VariableExpression(*it,
+                         $1,
+                         kNoConstVar,
+                         kNoVal));
+      }
+     }
+
+identifiers: tID
+    { $$ = new std::list<std::string>();
+      $$->push_front(*$1); }
+    | identifiers tID
+    { $1->push_back(*$2);
+      $$ = $1; }

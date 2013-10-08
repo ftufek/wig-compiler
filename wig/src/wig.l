@@ -39,6 +39,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
   "bool" return tBool;
   "string" return tString;
   "void" return tVoid;
+  "tuple" return tTuple;
 }
 
 <HTML>{

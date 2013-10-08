@@ -2,8 +2,8 @@
 
 using namespace std;
 
-VariableExpression::VariableExpression(string name, 
-                   string type,
+VariableExpression::VariableExpression(string name,
+                   TypeExpression *type,
                    bool isConst,
                    Expression *value):
                    name(name), 
@@ -15,7 +15,11 @@ void VariableExpression::prettyPrint(){
   if(isConst){
     cout<<"const ";
   }
-  cout<<type<<" "<<name<<" = ";
-  value->prettyPrint();
+  type->prettyPrint();
+  cout<<" "<<name;
+  if(value){
+    cout<<" = ";
+    value->prettyPrint();
+  }
   cout<<";"<<endl;
 }
