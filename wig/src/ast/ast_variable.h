@@ -1,9 +1,11 @@
 #ifndef AST_VARIABLE_H
 #define AST_VARIABLE_H
 
+#include <cstddef>
+
 const bool kConstVar = true;
 const bool kNoConstVar = false;
-const int kNoVal = 0;
+const std::nullptr_t kNoVal = nullptr;
 
 class VariableExpression : public Expression {
 public:

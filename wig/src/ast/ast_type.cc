@@ -6,27 +6,27 @@ TypeExpression::TypeExpression(Type type, std::string tupleID)
 
 void TypeExpression::prettyPrint() {
     switch(type){
-    case INT:
+    case Type::INT:
         std::cout<<"int";
         break;
 
-    case BOOL:
+    case Type::BOOL:
         std::cout<<"bool";
         break;
 
-    case STRING:
+    case Type::STRING:
         std::cout<<"string";
         break;
 
-    case VOID:
+    case Type::VOID:
         std::cout<<"void";
         break;
 
-    case TUPLE:
+    case Type::TUPLE:
         std::cout<<"tuple "<<tupleID;
         break;
 
-    case HTML:
+    case Type::HTML:
         std::cout<<"html";
         break;
     }

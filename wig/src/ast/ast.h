@@ -1,8 +1,7 @@
 #ifndef AST_H
 #define AST_H
 
-#include <string>
-#include <map>
+extern int yylineno;
 
 /* The Base Interface for all AST classes */
 class Expression{
@@ -12,7 +11,7 @@ public:
   virtual void prettyPrint() = 0;
 
 protected:
-  int atLine;
+  int at_line_;
 };
 
 #endif // AST_H

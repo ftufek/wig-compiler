@@ -1,12 +1,7 @@
-#include <iostream>
-#include "../ast.h"
+#include "ast.h"
 
-using namespace std;
+Expression::Expression() :at_line_(yylineno){}
 
-Expression::Expression()
-  :atLine(yylineno){}
-
-Expression::~Expression(){
-}
+Expression::~Expression(){}
 
 

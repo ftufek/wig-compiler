@@ -3,7 +3,7 @@
 
 #include "ast.h"
 
-enum Type{
+enum class Type{
   INT, BOOL, STRING, VOID, TUPLE, HTML
 };
 

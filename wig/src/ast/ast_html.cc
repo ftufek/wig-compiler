@@ -15,8 +15,7 @@ void HtmlTagExpression::prettyPrint(){
   std::cout<<id;
 
   if(attrs->size() > 0){
-    for(std::map<std::string,std::string>::const_iterator it = attrs->begin();
-        it != attrs->end(); ++it){
+    for(auto it = attrs->begin(); it != attrs->end(); ++it){
       std::cout<<" "<<it->first;
       if(it->second.length() > 0){
         std::cout<<"="<<it->second;

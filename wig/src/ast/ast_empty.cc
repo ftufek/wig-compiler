@@ -1,7 +1,4 @@
-#include "../ast.h"
+#include "ast_empty.h"
 
-EmptyExpression::EmptyExpression (){
-}
-
-void EmptyExpression::prettyPrint (){
-}
+EmptyExpression::EmptyExpression (){}
+void EmptyExpression::prettyPrint (){}

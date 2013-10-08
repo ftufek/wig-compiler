@@ -81,11 +81,11 @@ htmls : html
        { $$ = addBack($1, $2); }
 
 html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
-       {$$ = new VariableExpression(*$3, new TypeExpression(HTML), kConstVar,
+       {$$ = new VariableExpression(*$3, new TypeExpression(Type::HTML), kConstVar,
                                     wrapHtml(new ExpressionList())); }
     | tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
        { $$ = new VariableExpression(*$3, 
-                                      new TypeExpression(HTML),
+                                      new TypeExpression(Type::HTML),
                                       kConstVar,
                                       wrapHtml($6)); }
 
@@ -173,18 +173,18 @@ field: simpletype tID ';'
      { $$ = new FieldExpression(new TypeExpression($1), *$2); }
 
 simpletype: tInt
-           { $$ = INT; }
+           { $$ = Type::INT; }
            | tBool
-           { $$ = BOOL; }
+           { $$ = Type::BOOL; }
            | tString
-           { $$ = STRING; }
+           { $$ = Type::STRING; }
            | tVoid
-           { $$ = VOID; }
+           { $$ = Type::VOID; }
 
 type: simpletype
     { $$ = new TypeExpression($1); }
     | tTuple tID
-    { $$ = new TypeExpression(TUPLE, *$2); }
+    { $$ = new TypeExpression(Type::TUPLE, *$2); }
 
 nevariables: variable
     { $$ = $1; }

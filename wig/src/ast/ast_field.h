@@ -1,6 +1,8 @@
 #ifndef AST_FIELD_H
 #define AST_FIELD_H
 
+#include <string>
+#include "ast.h"
 #include "ast_type.h"
 
 class FieldExpression : public Expression {
