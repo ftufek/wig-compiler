@@ -1,7 +1,6 @@
 TEMPLATE = app
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG -= qt
+CONFIG -= app_bundle qt gui core
+LIBS -= -lQtGui -lQtCore
 QMAKE_CXXFLAGS += -std=c++11 -std=gnu++11
 
 SOURCES += \
@@ -45,15 +44,6 @@ OTHER_FILES += wig.l \
     wig.y
 
 LIBS += -lfl -ly
-
-#CONFIG += lex
-#LEXSOURCES += wig.l
-#QMAKE_YACC=bison
-#CONFIG += yacc
-#YACCSOURCES += wig.y
-#lex.CONFIG += target_predeps
-#yacc_impl.CONFIG += target_predeps
-#yacc_decl.CONFIG += target_predeps
 
 FLEXSOURCES = wig.l
 BISONSOURCES = wig.y
