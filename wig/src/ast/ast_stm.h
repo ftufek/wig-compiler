@@ -17,20 +17,23 @@ public:
 class CompoundStm : public Stm
 {
 public:
-    CompoundStm(std::list<Variable *> *vars = new std::list<Variable *>,
-                std::list<Stm *> *stms = new std::list<Stm *>);
+    CompoundStm(std::list<Stm *> *stms = new std::list<Stm *>,
+                std::list<Variable *> *vars = new std::list<Variable *>);
     void PrettyPrint() override;
 
 protected:
-    std::list<Variable *> *vars_;
     std::list<Stm *> *stms_;
+    std::list<Variable *> *vars_;
 };
 
 class EmptyStm : public Stm
 {
 public:
-    EmptyStm();
+    EmptyStm(bool print_semicol = false);
     void PrettyPrint() override;
+
+protected:
+    bool print_semicol_;
 };
 
 }

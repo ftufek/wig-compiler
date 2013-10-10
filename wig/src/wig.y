@@ -24,6 +24,7 @@
   std::list<std::string> *strList;
   std::list<ast::Argument*> *argList;
   ast::Stm *stm;
+  std::list<ast::Stm*> *stmList;
   ast::CompoundStm *compoundStm;
   ast::Base *exp;
   ast::List *listExp;
@@ -71,6 +72,8 @@
 %type <argList> arguments nearguments
 %type <argExp> argument
 %type <compoundStm> compoundstm
+%type <stm> stm
+%type <stmList> stms nestms
 
 %start service
 %%
@@ -241,5 +244,18 @@ nearguments: argument
 argument: type tID
     { $$ = new ast::Argument($1, *$2); }
 
-compoundstm: '{' '}'
-    { $$ = new ast::CompoundStm(); }
+compoundstm: '{' stms '}'
+    { $$ = new ast::CompoundStm($2); }
+
+stms: /* empty */
+    { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }
+    | nestms
+    { $$ = $1; }
+
+nestms: stm
+    { $$ = new std::list<ast::Stm *>{$1}; }
+    | nestms stm
+    { $1->push_back($2); $$ = $1; }
+
+stm: ';'
+    { $$ = new ast::EmptyStm(true); }

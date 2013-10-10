@@ -6,12 +6,14 @@ namespace ast {
 
 Stm::Stm(){}
 
-EmptyStm::EmptyStm(){}
+EmptyStm::EmptyStm(bool print_semicol):print_semicol_(print_semicol){}
 void EmptyStm::PrettyPrint(){
-    cout<<";"<<endl;
+    if(print_semicol_){
+        cout<<";"<<endl;
+    }
 }
 
-CompoundStm::CompoundStm(list<Variable *> *vars, list<Stm *> *stms)
+CompoundStm::CompoundStm(list<Stm *> *stms, list<Variable *> *vars)
     :vars_(vars), stms_(stms){}
 void CompoundStm::PrettyPrint(){
     cout<<" { "<<endl;

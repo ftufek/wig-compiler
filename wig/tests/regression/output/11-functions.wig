@@ -8,7 +8,11 @@ bool s;
 int testFunc() { 
 }
 bool doesWork() { 
+;
 }
 void takesArgs(int a, bool b) { 
+;
+;
+;
 }
 }
