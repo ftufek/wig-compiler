@@ -54,8 +54,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 }
 
 <METACODE>{
-    "-->" { BEGIN(HTML); return tMetaClose; }
-    "-" return '-';
+    [-]{2,}">" { BEGIN(HTML); return tMetaClose; }
     [^->]* {yylval.str = new std::string(yytext);
         return tWHATEVER; }
 }

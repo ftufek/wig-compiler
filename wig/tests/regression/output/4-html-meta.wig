@@ -1,2 +1,14 @@
-Error happened on line 9 : syntax error
- before: -
+service {
+const html ba_2 = <html>
+Cool html!
+Test <[number]>;
+hmm { asd
+<!--  hmm maybe this is a meta,
+does it work ??  -->
+<[yep]>
+      <!--  looks like it does!  -->
+</html>;
+
+
+
+}
