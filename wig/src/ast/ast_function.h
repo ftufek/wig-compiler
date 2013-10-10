@@ -5,6 +5,7 @@
 #include "ast.h"
 #include "ast_type.h"
 #include "ast_argument.h"
+#include "ast_stm.h"
 
 namespace ast {
 
@@ -12,13 +13,15 @@ class Function : public Base{
 public:
     Function(Type *type,
              std::string id,
-             std::list<Argument *> *args);
+             std::list<Argument *> *args,
+             CompoundStm *stm);
     void PrettyPrint() override;
 
 protected:
     Type *type_;
     std::string id_;
     std::list<Argument *> *args_;
+    CompoundStm *stm_;
 };
 
 }

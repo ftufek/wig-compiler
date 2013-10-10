@@ -7,8 +7,9 @@ namespace ast {
 
 Function::Function(Type *type,
                    std::string id,
-                   std::list<Argument *> *args)
-    :type_(type), id_(id), args_(args){}
+                   std::list<Argument *> *args,
+                   CompoundStm *stm)
+    :type_(type), id_(id), args_(args), stm_(stm){}
 
 void Function::PrettyPrint(){
     type_->PrettyPrint();
@@ -22,8 +23,9 @@ void Function::PrettyPrint(){
         cout<<", ";
         (*iter)->PrettyPrint();
     }
-    cout<<") {"<<endl;
-    cout<<"}"<<endl;
+    cout<<")";
+    stm_->PrettyPrint();
+    cout<<endl;
 }
 
 }

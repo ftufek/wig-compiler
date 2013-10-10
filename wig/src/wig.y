@@ -23,6 +23,8 @@
   std::map<std::string, std::string> *dict;
   std::list<std::string> *strList;
   std::list<ast::Argument*> *argList;
+  ast::Stm *stm;
+  ast::CompoundStm *compoundStm;
   ast::Base *exp;
   ast::List *listExp;
   ast::Type *typeExp;
@@ -68,6 +70,7 @@
 %type <strList> identifiers
 %type <argList> arguments nearguments
 %type <argExp> argument
+%type <compoundStm> compoundstm
 
 %start service
 %%
@@ -222,8 +225,8 @@ nefunctions: function
     | nefunctions function
     { $$ = ast::addBack($1, $2); }
 
-function: type tID '(' arguments ')'
-    { $$ = new ast::Function($1, *$2, $4);}
+function: type tID '(' arguments ')' compoundstm
+    { $$ = new ast::Function($1, *$2, $4, $6);}
 
 arguments: /* empty */
     { $$ = new std::list<ast::Argument*>; }
@@ -237,3 +240,6 @@ nearguments: argument
 
 argument: type tID
     { $$ = new ast::Argument($1, *$2); }
+
+compoundstm: '{' '}'
+    { $$ = new ast::CompoundStm(); }

@@ -19,7 +19,8 @@ SOURCES += \
     ast/ast.cc \
     ast/ast_type.cc \
     ast/ast_argument.cc \
-    ast/ast_function.cc
+    ast/ast_function.cc \
+    ast/ast_stm.cc
 
 HEADERS += \
     ast.h \

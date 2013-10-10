@@ -4,9 +4,12 @@ const html d = <html></html>;
 int a;
 bool s;
 
-int testFunc()
+int testFunc(){
+}
 
-bool doesWork()
+bool doesWork(){
+}
 
-void takesArgs(int a, bool b)
+void takesArgs(int a, bool b){
+}
 }
