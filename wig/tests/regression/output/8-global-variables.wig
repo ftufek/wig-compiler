@@ -1,2 +1,17 @@
-Error happened on line 10 : syntax error
- before: ,
+service {
+const html a = <html></html>;
+
+schema item {
+int price;
+string title;
+}
+
+string b;
+string a;
+string b;
+string s;
+int i1;
+int i2;
+int i3;
+
+}

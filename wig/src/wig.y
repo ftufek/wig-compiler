@@ -214,8 +214,8 @@ variable: type identifiers ';'
 
 identifiers: tID
     { $$ = new std::list<std::string>{*$1}; }
-    | identifiers tID
-    { $1->push_back(*$2);
+    | identifiers ',' tID
+    { $1->push_back(*$3);
       $$ = $1; }
 
 functions: /* empty */
