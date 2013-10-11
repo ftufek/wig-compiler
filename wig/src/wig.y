@@ -23,21 +23,25 @@
   std::map<std::string, std::string> *dict;
   std::list<std::string> *strList;
   std::list<ast::Argument*> *argList;
+  std::list<ast::PlugStm*> *plugList;
   ast::Stm *stm;
+  ast::Exp *exp;
   std::list<ast::Stm*> *stmList;
   ast::CompoundStm *compoundStm;
-  ast::Base *exp;
+  ast::DocumentStm *docStm;
+  ast::PlugStm *plugStm;
+  ast::ReceiveStm *receiveStm;
+  ast::Base *base;
   ast::List *listExp;
   ast::Type *typeExp;
   ast::Argument *argExp;
   ast::kType type;
 }
 
-%token tSERVICE
-%token tCONST
+%token tSERVICE tCONST
 
 %token ttHTML
-%token <str> tID tWHATEVER tSTR tInputType
+%token <str> tID tWHATEVER tSTR tInputType tLVALUE
 
 
 /* HTML RELATED TOKENS */
@@ -54,14 +58,10 @@
 %token tType
 /* END OF HTML RELATED TOKENS */
 
-%token tSchema
-%token tInt
-%token tBool
-%token tString
-%token tVoid
-%token tTuple
+%token tSchema tInt tBool tString tVoid tTuple
+%token tSHOW tPLUG tRECEIVE
 
-%type <exp> service html htmlbody schema field function
+%type <base> service html htmlbody schema field function
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
 %type <listExp> variable functions nefunctions
 %type <typeExp> type
@@ -72,8 +72,12 @@
 %type <argList> arguments nearguments
 %type <argExp> argument
 %type <compoundStm> compoundstm
-%type <stm> stm
-%type <stmList> stms nestms
+%type <stm> stm receive input
+%type <stmList> stms nestms inputs neinputs
+%type <docStm> document
+%type <plugList> plugs
+%type <plugStm> plug
+%type <exp> exp
 
 %start service
 %%
@@ -259,3 +263,39 @@ nestms: stm
 
 stm: ';'
     { $$ = new ast::EmptyStm(true); }
+    | tSHOW document receive ';'
+    { $$ = new ast::ShowStm($2, $3); }
+
+document: tID
+    { $$ = new ast::DocumentStm(*$1); }
+    | tPLUG tID '[' plugs ']'
+    { $$ = new ast::DocumentStm(*$2, true, $4); }
+
+plugs: plug
+    { $$ = new std::list<ast::PlugStm *>{$1}; }
+    | plugs ',' plug
+    { $1->push_back($3); $$ = $1; }
+
+plug: tID '=' exp
+    { $$ = new ast::PlugStm(*$1, $3); }
+
+receive: /* empty */
+    { $$ = new ast::EmptyStm(); }
+    | tRECEIVE '[' inputs ']'
+    { $$ = new ast::ReceiveStm($3); }
+
+exp: /* empty */
+    { $$ = new ast::Exp(); }
+
+inputs: /* empty */
+    { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }
+    | neinputs
+    { $$ = $1; }
+
+neinputs: input
+    { $$ = new std::list<ast::Stm *>{$1}; }
+    | neinputs ',' input
+    { $1->push_back($3); $$ = $1; }
+
+input: tID '=' tID /* TODO: replace left tID by tLVALUE */
+    { $$ = new ast::InputStm(*$1, *$3); }

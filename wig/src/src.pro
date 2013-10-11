@@ -21,7 +21,8 @@ SOURCES += \
     ast/ast_argument.cc \
     ast/ast_function.cc \
     ast/ast_stm.cc \
-    pretty_printer.cc
+    pretty_printer.cc \
+    ast/ast_exp.cc
 
 HEADERS += \
     ast.h \
@@ -42,7 +43,8 @@ HEADERS += \
     ast/ast_argument.h \
     ast/ast_stm.h \
     pretty_printer.h \
-    ast_visitor.h
+    ast_visitor.h \
+    ast/ast_exp.h
 
 OTHER_FILES += wig.l \
     wig.y

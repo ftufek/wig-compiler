@@ -9,6 +9,7 @@ ALFA [a-zA-Z]
 ALFANUM {ALFA}|[0-9]
 IDAUX {ALFANUM}|(_{ALFANUM})
 ID {ALFA}{IDAUX}*
+LVALUE [a-zA-Z0-9.]
 WHATEVER [^<>]*
 STR				\"((\\\")|([^\"\n\t]))*\"
 
@@ -25,6 +26,8 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 "}" return '}';
 "(" return '(';
 ")" return ')';
+"[" return '[';
+"]" return ']';
 "," return ',';
 
 <INITIAL>{
@@ -43,6 +46,10 @@ STR				\"((\\\")|([^\"\n\t]))*\"
     "string" return tString;
     "void" return tVoid;
     "tuple" return tTuple;
+
+    "show" return tSHOW;
+    "plug" return tPLUG;
+    "receive" return tRECEIVE;
 }
 
 <HTML>{
@@ -87,6 +94,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 <HTMLCODE,GAPCODE,INITIAL,SERVICE>{
     {ID} { yylval.str = new std::string(yytext);
         return tID; }
+
     {STR} { yylval.str = new std::string(yytext);
         return tSTR; }
     \n /* do nothing */

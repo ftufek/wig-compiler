@@ -9,6 +9,14 @@ int testFunc(){
 
 bool doesWork(){
 ;
+
+show d;
+
+show plug s [a = , d = ];
+
+show plug d [d=,asd=] receive [];
+
+show plug c [a=] receive [d=s,dd=d];
 }
 
 void takesArgs(int a, bool b){

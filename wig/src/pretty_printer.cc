@@ -154,4 +154,47 @@ void PrettyPrintVisitor::visit(ast::CompoundStm *s) {
     cout<<"}";
 }
 
+void PrettyPrintVisitor::visit(ast::ShowStm *s) {
+    cout<<"show ";
+    s->doc_->accept(this);
+    s->receive_->accept(this);
+    cout<<";"<<endl;
+}
+
+void PrettyPrintVisitor::visit(ast::DocumentStm *s){
+    if(s->pluggable_){
+        cout<<"plug "<<s->id_<<"[";
+        // TODO: fix this after. there's always a trailing ','
+        for(auto const &plug : *(s->plugs_)){
+            plug->accept(this);
+            cout<<", ";
+        }
+        cout<<"]";
+    }else{
+        cout<<s->id_;
+    }
+}
+
+void PrettyPrintVisitor::visit(ast::PlugStm *s){
+    cout<<s->id_<<"=";
+    s->exp_->accept(this);
+}
+
+void PrettyPrintVisitor::visit(ast::ReceiveStm *s){
+    cout<<"receive [";
+    for(auto const &input : *(s->inputs_)){
+        input->accept(this);
+        cout<<", ";
+    }
+    cout<<"]";
+}
+
+void PrettyPrintVisitor::visit(ast::InputStm *s){
+    cout<<s->lvalue_<<" = "<<s->id_;
+}
+
+void PrettyPrintVisitor::visit(ast::Exp *s){
+    cout<<"<empty>";
+}
+
 }

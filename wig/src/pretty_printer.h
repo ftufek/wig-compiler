@@ -24,6 +24,13 @@ public:
 
     void visit(ast::EmptyStm *s) override;
     void visit(ast::CompoundStm *s) override;
+    void visit(ast::ShowStm *s) override;
+    void visit(ast::DocumentStm *s) override;
+    void visit(ast::PlugStm *s) override;
+    void visit(ast::ReceiveStm *s) override;
+    void visit(ast::InputStm *s) override;
+
+    void visit(ast::Exp *s) override;
 };
 
 }

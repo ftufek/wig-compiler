@@ -24,6 +24,13 @@ public:
 
     virtual void visit(EmptyStm *s) = 0;
     virtual void visit(CompoundStm *s) = 0;
+    virtual void visit(ShowStm *s) = 0;
+    virtual void visit(DocumentStm *s) = 0;
+    virtual void visit(PlugStm *s) = 0;
+    virtual void visit(InputStm *s) = 0;
+    virtual void visit(ReceiveStm *s) = 0;
+
+    virtual void visit(Exp *s) = 0;
 };
 
 
