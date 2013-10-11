@@ -6,10 +6,10 @@
 
 namespace ast {
 
-class String : public Base {
+class String : public Base{
 public:
     String(std::string content_);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     std::string content_;

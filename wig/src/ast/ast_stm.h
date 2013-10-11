@@ -12,6 +12,7 @@ class Stm : public Base
 {
 public:
     Stm();
+    void accept(Visitor *v) override;
 };
 
 class CompoundStm : public Stm
@@ -19,18 +20,18 @@ class CompoundStm : public Stm
 public:
     CompoundStm(std::list<Stm *> *stms = new std::list<Stm *>,
                 std::list<Variable *> *vars = new std::list<Variable *>);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
-    std::list<Stm *> *stms_;
     std::list<Variable *> *vars_;
+    std::list<Stm *> *stms_;    
 };
 
 class EmptyStm : public Stm
 {
 public:
     EmptyStm(bool print_semicol = false);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     bool print_semicol_;

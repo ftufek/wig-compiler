@@ -18,7 +18,7 @@ public:
              Type *type_,
              bool is_const_,
              Base *value_);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     std::string name_;

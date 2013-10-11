@@ -1,14 +1,1 @@
-service {
-const html ba_2 = <html>
-Cool html!
-Test <[number]>;
-hmm { asd
-<!--  hmm maybe this is a meta,
-does it work ??  -->
-<[yep]>
-      <!--  looks like it does!  -->
-</html>;
-
-
-
-}
+10

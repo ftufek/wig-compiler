@@ -9,10 +9,8 @@ namespace ast{
 class Argument : public Base
 {
 public:
-    Argument(Type *type,
-             std::string id);
-    void PrettyPrint() override;
-
+    Argument(Type *type, std::string id);
+    void accept(Visitor *v) override;
 protected:
     Type *type_;
     std::string id_;

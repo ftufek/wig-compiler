@@ -1,15 +1,19 @@
 #include <iostream>
 #include "ast_meta.h"
+#include "../ast_visitor.h"
 
 namespace ast {
 
 MetaTag::MetaTag(std::string content)
     :content_(content){}
-
-void MetaTag::PrettyPrint(){
-    std::cout<<"<!-- ";
-    std::cout<<content_;
-    std::cout<<" -->";
+void MetaTag::accept(class Visitor *v){
+    v->visit(this);
 }
+
+//void MetaTag::PrettyPrint(){
+//    std::cout<<"<!-- ";
+//    std::cout<<content_;
+//    std::cout<<" -->";
+//}
 
 }

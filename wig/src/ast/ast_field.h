@@ -10,7 +10,7 @@ namespace ast{
 class Field : public Base {
 public:
     Field(Type *type, std::string id);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     Type *type;

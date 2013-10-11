@@ -20,7 +20,8 @@ SOURCES += \
     ast/ast_type.cc \
     ast/ast_argument.cc \
     ast/ast_function.cc \
-    ast/ast_stm.cc
+    ast/ast_stm.cc \
+    pretty_printer.cc
 
 HEADERS += \
     ast.h \
@@ -39,7 +40,9 @@ HEADERS += \
     ast/ast_type.h \
     ast/ast_function.h \
     ast/ast_argument.h \
-    ast/ast_stm.h
+    ast/ast_stm.h \
+    pretty_printer.h \
+    ast_visitor.h
 
 OTHER_FILES += wig.l \
     wig.y

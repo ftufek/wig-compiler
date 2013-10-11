@@ -15,7 +15,7 @@ public:
              std::string id,
              std::list<Argument *> *args,
              CompoundStm *stm);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     Type *type_;

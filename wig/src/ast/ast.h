@@ -5,16 +5,27 @@ extern int yylineno;
 
 namespace ast {
 
-/* The Base Interface for all AST classes */
-class Base{
+class Visitor;
+class Visitable
+{
+public:
+    virtual void accept(Visitor *v) = 0;
+};
+
+/* The Base Class (Interface) for all AST classes */
+class Base : public Visitable{
 public:
     Base();
     virtual ~Base();
-    virtual void PrettyPrint() = 0;
+    void accept(Visitor *v) override;
+
+    int at_line(){return at_line_;}
 
 protected:
     int at_line_;
 };
+
+
 
 }
 

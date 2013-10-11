@@ -7,14 +7,14 @@
 
 namespace ast {
 
-class HtmlTag : public Base {
+class HtmlTag : public Base{
 public:
     HtmlTag(std::string id,
             std::map<std::string, std::string> *attrs =
             new std::map<std::string,std::string>,
             bool is_closing_ = false,
             bool is_gap_ = false);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     std::string id;

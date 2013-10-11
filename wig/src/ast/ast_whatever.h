@@ -9,7 +9,7 @@ namespace ast {
 class Whatever : public Base {
 public:
     Whatever(std::string whatever_);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     std::string whatever_;

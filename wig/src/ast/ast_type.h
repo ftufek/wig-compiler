@@ -14,7 +14,7 @@ class Type : public Base
 {
 public:
     Type(kType type_, std::string tuple_id_ = "");
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     kType type_;

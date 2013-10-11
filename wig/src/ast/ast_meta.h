@@ -9,7 +9,7 @@ namespace ast {
 class MetaTag : public Base {
 public:
     MetaTag(std::string content_);
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     std::string content_;

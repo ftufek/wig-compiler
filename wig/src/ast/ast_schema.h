@@ -11,7 +11,7 @@ class Schema : public Base {
 public:
     Schema(std::string id_,
            List *fields_ = new List());
-    void PrettyPrint() override;
+    void accept(Visitor *v) override;
 
 protected:
     std::string id_;
