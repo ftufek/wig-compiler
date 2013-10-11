@@ -52,6 +52,9 @@ STR				\"((\\\")|([^\"\n\t]))*\"
     "receive" return tRECEIVE;
     "exit" return tEXIT;
     "return" return tRETURN;
+    "if" return tIF;
+    "else" return tELSE;
+    "while" return tWHILE;
 }
 
 <HTML>{

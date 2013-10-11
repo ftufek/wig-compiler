@@ -31,6 +31,9 @@ public:
     void visit(ast::InputStm *s) override;
     void visit(ast::ExitStm *s) override;
     void visit(ast::ReturnStm *s) override;
+    void visit(ast::IfStm *s) override;
+    void visit(ast::WhileStm *s) override;
+    void visit(ast::ExpStm *s) override;
 
     void visit(ast::Exp *s) override;
 };

@@ -59,7 +59,7 @@
 /* END OF HTML RELATED TOKENS */
 
 %token tSchema tInt tBool tString tVoid tTuple
-%token tSHOW tPLUG tRECEIVE tEXIT tRETURN
+%token tSHOW tPLUG tRECEIVE tEXIT tRETURN tIF tELSE tWHILE
 
 %type <base> service html htmlbody schema field function
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
@@ -248,8 +248,10 @@ nearguments: argument
 argument: type tID
     { $$ = new ast::Argument($1, *$2); }
 
-compoundstm: '{' stms '}'
-    { $$ = new ast::CompoundStm($2); }
+compoundstm: '{' nevariables stms '}'
+            { $$ = new ast::CompoundStm($3, $2->getList()); }
+            | '{' stms '}'
+            { $$ = new ast::CompoundStm($2); }
 
 stms: /* empty */
     { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }
@@ -271,6 +273,16 @@ stm: ';'
     { $$ = new ast::ReturnStm(); }
     | tRETURN exp ';'
     { $$ = new ast::ReturnStm($2); }
+    | tIF '(' exp ')' stm
+    { $$ = new ast::IfStm($3, $5); }
+    | tIF '(' exp ')' stm tELSE stm
+    { $$ = new ast::IfStm($3, $5, $7); }
+    | tWHILE '(' exp ')' stm
+    { $$ = new ast::WhileStm($3, $5); }
+    | compoundstm
+    { $$ = $1; }
+    | exp ';'
+    { $$ = new ast::ExpStm($1); }
 
 document: tID
     { $$ = new ast::DocumentStm(*$1); }

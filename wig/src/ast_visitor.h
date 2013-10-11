@@ -31,6 +31,9 @@ public:
     virtual void visit(ReceiveStm *s) = 0;
     virtual void visit(ExitStm *s) = 0;
     virtual void visit(ReturnStm *s) = 0;
+    virtual void visit(IfStm *s) = 0;
+    virtual void visit(WhileStm *s) = 0;
+    virtual void visit(ExpStm *s) = 0;
 
     virtual void visit(Exp *s) = 0;
 };

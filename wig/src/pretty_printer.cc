@@ -205,6 +205,29 @@ void PrettyPrintVisitor::visit(ast::ReturnStm *s){
     cout<<";"<<endl;
 }
 
+void PrettyPrintVisitor::visit(ast::IfStm *s){
+    cout<<"if (";
+    s->condition_->accept(this);
+    cout<<")";
+    s->true_stm_->accept(this);
+    if(s->else_stm_ != nullptr){
+        cout<<"else"<<endl;
+        s->else_stm_->accept(this);
+    }
+}
+
+void PrettyPrintVisitor::visit(ast::WhileStm *s){
+    cout<<"while (";
+    s->condition_->accept(this);
+    cout<<")";
+    s->stm_->accept(this);
+    cout<<endl;
+}
+
+void PrettyPrintVisitor::visit(ast::ExpStm *s){
+    s->exp_->accept(this);
+}
+
 void PrettyPrintVisitor::visit(ast::Exp *s){
     cout<<"<empty>";
 }

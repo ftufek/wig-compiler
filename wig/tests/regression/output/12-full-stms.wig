@@ -1,0 +1,19 @@
+service {
+const html a = <html><div><[plugHere]></div> </html>;
+
+
+
+bool checkIfTrue(int a, int b) { 
+if (<empty>)return <empty>;
+else
+show plug a[plugHere=<empty>, ]receive [plugHere = p, ];
+while (<empty>)exit a;
+
+if (<empty>) { 
+int a;
+bool c;
+bool d;
+bool a;
+show a;
+}}
+}

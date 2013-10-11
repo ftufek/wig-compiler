@@ -20,10 +20,10 @@ class CompoundStm : public Stm
 {
 public:
     CompoundStm(std::list<Stm *> *stms = new std::list<Stm *>,
-                std::list<Variable *> *vars = new std::list<Variable *>);
+                std::list<Base *> *vars = new std::list<Base *>);
     void accept(Visitor *v) override;
 
-    std::list<Variable *> *vars_;
+    std::list<Base *> *vars_;
     std::list<Stm *> *stms_;    
 };
 
@@ -114,6 +114,41 @@ public:
     Exp *exp_;
 };
 
+
+class IfStm : public Stm
+{
+public:
+    IfStm(Exp *condition,
+          Stm *true_stm,
+          Stm *else_stm = nullptr);
+    void accept(Visitor *v) override;
+
+    Exp *condition_;
+    Stm *true_stm_;
+    Stm *else_stm_;
+};
+
+
+class WhileStm : public Stm
+{
+public:
+    WhileStm(Exp *condition,
+             Stm *stm);
+    void accept(Visitor *v) override;
+
+    Exp *condition_;
+    Stm *stm_;
+};
+
+
+class ExpStm : public Stm
+{
+public:
+    ExpStm(Exp *exp);
+    void accept(Visitor *v) override;
+
+    Exp *exp_;
+};
 
 }
 

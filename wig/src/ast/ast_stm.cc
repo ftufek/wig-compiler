@@ -12,7 +12,7 @@ EmptyStm::EmptyStm(bool print_semicol):print_semicol_(print_semicol){}
 void EmptyStm::accept(class Visitor *v){ v->visit(this); }
 
 
-CompoundStm::CompoundStm(list<Stm *> *stms, list<Variable *> *vars)
+CompoundStm::CompoundStm(list<Stm *> *stms, list<Base *> *vars)
     :vars_(vars), stms_(stms){}
 void CompoundStm::accept(class Visitor *v){ v->visit(this); }
 
@@ -47,4 +47,17 @@ void ReceiveStm::accept(Visitor *v) { v->visit(this); }
 ReturnStm::ReturnStm(Exp *exp):exp_(exp){}
 void ReturnStm::accept(Visitor *v) { v->visit(this); }
 
+
+IfStm::IfStm(Exp *condition, Stm *true_stm, Stm *else_stm)
+    :condition_(condition), true_stm_(true_stm), else_stm_(else_stm){}
+void IfStm::accept(Visitor *v) { v->visit(this); }
+
+
+WhileStm::WhileStm(Exp *condition, Stm *stm)
+    :condition_(condition), stm_(stm){}
+void WhileStm::accept(Visitor *v) {v->visit(this);}
+
+
+ExpStm::ExpStm(Exp *exp) : exp_(exp) {}
+void ExpStm::accept(Visitor *v) { v->visit(this); }
 }
