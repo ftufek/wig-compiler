@@ -304,6 +304,8 @@ receive: /* empty */
 
 exp: /* empty */
     { $$ = new ast::Exp(); }
+    | lvalue
+    { $$ = new ast::LValExp(*$1); }
 
 inputs: /* empty */
     { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }

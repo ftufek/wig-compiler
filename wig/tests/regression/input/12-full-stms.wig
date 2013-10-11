@@ -2,12 +2,12 @@ service {
   const html a = <html><div ><[plugHere]></div> </html>;
 
   bool checkIfTrue(int a, int b){
-    if()
+    if(asd.dd)
       return ;
     else
       show plug a [plugHere=2] receive[plugHere=p];
 
-    while()
+    while(dsf)
       exit a;
 
     if(){

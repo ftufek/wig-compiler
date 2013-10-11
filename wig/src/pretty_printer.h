@@ -36,6 +36,7 @@ public:
     void visit(ast::ExpStm *s) override;
 
     void visit(ast::Exp *s) override;
+    void visit(ast::LValExp *s) override;
 };
 
 }

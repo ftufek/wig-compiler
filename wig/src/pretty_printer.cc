@@ -232,5 +232,9 @@ void PrettyPrintVisitor::visit(ast::Exp *s){
     cout<<"<empty>";
 }
 
+void PrettyPrintVisitor::visit(ast::LValExp *s){
+    cout<<s->lvalue_;
+}
+
 
 }
