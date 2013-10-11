@@ -59,7 +59,7 @@
 /* END OF HTML RELATED TOKENS */
 
 %token tSchema tInt tBool tString tVoid tTuple
-%token tSHOW tPLUG tRECEIVE
+%token tSHOW tPLUG tRECEIVE tEXIT
 
 %type <base> service html htmlbody schema field function
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
@@ -265,6 +265,8 @@ stm: ';'
     { $$ = new ast::EmptyStm(true); }
     | tSHOW document receive ';'
     { $$ = new ast::ShowStm($2, $3); }
+    | tEXIT document ';'
+    { $$ = new ast::ExitStm($2); }
 
 document: tID
     { $$ = new ast::DocumentStm(*$1); }

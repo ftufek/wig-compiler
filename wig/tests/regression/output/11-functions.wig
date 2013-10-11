@@ -13,6 +13,8 @@ show d;
 show plug s[a=<empty>, d=<empty>, ];
 show plug d[d=<empty>, asd=<empty>, ]receive [, ];
 show plug c[a=<empty>, ]receive [d = s, dd = d, ];
+exit d;
+exit plug d[a=<empty>, d=<empty>, ];
 }
 void takesArgs(int a, bool b) { 
 ;

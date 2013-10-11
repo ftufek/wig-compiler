@@ -29,6 +29,10 @@ ShowStm::ShowStm(DocumentStm *doc, Stm *receive):doc_(doc),receive_(receive){}
 void ShowStm::accept(Visitor *v) { v->visit(this); }
 
 
+ExitStm::ExitStm(DocumentStm *doc):doc_(doc){}
+void ExitStm::accept(Visitor *v) { v->visit(this); }
+
+
 DocumentStm::DocumentStm(std::string id_,
                          bool pluggable_,
                          std::list<PlugStm *> *plugs_)

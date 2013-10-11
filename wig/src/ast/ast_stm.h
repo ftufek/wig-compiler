@@ -73,6 +73,16 @@ public:
 };
 
 
+class ReceiveStm : public Stm
+{
+public:
+    ReceiveStm(std::list<Stm *> *inputs = new std::list<Stm *>);
+    void accept(Visitor *v) override;
+
+    std::list<Stm *> *inputs_;
+};
+
+
 class ShowStm : public Stm
 {
 public:
@@ -85,14 +95,15 @@ public:
 };
 
 
-class ReceiveStm : public Stm
+class ExitStm : public Stm
 {
 public:
-    ReceiveStm(std::list<Stm *> *inputs = new std::list<Stm *>);
+    ExitStm(DocumentStm *doc);
     void accept(Visitor *v) override;
 
-    std::list<Stm *> *inputs_;
+    DocumentStm *doc_;
 };
+
 
 }
 

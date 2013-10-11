@@ -193,6 +193,12 @@ void PrettyPrintVisitor::visit(ast::InputStm *s){
     cout<<s->lvalue_<<" = "<<s->id_;
 }
 
+void PrettyPrintVisitor::visit(ast::ExitStm *s){
+    cout<<"exit ";
+    s->doc_->accept(this);
+    cout<<";"<<endl;
+}
+
 void PrettyPrintVisitor::visit(ast::Exp *s){
     cout<<"<empty>";
 }

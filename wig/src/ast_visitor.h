@@ -29,6 +29,7 @@ public:
     virtual void visit(PlugStm *s) = 0;
     virtual void visit(InputStm *s) = 0;
     virtual void visit(ReceiveStm *s) = 0;
+    virtual void visit(ExitStm *s) = 0;
 
     virtual void visit(Exp *s) = 0;
 };

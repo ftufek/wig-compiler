@@ -17,6 +17,9 @@ show plug s [a = , d = ];
 show plug d [d=,asd=] receive [];
 
 show plug c [a=] receive [d=s,dd=d];
+
+exit d;
+exit plug d [a=,d=];
 }
 
 void takesArgs(int a, bool b){
