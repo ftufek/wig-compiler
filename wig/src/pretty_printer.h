@@ -30,6 +30,7 @@ public:
     void visit(ast::ReceiveStm *s) override;
     void visit(ast::InputStm *s) override;
     void visit(ast::ExitStm *s) override;
+    void visit(ast::ReturnStm *s) override;
 
     void visit(ast::Exp *s) override;
 };

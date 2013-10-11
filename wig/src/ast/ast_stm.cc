@@ -43,4 +43,8 @@ void DocumentStm::accept(Visitor *v) { v->visit(this); }
 ReceiveStm::ReceiveStm(std::list<Stm *> *inputs):inputs_(inputs){}
 void ReceiveStm::accept(Visitor *v) { v->visit(this); }
 
+
+ReturnStm::ReturnStm(Exp *exp):exp_(exp){}
+void ReturnStm::accept(Visitor *v) { v->visit(this); }
+
 }

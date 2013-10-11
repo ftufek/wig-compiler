@@ -20,5 +20,6 @@ void takesArgs(int a, bool b) {
 ;
 ;
 ;
+return <empty>;
 }
 }

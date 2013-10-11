@@ -105,6 +105,16 @@ public:
 };
 
 
+class ReturnStm : public Stm
+{
+public:
+    ReturnStm(Exp *exp = new Exp());
+    void accept(Visitor *v) override;
+
+    Exp *exp_;
+};
+
+
 }
 
 #endif // AST_STM_H

@@ -51,6 +51,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
     "plug" return tPLUG;
     "receive" return tRECEIVE;
     "exit" return tEXIT;
+    "return" return tRETURN;
 }
 
 <HTML>{

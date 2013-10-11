@@ -24,5 +24,6 @@ exit plug d [a=,d=];
 
 void takesArgs(int a, bool b){
 ;;;
+return ;
 }
 }

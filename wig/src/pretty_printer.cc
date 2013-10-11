@@ -199,8 +199,15 @@ void PrettyPrintVisitor::visit(ast::ExitStm *s){
     cout<<";"<<endl;
 }
 
+void PrettyPrintVisitor::visit(ast::ReturnStm *s){
+    cout<<"return ";
+    s->exp_->accept(this);
+    cout<<";"<<endl;
+}
+
 void PrettyPrintVisitor::visit(ast::Exp *s){
     cout<<"<empty>";
 }
+
 
 }
