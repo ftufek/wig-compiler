@@ -13,7 +13,6 @@ public:
            List *fields_ = new List());
     void accept(Visitor *v) override;
 
-protected:
     std::string id_;
     List *fields_;
 };

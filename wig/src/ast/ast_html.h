@@ -16,9 +16,8 @@ public:
             bool is_gap_ = false);
     void accept(Visitor *v) override;
 
-protected:
-    std::string id;
-    std::map<std::string, std::string> *attrs;
+    std::string id_;
+    std::map<std::string, std::string> *attrs_;
     bool is_closing_;
     bool is_gap_;
 };

@@ -4,9 +4,9 @@
 namespace ast{
 
 Empty::Empty (){}
+
 void Empty::accept(class Visitor *v){
     v->visit(this);
 }
-//void Empty::PrettyPrint (){}
 
 }

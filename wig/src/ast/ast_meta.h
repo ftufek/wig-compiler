@@ -11,7 +11,6 @@ public:
     MetaTag(std::string content_);
     void accept(Visitor *v) override;
 
-protected:
     std::string content_;
 };
 

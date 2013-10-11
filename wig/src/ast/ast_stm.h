@@ -12,7 +12,6 @@ class Stm : public Base
 {
 public:
     Stm();
-    void accept(Visitor *v) override;
 };
 
 class CompoundStm : public Stm
@@ -22,7 +21,6 @@ public:
                 std::list<Variable *> *vars = new std::list<Variable *>);
     void accept(Visitor *v) override;
 
-protected:
     std::list<Variable *> *vars_;
     std::list<Stm *> *stms_;    
 };
@@ -33,7 +31,6 @@ public:
     EmptyStm(bool print_semicol = false);
     void accept(Visitor *v) override;
 
-protected:
     bool print_semicol_;
 };
 

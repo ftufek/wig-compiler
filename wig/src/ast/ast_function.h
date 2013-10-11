@@ -17,7 +17,6 @@ public:
              CompoundStm *stm);
     void accept(Visitor *v) override;
 
-protected:
     Type *type_;
     std::string id_;
     std::list<Argument *> *args_;

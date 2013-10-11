@@ -9,8 +9,4 @@ void Whatever::accept(class Visitor *v){
     v->visit(this);
 }
 
-//void Whatever::PrettyPrint(){
-//    std::cout<<whatever_;
-//}
-
 }

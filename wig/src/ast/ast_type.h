@@ -16,7 +16,6 @@ public:
     Type(kType type_, std::string tuple_id_ = "");
     void accept(Visitor *v) override;
 
-protected:
     kType type_;
     std::string tuple_id_;
 };

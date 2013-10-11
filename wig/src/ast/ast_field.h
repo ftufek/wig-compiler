@@ -12,9 +12,8 @@ public:
     Field(Type *type, std::string id);
     void accept(Visitor *v) override;
 
-protected:
-    Type *type;
-    std::string id;
+    Type *type_;
+    std::string id_;
 };
 
 }

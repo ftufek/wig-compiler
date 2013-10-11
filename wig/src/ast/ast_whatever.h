@@ -11,7 +11,6 @@ public:
     Whatever(std::string whatever_);
     void accept(Visitor *v) override;
 
-protected:
     std::string whatever_;
 };
 

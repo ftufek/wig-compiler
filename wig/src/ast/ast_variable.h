@@ -20,7 +20,6 @@ public:
              Base *value_);
     void accept(Visitor *v) override;
 
-protected:
     std::string name_;
     Type *type_;
     bool is_const_;

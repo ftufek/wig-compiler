@@ -17,7 +17,6 @@ class Base : public Visitable{
 public:
     Base();
     virtual ~Base();
-    void accept(Visitor *v) override;
 
     int at_line(){return at_line_;}
 
