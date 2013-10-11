@@ -41,7 +41,7 @@
 %token tSERVICE tCONST
 
 %token ttHTML
-%token <str> tID tWHATEVER tSTR tInputType tLVALUE
+%token <str> tID tWHATEVER tSTR tInputType
 
 
 /* HTML RELATED TOKENS */
@@ -66,7 +66,7 @@
 %type <listExp> variable functions nefunctions
 %type <typeExp> type
 %type <dict> attributes neattributes attribute inputattr inputattrs
-%type <str> attr
+%type <str> attr lvalue
 %type <type> simpletype
 %type <strList> identifiers
 %type <argList> arguments nearguments
@@ -315,5 +315,10 @@ neinputs: input
     | neinputs ',' input
     { $1->push_back($3); $$ = $1; }
 
-input: tID '=' tID /* TODO: replace left tID by tLVALUE */
+input: lvalue '=' tID
     { $$ = new ast::InputStm(*$1, *$3); }
+
+lvalue: tID
+    { $$ = $1; }
+    | tID '.' tID
+    { $$ = new std::string(*$1+"."+*$3); }

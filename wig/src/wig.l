@@ -29,6 +29,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 "[" return '[';
 "]" return ']';
 "," return ',';
+"." return '.';
 
 <INITIAL>{
     "service" { BEGIN(SERVICE); return tSERVICE; }
@@ -99,7 +100,6 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 <HTMLCODE,GAPCODE,INITIAL,SERVICE>{
     {ID} { yylval.str = new std::string(yytext);
         return tID; }
-
     {STR} { yylval.str = new std::string(yytext);
         return tSTR; }
     \n /* do nothing */
