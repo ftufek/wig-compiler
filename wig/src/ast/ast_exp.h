@@ -23,6 +23,22 @@ public:
     std::string lvalue_;
 };
 
+
+enum class kBinopType{
+    Assignment, Equals
+};
+
+class BinopExp : public Exp
+{
+public:
+    BinopExp(Exp *left, kBinopType type, Exp *right);
+    void accept(Visitor *v) override;
+
+    Exp *left_;
+    kBinopType type_;
+    Exp *right_;
+};
+
 }
 
 #endif // AST_EXP_H

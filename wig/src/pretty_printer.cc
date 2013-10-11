@@ -236,5 +236,22 @@ void PrettyPrintVisitor::visit(ast::LValExp *s){
     cout<<s->lvalue_;
 }
 
+void PrettyPrintVisitor::visit(ast::BinopExp *s){
+    s->left_->accept(this);
+
+    switch (s->type_) {
+    case ast::kBinopType::Assignment:
+        cout<<" = ";
+        break;
+
+    case ast::kBinopType::Equals:
+        cout<<" == ";
+        break;
+    default:
+        break;
+    }
+
+    s->right_->accept(this);
+}
 
 }

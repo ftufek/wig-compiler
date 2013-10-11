@@ -37,6 +37,7 @@ public:
 
     virtual void visit(Exp *s) = 0;
     virtual void visit(LValExp *s) = 0;
+    virtual void visit(BinopExp *s) = 0;
 };
 
 

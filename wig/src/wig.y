@@ -61,6 +61,8 @@
 %token tSchema tInt tBool tString tVoid tTuple
 %token tSHOW tPLUG tRECEIVE tEXIT tRETURN tIF tELSE tWHILE
 
+%token tEQ
+
 %type <base> service html htmlbody schema field function
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
 %type <listExp> variable functions nefunctions
@@ -306,6 +308,12 @@ exp: /* empty */
     { $$ = new ast::Exp(); }
     | lvalue
     { $$ = new ast::LValExp(*$1); }
+    | lvalue '=' exp
+    { $$ = new ast::BinopExp(new ast::LValExp(*$1),
+                             ast::kBinopType::Assignment,
+                             $3); }
+    | exp tEQ exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::Equals, $3); }
 
 inputs: /* empty */
     { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }

@@ -30,6 +30,9 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 "]" return ']';
 "," return ',';
 "." return '.';
+"!" return '!';
+"<" return '<';
+">" return '>';
 
 <INITIAL>{
     "service" { BEGIN(SERVICE); return tSERVICE; }
@@ -38,6 +41,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 <SERVICE>{
     "const" return tCONST;
     "html" return ttHTML;
+    "==" return tEQ;
     "=" return '=';
     ";" return ';';
     "<html>" { BEGIN(HTML); return tHtmlOpen; }
