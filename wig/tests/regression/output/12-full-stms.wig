@@ -5,12 +5,10 @@ const html a = <html><div><[plugHere]></div> </html>;
 
 bool checkIfTrue(int a, int b) { 
 a = "asdasd asd asd ";
-tuple { <empty>,}
-;
-tuple { a = 2,}
-;
-a = tuple { price = 2,asddd = 2,}
-;
+tuple { <empty>,};
+tuple { a = 2,};
+a = tuple { price = 2,asddd = 2,};
+2 + 2;
 if (true) { 
 }while (false) { 
 }

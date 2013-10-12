@@ -380,6 +380,8 @@ exp: /* empty */
     { $$ = new ast::StringExp(*$1); }
     | tTuple '{' fieldvalues '}'
     { $$ = new ast::TupleExp($3); }
+    | '(' exp ')'
+    { $$ = $2; }
 
 fieldvalues: /* empty */
     { $$ = new std::list<ast::Exp *>{new ast::Exp()}; }

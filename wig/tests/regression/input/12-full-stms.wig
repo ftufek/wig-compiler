@@ -6,6 +6,7 @@ service {
     tuple { };
     tuple { a = 2};
     a = tuple { price = 2, asddd = 2};
+    (2+2);
     if(true){}
     while(false){}
     a(2231+2);
