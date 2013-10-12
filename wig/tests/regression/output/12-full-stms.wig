@@ -5,16 +5,17 @@ service {
 
 	bool checkIfTrue(int a, int b) { 
 		a = "asdasd asd asd ";
-		tuple { <empty>,};
-		tuple { a = 2,};
-		a = tuple { price = 2,asddd = 2,};
+		tuple { };
+		tuple { a = 2};
+		a = tuple { price = 2, 
+			asddd = 2};
 		2 + 2;
 		if (true) { 
 					}
 		while (false) { 
 							}
 
-		a(2231 + 2,);
+		a(2231 + 2);
 		a \+ (a,d,d,);
 		a \- (dsasd,);
 		a % d;
@@ -24,8 +25,8 @@ service {
 		!as;
 		ddsad = !as;
 		sa << as;
-		if (asd.dd > d)		return <empty>;
-		else		show plug a[plugHere=2, ]receive [plugHere = p, ];
+		if (asd.dd > d)		return ;
+		else		show plug a[plugHere = 2]receive [plugHere = p];
 		while (dsf == s)			exit a;
 
 		if (a = d) { 

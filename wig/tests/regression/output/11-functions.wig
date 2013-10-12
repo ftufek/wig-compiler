@@ -1,2 +1,31 @@
-Error happened on line 29 : syntax error
- before: }
+service {
+	const html d = <html></html>;
+
+
+	int a;
+	bool s;
+
+	int testFunc(int a, bool b) { 
+			}
+
+	bool doesWork() { 
+		;
+		show d		;
+		show plug s[a = , d = ]		;
+		show plug d[d = , asd = ]receive [		];
+		show plug c[a = ]receive [d.s = s, dsasd.d = aa, dd = d];
+		exit d;
+		exit plug d[a = , d = ];
+	}
+
+	void takesArgs(int a, bool b) { 
+		;
+		;
+		;
+		return ;
+	}
+
+
+	session a () { 
+			}
+}

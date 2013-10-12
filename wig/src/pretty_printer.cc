@@ -208,10 +208,15 @@ void PrettyPrintVisitor::visit(ast::ShowStm *s) {
 void PrettyPrintVisitor::visit(ast::DocumentStm *s){
     if(s->pluggable_){
         cout<<"plug "<<s->id_<<"[";
-        // TODO: fix this after. there's always a trailing ','
-        for(auto const &plug : *(s->plugs_)){
-            plug->accept(this);
+
+        auto it = s->plugs_->begin();
+        if(it != s->plugs_->end()){
+            (*it)->accept(this);
+            ++it;
+        }
+        for(; it != s->plugs_->end(); ++it){
             cout<<", ";
+            (*it)->accept(this);
         }
         cout<<"]";
     }else{
@@ -220,15 +225,21 @@ void PrettyPrintVisitor::visit(ast::DocumentStm *s){
 }
 
 void PrettyPrintVisitor::visit(ast::PlugStm *s){
-    cout<<s->id_<<"=";
+    cout<<s->id_<<" = ";
     s->exp_->accept(this);
 }
 
 void PrettyPrintVisitor::visit(ast::ReceiveStm *s){
     cout<<"receive [";
-    for(auto const &input : *(s->inputs_)){
-        input->accept(this);
+
+    auto it = s->inputs_->begin();
+    if(it != s->inputs_->end()){
+        (*it)->accept(this);
+        ++it;
+    }
+    for(; it != s->inputs_->end(); ++it){
         cout<<", ";
+        (*it)->accept(this);
     }
     cout<<"]";
 }
@@ -282,8 +293,7 @@ void PrettyPrintVisitor::visit(ast::ExpStm *s){
 }
 
 void PrettyPrintVisitor::visit(ast::Exp *){
-    //TODO: fix remove this
-    cout<<"<empty>";
+    //TODO: remove this when have time
 }
 
 void PrettyPrintVisitor::visit(ast::LValExp *s){
@@ -404,9 +414,16 @@ void PrettyPrintVisitor::visit(ast::TupleopExp *s){
 void PrettyPrintVisitor::visit(ast::FunctionExp *s){
     cout<<s->id_;
     cout<<"(";
-    for(const auto &exp : *(s->exps_)){
-        exp->accept(this);
-        cout<<",";
+
+    auto it = s->exps_->begin();
+    if(it != s->exps_->end()){
+        (*it)->accept(this);
+        ++it;
+    }
+
+    for(; it != s->exps_->end(); ++it){
+        cout<<", ";
+        (*it)->accept(this);
     }
     cout<<")";
 }
@@ -434,10 +451,18 @@ void PrettyPrintVisitor::visit(ast::FieldValExp *s){
 
 void PrettyPrintVisitor::visit(ast::TupleExp *s){
     cout<<"tuple { ";
-    for(auto const &field : *(s->field_vals_)){
-        field->accept(this);
-        cout<<",";
+    Indent();
+    auto it = s->field_vals_->begin();
+    if(it != s->field_vals_->end()){
+        (*it)->accept(this);
+        ++it;
     }
+    for(; it != s->field_vals_->end(); ++it){
+        cout<<", "<<endl;
+        PrintIndent();
+        (*it)->accept(this);
+    }
+    DeIndent();
     cout<<"}";
 }
 

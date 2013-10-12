@@ -1,2 +1,25 @@
-Error happened on line 18 : syntax error
- before: }
+service {
+	const html a = <html>
+	asdasd
+	
+	asd
+	<[asdsad]>
+	<!--  sadsad asd asd ddd
+	 -->
+	as</html>;
+
+	schema item {
+		int price;
+		string title;
+		bool available;
+		void whatisthis;
+	}
+
+
+
+	session a () { 
+		ds = tuple { price = 2, 
+			title = "asddsadasd"};
+		exit a;
+	}
+}

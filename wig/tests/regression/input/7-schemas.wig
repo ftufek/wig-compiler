@@ -15,4 +15,9 @@ bool available;
 void whatisthis;
 }
 
+session a(){
+  ds = tuple { price = 2, title = "asddsadasd" };
+  exit a;
+}
+
 }
