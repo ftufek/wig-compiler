@@ -1,4 +1,6 @@
 TEMPLATE = app
+CONFIG -= debug
+CONFIG += release
 CONFIG -= app_bundle qt gui core
 LIBS -= -lQtGui -lQtCore
 QMAKE_CXXFLAGS += -std=c++11 -std=gnu++11
