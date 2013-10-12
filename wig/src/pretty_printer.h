@@ -40,6 +40,7 @@ public:
     void visit(ast::BinopExp *s) override;
     void visit(ast::UnopExp *s) override;
     void visit(ast::TupleopExp *s) override;
+    void visit(ast::FunctionExp *s) override;
 };
 
 }

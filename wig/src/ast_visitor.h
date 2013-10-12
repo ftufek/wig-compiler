@@ -40,6 +40,7 @@ public:
     virtual void visit(BinopExp *s) = 0;
     virtual void visit(UnopExp *s) = 0;
     virtual void visit(TupleopExp *s) = 0;
+    virtual void visit(FunctionExp *s) = 0;
 };
 
 

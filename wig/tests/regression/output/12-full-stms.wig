@@ -4,6 +4,9 @@ const html a = <html><div><[plugHere]></div> </html>;
 
 
 bool checkIfTrue(int a, int b) { 
+a(<empty>,);
+a(asdsad + asdd,);
+a(as + s,a * a,d,);
 a \+ (dd,);
 a \+ (a,d,d,);
 a \- (dsasd,);

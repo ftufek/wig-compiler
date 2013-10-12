@@ -27,6 +27,7 @@
   ast::Stm *stm;
   ast::Exp *exp;
   std::list<ast::Stm*> *stmList;
+  std::list<ast::Exp*> *expList;
   ast::CompoundStm *compoundStm;
   ast::DocumentStm *docStm;
   ast::PlugStm *plugStm;
@@ -80,6 +81,7 @@
 %type <plugList> plugs
 %type <plugStm> plug
 %type <exp> exp
+%type <expList> exps neexps
 
 %start service
 %%
@@ -355,6 +357,18 @@ exp: /* empty */
                                    new std::list<std::string>{*$3}); }
     | exp tTDISCARD '(' identifiers ')'
     { $$ = new ast::TupleopExp($1, ast::kTupleopType::Discard, $4); }
+    | tID '(' exps ')'
+    { $$ = new ast::FunctionExp(*$1, $3); }
+
+exps: /* empty */
+    { $$ = new std::list<ast::Exp *>{new ast::Exp()}; }
+    | neexps
+    { $$ = $1; }
+
+neexps: exp
+    { $$ = new std::list<ast::Exp *>{$1}; }
+    | neexps ',' exp
+    { $1->push_back($3); $$ = $1; }
 
 inputs: /* empty */
     { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }

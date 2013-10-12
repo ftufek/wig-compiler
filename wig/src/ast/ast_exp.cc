@@ -24,4 +24,9 @@ TupleopExp::TupleopExp(Exp *exp, kTupleopType type, std::list<std::string> *ids)
     :exp_(exp), type_(type), ids_(ids) {}
 void TupleopExp::accept(Visitor *v) { v->visit(this); }
 
+
+FunctionExp::FunctionExp(std::string id, std::list<Exp *> *exps)
+    :id_(id), exps_(exps) {}
+void FunctionExp::accept(Visitor *v) { v->visit(this); }
+
 }

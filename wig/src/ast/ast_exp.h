@@ -77,6 +77,17 @@ public:
     std::list<std::string> *ids_;
 };
 
+
+class FunctionExp : public Exp
+{
+public:
+    FunctionExp(std::string id, std::list<Exp *> *exps);
+    void accept(Visitor *v) override;
+
+    std::string id_;
+    std::list<Exp *> *exps_;
+};
+
 }
 
 #endif // AST_EXP_H

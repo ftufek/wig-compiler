@@ -348,4 +348,14 @@ void PrettyPrintVisitor::visit(ast::TupleopExp *s){
     cout<<")";
 }
 
+void PrettyPrintVisitor::visit(ast::FunctionExp *s){
+    cout<<s->id_;
+    cout<<"(";
+    for(const auto &exp : *(s->exps_)){
+        exp->accept(this);
+        cout<<",";
+    }
+    cout<<")";
+}
+
 }
