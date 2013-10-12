@@ -31,6 +31,10 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 "," return ',';
 "." return '.';
 "!" return '!';
+"==" return tEQ;
+"!=" return tNotEQ;
+"<=" return tLowerEq;
+">=" return tHigherEq;
 "<" return '<';
 ">" return '>';
 
@@ -41,7 +45,6 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 <SERVICE>{
     "const" return tCONST;
     "html" return ttHTML;
-    "==" return tEQ;
     "=" return '=';
     ";" return ';';
     "<html>" { BEGIN(HTML); return tHtmlOpen; }

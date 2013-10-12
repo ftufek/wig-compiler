@@ -4,7 +4,11 @@ const html a = <html><div><[plugHere]></div> </html>;
 
 
 bool checkIfTrue(int a, int b) { 
-d = aif (asd.dd == d)return <empty>;
+s = a != d;
+s = a > d;
+d = s < d;
+d = a;
+if (asd.dd > d)return <empty>;
 else
 show plug a[plugHere=<empty>, ]receive [plugHere = p, ];
 while (dsf)exit a;

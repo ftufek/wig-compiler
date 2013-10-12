@@ -226,6 +226,7 @@ void PrettyPrintVisitor::visit(ast::WhileStm *s){
 
 void PrettyPrintVisitor::visit(ast::ExpStm *s){
     s->exp_->accept(this);
+    cout<<";"<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::Exp *s){
@@ -247,6 +248,19 @@ void PrettyPrintVisitor::visit(ast::BinopExp *s){
     case ast::kBinopType::Equals:
         cout<<" == ";
         break;
+
+    case ast::kBinopType::NotEquals:
+        cout<<" != ";
+        break;
+
+    case ast::kBinopType::LowerThan:
+        cout<<" < ";
+        break;
+
+    case ast::kBinopType::HigherThan:
+        cout<<" > ";
+        break;
+
     default:
         break;
     }

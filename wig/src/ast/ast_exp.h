@@ -25,7 +25,7 @@ public:
 
 
 enum class kBinopType{
-    Assignment, Equals
+    Assignment, Equals, NotEquals, LowerThan, HigherThan
 };
 
 class BinopExp : public Exp

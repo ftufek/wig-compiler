@@ -61,7 +61,7 @@
 %token tSchema tInt tBool tString tVoid tTuple
 %token tSHOW tPLUG tRECEIVE tEXIT tRETURN tIF tELSE tWHILE
 
-%token tEQ
+%token tEQ tNotEQ tLowerEq tHigherEq
 
 %type <base> service html htmlbody schema field function
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
@@ -314,6 +314,12 @@ exp: /* empty */
                              $3); }
     | exp tEQ exp
     { $$ = new ast::BinopExp($1, ast::kBinopType::Equals, $3); }
+    | exp tNotEQ exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::NotEquals, $3); }
+    | exp '<' exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::LowerThan, $3); }
+    | exp '>' exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::HigherThan, $3); }
 
 inputs: /* empty */
     { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }
