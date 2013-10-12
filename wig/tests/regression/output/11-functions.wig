@@ -1,25 +1,2 @@
-service {
-const html d = <html></html>;
-
-
-int a;
-bool s;
-
-int testFunc() { 
-}
-bool doesWork() { 
-;
-show d;
-show plug s[a=<empty>, d=<empty>, ];
-show plug d[d=<empty>, asd=<empty>, ]receive [, ];
-show plug c[a=<empty>, ]receive [d.s = s, dsasd.d = aa, dd = d, ];
-exit d;
-exit plug d[a=<empty>, d=<empty>, ];
-}
-void takesArgs(int a, bool b) { 
-;
-;
-;
-return <empty>;
-}
-}
+Error happened on line 29 : syntax error
+ before: }

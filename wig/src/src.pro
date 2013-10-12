@@ -22,7 +22,8 @@ SOURCES += \
     ast/helpers.cc \
     ast/function.cc \
     ast/field.cc \
-    ast/exp.cc
+    ast/exp.cc \
+    ast/session.cc
 
 HEADERS += \
     ast.h \
@@ -44,7 +45,8 @@ HEADERS += \
     ast/string.h \
     ast/type.h \
     ast/variable.h \
-    ast/whatever.h
+    ast/whatever.h \
+    ast/session.h
 
 OTHER_FILES += wig.l \
     wig.y

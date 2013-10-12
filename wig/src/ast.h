@@ -11,6 +11,7 @@ extern int yylineno;
 #include "ast/empty.h"
 #include "ast/list.h"
 #include "ast/service.h"
+#include "ast/session.h"
 #include "ast/variable.h"
 #include "ast/html.h"
 #include "ast/meta.h"

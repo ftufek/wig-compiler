@@ -1,19 +1,2 @@
-service {
-const html a = <html>
-asdasd
-
-asd
-<[asdsad]>
-<!--  sadsad asd asd ddd
- -->
-as</html>;
-
-schema item {
-int price;
-string title;
-bool available;
-void whatisthis;
-}
-
-
-}
+Error happened on line 18 : syntax error
+ before: }

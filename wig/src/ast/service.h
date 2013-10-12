@@ -11,12 +11,14 @@ public:
     Service(List *htmls_,
             List *schemas_,
             List *functions_,
+            List *sessions,
             List *global_variables_ = new List());
     void accept(class Visitor *v) override;
 
     List *htmls_;
     List *schemas_;
     List *functions_;
+    List *sessions_;
     List *global_variables_;
 };
 

@@ -1,13 +1,2 @@
-service {
-const html d = <html><div class=ds></div>
-            <input name="wow" type="text">
-            <input name="s" type="radio">
-
-            <select id="a" type="radio">
-            <div></div>
-          </select>
-      </html>;
-
-
-
-}
+Error happened on line 10 : syntax error
+ before: }

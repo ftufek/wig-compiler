@@ -77,6 +77,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 
     "true" return tTRUE;
     "false" return tFALSE;
+    "session" return tSESSION;
 }
 
 <HTML>{

@@ -40,7 +40,7 @@
   ast::kType type;
 }
 
-%token tSERVICE tCONST
+%token tSERVICE tCONST tSESSION
 
 %token ttHTML
 %token <str> tID tWHATEVER tSTR tInputType
@@ -67,9 +67,9 @@
 %token tEQ tNEQ tLEQ tHEQ tLAND tLOR tTCOMBINE tTKEEP tTDISCARD
 %token tTRUE tFALSE
 
-%type <base> service html htmlbody schema field function
+%type <base> service html htmlbody schema field function session
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
-%type <listExp> variable functions nefunctions
+%type <listExp> variable functions nefunctions sessions
 %type <typeExp> type
 %type <dict> attributes neattributes attribute inputattr inputattrs
 %type <str> attr lvalue
@@ -97,12 +97,12 @@
 %left '(' ')'
 %%
 
-service: tSERVICE '{' htmls schemas nevariables functions '}'
-       { EXP = new ast::Service($3, $4, $6, $5); }
-     | tSERVICE '{' htmls schemas functions '}'
-       { EXP = new ast::Service($3, $4, $5); }
+service: tSERVICE '{' htmls schemas nevariables functions sessions '}'
+       { EXP = new ast::Service($3, $4, $6, $7, $5); }
+     | tSERVICE '{' htmls schemas functions sessions '}'
+       { EXP = new ast::Service($3, $4, $5, $6); }
      | /* empty */
-       { EXP = new ast::Empty(); }
+       { yyerror("Error: doesn't contain any service."); }
 
 htmls : html
        { $$ = ast::initList($1); }
@@ -267,6 +267,14 @@ compoundstm: '{' nevariables stms '}'
             { $$ = new ast::CompoundStm($3, $2->getList()); }
             | '{' stms '}'
             { $$ = new ast::CompoundStm($2); }
+
+sessions: session
+    { $$ = ast::initList($1); }
+    | sessions session
+    { $$ = ast::addBack($1, $2); }
+
+session: tSESSION tID '(' ')' compoundstm
+    { $$ = new ast::Session(*$2, $5); }
 
 stms: /* empty */
     { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }

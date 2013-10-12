@@ -21,6 +21,7 @@ public:
     void visit(ast::String *s) override;
     void visit(ast::List *s) override;
     void visit(ast::Type *s) override;
+    void visit(ast::Session *s) override;
 
     void visit(ast::EmptyStm *s) override;
     void visit(ast::CompoundStm *s) override;

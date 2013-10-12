@@ -21,6 +21,7 @@ public:
     virtual void visit(String *s) = 0;
     virtual void visit(List *s) = 0;
     virtual void visit(Type *s) = 0;
+    virtual void visit(Session *s) = 0;
 
     virtual void visit(EmptyStm *s) = 0;
     virtual void visit(CompoundStm *s) = 0;

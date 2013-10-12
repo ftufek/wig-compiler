@@ -1,12 +1,2 @@
-service {
-const html a = <html>
-<div>maybe this 
-  is it!<[name]> test 1 2 
-
-3</div>
-
-</html>;
-
-
-
-}
+Error happened on line 11 : syntax error
+ before: }

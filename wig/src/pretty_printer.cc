@@ -14,6 +14,8 @@ void PrettyPrintVisitor::visit(ast::Service *s){
     s->global_variables_->accept(this);
     cout<<endl;
     s->functions_->accept(this);
+    cout<<endl;
+    s->sessions_->accept(this);
     cout<<"}"<<endl;
 }
 
@@ -135,6 +137,11 @@ void PrettyPrintVisitor::visit(ast::Type *s) {
         cout<<"html";
         break;
     }
+}
+
+void PrettyPrintVisitor::visit(ast::Session *s){
+    cout<<"session "<<s->id_<<" ()";
+    s->stm_->accept(this);
 }
 
 void PrettyPrintVisitor::visit(ast::EmptyStm *s) {

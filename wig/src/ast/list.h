@@ -10,6 +10,7 @@ class List : public Base{
 public:
     List(std::list<Base *> *exps_ = new std::list<Base *>);
     void accept(Visitor *v) override;
+
     std::list<Base *> *getList();
 
     std::list<Base *> *exps_;
