@@ -29,4 +29,14 @@ FunctionExp::FunctionExp(std::string id, std::list<Exp *> *exps)
     :id_(id), exps_(exps) {}
 void FunctionExp::accept(Visitor *v) { v->visit(this); }
 
+
+IntegerExp::IntegerExp(int i) :i_(i) {}
+void IntegerExp::accept(Visitor *v) { v->visit(this); }
+
+
+TrueExp::TrueExp(){}
+void TrueExp::accept(Visitor *v) { v->visit(this); }
+
+FalseExp::FalseExp(){}
+void FalseExp::accept(Visitor *v) { v->visit(this); }
 }

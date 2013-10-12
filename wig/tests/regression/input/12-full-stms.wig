@@ -2,7 +2,9 @@ service {
   const html a = <html><div ><[plugHere]></div> </html>;
 
   bool checkIfTrue(int a, int b){
-    a();
+    if(true){}
+    while(false){}
+    a(2231+2);
     a(asdsad+asdd);
     a(as+s, a*a, d);
     a \+ dd;

@@ -229,7 +229,7 @@ void PrettyPrintVisitor::visit(ast::ExpStm *s){
     cout<<";"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::Exp *s){
+void PrettyPrintVisitor::visit(ast::Exp *){
     cout<<"<empty>";
 }
 
@@ -356,6 +356,18 @@ void PrettyPrintVisitor::visit(ast::FunctionExp *s){
         cout<<",";
     }
     cout<<")";
+}
+
+void PrettyPrintVisitor::visit(ast::IntegerExp *s){
+    cout<<s->i_;
+}
+
+void PrettyPrintVisitor::visit(ast::TrueExp *){
+    cout<<"true";
+}
+
+void PrettyPrintVisitor::visit(ast::FalseExp *){
+    cout<<"false";
 }
 
 }

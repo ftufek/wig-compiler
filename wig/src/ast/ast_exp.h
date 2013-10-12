@@ -88,6 +88,29 @@ public:
     std::list<Exp *> *exps_;
 };
 
+
+class IntegerExp : public Exp
+{
+public:
+    IntegerExp(int i);
+    void accept(Visitor *v) override;
+
+    int i_;
+};
+
+class TrueExp : public Exp
+{
+public:
+    TrueExp();
+    void accept(Visitor *v) override;
+};
+
+class FalseExp : public Exp
+{
+public:
+    FalseExp();
+    void accept(Visitor *v) override;
+};
 }
 
 #endif // AST_EXP_H

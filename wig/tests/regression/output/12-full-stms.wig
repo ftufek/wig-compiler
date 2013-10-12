@@ -4,7 +4,10 @@ const html a = <html><div><[plugHere]></div> </html>;
 
 
 bool checkIfTrue(int a, int b) { 
-a(<empty>,);
+if (true) { 
+}while (false) { 
+}
+a(2231 + 2,);
 a(asdsad + asdd,);
 a(as + s,a * a,d,);
 a \+ (dd,);
@@ -32,7 +35,7 @@ ddsad = !as;
 sa << as;
 if (asd.dd > d)return <empty>;
 else
-show plug a[plugHere=<empty>, ]receive [plugHere = p, ];
+show plug a[plugHere=2, ]receive [plugHere = p, ];
 while (dsf == s)exit a;
 
 if (a = d) { 

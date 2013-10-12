@@ -41,6 +41,9 @@ public:
     virtual void visit(UnopExp *s) = 0;
     virtual void visit(TupleopExp *s) = 0;
     virtual void visit(FunctionExp *s) = 0;
+    virtual void visit(IntegerExp *s) = 0;
+    virtual void visit(TrueExp *s) = 0;
+    virtual void visit(FalseExp *s) = 0;
 };
 
 

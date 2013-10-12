@@ -9,6 +9,7 @@ ALFA [a-zA-Z]
 ALFANUM {ALFA}|[0-9]
 IDAUX {ALFANUM}|(_{ALFANUM})
 ID {ALFA}{IDAUX}*
+INT 0|([1-9][0-9]*)
 LVALUE [a-zA-Z0-9.]
 WHATEVER [^<>]*
 STR				\"((\\\")|([^\"\n\t]))*\"
@@ -73,6 +74,9 @@ STR				\"((\\\")|([^\"\n\t]))*\"
     "if" return tIF;
     "else" return tELSE;
     "while" return tWHILE;
+
+    "true" return tTRUE;
+    "false" return tFALSE;
 }
 
 <HTML>{
@@ -119,6 +123,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
         return tID; }
     {STR} { yylval.str = new std::string(yytext);
         return tSTR; }
+    {INT} { yylval.integer = atoi(yytext); return tINT; }
     \n /* do nothing */
              . /* do nothing for now*/
 }

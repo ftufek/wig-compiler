@@ -41,6 +41,9 @@ public:
     void visit(ast::UnopExp *s) override;
     void visit(ast::TupleopExp *s) override;
     void visit(ast::FunctionExp *s) override;
+    void visit(ast::IntegerExp *s) override;
+    void visit(ast::TrueExp *s) override;
+    void visit(ast::FalseExp *s) override;
 };
 
 }

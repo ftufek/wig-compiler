@@ -19,6 +19,7 @@
 %}
 
 %union{
+  int integer;
   std::string *str;
   std::map<std::string, std::string> *dict;
   std::list<std::string> *strList;
@@ -43,6 +44,7 @@
 
 %token ttHTML
 %token <str> tID tWHATEVER tSTR tInputType
+%token <integer> tINT
 
 
 /* HTML RELATED TOKENS */
@@ -63,6 +65,7 @@
 %token tSHOW tPLUG tRECEIVE tEXIT tRETURN tIF tELSE tWHILE
 
 %token tEQ tNEQ tLEQ tHEQ tLAND tLOR tTCOMBINE tTKEEP tTDISCARD
+%token tTRUE tFALSE
 
 %type <base> service html htmlbody schema field function
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
@@ -84,6 +87,14 @@
 %type <expList> exps neexps
 
 %start service
+
+%left '-' '+'
+%left '*' '/' '%'
+%left tLOR
+%left tLAND
+%left tEQ tNEQ tLEQ tHEQ '<' '>'
+%left '='
+%left '(' ')'
 %%
 
 service: tSERVICE '{' htmls schemas nevariables functions '}'
@@ -359,6 +370,12 @@ exp: /* empty */
     { $$ = new ast::TupleopExp($1, ast::kTupleopType::Discard, $4); }
     | tID '(' exps ')'
     { $$ = new ast::FunctionExp(*$1, $3); }
+    | tINT
+    { $$ = new ast::IntegerExp($1); }
+    | tTRUE
+    { $$ = new ast::TrueExp(); }
+    | tFALSE
+    { $$ = new ast::FalseExp(); }
 
 exps: /* empty */
     { $$ = new std::list<ast::Exp *>{new ast::Exp()}; }
