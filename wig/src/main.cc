@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 #include "ast.h"
 #include "pretty_printer.h"
 #include "y.tab.h"

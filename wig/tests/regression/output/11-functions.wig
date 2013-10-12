@@ -13,8 +13,8 @@ service {
 		;
 		show d		;
 		show plug s[a = , d = ]		;
-		show plug d[d = , asd = ]receive [		];
-		show plug c[a = ]receive [d.s = s, dsasd.d = aa, dd = d];
+		show plug d[d = , asd = ] receive [		];
+		show plug c[a = ] receive [d.s = s, dsasd.d = aa, dd = d];
 		exit d;
 		exit plug d[a = , d = ];
 	}

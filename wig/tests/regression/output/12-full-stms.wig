@@ -26,7 +26,7 @@ service {
 		ddsad = !as;
 		sa << as;
 		if (asd.dd > d)		return ;
-		else		show plug a[plugHere = 2]receive [plugHere = p];
+		else		show plug a[plugHere = 2] receive [plugHere = p];
 		while (dsf == s)			exit a;
 
 		if (a = d) { 

@@ -230,7 +230,7 @@ void PrettyPrintVisitor::visit(ast::PlugStm *s){
 }
 
 void PrettyPrintVisitor::visit(ast::ReceiveStm *s){
-    cout<<"receive [";
+    cout<<" receive [";
 
     auto it = s->inputs_->begin();
     if(it != s->inputs_->end()){
