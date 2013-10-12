@@ -91,10 +91,10 @@
 %left '-' '+'
 %left '*' '/' '%'
 %left tLOR
-%left tLAND
+%left tLAND '!'
+%left tTCOMBINE tTKEEP tTDISCARD
 %left tEQ tNEQ tLEQ tHEQ '<' '>'
 %left '='
-%left '(' ')'
 %%
 
 service: tSERVICE '{' htmls schemas nevariables functions sessions '}'

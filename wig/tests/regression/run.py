@@ -6,7 +6,7 @@ from filecmp import cmp
 idir = "input/"
 odir = "output/"
 tdir = "temp/"
-fwig = "../../build-debug/src"
+fwig = "../../build-debug/fwig"
 
 files = [ f for f in listdir(idir) if isfile(join(idir, f)) ]
 

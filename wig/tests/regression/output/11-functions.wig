@@ -9,6 +9,7 @@ service {
 			}
 
 	bool doesWork() { 
+		emtpyCall();
 		;
 		show d		;
 		show plug s[a = , d = ]		;
