@@ -38,6 +38,8 @@ public:
     virtual void visit(Exp *s) = 0;
     virtual void visit(LValExp *s) = 0;
     virtual void visit(BinopExp *s) = 0;
+    virtual void visit(UnopExp *s) = 0;
+    virtual void visit(TupleopExp *s) = 0;
 };
 
 

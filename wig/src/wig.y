@@ -61,7 +61,7 @@
 %token tSchema tInt tBool tString tVoid tTuple
 %token tSHOW tPLUG tRECEIVE tEXIT tRETURN tIF tELSE tWHILE
 
-%token tEQ tNotEQ tLowerEq tHigherEq
+%token tEQ tNEQ tLEQ tHEQ tLAND tLOR tTCOMBINE tTKEEP tTDISCARD
 
 %type <base> service html htmlbody schema field function
 %type <listExp> htmls nehtmlbodies schemas neschemas fields nefields nevariables
@@ -314,12 +314,47 @@ exp: /* empty */
                              $3); }
     | exp tEQ exp
     { $$ = new ast::BinopExp($1, ast::kBinopType::Equals, $3); }
-    | exp tNotEQ exp
+    | exp tNEQ exp
     { $$ = new ast::BinopExp($1, ast::kBinopType::NotEquals, $3); }
     | exp '<' exp
     { $$ = new ast::BinopExp($1, ast::kBinopType::LowerThan, $3); }
     | exp '>' exp
     { $$ = new ast::BinopExp($1, ast::kBinopType::HigherThan, $3); }
+    | exp tLEQ exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::LowerEquals, $3); }
+    | exp tHEQ exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::HigherEquals, $3); }
+    | '!' exp
+    { $$ = new ast::UnopExp(ast::kUnopType::LogicNegate, $2); }
+    | '-' exp
+    { $$ = new ast::UnopExp(ast::kUnopType::Minus, $2); }
+    | exp '+' exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::Add, $3); }
+    | exp '-' exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::Sub, $3); }
+    | exp '*' exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::Mult, $3); }
+    | exp '/' exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::Div, $3); }
+    | exp '%' exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::Mod, $3); }
+    | exp tLAND exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::And, $3); }
+    | exp tLOR exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::Or, $3); }
+    | exp tTCOMBINE exp
+    { $$ = new ast::BinopExp($1, ast::kBinopType::Combine, $3); }
+    | exp tTKEEP tID
+    { $$ = new ast::TupleopExp($1,
+                               ast::kTupleopType::Keep,
+                               new std::list<std::string>{*$3}); }
+    | exp tTKEEP '(' identifiers ')'
+    { $$ = new ast::TupleopExp($1, ast::kTupleopType::Keep, $4); }
+    | exp tTDISCARD tID
+    { $$ = new ast::TupleopExp($1, ast::kTupleopType::Discard,
+                                   new std::list<std::string>{*$3}); }
+    | exp tTDISCARD '(' identifiers ')'
+    { $$ = new ast::TupleopExp($1, ast::kTupleopType::Discard, $4); }
 
 inputs: /* empty */
     { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }

@@ -31,10 +31,20 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 "," return ',';
 "." return '.';
 "!" return '!';
+"+" return '+';
+"-" return '-';
+"*" return '*';
+"/" return '/';
+"%" return '%';
 "==" return tEQ;
-"!=" return tNotEQ;
-"<=" return tLowerEq;
-">=" return tHigherEq;
+"!=" return tNEQ;
+"<=" return tLEQ;
+">=" return tHEQ;
+"&&" return tLAND;
+"||" return tLOR;
+"<<" return tTCOMBINE;
+"\\+" return tTKEEP;
+"\\-" return tTDISCARD;
 "<" return '<';
 ">" return '>';
 

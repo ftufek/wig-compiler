@@ -2,6 +2,7 @@
 #define AST_EXP_H
 
 #include <string>
+#include <list>
 #include "ast.h"
 
 namespace ast{
@@ -25,7 +26,11 @@ public:
 
 
 enum class kBinopType{
-    Assignment, Equals, NotEquals, LowerThan, HigherThan
+    Assignment, Equals, NotEquals, LowerThan,
+    HigherThan, LowerEquals, HigherEquals,
+    Add, Sub, Mult, Div, Mod,
+    And, Or,
+    Combine
 };
 
 class BinopExp : public Exp
@@ -37,6 +42,39 @@ public:
     Exp *left_;
     kBinopType type_;
     Exp *right_;
+};
+
+
+enum class kUnopType{
+    LogicNegate, Minus
+};
+
+class UnopExp : public Exp
+{
+public:
+    UnopExp(kUnopType type, Exp *exp);
+    void accept(Visitor *v) override;
+
+    kUnopType type_;
+    Exp *exp_;
+};
+
+
+enum class kTupleopType{
+    Keep, Discard
+};
+
+class TupleopExp : public Exp
+{
+public:
+    TupleopExp(Exp *exp,
+               kTupleopType type,
+               std::list<std::string> *ids);
+    void accept(Visitor *v) override;
+
+    Exp *exp_;
+    kTupleopType type_;
+    std::list<std::string> *ids_;
 };
 
 }

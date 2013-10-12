@@ -261,11 +261,91 @@ void PrettyPrintVisitor::visit(ast::BinopExp *s){
         cout<<" > ";
         break;
 
+    case ast::kBinopType::LowerEquals:
+        cout<<" <= ";
+        break;
+
+    case ast::kBinopType::HigherEquals:
+        cout<<" >= ";
+        break;
+
+    case ast::kBinopType::Add:
+        cout<<" + ";
+        break;
+
+    case ast::kBinopType::Sub:
+        cout<<" - ";
+        break;
+
+    case ast::kBinopType::Mult:
+        cout<<" * ";
+        break;
+
+    case ast::kBinopType::Div:
+        cout<<" / ";
+        break;
+
+    case ast::kBinopType::Mod:
+        cout<<" % ";
+        break;
+
+    case ast::kBinopType::And:
+        cout<<" && ";
+        break;
+
+    case ast::kBinopType::Or:
+        cout<<" || ";
+        break;
+
+    case ast::kBinopType::Combine:
+        cout<<" << ";
+        break;
+
     default:
         break;
     }
 
     s->right_->accept(this);
+}
+
+void PrettyPrintVisitor::visit(ast::UnopExp *s){
+    switch (s->type_) {
+    case ast::kUnopType::LogicNegate:
+        cout<<"!";
+        break;
+
+    case ast::kUnopType::Minus:
+        cout<<"-";
+        break;
+
+    default:
+        break;
+    }
+
+    s->exp_->accept(this);
+}
+
+void PrettyPrintVisitor::visit(ast::TupleopExp *s){
+    s->exp_->accept(this);
+
+    switch (s->type_) {
+    case ast::kTupleopType::Keep:
+        cout<<" \\+ ";
+        break;
+
+    case ast::kTupleopType::Discard:
+        cout<<" \\- ";
+        break;
+
+    default:
+        break;
+    }
+
+    cout<<"(";
+    for(const auto &id : *(s->ids_)){
+        cout<<id<<",";
+    }
+    cout<<")";
 }
 
 }

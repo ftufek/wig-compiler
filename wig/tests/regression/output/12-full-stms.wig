@@ -4,14 +4,33 @@ const html a = <html><div><[plugHere]></div> </html>;
 
 
 bool checkIfTrue(int a, int b) { 
+a \+ (dd,);
+a \+ (a,d,d,);
+a \- (dsasd,);
+d \- (sa,d,d,a,);
 s = a != d;
 s = a > d;
 d = s < d;
 d = a;
+d = d <= d;
+s = a >= d;
+d = -dd;
+a = d + d;
+d = a * d;
+s = d - a;
+s = d / d;
+d = a + d * s;
+a % d;
+as && d;
+a || a;
+-dd;
+!as;
+ddsad = !as;
+sa << as;
 if (asd.dd > d)return <empty>;
 else
 show plug a[plugHere=<empty>, ]receive [plugHere = p, ];
-while (dsf)exit a;
+while (dsf == s)exit a;
 
 if (a = d) { 
 int a;

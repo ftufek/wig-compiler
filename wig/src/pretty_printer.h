@@ -38,6 +38,8 @@ public:
     void visit(ast::Exp *s) override;
     void visit(ast::LValExp *s) override;
     void visit(ast::BinopExp *s) override;
+    void visit(ast::UnopExp *s) override;
+    void visit(ast::TupleopExp *s) override;
 };
 
 }
