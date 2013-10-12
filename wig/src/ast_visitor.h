@@ -45,6 +45,8 @@ public:
     virtual void visit(TrueExp *s) = 0;
     virtual void visit(FalseExp *s) = 0;
     virtual void visit(StringExp *s) = 0;
+    virtual void visit(FieldValExp *s) = 0;
+    virtual void visit(TupleExp *s) = 0;
 };
 
 

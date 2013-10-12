@@ -374,4 +374,18 @@ void PrettyPrintVisitor::visit(ast::StringExp *s){
     cout<<s->str_;
 }
 
+void PrettyPrintVisitor::visit(ast::FieldValExp *s){
+    cout<<s->id_<<" = ";
+    s->exp_->accept(this);
+}
+
+void PrettyPrintVisitor::visit(ast::TupleExp *s){
+    cout<<"tuple { ";
+    for(auto const &field : *(s->field_vals_)){
+        field->accept(this);
+        cout<<",";
+    }
+    cout<<"}";
+}
+
 }

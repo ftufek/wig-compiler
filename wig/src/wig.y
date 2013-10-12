@@ -83,8 +83,8 @@
 %type <docStm> document
 %type <plugList> plugs
 %type <plugStm> plug
-%type <exp> exp
-%type <expList> exps neexps
+%type <exp> exp fieldvalue
+%type <expList> exps neexps fieldvalues nefieldvalues
 
 %start service
 
@@ -378,6 +378,21 @@ exp: /* empty */
     { $$ = new ast::FalseExp(); }
     | tSTR
     { $$ = new ast::StringExp(*$1); }
+    | tTuple '{' fieldvalues '}'
+    { $$ = new ast::TupleExp($3); }
+
+fieldvalues: /* empty */
+    { $$ = new std::list<ast::Exp *>{new ast::Exp()}; }
+    | nefieldvalues
+    { $$ = $1; }
+
+nefieldvalues: fieldvalue
+    { $$ = new std::list<ast::Exp *>{$1}; }
+    | nefieldvalues ',' fieldvalue
+    { $1->push_back($3); $$ = $1; }
+
+fieldvalue: tID '=' exp
+    { $$ = new ast::FieldValExp(*$1, $3); }
 
 exps: /* empty */
     { $$ = new std::list<ast::Exp *>{new ast::Exp()}; }

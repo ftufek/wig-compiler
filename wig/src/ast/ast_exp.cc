@@ -43,4 +43,11 @@ void FalseExp::accept(Visitor *v) { v->visit(this); }
 
 StringExp::StringExp(std::string str) :str_(str) {}
 void StringExp::accept(Visitor *v) { v->visit(this); }
+
+
+FieldValExp::FieldValExp(std::string id, Exp *exp):id_(id), exp_(exp){}
+void FieldValExp::accept(Visitor *v) { v->visit(this); }
+
+TupleExp::TupleExp(std::list<Exp *> *field_vals):field_vals_(field_vals){}
+void TupleExp::accept(Visitor *v) { v->visit(this); }
 }

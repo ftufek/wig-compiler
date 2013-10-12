@@ -121,6 +121,26 @@ public:
 
     std::string str_;
 };
+
+
+class FieldValExp : public Exp
+{
+public:
+    FieldValExp(std::string id, Exp *exp);
+    void accept(Visitor *v) override;
+
+    std::string id_;
+    Exp *exp_;
+};
+
+class TupleExp : public Exp
+{
+public:
+    TupleExp(std::list<Exp *> *field_vals);
+    void accept(Visitor *v) override;
+
+    std::list<Exp *> *field_vals_;
+};
 }
 
 #endif // AST_EXP_H
