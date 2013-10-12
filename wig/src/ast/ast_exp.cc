@@ -39,4 +39,8 @@ void TrueExp::accept(Visitor *v) { v->visit(this); }
 
 FalseExp::FalseExp(){}
 void FalseExp::accept(Visitor *v) { v->visit(this); }
+
+
+StringExp::StringExp(std::string str) :str_(str) {}
+void StringExp::accept(Visitor *v) { v->visit(this); }
 }

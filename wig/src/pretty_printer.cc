@@ -370,4 +370,8 @@ void PrettyPrintVisitor::visit(ast::FalseExp *){
     cout<<"false";
 }
 
+void PrettyPrintVisitor::visit(ast::StringExp *s){
+    cout<<s->str_;
+}
+
 }

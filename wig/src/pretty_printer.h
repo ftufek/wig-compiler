@@ -44,6 +44,7 @@ public:
     void visit(ast::IntegerExp *s) override;
     void visit(ast::TrueExp *s) override;
     void visit(ast::FalseExp *s) override;
+    void visit(ast::StringExp *s) override;
 };
 
 }

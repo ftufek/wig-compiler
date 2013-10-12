@@ -44,6 +44,7 @@ public:
     virtual void visit(IntegerExp *s) = 0;
     virtual void visit(TrueExp *s) = 0;
     virtual void visit(FalseExp *s) = 0;
+    virtual void visit(StringExp *s) = 0;
 };
 
 

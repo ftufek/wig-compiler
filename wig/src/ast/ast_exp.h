@@ -111,6 +111,16 @@ public:
     FalseExp();
     void accept(Visitor *v) override;
 };
+
+
+class StringExp : public Exp
+{
+public:
+    StringExp(std::string str);
+    void accept(Visitor *v) override;
+
+    std::string str_;
+};
 }
 
 #endif // AST_EXP_H

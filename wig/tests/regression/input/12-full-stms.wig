@@ -2,6 +2,7 @@ service {
   const html a = <html><div ><[plugHere]></div> </html>;
 
   bool checkIfTrue(int a, int b){
+    a = "asdasd asd asd ";
     if(true){}
     while(false){}
     a(2231+2);

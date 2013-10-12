@@ -376,6 +376,8 @@ exp: /* empty */
     { $$ = new ast::TrueExp(); }
     | tFALSE
     { $$ = new ast::FalseExp(); }
+    | tSTR
+    { $$ = new ast::StringExp(*$1); }
 
 exps: /* empty */
     { $$ = new std::list<ast::Exp *>{new ast::Exp()}; }
