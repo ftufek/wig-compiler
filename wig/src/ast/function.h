@@ -3,9 +3,9 @@
 
 #include <list>
 #include "ast.h"
-#include "ast_type.h"
-#include "ast_argument.h"
-#include "ast_stm.h"
+#include "type.h"
+#include "argument.h"
+#include "stm.h"
 
 namespace ast {
 

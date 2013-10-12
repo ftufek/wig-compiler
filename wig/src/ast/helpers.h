@@ -4,8 +4,8 @@
 #include <string>
 #include <map>
 #include "ast.h"
-#include "ast_list.h"
-#include "ast_html.h"
+#include "list.h"
+#include "html.h"
 
 namespace ast{
 

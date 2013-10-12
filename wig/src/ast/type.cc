@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ast_type.h"
+#include "type.h"
 #include "../ast_visitor.h"
 
 namespace ast {

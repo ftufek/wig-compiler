@@ -4,8 +4,8 @@
 #include <iostream>
 #include <list>
 #include "ast.h"
-#include "ast_variable.h"
-#include "ast_exp.h"
+#include "variable.h"
+#include "exp.h"
 
 namespace ast {
 

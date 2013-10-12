@@ -3,7 +3,7 @@
 
 #include <string>
 #include "ast.h"
-#include "ast_list.h"
+#include "list.h"
 
 namespace ast {
 

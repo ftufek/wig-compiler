@@ -2,7 +2,7 @@
 #define AST_ARGUMENT_H
 
 #include "ast.h"
-#include "ast_type.h"
+#include "type.h"
 
 namespace ast{
 

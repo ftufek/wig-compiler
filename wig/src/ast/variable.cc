@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ast_variable.h"
+#include "variable.h"
 #include "../ast_visitor.h"
 
 using namespace std;

@@ -1,4 +1,4 @@
-#include "ast_stm.h"
+#include "stm.h"
 #include "../ast_visitor.h"
 
 using namespace std;

@@ -2,7 +2,7 @@
 #define AST_SERVICE_H
 
 #include "ast.h"
-#include "ast_list.h"
+#include "list.h"
 
 namespace ast {
 

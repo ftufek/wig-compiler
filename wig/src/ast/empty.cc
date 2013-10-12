@@ -1,4 +1,4 @@
-#include "ast_empty.h"
+#include "empty.h"
 #include "../ast_visitor.h"
 
 namespace ast{

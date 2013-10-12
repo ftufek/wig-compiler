@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <string>
 #include "ast.h"
-#include "ast_type.h"
+#include "type.h"
 
 namespace ast {
 

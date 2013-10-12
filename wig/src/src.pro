@@ -5,46 +5,46 @@ QMAKE_CXXFLAGS += -std=c++11 -std=gnu++11
 
 SOURCES += \
     main.cc \
-    ast/ast_whatever.cc \
-    ast/ast_variable.cc \
-    ast/ast_string.cc \
-    ast/ast_service.cc \
-    ast/ast_schema.cc \
-    ast/ast_meta.cc \
-    ast/ast_list.cc \
-    ast/ast_html.cc \
-    ast/ast_helpers.cc \
-    ast/ast_field.cc \
-    ast/ast_empty.cc \
     ast/ast.cc \
-    ast/ast_type.cc \
-    ast/ast_argument.cc \
-    ast/ast_function.cc \
-    ast/ast_stm.cc \
     pretty_printer.cc \
-    ast/ast_exp.cc
+    ast/argument.cc \
+    ast/empty.cc \
+    ast/whatever.cc \
+    ast/variable.cc \
+    ast/type.cc \
+    ast/string.cc \
+    ast/stm.cc \
+    ast/service.cc \
+    ast/schema.cc \
+    ast/meta.cc \
+    ast/list.cc \
+    ast/html.cc \
+    ast/helpers.cc \
+    ast/function.cc \
+    ast/field.cc \
+    ast/exp.cc
 
 HEADERS += \
     ast.h \
     ast/ast.h \
-    ast/ast_empty.h \
-    ast/ast_list.h \
-    ast/ast_service.h \
-    ast/ast_variable.h \
-    ast/ast_html.h \
-    ast/ast_meta.h \
-    ast/ast_string.h \
-    ast/ast_whatever.h \
-    ast/ast_schema.h \
-    ast/ast_field.h \
-    ast/ast_helpers.h \
-    ast/ast_type.h \
-    ast/ast_function.h \
-    ast/ast_argument.h \
-    ast/ast_stm.h \
     pretty_printer.h \
     ast_visitor.h \
-    ast/ast_exp.h
+    ast/argument.h \
+    ast/empty.h \
+    ast/exp.h \
+    ast/field.h \
+    ast/function.h \
+    ast/helpers.h \
+    ast/html.h \
+    ast/list.h \
+    ast/meta.h \
+    ast/schema.h \
+    ast/service.h \
+    ast/stm.h \
+    ast/string.h \
+    ast/type.h \
+    ast/variable.h \
+    ast/whatever.h
 
 OTHER_FILES += wig.l \
     wig.y
