@@ -1,12 +1,35 @@
 #include <iostream>
+#include <boost/algorithm/string/replace.hpp>
 #include "pretty_printer.h"
 
 using namespace std;
 
 namespace pp {
 
+void PrettyPrintVisitor::Indent(){
+    indent_->append("\t");
+}
+
+void PrettyPrintVisitor::DeIndent(){
+    if(indent_->size() > 0){
+        indent_->pop_back();
+    }
+}
+
+void PrettyPrintVisitor::PrintIndent(){
+    cout<<*indent_;
+}
+
+string PrettyPrintVisitor::IndentStr(string str){
+    string indentation = "\n";
+    indentation += *indent_;
+    string indented = boost::replace_all_copy(str, "\n", indentation);
+    return indented;
+}
+
 void PrettyPrintVisitor::visit(ast::Service *s){
     cout<<"service {"<<endl;
+    Indent();
     s->htmls_->accept(this);
     cout<<endl;
     s->schemas_->accept(this);
@@ -16,14 +39,16 @@ void PrettyPrintVisitor::visit(ast::Service *s){
     s->functions_->accept(this);
     cout<<endl;
     s->sessions_->accept(this);
+    DeIndent();
     cout<<"}"<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::Whatever *s ) {
-    cout<<s->whatever_;
+    cout<<IndentStr(s->whatever_);
 }
 
 void PrettyPrintVisitor::visit(ast::Variable *s) {
+    PrintIndent();
     if(s->is_const_){
         cout<<"const ";
     }
@@ -37,6 +62,7 @@ void PrettyPrintVisitor::visit(ast::Variable *s) {
 }
 
 void PrettyPrintVisitor::visit(ast::Function *s) {
+    PrintIndent();
     s->type_->accept(this);
     cout<<" "<<s->id_<<"(";
     auto iter = s->args_->begin();
@@ -54,6 +80,7 @@ void PrettyPrintVisitor::visit(ast::Function *s) {
 }
 
 void PrettyPrintVisitor::visit(ast::Field *s) {
+    PrintIndent();
     s->type_->accept(this);
     cout<<" "<<s->id_<<";"<<endl;
 }
@@ -91,18 +118,22 @@ void PrettyPrintVisitor::visit(ast::Argument *s) {
 
 void PrettyPrintVisitor::visit(ast::MetaTag *s) {
     cout<<"<!-- ";
-    cout<<s->content_;
+    cout<<IndentStr(s->content_);
     cout<<" -->";
 }
 
 void PrettyPrintVisitor::visit(ast::Schema *s) {
+    PrintIndent();
     cout<<"schema "<<s->id_<<" {"<<endl;
+    Indent();
     s->fields_->accept(this);
+    DeIndent();
+    PrintIndent();
     cout<<"}"<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::String *s) {
-    cout<<"\""<<s->content_<<"\"";
+    cout<<"\""<<IndentStr(s->content_)<<"\"";
 }
 
 void PrettyPrintVisitor::visit(ast::List *s) {
@@ -140,11 +171,13 @@ void PrettyPrintVisitor::visit(ast::Type *s) {
 }
 
 void PrettyPrintVisitor::visit(ast::Session *s){
+    PrintIndent();
     cout<<"session "<<s->id_<<" ()";
     s->stm_->accept(this);
 }
 
 void PrettyPrintVisitor::visit(ast::EmptyStm *s) {
+    PrintIndent();
     if(s->print_semicol_){
         cout<<";"<<endl;
     }
@@ -152,16 +185,20 @@ void PrettyPrintVisitor::visit(ast::EmptyStm *s) {
 
 void PrettyPrintVisitor::visit(ast::CompoundStm *s) {
     cout<<" { "<<endl;
+    Indent();
     for(auto const &var : *(s->vars_)){
         var->accept(this);
     }
     for(auto const &stm : *(s->stms_)){
         stm->accept(this);
     }
-    cout<<"}";
+    DeIndent();
+    PrintIndent();
+    cout<<"}"<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::ShowStm *s) {
+    PrintIndent();
     cout<<"show ";
     s->doc_->accept(this);
     s->receive_->accept(this);
@@ -201,42 +238,51 @@ void PrettyPrintVisitor::visit(ast::InputStm *s){
 }
 
 void PrettyPrintVisitor::visit(ast::ExitStm *s){
+    PrintIndent();
     cout<<"exit ";
     s->doc_->accept(this);
     cout<<";"<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::ReturnStm *s){
+    PrintIndent();
     cout<<"return ";
     s->exp_->accept(this);
     cout<<";"<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::IfStm *s){
+    PrintIndent();
     cout<<"if (";
     s->condition_->accept(this);
     cout<<")";
     s->true_stm_->accept(this);
     if(s->else_stm_ != nullptr){
-        cout<<"else"<<endl;
+        PrintIndent();
+        cout<<"else";
         s->else_stm_->accept(this);
     }
 }
 
 void PrettyPrintVisitor::visit(ast::WhileStm *s){
+    PrintIndent();
     cout<<"while (";
     s->condition_->accept(this);
     cout<<")";
+    Indent();
     s->stm_->accept(this);
+    DeIndent();
     cout<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::ExpStm *s){
+    PrintIndent();
     s->exp_->accept(this);
     cout<<";"<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::Exp *){
+    //TODO: fix remove this
     cout<<"<empty>";
 }
 

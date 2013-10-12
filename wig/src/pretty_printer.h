@@ -48,6 +48,15 @@ public:
     void visit(ast::StringExp *s) override;
     void visit(ast::FieldValExp *s) override;
     void visit(ast::TupleExp *s) override;
+
+protected:
+    void Indent();
+    void DeIndent();
+    void PrintIndent();
+    std::string IndentStr(std::string);
+
+private:
+    std::string *indent_ = new std::string("");
 };
 
 }
