@@ -11,7 +11,6 @@ int yyparse();
 ast::Service *EXP;
 bool success = true;
 extern FILE *yyin;
-extern FILE *yyout;
 
 using namespace std;
 
