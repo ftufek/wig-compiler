@@ -1,6 +1,8 @@
 #ifndef PRETTY_PRINTER_H
 #define PRETTY_PRINTER_H
 
+#include <iostream>
+#include <fstream>
 #include "ast.h"
 
 namespace pp {
@@ -8,6 +10,8 @@ namespace pp {
 class PrettyPrintVisitor : public ast::Visitor
 {
 public:
+	PrettyPrintVisitor(std::ostream &out);
+
     void visit(ast::Service *s) override;
     void visit(ast::Whatever *s ) override;
     void visit(ast::Variable *s) override;
@@ -57,6 +61,7 @@ protected:
 
 private:
     std::string *indent_ = new std::string("");
+    std::ostream &ppout;
 };
 
 }
