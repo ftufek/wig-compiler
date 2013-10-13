@@ -1,5 +1,5 @@
 #include <iostream>
-#include <boost/algorithm/string/replace.hpp>
+#include "../3rd-party/boost/algorithm/string/replace.hpp"
 #include "pretty_printer.h"
 
 using namespace std;
