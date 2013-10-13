@@ -143,10 +143,17 @@ void Weeder::visit(ast::ReturnStm *s){
 }
 
 void Weeder::visit(ast::IfStm *s){
+	//For if statements, both branches have to return otherwise it's an error
     s->condition_->accept(this);
     s->true_stm_->accept(this);
     if(s->else_stm_ != nullptr){
+    	bool temp = temp_ends_with_return_;
+    	temp_ends_with_return_ = false;
         s->else_stm_->accept(this);
+        if(temp && temp_ends_with_return_){
+        	temp_ends_with_return_ = true;
+        }
+        temp_ends_with_return_ = temp;
     }
 }
 
