@@ -1,5 +1,6 @@
 service {
-	const html a = <html><div><[plugHere]></div> </html>;
+	const html a = <html><div><[plugHere]></div> </html>
+;
 
 
 
@@ -11,9 +12,11 @@ service {
 			asddd = 2};
 		2 + 2;
 		if (true) { 
-					}
+			
+		}
 		while (false) { 
-							}
+				
+			}
 
 		a(2231 + 2);
 		a \+ (a,d,d,);
@@ -34,12 +37,16 @@ service {
 			bool c;
 			bool d;
 			bool a;
-			show a			;
+
+			show a			
+;
 			;
 		}
 	}
 
 
 	session s () { 
-			}
+		
+	}
+
 }

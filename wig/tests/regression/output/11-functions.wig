@@ -1,19 +1,25 @@
 service {
-	const html d = <html></html>;
+	const html d = <html></html>
+;
 
 
 	int a;
 	bool s;
 
+
 	int testFunc(int a, bool b) { 
-			}
+		
+	}
 
 	bool doesWork() { 
 		emtpyCall();
 		;
-		show d		;
-		show plug s[a = , d = ]		;
-		show plug d[d = , asd = ] receive [		];
+		show d		
+;
+		show plug s[a = , d = ]		
+;
+		show plug d[d = , asd = ] receive [		
+];
 		show plug c[a = ] receive [d.s = s, dsasd.d = aa, dd = d];
 		exit d;
 		exit plug d[a = , d = ];
@@ -28,5 +34,7 @@ service {
 
 
 	session a () { 
-			}
+		
+	}
+
 }

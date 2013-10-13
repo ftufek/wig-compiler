@@ -82,6 +82,7 @@ int main(int argc, char **argv){
 		cerr<<"ERROR: can't open file "<<infile<<endl;
 		return 0;
 	}
+
     yyparse();
     fclose(yyin);
     if(success){

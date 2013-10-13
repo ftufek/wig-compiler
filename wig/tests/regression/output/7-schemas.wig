@@ -6,13 +6,15 @@ service {
 	<[asdsad]>
 	<!--  sadsad asd asd ddd
 	 -->
-	as</html>;
+	as</html>
+;
 
 	schema item {
 		int price;
 		string title;
 		bool available;
 		void whatisthis;
+
 	}
 
 
@@ -22,4 +24,5 @@ service {
 			title = "asddsadasd"};
 		exit a;
 	}
+
 }

@@ -11,4 +11,4 @@ fwig = "../../Debug/fwig"
 files = [ f for f in listdir(idir) if isfile(join(idir, f)) ]
 
 for f in files:
-  system(fwig+" < "+idir+f+" > "+odir+f)
+  system(fwig+" -p "+idir+f+" > "+odir+f)

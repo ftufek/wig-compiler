@@ -33,13 +33,9 @@ void PrettyPrintVisitor::visit(ast::Service *s){
     ppout<<"service {"<<endl;
     Indent();
     s->htmls_->accept(this);
-    ppout<<endl;
     s->schemas_->accept(this);
-    ppout<<endl;
     s->global_variables_->accept(this);
-    ppout<<endl;
     s->functions_->accept(this);
-    ppout<<endl;
     s->sessions_->accept(this);
     DeIndent();
     ppout<<"}"<<endl;
@@ -142,6 +138,7 @@ void PrettyPrintVisitor::visit(ast::List *s) {
     for(auto const &exp : *(s->exps_)){
         exp->accept(this);
     }
+    cout<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::Type *s) {
@@ -182,6 +179,8 @@ void PrettyPrintVisitor::visit(ast::EmptyStm *s) {
     PrintIndent();
     if(s->print_semicol_){
         ppout<<";"<<endl;
+    }else{
+    	ppout<<endl;
     }
 }
 
