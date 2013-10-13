@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "ast.h"
 #include "pretty_printer.h"
+#include "weeder.h"
 #include "y.tab.h"
 
 int yyparse();
@@ -96,8 +97,16 @@ int main(int argc, char **argv){
     		    buf = std::cout.rdbuf();
     		}
     		std::ostream out(buf);
-			pp::PrettyPrintVisitor *pp = new pp::PrettyPrintVisitor(out);
+    		visitors::PrettyPrintVisitor *pp = new visitors::PrettyPrintVisitor(out);
 			pp->visit(EXP);
+    	}
+    	if(weed){
+    		visitors::Weeder *weeder = new visitors::Weeder();
+    		weeder->visit(EXP);
+    		if(!weeder->is_valid()){
+    			cout<<"ERROR: Weeder showed errors in your code!"<<endl;
+    			return 0;
+    		}
     	}
     }
 }

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-namespace pp {
+namespace visitors {
 
 PrettyPrintVisitor::PrettyPrintVisitor(std::ostream &out):ppout(out){}
 

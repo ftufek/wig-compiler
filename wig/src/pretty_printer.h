@@ -5,7 +5,7 @@
 #include <fstream>
 #include "ast.h"
 
-namespace pp {
+namespace visitors {
 
 class PrettyPrintVisitor : public ast::Visitor
 {
