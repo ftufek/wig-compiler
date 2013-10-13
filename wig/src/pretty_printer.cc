@@ -9,11 +9,12 @@ namespace visitors {
 PrettyPrintVisitor::PrettyPrintVisitor(std::ostream &out):ppout(out){}
 
 void PrettyPrintVisitor::Indent(){
-    indent_->append("\t");
+    indent_->append("  ");
 }
 
 void PrettyPrintVisitor::DeIndent(){
     if(indent_->size() > 0){
+        indent_->pop_back();
         indent_->pop_back();
     }
 }
@@ -23,10 +24,15 @@ void PrettyPrintVisitor::PrintIndent(){
 }
 
 string PrettyPrintVisitor::IndentStr(string str){
-    string indentation = "\n";
-    indentation += *indent_;
-    string indented = boost::replace_all_copy(str, "\n", indentation);
-    return indented;
+	//TODO: fix when have time
+	// problem is that when you run IndentStr multiple times on
+	// whatever's string, it will just keep adding \t's
+	// find a way to remove \n\t+ than add the appropriate indentation...
+//    string indentation = "\n";
+//    indentation += *indent_;
+//    string indented = boost::replace_all_copy(str, "\n", indentation);
+//    return indented;
+	return str;
 }
 
 void PrettyPrintVisitor::visit(ast::Service *s){
@@ -406,8 +412,12 @@ void PrettyPrintVisitor::visit(ast::TupleopExp *s){
     }
 
     ppout<<"(";
-    for(const auto &id : *(s->ids_)){
-        ppout<<id<<",";
+    auto it = s->ids_->begin();
+    if(it != s->ids_->end()){
+    	ppout<<(*it);
+    }
+    for(; it != s->ids_->end(); ++it){
+        ppout<<", "<<(*it);
     }
     ppout<<")";
 }
