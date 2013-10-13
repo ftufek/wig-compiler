@@ -41,6 +41,19 @@ endif
 # All Target
 all: fwig
 
+code: fwig
+
+check: pretty
+
+pretty: code
+	cd ../tests/benchmarks/; python run.py;
+
+weed: code
+	cd ../tests/weeder/; python run.py;
+
+unit:
+	@echo "There wasn't much to unit-test for now."
+
 # Tool invocations
 fwig: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'

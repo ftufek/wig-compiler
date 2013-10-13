@@ -35,7 +35,7 @@ void Weeder::visit(ast::Variable *s) {
 void Weeder::visit(ast::Function *s) {
 	temp_ends_with_return_ = false;
 	s->stm_->accept(this);
-	if(!temp_ends_with_return_){
+	if(!temp_ends_with_return_ && s->type_->type_ != ast::kType::VOID){
 		is_valid_ = false;
 		std::cerr<<"ERROR: Function "<<s->id_<<" doesn't end with a return statement!"<<std::endl;
 	}
