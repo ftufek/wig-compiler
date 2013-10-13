@@ -39,11 +39,11 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: fwig
+all: fwig check
 
 code: fwig
 
-check: pretty
+check: pretty weed
 
 pretty: code
 	cd ../tests/benchmarks/; python run.py;

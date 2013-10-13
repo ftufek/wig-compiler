@@ -1,0 +1,15 @@
+To compile, it needs newer g++ (for c++11 support), than it's easy:
+
+1) cd build/;
+2) make code;
+
+I placed tests under tests/ folder. They are python scripts.
+There's run.py inside each folder.
+
+You can run them directly from the makefile with:
+
+make check
+OR
+make weed
+OR
+make pretty
