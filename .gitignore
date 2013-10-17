@@ -1,2 +1,5 @@
-.cproject
-.project
+build-debug/
+build-release/
+temp/*
+.settings/
+Debug/

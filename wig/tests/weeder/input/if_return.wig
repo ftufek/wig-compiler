@@ -1,0 +1,11 @@
+service{
+const html a = <html></html>;
+
+session a(){
+if(true){
+noreturn = true;
+}else{
+return 1;
+}
+}
+}
