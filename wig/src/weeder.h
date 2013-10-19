@@ -8,11 +8,11 @@
 #ifndef WEEDER_H_
 #define WEEDER_H_
 
-#include "empty_visitor.h"
+#include "ast_visitor.h"
 
 namespace visitors {
 
-class Weeder : public EmptyVisitor {
+class Weeder : public ast::Visitor {
 public:
 	Weeder();
 	virtual ~Weeder();

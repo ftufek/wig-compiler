@@ -8,6 +8,8 @@ namespace ast {
 class Visitor
 {
 public:
+	virtual ~Visitor(){};
+
     virtual void visit(Service *s) = 0;
     virtual void visit(Whatever *s) = 0;
     virtual void visit(Variable *s) = 0;
