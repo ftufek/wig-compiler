@@ -53,6 +53,66 @@ public:
 };
 
 
+class VisitorOptional : public Visitor
+{
+public:
+	~VisitorOptional(){};
+
+    void visit(Service *s) {};
+    void visit(Whatever *s) {};
+    void visit(Variable *s) {};
+    void visit(Function *s) {};
+    void visit(Field *s) {};
+    void visit(Empty *s) {};
+    void visit(HtmlTag *s) {};
+    void visit(Argument *s) {};
+    void visit(MetaTag *s) {};
+    void visit(Schema *s) {};
+    void visit(String *s) {};
+    void visit(List *s) {};
+    void visit(Type *s) {};
+    void visit(Session *s) {};
+
+    void visit(EmptyStm *s) {};
+    void visit(CompoundStm *s) {};
+    void visit(ShowStm *s) {};
+    void visit(DocumentStm *s) {};
+    void visit(PlugStm *s) {};
+    void visit(InputStm *s) {};
+    void visit(ReceiveStm *s) {};
+    void visit(ExitStm *s) {};
+    void visit(ReturnStm *s) {};
+    void visit(IfStm *s) {};
+    void visit(WhileStm *s) {};
+    void visit(ExpStm *s) {};
+
+    void visit(Exp *s) {};
+    void visit(LValExp *s) {};
+    void visit(BinopExp *s) {};
+    void visit(UnopExp *s) {};
+    void visit(TupleopExp *s) {};
+    void visit(FunctionExp *s) {};
+    void visit(IntegerExp *s) {};
+    void visit(TrueExp *s) {};
+    void visit(FalseExp *s) {};
+    void visit(StringExp *s) {};
+    void visit(FieldValExp *s) {};
+    void visit(TupleExp *s) {};
+};
+
+class MultipleVisitors : public VisitorOptional
+{
+public:
+	MultipleVisitors(std::list<Visitor *> *visitors = new std::list<Visitor *>)
+		:visitors_(visitors){};
+	virtual ~MultipleVisitors() {};
+
+	void visit(Service *service);
+
+private:
+	std::list<Visitor *> *visitors_;
+};
+
 }
 
 #endif // AST_VISITOR_H

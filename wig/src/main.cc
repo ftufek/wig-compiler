@@ -102,10 +102,11 @@ int main(int argc, char **argv){
     	if(weed){
     		visitors::Weeder *weeder = new visitors::Weeder();
     		weeder->visit(EXP);
-    		if(!weeder->is_valid()){
-    			cout<<"ERROR: Weeder showed errors in your code!"<<endl;
-    			return 0;
-    		}
+    		//TODO: implement is_valid for weeders when have time
+//    		if(!weeder->is_valid()){
+//    			cout<<"ERROR: Weeder showed errors in your code!"<<endl;
+//    			return 0;
+//    		}
     	}
     }
 }
