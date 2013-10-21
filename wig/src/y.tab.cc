@@ -634,15 +634,15 @@ static const yytype_uint16 yyrline[] =
      148,   151,   153,   155,   159,   160,   163,   165,   168,   170,
      173,   175,   179,   180,   183,   185,   188,   192,   193,   196,
      198,   201,   204,   206,   208,   210,   213,   215,   218,   220,
-     223,   234,   236,   241,   242,   245,   247,   250,   254,   255,
-     258,   260,   263,   266,   268,   271,   273,   276,   280,   281,
-     284,   286,   289,   291,   293,   295,   297,   299,   301,   303,
-     305,   307,   310,   312,   315,   317,   320,   324,   325,   329,
-     330,   332,   336,   338,   340,   342,   344,   346,   348,   350,
-     352,   354,   356,   358,   360,   362,   364,   366,   368,   372,
-     374,   377,   379,   381,   383,   385,   387,   389,   391,   395,
-     396,   399,   401,   404,   408,   409,   412,   414,   418,   419,
-     422,   424,   427,   430,   432
+     223,   235,   237,   242,   243,   246,   248,   251,   255,   256,
+     259,   261,   264,   267,   269,   272,   274,   277,   281,   282,
+     285,   287,   290,   292,   294,   296,   298,   300,   302,   304,
+     306,   308,   311,   313,   316,   318,   321,   325,   326,   330,
+     331,   333,   337,   339,   341,   343,   345,   347,   349,   351,
+     353,   355,   357,   359,   361,   363,   365,   367,   369,   373,
+     375,   378,   380,   382,   384,   386,   388,   390,   392,   396,
+     397,   400,   402,   405,   409,   410,   413,   415,   419,   420,
+     423,   425,   428,   431,   433
 };
 #endif
 
@@ -1863,13 +1863,13 @@ yyreduce:
   case 21:
 /* Line 1787 of yacc.c  */
 #line 152 "wig.y"
-    { (yyval.dict) = ast::initMap("name", *(yyvsp[(3) - (3)].str)); }
+    { (yyval.dict) = ast::initMap("name", *(yyvsp[(3) - (3)].str)); delete((yyvsp[(3) - (3)].str)); }
     break;
 
   case 22:
 /* Line 1787 of yacc.c  */
 #line 154 "wig.y"
-    { (yyval.dict) = ast::initMap("type", *(yyvsp[(3) - (3)].str)); }
+    { (yyval.dict) = ast::initMap("type", *(yyvsp[(3) - (3)].str)); delete((yyvsp[(3) - (3)].str)); }
     break;
 
   case 23:
@@ -1905,13 +1905,13 @@ yyreduce:
   case 28:
 /* Line 1787 of yacc.c  */
 #line 169 "wig.y"
-    { (yyval.dict) = ast::initMap(*(yyvsp[(1) - (1)].str), ""); }
+    { (yyval.dict) = ast::initMap(*(yyvsp[(1) - (1)].str), ""); delete((yyvsp[(1) - (1)].str)); }
     break;
 
   case 29:
 /* Line 1787 of yacc.c  */
 #line 171 "wig.y"
-    { (yyval.dict) = ast::initMap(*(yyvsp[(1) - (3)].str), *(yyvsp[(3) - (3)].str)); }
+    { (yyval.dict) = ast::initMap(*(yyvsp[(1) - (3)].str), *(yyvsp[(3) - (3)].str)); delete((yyvsp[(1) - (3)].str)); delete((yyvsp[(3) - (3)].str)); }
     break;
 
   case 30:
@@ -2045,253 +2045,254 @@ yyreduce:
                          ast::kNoConstVar,
                          ast::kNoVal));
       }
+      delete((yyvsp[(2) - (3)].strList));
      }
     break;
 
   case 51:
 /* Line 1787 of yacc.c  */
-#line 235 "wig.y"
-    { (yyval.strList) = new std::list<std::string>{*(yyvsp[(1) - (1)].str)}; }
+#line 236 "wig.y"
+    { (yyval.strList) = new std::list<std::string>{*(yyvsp[(1) - (1)].str)}; delete((yyvsp[(1) - (1)].str)); }
     break;
 
   case 52:
 /* Line 1787 of yacc.c  */
-#line 237 "wig.y"
-    { (yyvsp[(1) - (3)].strList)->push_back(*(yyvsp[(3) - (3)].str));
+#line 238 "wig.y"
+    { (yyvsp[(1) - (3)].strList)->push_back(*(yyvsp[(3) - (3)].str)); delete((yyvsp[(3) - (3)].str));
       (yyval.strList) = (yyvsp[(1) - (3)].strList); }
     break;
 
   case 53:
 /* Line 1787 of yacc.c  */
-#line 241 "wig.y"
+#line 242 "wig.y"
     { (yyval.listExp) = ast::initList(new ast::Empty()); }
     break;
 
   case 54:
 /* Line 1787 of yacc.c  */
-#line 243 "wig.y"
+#line 244 "wig.y"
     { (yyval.listExp) = (yyvsp[(1) - (1)].listExp); }
     break;
 
   case 55:
 /* Line 1787 of yacc.c  */
-#line 246 "wig.y"
+#line 247 "wig.y"
     { (yyval.listExp) = ast::initList((yyvsp[(1) - (1)].base)); }
     break;
 
   case 56:
 /* Line 1787 of yacc.c  */
-#line 248 "wig.y"
+#line 249 "wig.y"
     { (yyval.listExp) = ast::addBack((yyvsp[(1) - (2)].listExp), (yyvsp[(2) - (2)].base)); }
     break;
 
   case 57:
 /* Line 1787 of yacc.c  */
-#line 251 "wig.y"
+#line 252 "wig.y"
     { (yyval.base) = new ast::Function((yyvsp[(1) - (6)].typeExp), *(yyvsp[(2) - (6)].str), (yyvsp[(4) - (6)].argList), (yyvsp[(6) - (6)].compoundStm));}
     break;
 
   case 58:
 /* Line 1787 of yacc.c  */
-#line 254 "wig.y"
+#line 255 "wig.y"
     { (yyval.argList) = new std::list<ast::Argument*>; }
     break;
 
   case 59:
 /* Line 1787 of yacc.c  */
-#line 256 "wig.y"
+#line 257 "wig.y"
     { (yyval.argList) = (yyvsp[(1) - (1)].argList); }
     break;
 
   case 60:
 /* Line 1787 of yacc.c  */
-#line 259 "wig.y"
+#line 260 "wig.y"
     { (yyval.argList) = new std::list<ast::Argument*>{(yyvsp[(1) - (1)].argExp)}; }
     break;
 
   case 61:
 /* Line 1787 of yacc.c  */
-#line 261 "wig.y"
+#line 262 "wig.y"
     { (yyvsp[(1) - (3)].argList)->push_back((yyvsp[(3) - (3)].argExp)); (yyval.argList) = (yyvsp[(1) - (3)].argList); }
     break;
 
   case 62:
 /* Line 1787 of yacc.c  */
-#line 264 "wig.y"
+#line 265 "wig.y"
     { (yyval.argExp) = new ast::Argument((yyvsp[(1) - (2)].typeExp), *(yyvsp[(2) - (2)].str)); }
     break;
 
   case 63:
 /* Line 1787 of yacc.c  */
-#line 267 "wig.y"
+#line 268 "wig.y"
     { (yyval.compoundStm) = new ast::CompoundStm((yyvsp[(3) - (4)].stmList), (yyvsp[(2) - (4)].listExp)->getList()); }
     break;
 
   case 64:
 /* Line 1787 of yacc.c  */
-#line 269 "wig.y"
+#line 270 "wig.y"
     { (yyval.compoundStm) = new ast::CompoundStm((yyvsp[(2) - (3)].stmList)); }
     break;
 
   case 65:
 /* Line 1787 of yacc.c  */
-#line 272 "wig.y"
+#line 273 "wig.y"
     { (yyval.listExp) = ast::initList((yyvsp[(1) - (1)].base)); }
     break;
 
   case 66:
 /* Line 1787 of yacc.c  */
-#line 274 "wig.y"
+#line 275 "wig.y"
     { (yyval.listExp) = ast::addBack((yyvsp[(1) - (2)].listExp), (yyvsp[(2) - (2)].base)); }
     break;
 
   case 67:
 /* Line 1787 of yacc.c  */
-#line 277 "wig.y"
+#line 278 "wig.y"
     { (yyval.base) = new ast::Session(*(yyvsp[(2) - (5)].str), (yyvsp[(5) - (5)].compoundStm)); }
     break;
 
   case 68:
 /* Line 1787 of yacc.c  */
-#line 280 "wig.y"
+#line 281 "wig.y"
     { (yyval.stmList) = new std::list<ast::Stm *>{new ast::EmptyStm()}; }
     break;
 
   case 69:
 /* Line 1787 of yacc.c  */
-#line 282 "wig.y"
+#line 283 "wig.y"
     { (yyval.stmList) = (yyvsp[(1) - (1)].stmList); }
     break;
 
   case 70:
 /* Line 1787 of yacc.c  */
-#line 285 "wig.y"
+#line 286 "wig.y"
     { (yyval.stmList) = new std::list<ast::Stm *>{(yyvsp[(1) - (1)].stm)}; }
     break;
 
   case 71:
 /* Line 1787 of yacc.c  */
-#line 287 "wig.y"
+#line 288 "wig.y"
     { (yyvsp[(1) - (2)].stmList)->push_back((yyvsp[(2) - (2)].stm)); (yyval.stmList) = (yyvsp[(1) - (2)].stmList); }
     break;
 
   case 72:
 /* Line 1787 of yacc.c  */
-#line 290 "wig.y"
+#line 291 "wig.y"
     { (yyval.stm) = new ast::EmptyStm(true); }
     break;
 
   case 73:
 /* Line 1787 of yacc.c  */
-#line 292 "wig.y"
+#line 293 "wig.y"
     { (yyval.stm) = new ast::ShowStm((yyvsp[(2) - (4)].docStm), (yyvsp[(3) - (4)].stm)); }
     break;
 
   case 74:
 /* Line 1787 of yacc.c  */
-#line 294 "wig.y"
+#line 295 "wig.y"
     { (yyval.stm) = new ast::ExitStm((yyvsp[(2) - (3)].docStm)); }
     break;
 
   case 75:
 /* Line 1787 of yacc.c  */
-#line 296 "wig.y"
+#line 297 "wig.y"
     { (yyval.stm) = new ast::ReturnStm(); }
     break;
 
   case 76:
 /* Line 1787 of yacc.c  */
-#line 298 "wig.y"
+#line 299 "wig.y"
     { (yyval.stm) = new ast::ReturnStm((yyvsp[(2) - (3)].exp)); }
     break;
 
   case 77:
 /* Line 1787 of yacc.c  */
-#line 300 "wig.y"
+#line 301 "wig.y"
     { (yyval.stm) = new ast::IfStm((yyvsp[(3) - (5)].exp), (yyvsp[(5) - (5)].stm)); }
     break;
 
   case 78:
 /* Line 1787 of yacc.c  */
-#line 302 "wig.y"
+#line 303 "wig.y"
     { (yyval.stm) = new ast::IfStm((yyvsp[(3) - (7)].exp), (yyvsp[(5) - (7)].stm), (yyvsp[(7) - (7)].stm)); }
     break;
 
   case 79:
 /* Line 1787 of yacc.c  */
-#line 304 "wig.y"
+#line 305 "wig.y"
     { (yyval.stm) = new ast::WhileStm((yyvsp[(3) - (5)].exp), (yyvsp[(5) - (5)].stm)); }
     break;
 
   case 80:
 /* Line 1787 of yacc.c  */
-#line 306 "wig.y"
+#line 307 "wig.y"
     { (yyval.stm) = (yyvsp[(1) - (1)].compoundStm); }
     break;
 
   case 81:
 /* Line 1787 of yacc.c  */
-#line 308 "wig.y"
+#line 309 "wig.y"
     { (yyval.stm) = new ast::ExpStm((yyvsp[(1) - (2)].exp)); }
     break;
 
   case 82:
 /* Line 1787 of yacc.c  */
-#line 311 "wig.y"
+#line 312 "wig.y"
     { (yyval.docStm) = new ast::DocumentStm(*(yyvsp[(1) - (1)].str)); }
     break;
 
   case 83:
 /* Line 1787 of yacc.c  */
-#line 313 "wig.y"
+#line 314 "wig.y"
     { (yyval.docStm) = new ast::DocumentStm(*(yyvsp[(2) - (5)].str), true, (yyvsp[(4) - (5)].plugList)); }
     break;
 
   case 84:
 /* Line 1787 of yacc.c  */
-#line 316 "wig.y"
+#line 317 "wig.y"
     { (yyval.plugList) = new std::list<ast::PlugStm *>{(yyvsp[(1) - (1)].plugStm)}; }
     break;
 
   case 85:
 /* Line 1787 of yacc.c  */
-#line 318 "wig.y"
+#line 319 "wig.y"
     { (yyvsp[(1) - (3)].plugList)->push_back((yyvsp[(3) - (3)].plugStm)); (yyval.plugList) = (yyvsp[(1) - (3)].plugList); }
     break;
 
   case 86:
 /* Line 1787 of yacc.c  */
-#line 321 "wig.y"
+#line 322 "wig.y"
     { (yyval.plugStm) = new ast::PlugStm(*(yyvsp[(1) - (3)].str), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 87:
 /* Line 1787 of yacc.c  */
-#line 324 "wig.y"
+#line 325 "wig.y"
     { (yyval.stm) = new ast::EmptyStm(); }
     break;
 
   case 88:
 /* Line 1787 of yacc.c  */
-#line 326 "wig.y"
+#line 327 "wig.y"
     { (yyval.stm) = new ast::ReceiveStm((yyvsp[(3) - (4)].stmList)); }
     break;
 
   case 89:
 /* Line 1787 of yacc.c  */
-#line 329 "wig.y"
+#line 330 "wig.y"
     { (yyval.exp) = new ast::Exp(); }
     break;
 
   case 90:
 /* Line 1787 of yacc.c  */
-#line 331 "wig.y"
+#line 332 "wig.y"
     { (yyval.exp) = new ast::LValExp(*(yyvsp[(1) - (1)].str)); }
     break;
 
   case 91:
 /* Line 1787 of yacc.c  */
-#line 333 "wig.y"
+#line 334 "wig.y"
     { (yyval.exp) = new ast::BinopExp(new ast::LValExp(*(yyvsp[(1) - (3)].str)),
                              ast::kBinopType::Assignment,
                              (yyvsp[(3) - (3)].exp)); }
@@ -2299,103 +2300,103 @@ yyreduce:
 
   case 92:
 /* Line 1787 of yacc.c  */
-#line 337 "wig.y"
+#line 338 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::Equals, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 93:
 /* Line 1787 of yacc.c  */
-#line 339 "wig.y"
+#line 340 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::NotEquals, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 94:
 /* Line 1787 of yacc.c  */
-#line 341 "wig.y"
+#line 342 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::LowerThan, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 95:
 /* Line 1787 of yacc.c  */
-#line 343 "wig.y"
+#line 344 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::HigherThan, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 96:
 /* Line 1787 of yacc.c  */
-#line 345 "wig.y"
+#line 346 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::LowerEquals, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 97:
 /* Line 1787 of yacc.c  */
-#line 347 "wig.y"
+#line 348 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::HigherEquals, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 98:
 /* Line 1787 of yacc.c  */
-#line 349 "wig.y"
+#line 350 "wig.y"
     { (yyval.exp) = new ast::UnopExp(ast::kUnopType::LogicNegate, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 99:
 /* Line 1787 of yacc.c  */
-#line 351 "wig.y"
+#line 352 "wig.y"
     { (yyval.exp) = new ast::UnopExp(ast::kUnopType::Minus, (yyvsp[(2) - (2)].exp)); }
     break;
 
   case 100:
 /* Line 1787 of yacc.c  */
-#line 353 "wig.y"
+#line 354 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::Add, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 101:
 /* Line 1787 of yacc.c  */
-#line 355 "wig.y"
+#line 356 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::Sub, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 102:
 /* Line 1787 of yacc.c  */
-#line 357 "wig.y"
+#line 358 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::Mult, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 103:
 /* Line 1787 of yacc.c  */
-#line 359 "wig.y"
+#line 360 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::Div, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 104:
 /* Line 1787 of yacc.c  */
-#line 361 "wig.y"
+#line 362 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::Mod, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 105:
 /* Line 1787 of yacc.c  */
-#line 363 "wig.y"
+#line 364 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::And, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 106:
 /* Line 1787 of yacc.c  */
-#line 365 "wig.y"
+#line 366 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::Or, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 107:
 /* Line 1787 of yacc.c  */
-#line 367 "wig.y"
+#line 368 "wig.y"
     { (yyval.exp) = new ast::BinopExp((yyvsp[(1) - (3)].exp), ast::kBinopType::Combine, (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 108:
 /* Line 1787 of yacc.c  */
-#line 369 "wig.y"
+#line 370 "wig.y"
     { (yyval.exp) = new ast::TupleopExp((yyvsp[(1) - (3)].exp),
                                ast::kTupleopType::Keep,
                                new std::list<std::string>{*(yyvsp[(3) - (3)].str)}); }
@@ -2403,164 +2404,164 @@ yyreduce:
 
   case 109:
 /* Line 1787 of yacc.c  */
-#line 373 "wig.y"
+#line 374 "wig.y"
     { (yyval.exp) = new ast::TupleopExp((yyvsp[(1) - (5)].exp), ast::kTupleopType::Keep, (yyvsp[(4) - (5)].strList)); }
     break;
 
   case 110:
 /* Line 1787 of yacc.c  */
-#line 375 "wig.y"
+#line 376 "wig.y"
     { (yyval.exp) = new ast::TupleopExp((yyvsp[(1) - (3)].exp), ast::kTupleopType::Discard,
                                    new std::list<std::string>{*(yyvsp[(3) - (3)].str)}); }
     break;
 
   case 111:
 /* Line 1787 of yacc.c  */
-#line 378 "wig.y"
+#line 379 "wig.y"
     { (yyval.exp) = new ast::TupleopExp((yyvsp[(1) - (5)].exp), ast::kTupleopType::Discard, (yyvsp[(4) - (5)].strList)); }
     break;
 
   case 112:
 /* Line 1787 of yacc.c  */
-#line 380 "wig.y"
+#line 381 "wig.y"
     { (yyval.exp) = new ast::FunctionExp(*(yyvsp[(1) - (4)].str), (yyvsp[(3) - (4)].expList)); }
     break;
 
   case 113:
 /* Line 1787 of yacc.c  */
-#line 382 "wig.y"
+#line 383 "wig.y"
     { (yyval.exp) = new ast::IntegerExp((yyvsp[(1) - (1)].integer)); }
     break;
 
   case 114:
 /* Line 1787 of yacc.c  */
-#line 384 "wig.y"
+#line 385 "wig.y"
     { (yyval.exp) = new ast::TrueExp(); }
     break;
 
   case 115:
 /* Line 1787 of yacc.c  */
-#line 386 "wig.y"
+#line 387 "wig.y"
     { (yyval.exp) = new ast::FalseExp(); }
     break;
 
   case 116:
 /* Line 1787 of yacc.c  */
-#line 388 "wig.y"
-    { (yyval.exp) = new ast::StringExp(*(yyvsp[(1) - (1)].str)); }
+#line 389 "wig.y"
+    { (yyval.exp) = new ast::StringExp(*(yyvsp[(1) - (1)].str)); delete((yyvsp[(1) - (1)].str)); }
     break;
 
   case 117:
 /* Line 1787 of yacc.c  */
-#line 390 "wig.y"
+#line 391 "wig.y"
     { (yyval.exp) = new ast::TupleExp((yyvsp[(3) - (4)].expList)); }
     break;
 
   case 118:
 /* Line 1787 of yacc.c  */
-#line 392 "wig.y"
+#line 393 "wig.y"
     { (yyval.exp) = (yyvsp[(2) - (3)].exp); }
     break;
 
   case 119:
 /* Line 1787 of yacc.c  */
-#line 395 "wig.y"
+#line 396 "wig.y"
     { (yyval.expList) = new std::list<ast::Exp *>{new ast::Exp()}; }
     break;
 
   case 120:
 /* Line 1787 of yacc.c  */
-#line 397 "wig.y"
+#line 398 "wig.y"
     { (yyval.expList) = (yyvsp[(1) - (1)].expList); }
     break;
 
   case 121:
 /* Line 1787 of yacc.c  */
-#line 400 "wig.y"
+#line 401 "wig.y"
     { (yyval.expList) = new std::list<ast::Exp *>{(yyvsp[(1) - (1)].exp)}; }
     break;
 
   case 122:
 /* Line 1787 of yacc.c  */
-#line 402 "wig.y"
+#line 403 "wig.y"
     { (yyvsp[(1) - (3)].expList)->push_back((yyvsp[(3) - (3)].exp)); (yyval.expList) = (yyvsp[(1) - (3)].expList); }
     break;
 
   case 123:
 /* Line 1787 of yacc.c  */
-#line 405 "wig.y"
+#line 406 "wig.y"
     { (yyval.exp) = new ast::FieldValExp(*(yyvsp[(1) - (3)].str), (yyvsp[(3) - (3)].exp)); }
     break;
 
   case 124:
 /* Line 1787 of yacc.c  */
-#line 408 "wig.y"
+#line 409 "wig.y"
     { (yyval.expList) = new std::list<ast::Exp *>{new ast::Exp()}; }
     break;
 
   case 125:
 /* Line 1787 of yacc.c  */
-#line 410 "wig.y"
+#line 411 "wig.y"
     { (yyval.expList) = (yyvsp[(1) - (1)].expList); }
     break;
 
   case 126:
 /* Line 1787 of yacc.c  */
-#line 413 "wig.y"
+#line 414 "wig.y"
     { (yyval.expList) = new std::list<ast::Exp *>{(yyvsp[(1) - (1)].exp)}; }
     break;
 
   case 127:
 /* Line 1787 of yacc.c  */
-#line 415 "wig.y"
+#line 416 "wig.y"
     { (yyvsp[(1) - (3)].expList)->push_back((yyvsp[(3) - (3)].exp)); (yyval.expList) = (yyvsp[(1) - (3)].expList); }
     break;
 
   case 128:
 /* Line 1787 of yacc.c  */
-#line 418 "wig.y"
+#line 419 "wig.y"
     { (yyval.stmList) = new std::list<ast::Stm *>{new ast::EmptyStm()}; }
     break;
 
   case 129:
 /* Line 1787 of yacc.c  */
-#line 420 "wig.y"
+#line 421 "wig.y"
     { (yyval.stmList) = (yyvsp[(1) - (1)].stmList); }
     break;
 
   case 130:
 /* Line 1787 of yacc.c  */
-#line 423 "wig.y"
+#line 424 "wig.y"
     { (yyval.stmList) = new std::list<ast::Stm *>{(yyvsp[(1) - (1)].stm)}; }
     break;
 
   case 131:
 /* Line 1787 of yacc.c  */
-#line 425 "wig.y"
+#line 426 "wig.y"
     { (yyvsp[(1) - (3)].stmList)->push_back((yyvsp[(3) - (3)].stm)); (yyval.stmList) = (yyvsp[(1) - (3)].stmList); }
     break;
 
   case 132:
 /* Line 1787 of yacc.c  */
-#line 428 "wig.y"
+#line 429 "wig.y"
     { (yyval.stm) = new ast::InputStm(*(yyvsp[(1) - (3)].str), *(yyvsp[(3) - (3)].str)); }
     break;
 
   case 133:
 /* Line 1787 of yacc.c  */
-#line 431 "wig.y"
+#line 432 "wig.y"
     { (yyval.str) = (yyvsp[(1) - (1)].str); }
     break;
 
   case 134:
 /* Line 1787 of yacc.c  */
-#line 433 "wig.y"
+#line 434 "wig.y"
     { (yyval.str) = new std::string(*(yyvsp[(1) - (3)].str)+"."+*(yyvsp[(3) - (3)].str)); }
     break;
 
 
 /* Line 1787 of yacc.c  */
-#line 2564 "y.tab.c"
+#line 2565 "y.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

@@ -149,9 +149,9 @@ inputattrs: inputattr
         { $$ = ast::mergeMap($1, $2); }
 
 inputattr: tName '=' attr
-         { $$ = ast::initMap("name", *$3); }
+         { $$ = ast::initMap("name", *$3); delete($3); }
          | tType '=' tInputType
-         { $$ = ast::initMap("type", *$3); }
+         { $$ = ast::initMap("type", *$3); delete($3); }
          | attribute
          { $$ = $1; }
 
@@ -166,9 +166,9 @@ neattributes: attribute
             { $$ = ast::mergeMap($1, $2); }
 
 attribute: attr
-         { $$ = ast::initMap(*$1, ""); }
+         { $$ = ast::initMap(*$1, ""); delete($1); }
          | attr '=' attr
-         { $$ = ast::initMap(*$1, *$3); }
+         { $$ = ast::initMap(*$1, *$3); delete($1); delete($3); }
 
 attr: tID
     { $$ = $1; }
@@ -229,12 +229,13 @@ variable: type identifiers ';'
                          ast::kNoConstVar,
                          ast::kNoVal));
       }
+      delete($2);
      }
 
 identifiers: tID
-    { $$ = new std::list<std::string>{*$1}; }
+    { $$ = new std::list<std::string>{*$1}; delete($1); }
     | identifiers ',' tID
-    { $1->push_back(*$3);
+    { $1->push_back(*$3); delete($3);
       $$ = $1; }
 
 functions: /* empty */
@@ -385,7 +386,7 @@ exp: /* empty */
     | tFALSE
     { $$ = new ast::FalseExp(); }
     | tSTR
-    { $$ = new ast::StringExp(*$1); }
+    { $$ = new ast::StringExp(*$1); delete($1); }
     | tTuple '{' fieldvalues '}'
     { $$ = new ast::TupleExp($3); }
     | '(' exp ')'
