@@ -10,6 +10,7 @@ class Argument : public Base
 {
 public:
     Argument(Type *type, std::string id);
+    ~Argument();
     void accept(Visitor *v) override;
 
     Type *type_;

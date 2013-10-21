@@ -15,6 +15,7 @@ public:
              std::string id,
              std::list<Argument *> *args,
              CompoundStm *stm);
+    ~Function();
     void accept(Visitor *v) override;
 
     Type *type_;

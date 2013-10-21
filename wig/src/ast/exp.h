@@ -37,6 +37,7 @@ class BinopExp : public Exp
 {
 public:
     BinopExp(Exp *left, kBinopType type, Exp *right);
+    ~BinopExp();
     void accept(Visitor *v) override;
 
     Exp *left_;
@@ -53,6 +54,7 @@ class UnopExp : public Exp
 {
 public:
     UnopExp(kUnopType type, Exp *exp);
+    ~UnopExp();
     void accept(Visitor *v) override;
 
     kUnopType type_;
@@ -70,6 +72,7 @@ public:
     TupleopExp(Exp *exp,
                kTupleopType type,
                std::list<std::string> *ids);
+    ~TupleopExp();
     void accept(Visitor *v) override;
 
     Exp *exp_;
@@ -82,6 +85,7 @@ class FunctionExp : public Exp
 {
 public:
     FunctionExp(std::string id, std::list<Exp *> *exps);
+    ~FunctionExp();
     void accept(Visitor *v) override;
 
     std::string id_;
@@ -127,6 +131,7 @@ class FieldValExp : public Exp
 {
 public:
     FieldValExp(std::string id, Exp *exp);
+    ~FieldValExp();
     void accept(Visitor *v) override;
 
     std::string id_;
@@ -137,6 +142,7 @@ class TupleExp : public Exp
 {
 public:
     TupleExp(std::list<Exp *> *field_vals);
+    ~TupleExp();
     void accept(Visitor *v) override;
 
     std::list<Exp *> *field_vals_;

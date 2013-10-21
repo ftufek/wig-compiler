@@ -10,6 +10,7 @@ namespace ast{
 class Field : public Base {
 public:
     Field(Type *type, std::string id);
+    ~Field();
     void accept(Visitor *v) override;
 
     Type *type_;

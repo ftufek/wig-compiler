@@ -13,6 +13,7 @@ public:
             List *functions_,
             List *sessions,
             List *global_variables_ = new List());
+    ~Service();
     void accept(class Visitor *v) override;
 
     List *htmls_;
