@@ -96,12 +96,12 @@ int main(int argc, char **argv){
     		    buf = std::cout.rdbuf();
     		}
     		std::ostream out(buf);
-    		visitors::PrettyPrintVisitor *pp = new visitors::PrettyPrintVisitor(out);
-			pp->visit(EXP);
+    		visitors::PrettyPrintVisitor pp = visitors::PrettyPrintVisitor(out);
+			pp.visit(EXP);
     	}
     	if(weed){
-    		visitors::Weeder *weeder = new visitors::Weeder();
-    		weeder->visit(EXP);
+    		visitors::Weeder weeder = visitors::Weeder();
+    		weeder.visit(EXP);
     		//TODO: implement is_valid for weeders when have time
 //    		if(!weeder->is_valid()){
 //    			cout<<"ERROR: Weeder showed errors in your code!"<<endl;
