@@ -14,6 +14,7 @@ public:
             new std::map<std::string,std::string>,
             bool is_closing_ = false,
             bool is_gap_ = false);
+    ~HtmlTag();
     void accept(Visitor *v) override;
 
     std::string id_;

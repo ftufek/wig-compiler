@@ -11,6 +11,7 @@ class Schema : public Base {
 public:
     Schema(std::string id_,
            List *fields_ = new List());
+    ~Schema();
     void accept(Visitor *v) override;
 
     std::string id_;

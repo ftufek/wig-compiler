@@ -21,6 +21,7 @@ class CompoundStm : public Stm
 public:
     CompoundStm(std::list<Stm *> *stms = new std::list<Stm *>,
                 std::list<Base *> *vars = new std::list<Base *>);
+    ~CompoundStm();
     void accept(Visitor *v) override;
 
     std::list<Base *> *vars_;
@@ -42,6 +43,7 @@ class PlugStm : public Stm
 public:
     PlugStm(std::string id,
             Exp *exp);
+    ~PlugStm();
     void accept(Visitor *v) override;
 
     std::string id_;
@@ -65,6 +67,7 @@ public:
     DocumentStm(std::string id_,
                 bool pluggable_ = false,
                 std::list<PlugStm *> *plugs_=new std::list<PlugStm*>);
+    ~DocumentStm();
     void accept(Visitor *v) override;
 
     std::string id_;
@@ -77,6 +80,7 @@ class ReceiveStm : public Stm
 {
 public:
     ReceiveStm(std::list<Stm *> *inputs = new std::list<Stm *>);
+    ~ReceiveStm();
     void accept(Visitor *v) override;
 
     std::list<Stm *> *inputs_;
@@ -88,6 +92,7 @@ class ShowStm : public Stm
 public:
     ShowStm(DocumentStm *doc,
             Stm *receive);
+    ~ShowStm();
     void accept(Visitor *v) override;
 
     DocumentStm *doc_;
@@ -99,6 +104,7 @@ class ExitStm : public Stm
 {
 public:
     ExitStm(DocumentStm *doc);
+    ~ExitStm();
     void accept(Visitor *v) override;
 
     DocumentStm *doc_;
@@ -109,6 +115,7 @@ class ReturnStm : public Stm
 {
 public:
     ReturnStm(Exp *exp = new Exp());
+    ~ReturnStm();
     void accept(Visitor *v) override;
 
     Exp *exp_;
@@ -121,6 +128,7 @@ public:
     IfStm(Exp *condition,
           Stm *true_stm,
           Stm *else_stm = nullptr);
+    ~IfStm();
     void accept(Visitor *v) override;
 
     Exp *condition_;
@@ -134,6 +142,7 @@ class WhileStm : public Stm
 public:
     WhileStm(Exp *condition,
              Stm *stm);
+    ~WhileStm();
     void accept(Visitor *v) override;
 
     Exp *condition_;
@@ -145,6 +154,7 @@ class ExpStm : public Stm
 {
 public:
     ExpStm(Exp *exp);
+    ~ExpStm();
     void accept(Visitor *v) override;
 
     Exp *exp_;

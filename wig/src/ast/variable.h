@@ -18,6 +18,7 @@ public:
              Type *type_,
              bool is_const_,
              Base *value_);
+    ~Variable();
     void accept(Visitor *v) override;
 
     std::string name_;

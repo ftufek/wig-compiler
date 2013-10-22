@@ -11,6 +11,7 @@ class Session : public Base
 {
 public:
     Session(std::string id, CompoundStm *stm);
+    ~Session();
     void accept(Visitor *v) override;
 
     std::string id_;

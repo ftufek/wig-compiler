@@ -9,6 +9,7 @@ namespace ast {
 class List : public Base{
 public:
     List(std::list<Base *> *exps_ = new std::list<Base *>);
+    ~List();
     void accept(Visitor *v) override;
 
     std::list<Base *> *getList();
