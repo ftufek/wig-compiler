@@ -111,12 +111,14 @@ htmls : html
 
 html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
        {$$ = new ast::Variable(*$3, new ast::Type(ast::kType::HTML), ast::kConstVar,
-                                    ast::wrapHtml(new ast::List())); }
+                                    ast::wrapHtml(new ast::List()));
+        delete($3); }
     | tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
        { $$ = new ast::Variable(*$3,
                                       new ast::Type(ast::kType::HTML),
                                       ast::kConstVar,
-                                      ast::wrapHtml($6)); }
+                                      ast::wrapHtml($6));
+          delete($3); }
 
 nehtmlbodies: htmlbody
             { ast::List *l = new ast::List();
@@ -127,15 +129,15 @@ nehtmlbodies: htmlbody
               $$ = $1; }
 
 htmlbody: '<' tID attributes '>' 
-        { $$ = new ast::HtmlTag(*$2, $3);}
+        { $$ = new ast::HtmlTag(*$2, $3); delete($2); }
         | tTagClose tID '>' /* "</tID>" */
-        { $$ = new ast::HtmlTag(*$2, ast::emptyMap(), true); }
+        { $$ = new ast::HtmlTag(*$2, ast::emptyMap(), true); delete($2); }
         | tGapOpen tID tGapClose
-        { $$ = new ast::HtmlTag(*$2, ast::emptyMap(), false, true); }
+        { $$ = new ast::HtmlTag(*$2, ast::emptyMap(), false, true); delete($2); }
         | tWHATEVER
-        { $$ = new ast::Whatever(*$1); }
+        { $$ = new ast::Whatever(*$1); delete($1); }
         | tMetaOpen tWHATEVER tMetaClose
-        { $$ = new ast::MetaTag(*$2); }
+        { $$ = new ast::MetaTag(*$2); delete($2); }
         | '<' tInput inputattrs '>'
         { $$ = new ast::HtmlTag("input", $3); }
         | '<' tSelect inputattrs '>' nehtmlbodies tTagClose tSelect '>'
@@ -186,7 +188,7 @@ neschemas: schema
          { $$ = ast::addBack($1, $2); }
 
 schema: tSchema tID '{' fields '}'
-      { $$ = new ast::Schema(*$2, $4); }
+      { $$ = new ast::Schema(*$2, $4); delete($2); }
 
 fields: /* empty */
       { $$ = new ast::List(); }
@@ -199,7 +201,7 @@ nefields: field
         { $$ = ast::addBack($1, $2); }
 
 field: simpletype tID ';'
-     { $$ = new ast::Field(new ast::Type($1), *$2); }
+     { $$ = new ast::Field(new ast::Type($1), *$2); delete($2); }
 
 simpletype: tInt
            { $$ = ast::kType::INT; }
@@ -213,7 +215,7 @@ simpletype: tInt
 type: simpletype
     { $$ = new ast::Type($1); }
     | tTuple tID
-    { $$ = new ast::Type(ast::kType::TUPLE, *$2); }
+    { $$ = new ast::Type(ast::kType::TUPLE, *$2); delete($2); }
 
 nevariables: variable
     { $$ = $1; }
@@ -249,7 +251,7 @@ nefunctions: function
     { $$ = ast::addBack($1, $2); }
 
 function: type tID '(' arguments ')' compoundstm
-    { $$ = new ast::Function($1, *$2, $4, $6);}
+    { $$ = new ast::Function($1, *$2, $4, $6); delete($2); }
 
 arguments: /* empty */
     { $$ = new std::list<ast::Argument*>; }
@@ -262,7 +264,7 @@ nearguments: argument
     { $1->push_back($3); $$ = $1; }
 
 argument: type tID
-    { $$ = new ast::Argument($1, *$2); }
+    { $$ = new ast::Argument($1, *$2); delete($2); }
 
 compoundstm: '{' nevariables stms '}'
             { $$ = new ast::CompoundStm($3, $2->getList()); }
@@ -275,7 +277,7 @@ sessions: session
     { $$ = ast::addBack($1, $2); }
 
 session: tSESSION tID '(' ')' compoundstm
-    { $$ = new ast::Session(*$2, $5); }
+    { $$ = new ast::Session(*$2, $5); delete($2); }
 
 stms: /* empty */
     { $$ = new std::list<ast::Stm *>{new ast::EmptyStm()}; }
@@ -309,9 +311,9 @@ stm: ';'
     { $$ = new ast::ExpStm($1); }
 
 document: tID
-    { $$ = new ast::DocumentStm(*$1); }
+    { $$ = new ast::DocumentStm(*$1); delete($1); }
     | tPLUG tID '[' plugs ']'
-    { $$ = new ast::DocumentStm(*$2, true, $4); }
+    { $$ = new ast::DocumentStm(*$2, true, $4); delete($2); }
 
 plugs: plug
     { $$ = new std::list<ast::PlugStm *>{$1}; }
@@ -319,7 +321,7 @@ plugs: plug
     { $1->push_back($3); $$ = $1; }
 
 plug: tID '=' exp
-    { $$ = new ast::PlugStm(*$1, $3); }
+    { $$ = new ast::PlugStm(*$1, $3); delete($1); }
 
 receive: /* empty */
     { $$ = new ast::EmptyStm(); }
@@ -369,16 +371,16 @@ exp: /* empty */
     | exp tTKEEP tID
     { $$ = new ast::TupleopExp($1,
                                ast::kTupleopType::Keep,
-                               new std::list<std::string>{*$3}); }
+                               new std::list<std::string>{*$3}); delete($3); }
     | exp tTKEEP '(' identifiers ')'
     { $$ = new ast::TupleopExp($1, ast::kTupleopType::Keep, $4); }
     | exp tTDISCARD tID
     { $$ = new ast::TupleopExp($1, ast::kTupleopType::Discard,
-                                   new std::list<std::string>{*$3}); }
+                                   new std::list<std::string>{*$3}); delete($3); }
     | exp tTDISCARD '(' identifiers ')'
     { $$ = new ast::TupleopExp($1, ast::kTupleopType::Discard, $4); }
     | tID '(' exps ')'
-    { $$ = new ast::FunctionExp(*$1, $3); }
+    { $$ = new ast::FunctionExp(*$1, $3); delete($1); }
     | tINT
     { $$ = new ast::IntegerExp($1); }
     | tTRUE
@@ -403,7 +405,7 @@ nefieldvalues: fieldvalue
     { $1->push_back($3); $$ = $1; }
 
 fieldvalue: tID '=' exp
-    { $$ = new ast::FieldValExp(*$1, $3); }
+    { $$ = new ast::FieldValExp(*$1, $3); delete($1); }
 
 exps: /* empty */
     { $$ = new std::list<ast::Exp *>{new ast::Exp()}; }
@@ -426,9 +428,9 @@ neinputs: input
     { $1->push_back($3); $$ = $1; }
 
 input: lvalue '=' tID
-    { $$ = new ast::InputStm(*$1, *$3); }
+    { $$ = new ast::InputStm(*$1, *$3); delete($1); delete($3); }
 
 lvalue: tID
     { $$ = $1; }
     | tID '.' tID
-    { $$ = new std::string(*$1+"."+*$3); }
+    { $$ = new std::string(*$1+"."+*$3); delete($1); delete($3); }

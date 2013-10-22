@@ -105,7 +105,7 @@ class MultipleVisitors : public VisitorOptional
 public:
 	MultipleVisitors(std::list<Visitor *> *visitors = new std::list<Visitor *>)
 		:visitors_(visitors){};
-	virtual ~MultipleVisitors() {};
+	virtual ~MultipleVisitors();
 
 	void visit(Service *service);
 

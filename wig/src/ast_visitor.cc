@@ -9,6 +9,13 @@
 
 namespace ast{
 
+MultipleVisitors::~MultipleVisitors(){
+	for(auto it : *visitors_){
+		delete(it);
+	}
+	delete(visitors_);
+}
+
 void MultipleVisitors::visit(Service *service){
 	for(auto const visitor : *visitors_){
 		service->accept(visitor);
