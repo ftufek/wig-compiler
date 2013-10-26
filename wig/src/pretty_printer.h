@@ -10,7 +10,7 @@ namespace visitors {
 class PrettyPrintVisitor : public ast::Visitor
 {
 public:
-	PrettyPrintVisitor(std::ostream &out);
+	PrettyPrintVisitor(std::ostream &out, bool print_sym_table);
 
     void visit(ast::Service *s) override;
     void visit(ast::Whatever *s ) override;
@@ -62,6 +62,7 @@ protected:
 private:
     std::string *indent_ = new std::string("");
     std::ostream &ppout;
+    bool print_sym_table_;
 };
 
 }

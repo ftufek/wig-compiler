@@ -1,12 +1,14 @@
 #include <iostream>
 //#include <boost/algorithm/string/replace.hpp>
+#include "symbol_table/table.h"
 #include "pretty_printer.h"
 
 using namespace std;
 
 namespace visitors {
 
-PrettyPrintVisitor::PrettyPrintVisitor(std::ostream &out):ppout(out){}
+PrettyPrintVisitor::PrettyPrintVisitor(std::ostream &out, bool print_sym_table)
+	:ppout(out), print_sym_table_(print_sym_table){}
 
 void PrettyPrintVisitor::Indent(){
     indent_->append("  ");
@@ -38,6 +40,9 @@ string PrettyPrintVisitor::IndentStr(string str){
 void PrettyPrintVisitor::visit(ast::Service *s){
     ppout<<"service {"<<endl;
     Indent();
+    if(print_sym_table_){
+    	s->get_sym_table()->PrettyPrint(ppout);
+    }
     s->htmls_->accept(this);
     s->schemas_->accept(this);
     s->global_variables_->accept(this);

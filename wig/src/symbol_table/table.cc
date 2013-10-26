@@ -9,20 +9,25 @@
 
 namespace st{
 
+Table::Table(SymTable table) : table_(table){
+}
 Table::~Table(){};
 
 void Table::Scope(){
-	table_.push(std::map<std::string, const ast::Base &>());
+	table_.push(std::map<std::string, std::string>());
 };
 
 void Table::UnScope(){
 	table_.pop();
 };
 
-bool Table::PutSymbol(std::string name, Symbol sym, const ast::Base &node){
+bool Table::PutSymbol(std::string name, Symbol sym){
+	if(table_.size() <= 0) { return false; }
 	auto scope = table_.top();
-	if(scope.find(name) != scope.end()){
-		table_.top().insert(std::pair<std::string, const ast::Base &>(name, node));
+	if(scope.find(name) == scope.end()){
+		scope.insert(std::make_pair(name, "empty"));
+		table_.pop();
+		table_.push(scope);
 		return true;
 	}else{
 		return false;
@@ -47,6 +52,7 @@ void Table::PrettyPrint(std::ostream &out) const{
 	std::string scope_separator = offset + "--------------";
 	auto copy = table_;
 	auto scope = table_.top();
+	out<<offset<<"Symbol table: "<<std::endl;
 	while(!copy.empty()){
 		scope = table_.top();
 		for(auto it = scope.begin(); it != scope.end(); ++it){
@@ -57,8 +63,8 @@ void Table::PrettyPrint(std::ostream &out) const{
 	}
 };
 
-SymTable Table::get_table(){
-	return SymTable(table_);
+Table Table::get_table(){
+	return Table(table_);
 };
 
 }
