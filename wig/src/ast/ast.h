@@ -17,7 +17,7 @@ public:
 class Base : public Visitable{
 public:
     Base();
-    virtual ~Base();
+    virtual ~Base() {};
 
     int at_line(){return at_line_;}
 

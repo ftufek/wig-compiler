@@ -39,7 +39,14 @@ public:
 
 	void Scope();
 	void UnScope();
-	void PutSymbol(std::string name, Symbol sym, const ast::Base &node);
+
+	/**
+	 * PutSymbol
+	 *
+	 * @returns true if insertion was successful, insertion is successful
+	 * 			when there's no symbol on the same name in the current scope
+	 */
+	bool PutSymbol(std::string name, Symbol sym, const ast::Base &node);
 	bool ExistsSymbol(std::string name) const;
 	void PrettyPrint(std::ostream &out) const;
 
