@@ -56,48 +56,48 @@ public:
 class VisitorOptional : public Visitor
 {
 public:
-	~VisitorOptional(){};
+	virtual ~VisitorOptional(){};
 
-    void visit(Service *s) {};
-    void visit(Whatever *s) {};
-    void visit(Variable *s) {};
-    void visit(Function *s) {};
-    void visit(Field *s) {};
-    void visit(Empty *s) {};
-    void visit(HtmlTag *s) {};
-    void visit(Argument *s) {};
-    void visit(MetaTag *s) {};
-    void visit(Schema *s) {};
-    void visit(String *s) {};
-    void visit(List *s) {};
-    void visit(Type *s) {};
-    void visit(Session *s) {};
+    virtual void visit(Service *s) {};
+    virtual void visit(Whatever *s) {};
+    virtual void visit(Variable *s) {};
+    virtual void visit(Function *s) {};
+    virtual void visit(Field *s) {};
+    virtual void visit(Empty *s) {};
+    virtual void visit(HtmlTag *s) {};
+    virtual void visit(Argument *s) {};
+    virtual void visit(MetaTag *s) {};
+    virtual void visit(Schema *s) {};
+    virtual void visit(String *s) {};
+    virtual void visit(List *s) {};
+    virtual void visit(Type *s) {};
+    virtual void visit(Session *s) {};
 
-    void visit(EmptyStm *s) {};
-    void visit(CompoundStm *s) {};
-    void visit(ShowStm *s) {};
-    void visit(DocumentStm *s) {};
-    void visit(PlugStm *s) {};
-    void visit(InputStm *s) {};
-    void visit(ReceiveStm *s) {};
-    void visit(ExitStm *s) {};
-    void visit(ReturnStm *s) {};
-    void visit(IfStm *s) {};
-    void visit(WhileStm *s) {};
-    void visit(ExpStm *s) {};
+    virtual void visit(EmptyStm *s) {};
+    virtual void visit(CompoundStm *s) {};
+    virtual void visit(ShowStm *s) {};
+    virtual void visit(DocumentStm *s) {};
+    virtual void visit(PlugStm *s) {};
+    virtual void visit(InputStm *s) {};
+    virtual void visit(ReceiveStm *s) {};
+    virtual void visit(ExitStm *s) {};
+    virtual void visit(ReturnStm *s) {};
+    virtual void visit(IfStm *s) {};
+    virtual void visit(WhileStm *s) {};
+    virtual void visit(ExpStm *s) {};
 
-    void visit(Exp *s) {};
-    void visit(LValExp *s) {};
-    void visit(BinopExp *s) {};
-    void visit(UnopExp *s) {};
-    void visit(TupleopExp *s) {};
-    void visit(FunctionExp *s) {};
-    void visit(IntegerExp *s) {};
-    void visit(TrueExp *s) {};
-    void visit(FalseExp *s) {};
-    void visit(StringExp *s) {};
-    void visit(FieldValExp *s) {};
-    void visit(TupleExp *s) {};
+    virtual void visit(Exp *s) {};
+    virtual void visit(LValExp *s) {};
+    virtual void visit(BinopExp *s) {};
+    virtual void visit(UnopExp *s) {};
+    virtual void visit(TupleopExp *s) {};
+    virtual void visit(FunctionExp *s) {};
+    virtual void visit(IntegerExp *s) {};
+    virtual void visit(TrueExp *s) {};
+    virtual void visit(FalseExp *s) {};
+    virtual void visit(StringExp *s) {};
+    virtual void visit(FieldValExp *s) {};
+    virtual void visit(TupleExp *s) {};
 };
 
 class MultipleVisitors : public VisitorOptional
