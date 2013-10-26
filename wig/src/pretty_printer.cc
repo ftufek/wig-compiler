@@ -37,12 +37,16 @@ string PrettyPrintVisitor::IndentStr(string str){
 	return str;
 }
 
+void PrettyPrintVisitor::PrintSymTable(ast::Base *s) const{
+	if(print_sym_table_){
+		s->get_sym_table()->PrettyPrint(ppout);
+	}
+}
+
 void PrettyPrintVisitor::visit(ast::Service *s){
     ppout<<"service {"<<endl;
     Indent();
-    if(print_sym_table_){
-    	s->get_sym_table()->PrettyPrint(ppout);
-    }
+    PrintSymTable(s);
     s->htmls_->accept(this);
     s->schemas_->accept(this);
     s->global_variables_->accept(this);
@@ -198,6 +202,7 @@ void PrettyPrintVisitor::visit(ast::EmptyStm *s) {
 void PrettyPrintVisitor::visit(ast::CompoundStm *s) {
     ppout<<" { "<<endl;
     Indent();
+    PrintSymTable(s);
     for(auto const &var : *(s->vars_)){
         var->accept(this);
     }

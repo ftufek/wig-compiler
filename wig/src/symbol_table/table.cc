@@ -38,7 +38,7 @@ bool Table::ExistsSymbol(std::string name) const{
 	auto copy = table_; //copy table
 	auto scope = table_.top();
 	while(!copy.empty()){
-		scope = table_.top();
+		scope = copy.top();
 		if(scope.find(name) != scope.end()){
 			return true;
 		}
@@ -50,11 +50,12 @@ bool Table::ExistsSymbol(std::string name) const{
 void Table::PrettyPrint(std::ostream &out) const{
 	std::string offset = "          ------||| ";
 	std::string scope_separator = offset + "--------------";
+	if(table_.size() <= 0){return;}
 	auto copy = table_;
 	auto scope = table_.top();
 	out<<offset<<"Symbol table: "<<std::endl;
 	while(!copy.empty()){
-		scope = table_.top();
+		scope = copy.top();
 		for(auto it = scope.begin(); it != scope.end(); ++it){
 			out<<offset<<it->first<<std::endl;
 		}

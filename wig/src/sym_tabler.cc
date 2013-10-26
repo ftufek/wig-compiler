@@ -14,7 +14,11 @@ SymTabler::~SymTabler(){};
 
 void SymTabler::visit(ast::Service *s){
 	sym_table_.Scope();
+	s->htmls_->accept(this);
+	s->schemas_->accept(this);
+	s->functions_->accept(this);
 	s->global_variables_->accept(this);
+	s->sessions_->accept(this);
 	s->set_sym_table(new st::Table(sym_table_));
 }
 void SymTabler::visit(ast::Whatever *s){}
@@ -23,7 +27,10 @@ void SymTabler::visit(ast::Variable *s){
 	sym_table_.PutSymbol(s->name_, st::Symbol::VARIABLE);
 }
 
-void SymTabler::visit(ast::Function *s){}
+void SymTabler::visit(ast::Function *s){
+	sym_table_.PutSymbol(s->id_, st::Symbol::FUNCTION);
+	s->stm_->accept(this);
+}
 void SymTabler::visit(ast::Field *s){}
 void SymTabler::visit(ast::Empty *s){}
 void SymTabler::visit(ast::HtmlTag *s){
@@ -41,10 +48,20 @@ void SymTabler::visit(ast::List *s){
 }
 
 void SymTabler::visit(ast::Type *s){}
-void SymTabler::visit(ast::Session *s){}
+void SymTabler::visit(ast::Session *s){
+	sym_table_.PutSymbol(s->id_, st::Symbol::SESSION);
+	s->stm_->accept(this);
+}
 
 void SymTabler::visit(ast::EmptyStm *s){}
-void SymTabler::visit(ast::CompoundStm *s){}
+void SymTabler::visit(ast::CompoundStm *s){
+	sym_table_.Scope();
+	for(auto it : *(s->vars_)){
+		it->accept(this);
+	}
+	s->set_sym_table(new st::Table(sym_table_));
+	sym_table_.UnScope();
+}
 void SymTabler::visit(ast::ShowStm *s){}
 void SymTabler::visit(ast::DocumentStm *s){}
 void SymTabler::visit(ast::PlugStm *s){}
