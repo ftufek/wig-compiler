@@ -8,19 +8,16 @@ service {
   const html a = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| div	|sym_type: html_tag	|type: html
           ------||| html	|sym_type: html_tag	|type: html
           ------||| --------------
-<html></html>;
+<html><div></div></html>;
   session a () { 
           ------||| Symbol table: 
           ------||| --------------
           ------||| a	|sym_type: variable	|type: html
           ------||| --------------
-    if (true) { 
-      noreturn = true;
-    }
-    else { 
-      return 1;
-    }
+    return 1 + 1;
+    ;
   }
 }

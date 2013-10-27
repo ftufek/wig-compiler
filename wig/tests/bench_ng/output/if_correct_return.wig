@@ -1,6 +1,3 @@
-/* Produced errors: 
-NO_RETURN(a)
-*/
 service {
           ------||| Symbol table: 
           ------||| a	|sym_type: variable	|type: html
@@ -18,6 +15,7 @@ service {
           ------||| --------------
     if (true) { 
       noreturn = true;
+      return 2;
     }
     else { 
       return 1;

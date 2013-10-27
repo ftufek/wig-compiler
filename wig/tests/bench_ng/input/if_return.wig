@@ -1,11 +1,8 @@
 /* Expected errors:
 NO_RETURN(a)
-NO_RETURN(b)
 */
 service{
 const html a = <html></html>;
-
-int b(){}
 
 session a(){
 if(true){
