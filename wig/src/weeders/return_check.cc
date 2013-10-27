@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "return_check.h"
+#include "../error.h"
 
 namespace visitors {
 
@@ -27,7 +28,7 @@ void ReturnCheck::visit(ast::Function *s) {
 	s->stm_->accept(this);
 	if(!temp_ends_with_return_ && s->type_->type_ != ast::kType::VOID){
 		is_valid_ = false;
-		std::cerr<<"ERROR: Function "<<s->id_<<" doesn't end with a return statement!"<<std::endl;
+		error::GenerateError(error::NO_RETURN, s->id_);
 	}
 	temp_ends_with_return_ = false;
 }
@@ -43,7 +44,7 @@ void ReturnCheck::visit(ast::Session *s){
     s->stm_->accept(this);
     if(!temp_ends_with_return_){
     	is_valid_ = false;
-    	std::cerr<<"ERROR: Session "<<s->id_<<" doesn't end with a return statement!"<<std::endl;
+    	error::GenerateError(error::NO_RETURN, s->id_);
     }
     temp_ends_with_return_ = false;
 }

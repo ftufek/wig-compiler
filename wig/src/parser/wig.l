@@ -15,7 +15,7 @@ WHATEVER [^<>]*
 STR				\"((\\\")|([^\"\n\t]))*\"
 
 %s SERVICE
-%x HTML HTMLCODE METACODE GAPCODE
+%x HTML HTMLCODE METACODE GAPCODE COMMENT
 
 %option noyywrap
 %option never-interactive
@@ -50,6 +50,7 @@ STR				\"((\\\")|([^\"\n\t]))*\"
 ">" return '>';
 
 <INITIAL>{
+    "/*" { BEGIN(COMMENT); } 
     "service" { BEGIN(SERVICE); return tSERVICE; }
 }
 
@@ -78,6 +79,11 @@ STR				\"((\\\")|([^\"\n\t]))*\"
     "true" return tTRUE;
     "false" return tFALSE;
     "session" return tSESSION;
+}
+
+<COMMENT>{
+	"*/" { BEGIN(INITIAL); }
+	.|\n
 }
 
 <HTML>{

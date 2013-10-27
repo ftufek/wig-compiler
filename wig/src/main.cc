@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "ast.h"
 #include "pretty_printer.h"
+#include "error.h"
 #include "sym_tabler.h"
 #include "weeder.h"
 #include "parser/y.tab.h"
@@ -97,6 +98,15 @@ int main(int argc, char **argv){
     		visitors::SymTabler tabler = visitors::SymTabler();
     		tabler.visit(EXP);
     	}
+    	if(weed){
+			visitors::Weeder weeder = visitors::Weeder();
+			weeder.visit(EXP);
+			//TODO: implement is_valid for weeders when have time
+//    		if(!weeder->is_valid()){
+//    			cout<<"ERROR: Weeder showed errors in your code!"<<endl;
+//    			return 0;
+//    		}
+		}
     	if(prettyPrint){
     		std::streambuf * buf;
     		std::ofstream of;
@@ -110,15 +120,7 @@ int main(int argc, char **argv){
     		visitors::PrettyPrintVisitor pp = visitors::PrettyPrintVisitor(out,symbol);
 			pp.visit(EXP);
     	}
-    	if(weed){
-    		visitors::Weeder weeder = visitors::Weeder();
-    		weeder.visit(EXP);
-    		//TODO: implement is_valid for weeders when have time
-//    		if(!weeder->is_valid()){
-//    			cout<<"ERROR: Weeder showed errors in your code!"<<endl;
-//    			return 0;
-//    		}
-    	}
+
     }
 
 //    delete(EXP); TODO: hmm it's bizarre, when I try to call

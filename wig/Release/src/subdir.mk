@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CC_SRCS += \
 ../src/ast.cc \
+../src/error.cc \
 ../src/main.cc \
 ../src/pretty_printer.cc \
 ../src/sym_tabler.cc \
@@ -12,6 +13,7 @@ CC_SRCS += \
 
 OBJS += \
 ./src/ast.o \
+./src/error.o \
 ./src/main.o \
 ./src/pretty_printer.o \
 ./src/sym_tabler.o \
@@ -19,6 +21,7 @@ OBJS += \
 
 CC_DEPS += \
 ./src/ast.d \
+./src/error.d \
 ./src/main.d \
 ./src/pretty_printer.d \
 ./src/sym_tabler.d \

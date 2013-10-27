@@ -1,0 +1,38 @@
+/* Produced errors: 
+NO_RETURN(b)
+NO_RETURN(a)
+*/
+service {
+          ------||| Symbol table: 
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: function	|type: int
+          ------||| --------------
+  const html a = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| html	|sym_type: html_tag	|type: html
+          ------||| --------------
+<html></html>;
+  int b() { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: function	|type: int
+          ------||| --------------
+    
+  }
+
+  session a () { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: function	|type: int
+          ------||| --------------
+    if (true) { 
+      noreturn = true;
+    }
+    else { 
+      return 1;
+    }
+  }
+}

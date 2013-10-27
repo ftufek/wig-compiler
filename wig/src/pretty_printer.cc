@@ -2,6 +2,7 @@
 //#include <boost/algorithm/string/replace.hpp>
 #include "symbol_table/table.h"
 #include "pretty_printer.h"
+#include "error.h"
 
 using namespace std;
 
@@ -44,6 +45,9 @@ void PrettyPrintVisitor::PrintSymTable(ast::Base *s, bool last_scope_only) const
 }
 
 void PrettyPrintVisitor::visit(ast::Service *s){
+	if(error::ErrorsPresent()){
+		error::PrintErrors(ppout);
+	}
     ppout<<"service {"<<endl;
     Indent();
     PrintSymTable(s);
