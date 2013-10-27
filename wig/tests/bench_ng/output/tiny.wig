@@ -9,8 +9,6 @@ service {
   const html Welcome = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body>
     Welcome!
@@ -18,9 +16,6 @@ service {
   const html Pledge = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body>
     How much do you want to contribute?
@@ -29,9 +24,6 @@ service {
   const html Total = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| total	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     The total is now <[total]>.

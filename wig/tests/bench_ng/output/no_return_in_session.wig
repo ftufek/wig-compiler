@@ -1,4 +1,5 @@
 /* Produced errors: 
+SYMBOL_ALREADY_PRESENT(a)
 NO_RETURN(a)
 */
 service {
@@ -8,8 +9,6 @@ service {
   const html a = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| div	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
           ------||| --------------
 <html><div></div></html>;
   session a () { 

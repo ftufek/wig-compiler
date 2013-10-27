@@ -6,6 +6,7 @@
  */
 
 #include "table.h"
+#include "../error.h"
 
 namespace st{
 
@@ -125,6 +126,7 @@ bool Table::PutSymbol(Symbol sym){
 		table_.push(scope);
 		return true;
 	}else{
+		error::GenerateError(error::SYMBOL_ALREADY_PRESENT, sym.get_name());
 		return false;
 	}
 };

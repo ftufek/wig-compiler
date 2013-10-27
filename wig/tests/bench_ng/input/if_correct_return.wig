@@ -1,3 +1,6 @@
+/* errors expected:
+SYMBOL_ALREADY_PRESENT(a)
+*/
 service{
 const html a = <html></html>;
 

@@ -9,11 +9,6 @@ service {
   const html Setup = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
-          ------||| p	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>A Simple Plus Minus Calculator</h1>
@@ -30,13 +25,6 @@ service {
   const html Return = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| Ans	|sym_type: hole_tag	|type: html
-          ------||| b	|sym_type: html_tag	|type: html
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
-          ------||| p	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>The Answer</h1>
@@ -49,9 +37,6 @@ service {
   const html ByeBye = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>Thank you for using this calculator</h1>

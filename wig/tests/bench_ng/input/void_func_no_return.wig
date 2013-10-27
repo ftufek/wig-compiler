@@ -1,10 +1,10 @@
 service {
-const html a = <html></html>;
+const html c = <html></html>;
 void a(bool a){
 
 }
 
-session a(){
+session b(){
 return 1+1;
 }
 

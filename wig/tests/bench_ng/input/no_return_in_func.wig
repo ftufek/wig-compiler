@@ -1,5 +1,7 @@
 /* expected errors:
 NO_RETURN(a)
+SYMBOL_ALREADY_PRESENT(a)
+SYMBOL_ALREADY_PRESENT(a)
 */
 service {
 const html a = <html></html>;

@@ -2,7 +2,7 @@
 NO_RETURN(a)
 */
 service{
-const html a = <html></html>;
+const html d = <html></html>;
 
 session a(){
 if(true){

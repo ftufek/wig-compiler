@@ -1,4 +1,6 @@
 /* Produced errors: 
+SYMBOL_ALREADY_PRESENT(a)
+SYMBOL_ALREADY_PRESENT(a)
 NO_RETURN(a)
 */
 service {
@@ -8,7 +10,6 @@ service {
   const html a = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| html	|sym_type: html_tag	|type: html
           ------||| --------------
 <html></html>;
   int a(bool a) { 

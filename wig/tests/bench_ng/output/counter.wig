@@ -7,12 +7,6 @@ service {
   const html Nikolaj = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| i	|sym_type: html_tag	|type: html
-          ------||| img	|sym_type: html_tag	|type: html
-          ------||| no	|sym_type: hole_tag	|type: html
-          ------||| p	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body>
      <img src="http://www.brics.dk/~mis/babybath.jpg">

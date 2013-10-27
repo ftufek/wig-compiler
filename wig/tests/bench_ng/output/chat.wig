@@ -14,10 +14,6 @@ service {
   const html Logon = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>Welcome to The Chat Room</h1>
@@ -27,19 +23,6 @@ service {
   const html Update = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| b	|sym_type: html_tag	|type: html
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| hr	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
-          ------||| msg0	|sym_type: hole_tag	|type: html
-          ------||| msg1	|sym_type: hole_tag	|type: html
-          ------||| msg2	|sym_type: hole_tag	|type: html
-          ------||| msg3	|sym_type: hole_tag	|type: html
-          ------||| msg4	|sym_type: hole_tag	|type: html
-          ------||| msg5	|sym_type: hole_tag	|type: html
-          ------||| p	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>The Chat Room Service</h1>
@@ -59,11 +42,6 @@ service {
   const html ByeBye = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| conns	|sym_type: hole_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| msgs	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>Thanks for using The Chat Room</h1>

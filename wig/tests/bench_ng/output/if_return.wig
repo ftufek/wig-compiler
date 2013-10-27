@@ -3,18 +3,19 @@ NO_RETURN(a)
 */
 service {
           ------||| Symbol table: 
-          ------||| a	|sym_type: variable	|type: html
+          ------||| a	|sym_type: session	|type: void
+          ------||| d	|sym_type: variable	|type: html
           ------||| --------------
-  const html a = 
+  const html d = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| html	|sym_type: html_tag	|type: html
           ------||| --------------
 <html></html>;
   session a () { 
           ------||| Symbol table: 
           ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
+          ------||| a	|sym_type: session	|type: void
+          ------||| d	|sym_type: variable	|type: html
           ------||| --------------
     if (true) { 
       noreturn = true;

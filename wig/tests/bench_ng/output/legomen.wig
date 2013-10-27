@@ -11,16 +11,6 @@ service {
   const html Init = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| br	|sym_type: html_tag	|type: html
-          ------||| center	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| img	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
-          ------||| table	|sym_type: html_tag	|type: html
-          ------||| td	|sym_type: html_tag	|type: html
-          ------||| tr	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#4400ff">
 		<br>
@@ -52,16 +42,6 @@ service {
   const html Red = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| br	|sym_type: html_tag	|type: html
-          ------||| center	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| img	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
-          ------||| table	|sym_type: html_tag	|type: html
-          ------||| td	|sym_type: html_tag	|type: html
-          ------||| tr	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#ff0000">
 		<br>
@@ -93,16 +73,6 @@ service {
   const html Blue = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| br	|sym_type: html_tag	|type: html
-          ------||| center	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| img	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
-          ------||| table	|sym_type: html_tag	|type: html
-          ------||| td	|sym_type: html_tag	|type: html
-          ------||| tr	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#4400ff">
 		<br>
@@ -134,16 +104,6 @@ service {
   const html Green = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| br	|sym_type: html_tag	|type: html
-          ------||| center	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| img	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
-          ------||| table	|sym_type: html_tag	|type: html
-          ------||| td	|sym_type: html_tag	|type: html
-          ------||| tr	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#22ff22">
 		<br>
@@ -175,16 +135,6 @@ service {
   const html Purple = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| br	|sym_type: html_tag	|type: html
-          ------||| center	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
-          ------||| img	|sym_type: html_tag	|type: html
-          ------||| input	|sym_type: input_tag	|type: html
-          ------||| table	|sym_type: html_tag	|type: html
-          ------||| td	|sym_type: html_tag	|type: html
-          ------||| tr	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#880099">
 		<br>
@@ -216,11 +166,6 @@ service {
   const html End = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
-          ------||| body	|sym_type: html_tag	|type: html
-          ------||| br	|sym_type: html_tag	|type: html
-          ------||| center	|sym_type: html_tag	|type: html
-          ------||| h1	|sym_type: html_tag	|type: html
-          ------||| html	|sym_type: html_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#334433">
         	<br>
