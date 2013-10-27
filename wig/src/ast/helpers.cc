@@ -4,12 +4,9 @@ using namespace std;
 
 namespace ast {
 
-Base *wrapAround(string name, map<string, string> *attrs,
-                      List *exp){
+Base *wrapAround(string name, map<string, string> *attrs, List *exp){
     Base *opening = new HtmlTag(name, attrs);
-    Base *closing = new HtmlTag(name,
-                                     emptyMap(),
-                                     true);
+    Base *closing = new HtmlTag(name, emptyMap(), true);
     exp->getList()->push_front(opening);
     exp->getList()->push_back(closing);
     return exp;

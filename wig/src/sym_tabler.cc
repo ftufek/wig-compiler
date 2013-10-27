@@ -24,17 +24,17 @@ void SymTabler::visit(ast::Service *s){
 void SymTabler::visit(ast::Whatever *s){}
 
 void SymTabler::visit(ast::Variable *s){
-	sym_table_.PutSymbol(s->name_, st::Symbol::VARIABLE);
+	sym_table_.PutSymbol(st::Symbol::ForVariable(s));
 }
 
 void SymTabler::visit(ast::Function *s){
-	sym_table_.PutSymbol(s->id_, st::Symbol::FUNCTION);
+	sym_table_.PutSymbol(st::Symbol::ForFunction(s));
 	s->stm_->accept(this);
 }
 void SymTabler::visit(ast::Field *s){}
 void SymTabler::visit(ast::Empty *s){}
 void SymTabler::visit(ast::HtmlTag *s){
-	sym_table_.PutSymbol(s->id_, st::Symbol::HTML);
+	sym_table_.PutSymbol(st::Symbol::ForHtmlTag(s));
 }
 void SymTabler::visit(ast::Argument *s){}
 void SymTabler::visit(ast::MetaTag *s){}
@@ -49,7 +49,7 @@ void SymTabler::visit(ast::List *s){
 
 void SymTabler::visit(ast::Type *s){}
 void SymTabler::visit(ast::Session *s){
-	sym_table_.PutSymbol(s->id_, st::Symbol::SESSION);
+	sym_table_.PutSymbol(st::Symbol::ForSession(s));
 	s->stm_->accept(this);
 }
 

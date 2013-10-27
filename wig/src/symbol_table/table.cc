@@ -9,23 +9,102 @@
 
 namespace st{
 
+std::string SymTypeToStr(SymbolType type){
+	switch(type){
+	case SymbolType::HTML:
+		return "html";
+		break;
+
+	case SymbolType::SELECT_TAG:
+		return "select_tag";
+		break;
+
+	case SymbolType::INPUT_TAG:
+		return "input_tag";
+		break;
+
+	case SymbolType::HOLE_TAG:
+		return "hole_tag";
+		break;
+
+	case SymbolType::SCHEMA:
+		return "schema";
+		break;
+
+	case SymbolType::FIELD:
+		return "field";
+		break;
+
+	case SymbolType::VARIABLE:
+		return "variable";
+		break;
+
+	case SymbolType::ARGUMENT:
+		return "argument";
+		break;
+
+	case SymbolType::FUNCTION:
+		return "function";
+		break;
+
+	case SymbolType::SESSION:
+		return "session";
+		break;
+
+	default:
+		break;
+	}
+	return "";
+}
+
+Symbol::Symbol(std::string name, ast::Base *node, ast::kType type, SymbolType sym_type)
+	:name_(name), node_(node), type_(type), sym_type_(sym_type){}
+Symbol::~Symbol(){};
+
+Symbol Symbol::ForVariable(ast::Variable *var){
+	return Symbol(var->name_, var, var->type_->type_, SymbolType::VARIABLE);
+}
+Symbol Symbol::ForFunction(ast::Function *f){
+	return Symbol(f->id_, f, f->type_->type_, SymbolType::FUNCTION);
+}
+Symbol Symbol::ForHtmlTag(ast::HtmlTag *tag){
+	return Symbol(tag->id_, tag, ast::kType::HTML, SymbolType::HTML);
+}
+Symbol Symbol::ForSession(ast::Session *session){
+	return Symbol(session->id_, session, ast::kType::VOID, SymbolType::HTML);
+}
+
+const std::string Symbol::get_name() const{
+	return name_;
+}
+const ast::Base *Symbol::get_node() const{
+	return node_;
+}
+const ast::kType Symbol::get_type() const{
+	return type_;
+}
+const SymbolType Symbol::get_sym_type() const{
+	return sym_type_;
+}
+
+
 Table::Table(SymTable table) : table_(table){
 }
 Table::~Table(){};
 
 void Table::Scope(){
-	table_.push(std::map<std::string, std::string>());
+	table_.push(std::map<std::string, Symbol>());
 };
 
 void Table::UnScope(){
 	table_.pop();
 };
 
-bool Table::PutSymbol(std::string name, Symbol sym){
+bool Table::PutSymbol(Symbol sym){
 	if(table_.size() <= 0) { return false; }
 	auto scope = table_.top();
-	if(scope.find(name) == scope.end()){
-		scope.insert(std::make_pair(name, "empty"));
+	if(scope.find(sym.get_name()) == scope.end()){
+		scope.insert(std::make_pair(sym.get_name(), sym));
 		table_.pop();
 		table_.push(scope);
 		return true;
@@ -57,7 +136,10 @@ void Table::PrettyPrint(std::ostream &out) const{
 	while(!copy.empty()){
 		scope = copy.top();
 		for(auto it = scope.begin(); it != scope.end(); ++it){
-			out<<offset<<it->first<<std::endl;
+			out<<offset<<it->first;
+			Symbol s = it->second;
+			out<<"\t|sym_type: "<<SymTypeToStr(s.get_sym_type());
+			out<<std::endl;
 		}
 		copy.pop();
 		out<<scope_separator<<std::endl;

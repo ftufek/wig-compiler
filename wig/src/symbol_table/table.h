@@ -18,7 +18,7 @@
 
 namespace st{
 
-enum class Symbol{
+enum class SymbolType{
 	HTML,
 	SELECT_TAG,
 	INPUT_TAG,
@@ -30,8 +30,33 @@ enum class Symbol{
 	FUNCTION,
 	SESSION,
 };
+std::string SymTypeToStr(SymbolType type);
 
-typedef std::stack<std::map<std::string, std::string>> SymTable;
+class Symbol
+{
+public:
+	~Symbol();
+
+	const std::string get_name() const;
+	const ast::Base *get_node() const;
+	const ast::kType get_type() const;
+	const SymbolType get_sym_type() const;
+
+	static Symbol ForVariable(ast::Variable *var);
+	static Symbol ForFunction(ast::Function *f);
+	static Symbol ForHtmlTag(ast::HtmlTag *tag);
+	static Symbol ForSession(ast::Session *session);
+
+private:
+	Symbol(std::string name, ast::Base *node, ast::kType type, SymbolType sym_type);
+
+	std::string name_;
+	ast::Base *node_;
+	ast::kType type_;
+	SymbolType sym_type_;
+};
+
+typedef std::stack<std::map<std::string, Symbol>> SymTable;
 
 class Table
 {
@@ -48,7 +73,8 @@ public:
 	 * @returns true if insertion was successful, insertion is successful
 	 * 			when there's no symbol on the same name in the current scope
 	 */
-	bool PutSymbol(std::string name, Symbol sym);
+//	bool PutSymbol(ast::Base *node, std::string name, SymbolType sym);
+	bool PutSymbol(Symbol sym);
 	bool ExistsSymbol(std::string name) const;
 	void PrettyPrint(std::ostream &out) const;
 
