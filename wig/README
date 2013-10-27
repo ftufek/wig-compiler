@@ -1,15 +1,18 @@
-To compile, it needs newer g++ (for c++11 support), than it's easy:
+In order to build, it requires g++ (>= 4.7) for c++11 support.
 
-1) cd build/;
-2) make code;
+You can than just execute:
+> make code;
+It will generate an "fwig" executable in the current directory.
 
-I placed tests under tests/ folder. They are python scripts.
+The tests are placed under tests/ folder. 
+They are python scripts.
 There's run.py inside each folder.
 
-You can run them directly from the makefile with:
+You can run them directly or from the makefile with:
 
-make check
-OR
-make weed
-OR
-make pretty
+> make check
+
+I didn't implement any unit tests as of now. Because the python
+test scripts execute the entire compiler already and if there's
+any bug, it's easily visible. It isn't worth putting all the
+effort into unit-testing for now...

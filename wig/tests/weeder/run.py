@@ -4,7 +4,7 @@ from sys import exit
 from filecmp import cmpfiles
 
 idir = "input/"
-fwig = "../../Debug/fwig"
+fwig = "../../fwig"
 
 files = [ f for f in listdir(idir) if isfile(join(idir,f)) ]
 
