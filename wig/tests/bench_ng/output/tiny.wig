@@ -1,0 +1,58 @@
+service {
+          ------||| Symbol table: 
+          ------||| Contribute	|sym_type: session	|type: void
+          ------||| Pledge	|sym_type: variable	|type: html
+          ------||| Total	|sym_type: variable	|type: html
+          ------||| Welcome	|sym_type: variable	|type: html
+          ------||| amount	|sym_type: variable	|type: int
+          ------||| --------------
+  const html Welcome = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| body	|sym_type: html_tag	|type: html
+          ------||| html	|sym_type: html_tag	|type: html
+          ------||| --------------
+<html> <body>
+    Welcome!
+  </body> </html>;
+  const html Pledge = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| body	|sym_type: html_tag	|type: html
+          ------||| html	|sym_type: html_tag	|type: html
+          ------||| input	|sym_type: input_tag	|type: html
+          ------||| --------------
+<html> <body>
+    How much do you want to contribute?
+    <input name="contribution" size=4 type="text">
+  </body> </html>;
+  const html Total = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| body	|sym_type: html_tag	|type: html
+          ------||| html	|sym_type: html_tag	|type: html
+          ------||| total	|sym_type: hole_tag	|type: html
+          ------||| --------------
+<html> <body>
+    The total is now <[total]>.
+  </body> </html>;
+  int amount;
+  session Contribute () { 
+          ------||| Symbol table: 
+          ------||| i	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| Contribute	|sym_type: session	|type: void
+          ------||| Pledge	|sym_type: variable	|type: html
+          ------||| Total	|sym_type: variable	|type: html
+          ------||| Welcome	|sym_type: variable	|type: html
+          ------||| amount	|sym_type: variable	|type: int
+          ------||| --------------
+    int i;
+    i = 87;
+    show Welcome    
+;
+    show Pledge receive [i = contribution];
+    amount = amount + i;
+    exit plug Total[total = amount];
+  }
+}

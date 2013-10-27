@@ -1,0 +1,69 @@
+service {
+          ------||| Symbol table: 
+          ------||| Test	|sym_type: session	|type: void
+          ------||| factorial	|sym_type: function	|type: int
+          ------||| right	|sym_type: variable	|type: html
+          ------||| status	|sym_type: variable	|type: html
+          ------||| wrong	|sym_type: variable	|type: html
+          ------||| --------------
+  const html status = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| body	|sym_type: html_tag	|type: html
+          ------||| html	|sym_type: html_tag	|type: html
+          ------||| --------------
+<html><body>Computing 10! ...</body></html>;
+  const html wrong = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| b	|sym_type: html_tag	|type: html
+          ------||| body	|sym_type: html_tag	|type: html
+          ------||| br	|sym_type: html_tag	|type: html
+          ------||| html	|sym_type: html_tag	|type: html
+          ------||| n	|sym_type: hole_tag	|type: html
+          ------||| --------------
+<html><body>You calculated 10! = <[n]><br>You have <b>failed</b> the show inside functions test!</body></html>;
+  const html right = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| b	|sym_type: html_tag	|type: html
+          ------||| body	|sym_type: html_tag	|type: html
+          ------||| br	|sym_type: html_tag	|type: html
+          ------||| html	|sym_type: html_tag	|type: html
+          ------||| n	|sym_type: hole_tag	|type: html
+          ------||| --------------
+<html><body>You calculated 10! = <[n]><br>Congratulations! You have <b>passed</b> the show inside functions test!</body></html>;
+  int factorial(int n) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| factorial	|sym_type: function	|type: int
+          ------||| right	|sym_type: variable	|type: html
+          ------||| status	|sym_type: variable	|type: html
+          ------||| wrong	|sym_type: variable	|type: html
+          ------||| --------------
+    if (n == 0) { 
+      show status      
+;
+      return 1;
+    }
+    return n * factorial(n - 1);
+  }
+
+  session Test () { 
+          ------||| Symbol table: 
+          ------||| n	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| Test	|sym_type: session	|type: void
+          ------||| factorial	|sym_type: function	|type: int
+          ------||| right	|sym_type: variable	|type: html
+          ------||| status	|sym_type: variable	|type: html
+          ------||| wrong	|sym_type: variable	|type: html
+          ------||| --------------
+    int n;
+    n = factorial(10);
+    if (n != 3628800) { 
+      exit plug wrong[n = n];
+    }
+    exit plug right[n = n];
+  }
+}
