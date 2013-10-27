@@ -8,6 +8,8 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include src/weeders/subdir.mk
+-include src/symbol_table/subdir.mk
 -include src/ast/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
@@ -39,20 +41,7 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: fwig check
-
-code: fwig
-
-check: pretty weed
-
-pretty: code
-	cd ../tests/benchmarks/; python run.py;
-
-weed: code
-	cd ../tests/weeder/; python run.py;
-
-unit:
-	@echo "There wasn't much to unit-test for now."
+all: fwig
 
 # Tool invocations
 fwig: $(OBJS) $(USER_OBJS)
