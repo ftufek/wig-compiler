@@ -1,7 +1,10 @@
-all: code test
+all: code check
+
+clean:
+	rm fwig; cd Release/; make clean;
 
 code:
-	cd Release/; make; cp fwig ../;
+	cd Release/; make; ln -sf Release/fwig ../fwig;
 
 check: weed pretty unit
 
