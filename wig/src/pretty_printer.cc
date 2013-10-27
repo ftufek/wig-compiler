@@ -157,31 +157,10 @@ void PrettyPrintVisitor::visit(ast::List *s) {
 }
 
 void PrettyPrintVisitor::visit(ast::Type *s) {
-    switch(s->type_){
-    case ast::kType::INT:
-        ppout<<"int";
-        break;
-
-    case ast::kType::BOOL:
-        ppout<<"bool";
-        break;
-
-    case ast::kType::STRING:
-        ppout<<"string";
-        break;
-
-    case ast::kType::VOID:
-        ppout<<"void";
-        break;
-
-    case ast::kType::TUPLE:
-        ppout<<"tuple "<<s->tuple_id_;
-        break;
-
-    case ast::kType::HTML:
-        ppout<<"html";
-        break;
-    }
+	ppout<<ast::KTypeToStr(s->type_);
+	if(s->type_ == ast::kType::TUPLE){
+		ppout<<" "<<s->tuple_id_;
+	}
 }
 
 void PrettyPrintVisitor::visit(ast::Session *s){

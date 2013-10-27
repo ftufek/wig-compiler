@@ -139,6 +139,7 @@ void Table::PrettyPrint(std::ostream &out) const{
 			out<<offset<<it->first;
 			Symbol s = it->second;
 			out<<"\t|sym_type: "<<SymTypeToStr(s.get_sym_type());
+			out<<"\t|type: "<<ast::KTypeToStr(s.get_type());
 			out<<std::endl;
 		}
 		copy.pop();

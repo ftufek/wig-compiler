@@ -9,6 +9,7 @@ namespace ast {
 enum class kType{
     INT, BOOL, STRING, VOID, TUPLE, HTML
 };
+std::string KTypeToStr(kType type);
 
 class Type : public Base
 {

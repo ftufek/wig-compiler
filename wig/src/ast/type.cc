@@ -4,6 +4,35 @@
 
 namespace ast {
 
+std::string KTypeToStr(kType type){
+	switch(type){
+	case ast::kType::INT:
+		return "int";
+		break;
+
+	case ast::kType::BOOL:
+		return "bool";
+		break;
+
+	case ast::kType::STRING:
+		return "string";
+		break;
+
+	case ast::kType::VOID:
+		return "void";
+		break;
+
+	case ast::kType::TUPLE:
+		return "tuple";
+		break;
+
+	case ast::kType::HTML:
+		return "html";
+		break;
+	}
+	return "";
+}
+
 Type::Type(kType type, std::string tupleID)
     :type_(type), tuple_id_(tupleID) {}
 
