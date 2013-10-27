@@ -37,9 +37,9 @@ string PrettyPrintVisitor::IndentStr(string str){
 	return str;
 }
 
-void PrettyPrintVisitor::PrintSymTable(ast::Base *s) const{
+void PrettyPrintVisitor::PrintSymTable(ast::Base *s, bool last_scope_only) const{
 	if(print_sym_table_){
-		s->get_sym_table()->PrettyPrint(ppout);
+		s->get_sym_table()->PrettyPrint(ppout, last_scope_only);
 	}
 }
 
@@ -69,6 +69,11 @@ void PrettyPrintVisitor::visit(ast::Variable *s) {
     ppout<<" "<<s->name_;
     if(s->value_){
         ppout<<" = ";
+        if(print_sym_table_ && s->type_->type_ == ast::kType::HTML){
+        	ppout<<std::endl;
+        	ppout<<" ---- Symbols inside the HTML"<<std::endl;
+        	PrintSymTable(s, true);
+        }
         s->value_->accept(this);
     }
     ppout<<";"<<endl;
@@ -139,6 +144,10 @@ void PrettyPrintVisitor::visit(ast::Schema *s) {
     PrintIndent();
     ppout<<"schema "<<s->id_<<" {"<<endl;
     Indent();
+    if(print_sym_table_){
+    	ppout<<"------- Symbols inside the schema: "<<endl;
+        PrintSymTable(s, true);
+    }
     s->fields_->accept(this);
     DeIndent();
     PrintIndent();

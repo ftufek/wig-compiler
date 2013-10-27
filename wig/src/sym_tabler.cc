@@ -25,20 +25,34 @@ void SymTabler::visit(ast::Whatever *s){}
 
 void SymTabler::visit(ast::Variable *s){
 	sym_table_.PutSymbol(st::Symbol::ForVariable(s));
+	if(s->type_->type_ == ast::kType::HTML && s->value_){
+		sym_table_.Scope();
+		s->value_->accept(this);
+		s->set_sym_table(new st::Table(sym_table_));
+		sym_table_.UnScope();
+	}
 }
 
 void SymTabler::visit(ast::Function *s){
 	sym_table_.PutSymbol(st::Symbol::ForFunction(s));
 	s->stm_->accept(this);
 }
-void SymTabler::visit(ast::Field *s){}
+void SymTabler::visit(ast::Field *s){
+	sym_table_.PutSymbol(st::Symbol::ForField(s));
+}
 void SymTabler::visit(ast::Empty *s){}
 void SymTabler::visit(ast::HtmlTag *s){
 	sym_table_.PutSymbol(st::Symbol::ForHtmlTag(s));
 }
 void SymTabler::visit(ast::Argument *s){}
 void SymTabler::visit(ast::MetaTag *s){}
-void SymTabler::visit(ast::Schema *s){}
+void SymTabler::visit(ast::Schema *s){
+	sym_table_.PutSymbol(st::Symbol::ForSchema(s));
+	sym_table_.Scope();
+	s->fields_->accept(this);
+	s->set_sym_table(new st::Table(sym_table_));
+	sym_table_.UnScope();
+}
 void SymTabler::visit(ast::String *s){}
 
 void SymTabler::visit(ast::List *s){

@@ -6,10 +6,12 @@ service {
   const html Pledge = <html> <body>
     How much do you want to contribute?
     <input name="contribution" type="text" size=4>
+	<[myGap]>
   </body> </html>;
 
   const html Total = <html> <body>
     The total is now <[total]>.
+	<select name="a" type="text"></select>
   </body> </html>;
 
   int amount;

@@ -46,6 +46,8 @@ public:
 	static Symbol ForFunction(ast::Function *f);
 	static Symbol ForHtmlTag(ast::HtmlTag *tag);
 	static Symbol ForSession(ast::Session *session);
+	static Symbol ForSchema(ast::Schema *schema);
+	static Symbol ForField(ast::Field *field);
 
 private:
 	Symbol(std::string name, ast::Base *node, ast::kType type, SymbolType sym_type);
@@ -71,12 +73,11 @@ public:
 	 * PutSymbol
 	 *
 	 * @returns true if insertion was successful, insertion is successful
-	 * 			when there's no symbol on the same name in the current scope
+	 * 			when there's no symbol with the same name in the current scope
 	 */
-//	bool PutSymbol(ast::Base *node, std::string name, SymbolType sym);
 	bool PutSymbol(Symbol sym);
 	bool ExistsSymbol(std::string name) const;
-	void PrettyPrint(std::ostream &out) const;
+	void PrettyPrint(std::ostream &out, bool last_scope_only = false) const;
 
 	Table get_table();
 private:

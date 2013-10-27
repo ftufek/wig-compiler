@@ -12,7 +12,7 @@ namespace st{
 std::string SymTypeToStr(SymbolType type){
 	switch(type){
 	case SymbolType::HTML:
-		return "html";
+		return "html_tag";
 		break;
 
 	case SymbolType::SELECT_TAG:
@@ -68,10 +68,26 @@ Symbol Symbol::ForFunction(ast::Function *f){
 	return Symbol(f->id_, f, f->type_->type_, SymbolType::FUNCTION);
 }
 Symbol Symbol::ForHtmlTag(ast::HtmlTag *tag){
-	return Symbol(tag->id_, tag, ast::kType::HTML, SymbolType::HTML);
+	SymbolType s;
+	if(tag->is_gap_){
+		s = SymbolType::HOLE_TAG;
+	}else if(tag->id_ == "input"){
+		s = SymbolType::INPUT_TAG;
+	}else if(tag->id_ == "select"){
+		s = SymbolType::SELECT_TAG;
+	}else{
+		s = SymbolType::HTML;
+	}
+	return Symbol(tag->id_, tag, ast::kType::HTML, s);
 }
 Symbol Symbol::ForSession(ast::Session *session){
-	return Symbol(session->id_, session, ast::kType::VOID, SymbolType::HTML);
+	return Symbol(session->id_, session, ast::kType::VOID, SymbolType::SESSION);
+}
+Symbol Symbol::ForSchema(ast::Schema *schema){
+	return Symbol(schema->id_, schema, ast::kType::SCHEMA, SymbolType::SCHEMA);
+}
+Symbol Symbol::ForField(ast::Field *field){
+	return Symbol(field->id_, field, field->type_->type_, SymbolType::FIELD);
 }
 
 const std::string Symbol::get_name() const{
@@ -126,7 +142,7 @@ bool Table::ExistsSymbol(std::string name) const{
 	return false;
 };
 
-void Table::PrettyPrint(std::ostream &out) const{
+void Table::PrettyPrint(std::ostream &out, bool last_scope_only) const{
 	std::string offset = "          ------||| ";
 	std::string scope_separator = offset + "--------------";
 	if(table_.size() <= 0){return;}
@@ -144,6 +160,7 @@ void Table::PrettyPrint(std::ostream &out) const{
 		}
 		copy.pop();
 		out<<scope_separator<<std::endl;
+		if(last_scope_only){break;}
 	}
 };
 

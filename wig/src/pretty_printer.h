@@ -58,7 +58,7 @@ protected:
     void DeIndent();
     void PrintIndent();
     std::string IndentStr(std::string);
-    void PrintSymTable(ast::Base *s) const;
+    void PrintSymTable(ast::Base *s, bool last_scope_only = false) const;
 
 private:
     std::string *indent_ = new std::string("");

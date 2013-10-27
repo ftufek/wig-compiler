@@ -7,7 +7,7 @@
 namespace ast {
 
 enum class kType{
-    INT, BOOL, STRING, VOID, TUPLE, HTML
+    INT, BOOL, STRING, VOID, TUPLE, HTML, SCHEMA
 };
 std::string KTypeToStr(kType type);
 

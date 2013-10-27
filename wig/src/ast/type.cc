@@ -29,6 +29,10 @@ std::string KTypeToStr(kType type){
 	case ast::kType::HTML:
 		return "html";
 		break;
+
+	case ast::kType::SCHEMA:
+		return "schema";
+		break;
 	}
 	return "";
 }
