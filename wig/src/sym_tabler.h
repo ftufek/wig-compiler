@@ -9,7 +9,6 @@
 #define SYM_TABLER_H_
 
 #include "ast.h"
-#include "ast_visitor.h"
 #include "symbol_table/table.h"
 
 namespace visitors{

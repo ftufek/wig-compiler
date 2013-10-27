@@ -1,5 +1,5 @@
 #include "ast.h"
-#include "../ast_visitor.h"
+#include "../ast.h"
 #include "../symbol_table/table.h"
 
 namespace ast{

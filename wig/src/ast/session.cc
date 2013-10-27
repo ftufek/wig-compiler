@@ -1,5 +1,5 @@
 #include "session.h"
-#include "../ast_visitor.h"
+#include "../ast.h"
 
 namespace ast {
 

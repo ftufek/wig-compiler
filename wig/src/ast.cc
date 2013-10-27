@@ -1,11 +1,11 @@
 /*
- * ast_visitor.cc
+ * ast.cc
  *
- *  Created on: Oct 20, 2013
+ *  Created on: Oct 27, 2013
  *      Author: user
  */
 
-#include "ast_visitor.h"
+#include "ast.h"
 
 namespace ast{
 
@@ -23,5 +23,3 @@ void MultipleVisitors::visit(Service *service){
 }
 
 }
-
-

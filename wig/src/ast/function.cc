@@ -1,6 +1,6 @@
 #include <iostream>
 #include "function.h"
-#include "../ast_visitor.h"
+#include "../ast.h"
 
 using namespace std;
 

@@ -8,7 +8,7 @@
 #ifndef RETURN_CHECK_H_
 #define RETURN_CHECK_H_
 
-#include "../ast_visitor.h"
+#include "../ast.h"
 
 namespace visitors {
 

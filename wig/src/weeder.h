@@ -8,7 +8,7 @@
 #ifndef WEEDER_H_
 #define WEEDER_H_
 
-#include "ast_visitor.h"
+#include "ast.h"
 
 namespace visitors {
 

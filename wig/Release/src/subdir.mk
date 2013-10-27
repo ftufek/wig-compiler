@@ -4,21 +4,21 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CC_SRCS += \
-../src/ast_visitor.cc \
+../src/ast.cc \
 ../src/main.cc \
 ../src/pretty_printer.cc \
 ../src/sym_tabler.cc \
 ../src/weeder.cc 
 
 OBJS += \
-./src/ast_visitor.o \
+./src/ast.o \
 ./src/main.o \
 ./src/pretty_printer.o \
 ./src/sym_tabler.o \
 ./src/weeder.o 
 
 CC_DEPS += \
-./src/ast_visitor.d \
+./src/ast.d \
 ./src/main.d \
 ./src/pretty_printer.d \
 ./src/sym_tabler.d \
