@@ -162,7 +162,6 @@ void PrettyPrintVisitor::visit(ast::List *s) {
     for(auto const &exp : *(s->exps_)){
         exp->accept(this);
     }
-//    cout<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::Type *s) {
