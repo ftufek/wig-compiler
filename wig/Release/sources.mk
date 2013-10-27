@@ -23,8 +23,9 @@ C_UPPER_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-src \
 src/weeders \
+src \
 src/symbol_table \
+src/parser \
 src/ast \
 

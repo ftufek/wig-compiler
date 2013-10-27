@@ -668,7 +668,7 @@ char *yytext;
 #line 1 "wig.l"
 #line 2 "wig.l"
 extern "C" int yylex();
-#include "ast.h"
+#include "../ast.h"
 #include <string>
 #include "y.tab.h"
 

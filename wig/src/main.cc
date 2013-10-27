@@ -6,7 +6,7 @@
 #include "pretty_printer.h"
 #include "sym_tabler.h"
 #include "weeder.h"
-#include "y.tab.h"
+#include "parser/y.tab.h"
 
 int yyparse();
 ast::Service *EXP;

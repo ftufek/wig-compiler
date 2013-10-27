@@ -69,7 +69,7 @@
   #include <string>
   #include <list>
   #include <map>
-  #include "ast.h"
+  #include "../ast.h"
 
   extern "C" int yylex();
   extern ast::Base *EXP;
