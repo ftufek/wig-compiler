@@ -95,6 +95,8 @@
 %left tTCOMBINE tTKEEP tTDISCARD
 %left tEQ tNEQ tLEQ tHEQ '<' '>'
 %left '='
+%left UMINUS
+
 %%
 
 service: tSERVICE '{' htmls schemas nevariables functions sessions '}'
@@ -104,21 +106,21 @@ service: tSERVICE '{' htmls schemas nevariables functions sessions '}'
      | /* empty */
        { yyerror("Error: doesn't contain any service."); }
 
-htmls : html
+htmls: html
        { $$ = ast::initList($1); }
       | htmls html
        { $$ = ast::addBack($1, $2); }
 
-html: tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
-       {$$ = new ast::Variable(*$3, new ast::Type(ast::kType::HTML), ast::kConstVar,
-                                    ast::wrapHtml(new ast::List()));
-        delete($3); }
-    | tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
+html: tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
        { $$ = new ast::Variable(*$3,
                                       new ast::Type(ast::kType::HTML),
                                       ast::kConstVar,
                                       ast::wrapHtml($6));
           delete($3); }
+	| tCONST ttHTML tID '=' tHtmlOpen tHtmlClose ';'
+       {$$ = new ast::Variable(*$3, new ast::Type(ast::kType::HTML), ast::kConstVar,
+                                    ast::wrapHtml(new ast::List()));
+        delete($3); } 
 
 nehtmlbodies: htmlbody
             { ast::List *l = new ast::List();
@@ -130,7 +132,7 @@ nehtmlbodies: htmlbody
 
 htmlbody: '<' tID attributes '>' 
         { $$ = new ast::HtmlTag(*$2, $3); delete($2); }
-        | tTagClose tID '>' /* "</tID>" */
+        | tTagClose tID '>'
         { $$ = new ast::HtmlTag(*$2, ast::emptyMap(), true); delete($2); }
         | tGapOpen tID tGapClose
         { $$ = new ast::HtmlTag(*$2, ast::emptyMap(), false, true); delete($2); }
@@ -328,9 +330,7 @@ receive: /* empty */
     | tRECEIVE '[' inputs ']'
     { $$ = new ast::ReceiveStm($3); }
 
-exp: /* empty */
-    { $$ = new ast::Exp(); }
-    | lvalue
+exp: lvalue
     { $$ = new ast::LValExp(*$1); }
     | lvalue '=' exp
     { $$ = new ast::BinopExp(new ast::LValExp(*$1),
@@ -348,10 +348,10 @@ exp: /* empty */
     { $$ = new ast::BinopExp($1, ast::kBinopType::LowerEquals, $3); }
     | exp tHEQ exp
     { $$ = new ast::BinopExp($1, ast::kBinopType::HigherEquals, $3); }
+    | '-' exp %prec UMINUS
+    { $$ = new ast::UnopExp(ast::kUnopType::Minus, $2); }
     | '!' exp
     { $$ = new ast::UnopExp(ast::kUnopType::LogicNegate, $2); }
-    | '-' exp
-    { $$ = new ast::UnopExp(ast::kUnopType::Minus, $2); }
     | exp '+' exp
     { $$ = new ast::BinopExp($1, ast::kBinopType::Add, $3); }
     | exp '-' exp

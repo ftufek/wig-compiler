@@ -90,7 +90,8 @@ extern int yydebug;
      tTKEEP = 299,
      tTDISCARD = 300,
      tTRUE = 301,
-     tFALSE = 302
+     tFALSE = 302,
+     UMINUS = 303
    };
 #endif
 /* Tokens.  */
@@ -139,6 +140,7 @@ extern int yydebug;
 #define tTDISCARD 300
 #define tTRUE 301
 #define tFALSE 302
+#define UMINUS 303
 
 
 
@@ -170,7 +172,7 @@ typedef union YYSTYPE
 
 
 /* Line 2053 of yacc.c  */
-#line 174 "y.tab.h"
+#line 176 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
