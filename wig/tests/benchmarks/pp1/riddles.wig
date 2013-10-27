@@ -1,26 +1,22 @@
 service {
   const html Welcome = <html> <body>
     Welcome to the riddle game!
-  </body> </html>
-;
+  </body> </html>;
   const html Pick = <html> <body>
     There are 5 riddles. You are allowed to make 3 choices.
     <p> 
     Please enter a number from 1 to 5:
     <input name="choice" size=1 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html Trials = <html> <body>
     Number of riddles read so far is: <[trials]>.
-  </body> </html>
-;
+  </body> </html>;
   const html Retry = <html> <body> 
     You have made an invalid choice!
     <p>
     Please enter a number between 1 and 5 only:
    <input name="choice" size=1 type="text">    
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle1 = <html> <body>
    A man is standing in front of a painting of a man, and he
   tells us the following: Brothers and sisters have I none, 
@@ -31,8 +27,7 @@ service {
   b) The Father
   <p> 
   c) Himself
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle1Sol = <html> <body>
     The Solution: His son
   <p>
@@ -42,8 +37,7 @@ service {
   the only child. Now remains: This man s father is myself,
   so this man is his son.
   <p>   
-   </body> </html>
-;
+   </body> </html>;
   const html Riddle2 = <html> <body>
   It is dark in my bedroom and I want to get two socks of the same color 
   from my drawer, which contains 24 red and 24 blue socks. How many socks 
@@ -57,8 +51,7 @@ service {
   c) 48
   <p> 
   d) 25   
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle2Sol = <html> <body>
    The Solution: 3
   <p>
@@ -69,8 +62,7 @@ service {
   color, or the third sock you take from the drawer has the same color as 
   one of the previous two.
   <p>  
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle3 = <html> <body>
   A hunter leaves his cabin early in the morning and walks one mile due 
   south. Here he sees a bear and starts chasing it for one mile due east 
@@ -83,8 +75,7 @@ service {
   b) White
   <p> 
   c) Can not tell
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle3Sol = <html> <body>
   The Solution: White
   <p>
@@ -94,8 +85,7 @@ service {
   due north where he finds his cabin again. This means that his cabin can 
   only be at the north pole, and for that reason the bear will be white.
   <p>            
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle4 = <html> <body>
   One day Alice meets the Lion and the Unicorn in the Forest of 
   Forgetfulness. She knows that the Lion lies on Mondays, Tuesdays, and 
@@ -117,8 +107,7 @@ service {
   e) Thursday<br> 
   f) Friday<br> 
   g) Saturday<br>                       
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle4Sol = <html> <body>
    The Solution: Thursday
   <p>
@@ -128,8 +117,7 @@ service {
   and Thursdays. The only days the Unicorn can say this, are Thursdays and
   Sundays. Therefore, the only day they both say that is on Thursday.
   <p>          
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle5 = <html> <body>
    A certain street contains 100 buildings. They are numbered from 1 to 100.
    How many 9 are used in these numbers?
@@ -139,8 +127,7 @@ service {
   b) 20
   <p> 
   c) 21     
-  </body> </html>
-;
+  </body> </html>;
   const html Riddle5Sol = <html> <body>
    The Solution: 20
   <p>
@@ -149,23 +136,16 @@ service {
   Just count the nines in the numbers: 9, 19, 29, 39, 49, 59, 69, 79, 89, 90,
   91, 92, 93, 94, 95, 96, 97, 98, 99.      
   <p>   
-  </body> </html>
-;
+  </body> </html>;
   const html Fin = <html> <body>   
   Thanks for playing this game!
   <p>
   <A href="/~mdini">BACK</A>                                                    
-  </body> </html>
-;
-
-
+  </body> </html>;
   int choice;
-
-
   session Guess () { 
     int total;
     int i;
-
     total = 0;
     while (total != 3) { 
         show Welcome        
@@ -212,5 +192,4 @@ service {
       }
 
   }
-
 }

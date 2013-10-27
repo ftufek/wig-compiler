@@ -3,8 +3,7 @@ service {
     <h1>Welcome to The Chat Room</h1>
     Please enter your on-line name:
     <input name="name" size=25 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html Update = <html> <body>
     <h1>The Chat Room Service</h1>
     <hr>
@@ -19,31 +18,24 @@ service {
     <hr>
     <p>
     <input name="quit" type="radio" value="yes"> Quit now
-  </body> </html>
-;
+  </body> </html>;
   const html ByeBye = <html> <body>
     <h1>Thanks for using The Chat Room</h1>
     You made <[conns]> connections
     and wrote <[msgs]> messages.
-  </body> </html>
-;
-
-
+  </body> </html>;
   string msg0;
   string msg1;
   string msg2;
   string msg3;
   string msg4;
   string msg5;
-
-
   session Chat () { 
     string name;
     string msg;
     string quit;
     int connections;
     int written;
-
     connections = 0;
     written = 0;
     quit = "no";
@@ -64,5 +56,4 @@ service {
 
     exit plug ByeBye[conns = connections, msgs = written];
   }
-
 }

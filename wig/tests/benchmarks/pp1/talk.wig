@@ -7,13 +7,11 @@ service {
     <p>
     Enter your password:
     <input name="password" size=25 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html incorrect = <html> <body>
     <h1>I'm sorry <[username]>, permission denied! </h1>
 
-  </body> </html>
-;
+  </body> </html>;
   const html Update = <html> <body>
     <h1>The Talk Room Service</h1>
     <hr>
@@ -28,33 +26,24 @@ service {
     <hr>
     <p>
     <input name="quit" type="radio" value="yes"> Quit now
-  </body> </html>
-;
+  </body> </html>;
   const html ByeBye = <html> <body>
     <h1>Thanks for visiting, <[username]>. </h1>
     There have been <[conns]> connections so far.
      <p>
     You wrote <[msgs]> messages this time.
-  </body> </html>
-;
-
-
+  </body> </html>;
   string msg0;
   string msg1;
   string msg2;
   int connections;
-
-
-
   session Talk () { 
     string username;
     string password;
     string msg;
     string quit;
     int written;
-
     bool correct;
-
     connections = connections + 1;
     correct = false;
     written = 0;
@@ -78,5 +67,4 @@ service {
 
     exit plug ByeBye[username = username, conns = connections, msgs = written];
   }
-
 }

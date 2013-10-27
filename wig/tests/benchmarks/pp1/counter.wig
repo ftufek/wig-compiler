@@ -3,16 +3,10 @@ service {
      <img src="http://www.brics.dk/~mis/babybath.jpg">
      <p>
      <i>You are visitor number <[no]></i>
-  </body> </html>
-;
-
-
+  </body> </html>;
   int counter;
-
-
   session Access () { 
     counter = counter + 1;
     exit plug Nikolaj[no = counter];
   }
-
 }

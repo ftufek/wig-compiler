@@ -2,66 +2,50 @@ service {
   const html GetSeed = <html> <body>
     Please enter an integer seed for the random number generator: 
     <input name="seed" size=5 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html GameSeeded = <html> <body>
     Ok, now the game can proceed, the generator is seeded. 
-  </body> </html>
-;
+  </body> </html>;
   const html Init = <html> <body>
     Please guess a number between 0 and 99:
     <input name="guess" size=2 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html Retry = <html> <body>
     That number is too large!
     <p>
     Please keep your guess between 0 and 99:
     <input name="guess" size=2 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html Again = <html> <body>
     That is not correct. Try a <[correction]> number:
     <input name="guess" size=2 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html Done = <html> <body>
     You got it, using <[trys]> guesses.
-  </body> </html>
-;
+  </body> </html>;
   const html Record = <html> <body>
     That makes you the new record holder,
     beating the old record of <[old]> guesses.
     <p>
     Please enter your name for the hi-score list
     <input name="name" size=20 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html Finish = <html> <body>
     Thanks for playing this exciting game.
-  </body> </html>
-;
+  </body> </html>;
   const html List = <html> <body>
     In <[plays]> plays of this game, the record
     holder is <[holder]> with <[record]> guesses.
-  </body> </html>
-;
-
-
+  </body> </html>;
   int plays;
   int record;
-
   int seed;
-
   string holder;
-
-
   int nextRandom() { 
     int current;
     seed = 25173 * seed + 13849 % 65536;
     return seed;
   }
-
 
   session Seed () { 
     show GetSeed receive [seed = seed];
@@ -70,11 +54,8 @@ service {
   session Play () { 
     int number;
     int guesses;
-
     int guess;
-
     string localholder;
-
     number = nextRandom() % 100;
     plays = plays + 1;
     guesses = 1;
@@ -101,5 +82,4 @@ service {
   session HiScore () { 
     exit plug List[plays = plays, holder = holder, record = record];
   }
-
 }

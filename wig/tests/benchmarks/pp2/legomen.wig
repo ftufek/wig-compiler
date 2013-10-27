@@ -25,8 +25,7 @@ service {
 		<br>
 		<br>
 		</center>
-	</body></html>
-;
+	</body></html>;
   const html Red = <html> <body bgcolor="#ff0000">
 		<br>
 		<center>
@@ -53,8 +52,7 @@ service {
 		<br>
 		<br>
 		</center>
-	</body></html>
-;
+	</body></html>;
   const html Blue = <html> <body bgcolor="#4400ff">
 		<br>
 		<center>
@@ -81,8 +79,7 @@ service {
 		<br>
 		<br>
 		</center>
-	</body></html>
-;
+	</body></html>;
   const html Green = <html> <body bgcolor="#22ff22">
 		<br>
 		<center>
@@ -109,8 +106,7 @@ service {
 		<br>
 		<br>
 		</center>
-	</body></html>
-;
+	</body></html>;
   const html Purple = <html> <body bgcolor="#880099">
 		<br>
 		<center>
@@ -137,8 +133,7 @@ service {
 		<br>
 		<br>
 		</center>
-	</body></html>
-;
+	</body></html>;
   const html End = <html> <body bgcolor="#334433">
         	<br>
 		<center>
@@ -146,12 +141,7 @@ service {
 		<h1>GOODBYE!</h1>
 		<br>
 		</center>
-	</body></html>
-;
-
-
-
-
+	</body></html>;
   session Access () { 
     int man;
     show Init receive [man = man];
@@ -164,5 +154,4 @@ service {
 
     exit End;
   }
-
 }

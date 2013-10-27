@@ -1,52 +1,39 @@
 service {
   const html ShowSchema1 = <html> <body>
-    <[message]> b: <[b]>  i: <[i]>  s: <[s]>  </body> </html>
-;
+    <[message]> b: <[b]>  i: <[i]>  s: <[s]>  </body> </html>;
   const html ShowSchema2 = <html> <body>
-   <[message]>  b: <[b]>  i: <[i]>  </body> </html>
-;
+   <[message]>  b: <[b]>  i: <[i]>  </body> </html>;
   const html ShowSchema3 = <html> <body>
-   <[message]>  b: <[b]>  s: <[s]>  </body> </html>
-;
+   <[message]>  b: <[b]>  s: <[s]>  </body> </html>;
   const html PrintString = <html> <body>
-   <[message]>  </body> </html>
-;
-  const html Done = <html> <body> Done! </body> </html>
-;
-
+   <[message]>  </body> </html>;
+  const html Done = <html> <body> Done! </body> </html>;
   schema Scm1 {
     bool b;
     int i;
     string s;
-
   }
   schema Scm2 {
     bool b;
     int i;
-
   }
   schema Scm3 {
     bool b;
     string s;
-
   }
-
-
-
   session test1 () { 
     tuple Scm1 t1;
     tuple Scm2 t2;
     tuple Scm2 t3;
-
     t1 = tuple { b = true, 
       i = 87, 
       s = "foo"};
     show plug ShowSchema1[message = "t1 is: ", b = t1.b, i = t1.i, s = t1.s]    
 ;
-    t2 = t1 \+ (b, b, i);
+    t2 = t1 \+ (b, i);
     show plug ShowSchema2[message = "t2 is: ", b = t2.b, i = t2.i]    
 ;
-    t3 = t1 \- (s, s);
+    t3 = t1 \- (s);
     show plug ShowSchema2[message = "t3 is: ", b = t3.b, i = t3.i]    
 ;
     exit Done;
@@ -54,9 +41,7 @@ service {
   session test2 () { 
     tuple Scm1 g1;
     tuple Scm2 g2;
-
     tuple Scm3 g3;
-
     g2 = tuple { b = true, 
       i = 87};
     show plug ShowSchema2[message = "g2 is: ", b = g2.b, i = g2.i]    
@@ -70,5 +55,4 @@ service {
 ;
     exit Done;
   }
-
 }

@@ -10,8 +10,7 @@ service {
     <p>
     Enter the second integer (-99 to 999):
     <input name="int2" size=3 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html Return = <html> <body>
     <h1>The Answer</h1>
     <p>
@@ -19,25 +18,16 @@ service {
     <p>
     Would you like to do another calculation (yes or no)?
     <input name="YorN" size=5 type="text">
-  </body> </html>
-;
+  </body> </html>;
   const html ByeBye = <html> <body>
     <h1>Thank you for using this calculator</h1>
-  </body> </html>
-;
-
-
+  </body> </html>;
   int Ans;
-
-
   session Calculate () { 
     string YorN;
     int int1;
-
     int int2;
-
     string operator;
-
     YorN = "";
     while (YorN != "no") { 
         show Setup receive [operator = operator, int1 = int1, int2 = int2];
@@ -48,5 +38,4 @@ service {
 
     exit ByeBye;
   }
-
 }

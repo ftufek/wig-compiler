@@ -162,7 +162,7 @@ void PrettyPrintVisitor::visit(ast::List *s) {
     for(auto const &exp : *(s->exps_)){
         exp->accept(this);
     }
-    cout<<endl;
+//    cout<<endl;
 }
 
 void PrettyPrintVisitor::visit(ast::Type *s) {
@@ -413,6 +413,7 @@ void PrettyPrintVisitor::visit(ast::TupleopExp *s){
     auto it = s->ids_->begin();
     if(it != s->ids_->end()){
     	ppout<<(*it);
+    	++it;
     }
     for(; it != s->ids_->end(); ++it){
         ppout<<", "<<(*it);

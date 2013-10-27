@@ -22,7 +22,7 @@ print "pretty(parse(pretty(parse(X)))) = pretty(parse(X))"
 print
 
 for f in files:
-  if not cmp(pp1dir+f,pp2dir+f):
+  if not open(pp1dir+f).readlines() == open(pp2dir+f).readlines():
     print "ERROR for file "+f
     exit(1)
   else:
