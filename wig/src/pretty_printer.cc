@@ -12,17 +12,17 @@ PrettyPrintVisitor::PrettyPrintVisitor(std::ostream &out, bool print_sym_table)
 	:ppout(out), print_sym_table_(print_sym_table){}
 
 void PrettyPrintVisitor::Indent(){
-    indent_->append("  ");
+    indent_.append("  ");
 }
 
 void PrettyPrintVisitor::DeIndent(){
-    if(indent_->size() > 0){
-    	indent_->resize(indent_->size() - 2);
+    if(indent_.size() > 0){
+    	indent_.resize(indent_.size() - 2);
     }
 }
 
 void PrettyPrintVisitor::PrintIndent(){
-    ppout<<*indent_;
+    ppout<<indent_;
 }
 
 void PrettyPrintVisitor::PrintSymTable(ast::Base *s, bool last_scope_only) const{

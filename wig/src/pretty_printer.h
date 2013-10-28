@@ -60,7 +60,7 @@ protected:
     void PrintSymTable(ast::Base *s, bool last_scope_only = false) const;
 
 private:
-    std::string *indent_ = new std::string("");
+    std::string indent_ = std::string("");
     std::ostream &ppout;
     bool print_sym_table_;
 };

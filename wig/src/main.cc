@@ -114,6 +114,7 @@ int main(int argc, char **argv){
     		std::ostream out(buf);
     		visitors::PrettyPrintVisitor pp = visitors::PrettyPrintVisitor(out,symbol);
 			pp.visit(EXP);
+			of.close();
     	}
 
     }
