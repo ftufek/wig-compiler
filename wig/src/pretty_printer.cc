@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <boost/algorithm/string/replace.hpp>
+#include <string>
 #include "symbol_table/table.h"
 #include "pretty_printer.h"
 #include "error.h"
@@ -17,25 +17,12 @@ void PrettyPrintVisitor::Indent(){
 
 void PrettyPrintVisitor::DeIndent(){
     if(indent_->size() > 0){
-        indent_->pop_back();
-        indent_->pop_back();
+    	indent_->resize(indent_->size() - 2);
     }
 }
 
 void PrettyPrintVisitor::PrintIndent(){
     ppout<<*indent_;
-}
-
-string PrettyPrintVisitor::IndentStr(string str){
-	//TODO: fix when have time
-	// problem is that when you run IndentStr multiple times on
-	// whatever's string, it will just keep adding \t's
-	// find a way to remove \n\t+ than add the appropriate indentation...
-//    string indentation = "\n";
-//    indentation += *indent_;
-//    string indented = boost::replace_all_copy(str, "\n", indentation);
-//    return indented;
-	return str;
 }
 
 void PrettyPrintVisitor::PrintSymTable(ast::Base *s, bool last_scope_only) const{
@@ -61,7 +48,7 @@ void PrettyPrintVisitor::visit(ast::Service *s){
 }
 
 void PrettyPrintVisitor::visit(ast::Whatever *s ) {
-    ppout<<IndentStr(s->whatever_);
+    ppout<<s->whatever_;
 }
 
 void PrettyPrintVisitor::visit(ast::Variable *s) {
@@ -140,7 +127,7 @@ void PrettyPrintVisitor::visit(ast::Argument *s) {
 
 void PrettyPrintVisitor::visit(ast::MetaTag *s) {
     ppout<<"<!-- ";
-    ppout<<IndentStr(s->content_);
+    ppout<<s->content_;
     ppout<<" -->";
 }
 
@@ -159,7 +146,7 @@ void PrettyPrintVisitor::visit(ast::Schema *s) {
 }
 
 void PrettyPrintVisitor::visit(ast::String *s) {
-    ppout<<"\""<<IndentStr(s->content_)<<"\"";
+    ppout<<"\""<<s->content_<<"\"";
 }
 
 void PrettyPrintVisitor::visit(ast::List *s) {
@@ -301,7 +288,6 @@ void PrettyPrintVisitor::visit(ast::ExpStm *s){
 }
 
 void PrettyPrintVisitor::visit(ast::Exp *){
-    //TODO: remove this when have time
 }
 
 void PrettyPrintVisitor::visit(ast::LValExp *s){

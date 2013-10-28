@@ -57,7 +57,6 @@ protected:
     void Indent();
     void DeIndent();
     void PrintIndent();
-    std::string IndentStr(std::string);
     void PrintSymTable(ast::Base *s, bool last_scope_only = false) const;
 
 private:
