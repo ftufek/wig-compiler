@@ -112,7 +112,7 @@ int main(int argc, char **argv){
     		    buf = std::cout.rdbuf();
     		}
     		std::ostream out(buf);
-    		visitors::PrettyPrintVisitor pp = visitors::PrettyPrintVisitor(out,symbol);
+    		visitors::PrettyPrinter pp = visitors::PrettyPrinter(out,symbol);
 			pp.visit(EXP);
 			of.close();
     	}

@@ -1,0 +1,11 @@
+/* expected results:
+NO_RETURN(a)
+*/
+service{
+const html b = <html></html>;
+
+session a(){
+int a;
+a = true;
+}
+}

@@ -8,30 +8,30 @@ using namespace std;
 
 namespace visitors {
 
-PrettyPrintVisitor::PrettyPrintVisitor(std::ostream &out, bool print_sym_table)
+PrettyPrinter::PrettyPrinter(std::ostream &out, bool print_sym_table)
 	:ppout(out), print_sym_table_(print_sym_table){}
 
-void PrettyPrintVisitor::Indent(){
+void PrettyPrinter::Indent(){
     indent_.append("  ");
 }
 
-void PrettyPrintVisitor::DeIndent(){
+void PrettyPrinter::DeIndent(){
     if(indent_.size() > 0){
     	indent_.resize(indent_.size() - 2);
     }
 }
 
-void PrettyPrintVisitor::PrintIndent(){
+void PrettyPrinter::PrintIndent(){
     ppout<<indent_;
 }
 
-void PrettyPrintVisitor::PrintSymTable(ast::Base *s, bool last_scope_only) const{
+void PrettyPrinter::PrintSymTable(ast::Base *s, bool last_scope_only) const{
 	if(print_sym_table_){
 		s->get_sym_table()->PrettyPrint(ppout, last_scope_only);
 	}
 }
 
-void PrettyPrintVisitor::visit(ast::Service *s){
+void PrettyPrinter::visit(ast::Service *s){
 	if(error::ErrorsPresent()){
 		error::PrintErrors(ppout);
 	}
@@ -47,11 +47,11 @@ void PrettyPrintVisitor::visit(ast::Service *s){
     ppout<<"}"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::Whatever *s ) {
+void PrettyPrinter::visit(ast::Whatever *s ) {
     ppout<<s->whatever_;
 }
 
-void PrettyPrintVisitor::visit(ast::Variable *s) {
+void PrettyPrinter::visit(ast::Variable *s) {
     PrintIndent();
     if(s->is_const_){
         ppout<<"const ";
@@ -71,7 +71,7 @@ void PrettyPrintVisitor::visit(ast::Variable *s) {
     ppout<<";"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::Function *s) {
+void PrettyPrinter::visit(ast::Function *s) {
     PrintIndent();
     s->type_->accept(this);
     ppout<<" "<<s->id_<<"(";
@@ -89,15 +89,15 @@ void PrettyPrintVisitor::visit(ast::Function *s) {
     ppout<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::Field *s) {
+void PrettyPrinter::visit(ast::Field *s) {
     PrintIndent();
     s->type_->accept(this);
     ppout<<" "<<s->id_<<";"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::Empty *) {}
+void PrettyPrinter::visit(ast::Empty *) {}
 
-void PrettyPrintVisitor::visit(ast::HtmlTag *s) {
+void PrettyPrinter::visit(ast::HtmlTag *s) {
     if(s->is_closing_)
         ppout<<"</";
     else if(s->is_gap_)
@@ -121,18 +121,18 @@ void PrettyPrintVisitor::visit(ast::HtmlTag *s) {
         ppout<<">";
 }
 
-void PrettyPrintVisitor::visit(ast::Argument *s) {
+void PrettyPrinter::visit(ast::Argument *s) {
     s->type_->accept(this);
     ppout<<" "<<s->id_;
 }
 
-void PrettyPrintVisitor::visit(ast::MetaTag *s) {
+void PrettyPrinter::visit(ast::MetaTag *s) {
     ppout<<"<!-- ";
     ppout<<s->content_;
     ppout<<" -->";
 }
 
-void PrettyPrintVisitor::visit(ast::Schema *s) {
+void PrettyPrinter::visit(ast::Schema *s) {
     PrintIndent();
     ppout<<"schema "<<s->id_<<" {"<<endl;
     Indent();
@@ -146,30 +146,30 @@ void PrettyPrintVisitor::visit(ast::Schema *s) {
     ppout<<"}"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::String *s) {
+void PrettyPrinter::visit(ast::String *s) {
     ppout<<"\""<<s->content_<<"\"";
 }
 
-void PrettyPrintVisitor::visit(ast::List *s) {
+void PrettyPrinter::visit(ast::List *s) {
     for(auto const &exp : *(s->exps_)){
         exp->accept(this);
     }
 }
 
-void PrettyPrintVisitor::visit(ast::Type *s) {
+void PrettyPrinter::visit(ast::Type *s) {
 	ppout<<ast::KTypeToStr(s->type_);
 	if(s->type_ == ast::kType::TUPLE){
 		ppout<<" "<<s->tuple_id_;
 	}
 }
 
-void PrettyPrintVisitor::visit(ast::Session *s){
+void PrettyPrinter::visit(ast::Session *s){
     PrintIndent();
     ppout<<"session "<<s->id_<<" ()";
     s->stm_->accept(this);
 }
 
-void PrettyPrintVisitor::visit(ast::EmptyStm *s) {
+void PrettyPrinter::visit(ast::EmptyStm *s) {
     PrintIndent();
     if(s->print_semicol_){
         ppout<<";"<<endl;
@@ -178,7 +178,7 @@ void PrettyPrintVisitor::visit(ast::EmptyStm *s) {
     }
 }
 
-void PrettyPrintVisitor::visit(ast::CompoundStm *s) {
+void PrettyPrinter::visit(ast::CompoundStm *s) {
     ppout<<" { "<<endl;
     Indent();
     PrintSymTable(s);
@@ -193,7 +193,7 @@ void PrettyPrintVisitor::visit(ast::CompoundStm *s) {
     ppout<<"}"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::ShowStm *s) {
+void PrettyPrinter::visit(ast::ShowStm *s) {
     PrintIndent();
     ppout<<"show ";
     s->doc_->accept(this);
@@ -201,7 +201,7 @@ void PrettyPrintVisitor::visit(ast::ShowStm *s) {
     ppout<<";"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::DocumentStm *s){
+void PrettyPrinter::visit(ast::DocumentStm *s){
     if(s->pluggable_){
         ppout<<"plug "<<s->id_<<"[";
 
@@ -220,12 +220,12 @@ void PrettyPrintVisitor::visit(ast::DocumentStm *s){
     }
 }
 
-void PrettyPrintVisitor::visit(ast::PlugStm *s){
+void PrettyPrinter::visit(ast::PlugStm *s){
     ppout<<s->id_<<" = ";
     s->exp_->accept(this);
 }
 
-void PrettyPrintVisitor::visit(ast::ReceiveStm *s){
+void PrettyPrinter::visit(ast::ReceiveStm *s){
     ppout<<" receive [";
 
     auto it = s->inputs_->begin();
@@ -240,25 +240,25 @@ void PrettyPrintVisitor::visit(ast::ReceiveStm *s){
     ppout<<"]";
 }
 
-void PrettyPrintVisitor::visit(ast::InputStm *s){
+void PrettyPrinter::visit(ast::InputStm *s){
     ppout<<s->lvalue_<<" = "<<s->id_;
 }
 
-void PrettyPrintVisitor::visit(ast::ExitStm *s){
+void PrettyPrinter::visit(ast::ExitStm *s){
     PrintIndent();
     ppout<<"exit ";
     s->doc_->accept(this);
     ppout<<";"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::ReturnStm *s){
+void PrettyPrinter::visit(ast::ReturnStm *s){
     PrintIndent();
     ppout<<"return ";
     s->exp_->accept(this);
     ppout<<";"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::IfStm *s){
+void PrettyPrinter::visit(ast::IfStm *s){
     PrintIndent();
     ppout<<"if (";
     s->condition_->accept(this);
@@ -271,7 +271,7 @@ void PrettyPrintVisitor::visit(ast::IfStm *s){
     }
 }
 
-void PrettyPrintVisitor::visit(ast::WhileStm *s){
+void PrettyPrinter::visit(ast::WhileStm *s){
     PrintIndent();
     ppout<<"while (";
     s->condition_->accept(this);
@@ -282,20 +282,20 @@ void PrettyPrintVisitor::visit(ast::WhileStm *s){
     ppout<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::ExpStm *s){
+void PrettyPrinter::visit(ast::ExpStm *s){
     PrintIndent();
     s->exp_->accept(this);
     ppout<<";"<<endl;
 }
 
-void PrettyPrintVisitor::visit(ast::Exp *){
+void PrettyPrinter::visit(ast::Exp *){
 }
 
-void PrettyPrintVisitor::visit(ast::LValExp *s){
+void PrettyPrinter::visit(ast::LValExp *s){
     ppout<<s->lvalue_;
 }
 
-void PrettyPrintVisitor::visit(ast::BinopExp *s){
+void PrettyPrinter::visit(ast::BinopExp *s){
     s->left_->accept(this);
 
     switch (s->type_) {
@@ -366,7 +366,7 @@ void PrettyPrintVisitor::visit(ast::BinopExp *s){
     s->right_->accept(this);
 }
 
-void PrettyPrintVisitor::visit(ast::UnopExp *s){
+void PrettyPrinter::visit(ast::UnopExp *s){
     switch (s->type_) {
     case ast::kUnopType::LogicNegate:
         ppout<<"!";
@@ -383,7 +383,7 @@ void PrettyPrintVisitor::visit(ast::UnopExp *s){
     s->exp_->accept(this);
 }
 
-void PrettyPrintVisitor::visit(ast::TupleopExp *s){
+void PrettyPrinter::visit(ast::TupleopExp *s){
     s->exp_->accept(this);
 
     switch (s->type_) {
@@ -411,7 +411,7 @@ void PrettyPrintVisitor::visit(ast::TupleopExp *s){
     ppout<<")";
 }
 
-void PrettyPrintVisitor::visit(ast::FunctionExp *s){
+void PrettyPrinter::visit(ast::FunctionExp *s){
     ppout<<s->id_;
     ppout<<"(";
 
@@ -428,28 +428,28 @@ void PrettyPrintVisitor::visit(ast::FunctionExp *s){
     ppout<<")";
 }
 
-void PrettyPrintVisitor::visit(ast::IntegerExp *s){
+void PrettyPrinter::visit(ast::IntegerExp *s){
     ppout<<s->i_;
 }
 
-void PrettyPrintVisitor::visit(ast::TrueExp *){
+void PrettyPrinter::visit(ast::TrueExp *){
     ppout<<"true";
 }
 
-void PrettyPrintVisitor::visit(ast::FalseExp *){
+void PrettyPrinter::visit(ast::FalseExp *){
     ppout<<"false";
 }
 
-void PrettyPrintVisitor::visit(ast::StringExp *s){
+void PrettyPrinter::visit(ast::StringExp *s){
     ppout<<s->str_;
 }
 
-void PrettyPrintVisitor::visit(ast::FieldValExp *s){
+void PrettyPrinter::visit(ast::FieldValExp *s){
     ppout<<s->id_<<" = ";
     s->exp_->accept(this);
 }
 
-void PrettyPrintVisitor::visit(ast::TupleExp *s){
+void PrettyPrinter::visit(ast::TupleExp *s){
     ppout<<"tuple { ";
     Indent();
     auto it = s->field_vals_->begin();

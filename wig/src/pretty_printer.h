@@ -7,10 +7,10 @@
 
 namespace visitors {
 
-class PrettyPrintVisitor : public ast::Visitor
+class PrettyPrinter : public ast::Visitor
 {
 public:
-	PrettyPrintVisitor(std::ostream &out, bool print_sym_table);
+	PrettyPrinter(std::ostream &out, bool print_sym_table);
 
     void visit(ast::Service *s) override;
     void visit(ast::Whatever *s ) override;

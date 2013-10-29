@@ -8,14 +8,14 @@ clean:
 code:
 	cd $(BUILD_DIR)/; make; ln -sf $(BUILD_DIR)/fwig ../fwig;
 
-check: unit pretty weed typecheck
+check: code unit pretty weed typecheck
 
 pretty: code
 	cd tests/benchmarks/; python run.py;
 
-weed: bench_ng
+weed: code bench_ng
 
-typecheck:
+typecheck: code
 	cd tests/typecheck/; python run.py;
 
 bench_ng: code
