@@ -1,12 +1,14 @@
+BUILD_DIR=Debug
+
 all: code check
 
 clean:
-	rm fwig; cd Release/; make clean;
+	rm fwig; cd $(BUILD_DIR)/; make clean;
 
 code:
-	cd Release/; make; ln -sf Release/fwig ../fwig;
+	cd $(BUILD_DIR)/; make; ln -sf $(BUILD_DIR)/fwig ../fwig;
 
-check: weed pretty unit
+check: unit pretty weed
 
 pretty: code
 	cd tests/benchmarks/; python run.py;
