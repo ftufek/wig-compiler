@@ -16,6 +16,7 @@ service {
   const html Pledge = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "contribution"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body>
     How much do you want to contribute?
@@ -24,6 +25,7 @@ service {
   const html Total = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| total	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     The total is now <[total]>.

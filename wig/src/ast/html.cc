@@ -16,4 +16,8 @@ HtmlTag::~HtmlTag(){
 
 void HtmlTag::accept(class Visitor *v){ v->visit(this); }
 
+std::string HtmlTag::get_arg(std::string arg_name){
+	return attrs_->find(arg_name)->second;
+}
+
 }

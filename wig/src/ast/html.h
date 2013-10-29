@@ -17,6 +17,8 @@ public:
     ~HtmlTag();
     void accept(Visitor *v) override;
 
+    std::string get_arg(std::string arg_name);
+
     std::string id_;
     std::map<std::string, std::string> *attrs_;
     bool is_closing_;

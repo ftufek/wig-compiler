@@ -11,6 +11,7 @@ service {
   const html Init = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "man"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#4400ff">
 		<br>
@@ -42,6 +43,7 @@ service {
   const html Red = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "man"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#ff0000">
 		<br>
@@ -73,6 +75,7 @@ service {
   const html Blue = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "man"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#4400ff">
 		<br>
@@ -104,6 +107,7 @@ service {
   const html Green = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "man"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#22ff22">
 		<br>
@@ -135,6 +139,7 @@ service {
   const html Purple = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "man"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body bgcolor="#880099">
 		<br>

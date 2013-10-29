@@ -13,6 +13,8 @@ service {
   const html Login = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "password"	|sym_type: input_tag	|type: html
+          ------||| "username"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>Welcome to The Talk Room</h1>
@@ -26,6 +28,7 @@ service {
   const html incorrect = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| username	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>I'm sorry <[username]>, permission denied! </h1>
@@ -34,6 +37,11 @@ service {
   const html Update = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "msg"	|sym_type: input_tag	|type: html
+          ------||| "quit"	|sym_type: input_tag	|type: html
+          ------||| msg0	|sym_type: hole_tag	|type: html
+          ------||| msg1	|sym_type: hole_tag	|type: html
+          ------||| msg2	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>The Talk Room Service</h1>
@@ -53,6 +61,9 @@ service {
   const html ByeBye = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| conns	|sym_type: hole_tag	|type: html
+          ------||| msgs	|sym_type: hole_tag	|type: html
+          ------||| username	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>Thanks for visiting, <[username]>. </h1>

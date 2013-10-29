@@ -14,24 +14,35 @@ service {
   const html ShowSchema1 = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| b	|sym_type: hole_tag	|type: html
+          ------||| i	|sym_type: hole_tag	|type: html
+          ------||| message	|sym_type: hole_tag	|type: html
+          ------||| s	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     <[message]> b: <[b]>  i: <[i]>  s: <[s]>  </body> </html>;
   const html ShowSchema2 = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| b	|sym_type: hole_tag	|type: html
+          ------||| i	|sym_type: hole_tag	|type: html
+          ------||| message	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
    <[message]>  b: <[b]>  i: <[i]>  </body> </html>;
   const html ShowSchema3 = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| b	|sym_type: hole_tag	|type: html
+          ------||| message	|sym_type: hole_tag	|type: html
+          ------||| s	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
    <[message]>  b: <[b]>  s: <[s]>  </body> </html>;
   const html PrintString = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| message	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
    <[message]>  </body> </html>;

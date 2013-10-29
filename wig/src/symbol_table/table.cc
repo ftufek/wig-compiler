@@ -70,16 +70,21 @@ Symbol Symbol::ForFunction(ast::Function *f){
 }
 Symbol Symbol::ForHtmlTag(ast::HtmlTag *tag){
 	SymbolType s;
+	std::string text;
 	if(tag->is_gap_){
 		s = SymbolType::HOLE_TAG;
+		text = tag->id_;
 	}else if(tag->id_ == "input"){
 		s = SymbolType::INPUT_TAG;
+		text = tag->get_arg("name");
 	}else if(tag->id_ == "select"){
 		s = SymbolType::SELECT_TAG;
+		text = tag->get_arg("name");
 	}else{
-		s = SymbolType::HTML;
+		error::GenerateError(error::HTML_TAG_NOT_A_SYMBOL, tag->id_);
+		text = "";
 	}
-	return Symbol(tag->id_, tag, ast::kType::HTML, s);
+	return Symbol(text, tag, ast::kType::HTML, s);
 }
 Symbol Symbol::ForSession(ast::Session *session){
 	return Symbol(session->id_, session, ast::kType::VOID, SymbolType::SESSION);
@@ -123,7 +128,10 @@ void Table::UnScope(){
 bool Table::PutSymbol(Symbol sym){
 	if(table_.size() <= 0) { return false; }
 	auto scope = table_.top();
-	if(scope.find(sym.get_name()) == scope.end()){
+	if(scope.find(sym.get_name()) == scope.end()
+			|| sym.get_sym_type() == SymbolType::INPUT_TAG
+			|| sym.get_sym_type() == SymbolType::SELECT_TAG){
+		//TODO: input and select html tags can appear multiple times, fix it
 		scope.insert(std::make_pair(sym.get_name(), sym));
 		table_.pop();
 		table_.push(scope);

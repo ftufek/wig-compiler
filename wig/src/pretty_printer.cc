@@ -61,6 +61,7 @@ void PrettyPrintVisitor::visit(ast::Variable *s) {
     if(s->value_){
         ppout<<" = ";
         if(print_sym_table_ && s->type_->type_ == ast::kType::HTML){
+        	//If the variable is an HTML const
         	ppout<<std::endl;
         	ppout<<" ---- Symbols inside the HTML"<<std::endl;
         	PrintSymTable(s, true);

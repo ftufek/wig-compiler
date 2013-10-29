@@ -20,6 +20,7 @@ service {
   const html GetSeed = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "seed"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body>
     Please enter an integer seed for the random number generator:
@@ -35,6 +36,7 @@ service {
   const html Init = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "guess"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body>
     Please guess a number between 0 and 99:
@@ -43,6 +45,7 @@ service {
   const html Retry = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "guess"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body>
     That number is too large!
@@ -53,6 +56,8 @@ service {
   const html Again = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "guess"	|sym_type: input_tag	|type: html
+          ------||| correction	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     That is not correct. Try a <[correction]> number:
@@ -61,6 +66,7 @@ service {
   const html Done = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| trys	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     You got it, using <[trys]> guesses.
@@ -68,6 +74,8 @@ service {
   const html Record = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "name"	|sym_type: input_tag	|type: html
+          ------||| old	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     That makes you the new record holder,
@@ -86,6 +94,9 @@ service {
   const html List = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| holder	|sym_type: hole_tag	|type: html
+          ------||| plays	|sym_type: hole_tag	|type: html
+          ------||| record	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     In <[plays]> plays of this game, the record

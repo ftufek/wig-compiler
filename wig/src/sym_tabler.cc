@@ -49,9 +49,9 @@ void SymTabler::visit(ast::Field *s){
 }
 void SymTabler::visit(ast::Empty *s){}
 void SymTabler::visit(ast::HtmlTag *s){
-	//TODO: for now I disabled hole and input detection inside
-	//html's because there's a bug, fix when have time
-//	sym_table_.PutSymbol(st::Symbol::ForHtmlTag(s));
+	if(s->is_gap_ || s->id_ == "input" || s->id_ == "select"){
+		sym_table_.PutSymbol(st::Symbol::ForHtmlTag(s));
+	}
 }
 void SymTabler::visit(ast::Argument *s){}
 void SymTabler::visit(ast::MetaTag *s){}

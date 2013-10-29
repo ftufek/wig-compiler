@@ -9,6 +9,9 @@ service {
   const html Setup = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "int1"	|sym_type: input_tag	|type: html
+          ------||| "int2"	|sym_type: input_tag	|type: html
+          ------||| "operator"	|sym_type: input_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>A Simple Plus Minus Calculator</h1>
@@ -25,6 +28,8 @@ service {
   const html Return = 
  ---- Symbols inside the HTML
           ------||| Symbol table: 
+          ------||| "YorN"	|sym_type: input_tag	|type: html
+          ------||| Ans	|sym_type: hole_tag	|type: html
           ------||| --------------
 <html> <body>
     <h1>The Answer</h1>
