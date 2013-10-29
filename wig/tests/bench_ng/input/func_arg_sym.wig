@@ -1,0 +1,10 @@
+service{
+const html d = <html></html>;
+
+int a(int a, bool b){
+return a+2;
+}
+session b(){
+exit a;
+}
+}

@@ -48,6 +48,7 @@ public:
 	static Symbol ForSession(ast::Session *session);
 	static Symbol ForSchema(ast::Schema *schema);
 	static Symbol ForField(ast::Field *field);
+	static Symbol ForArgument(ast::Argument *arg);
 
 private:
 	Symbol(std::string name, ast::Base *node, ast::kType type, SymbolType sym_type);

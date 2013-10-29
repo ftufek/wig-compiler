@@ -23,6 +23,7 @@ service {
 <html><body>You calculated 10! = <[n]><br>Congratulations! You have <b>passed</b> the show inside functions test!</body></html>;
   int factorial(int n) { 
           ------||| Symbol table: 
+          ------||| n	|sym_type: argument	|type: int
           ------||| --------------
           ------||| factorial	|sym_type: function	|type: int
           ------||| right	|sym_type: variable	|type: html

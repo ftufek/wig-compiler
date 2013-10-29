@@ -36,6 +36,13 @@ void SymTabler::visit(ast::Variable *s){
 void SymTabler::visit(ast::Function *s){
 	sym_table_.PutSymbol(st::Symbol::ForFunction(s));
 	s->stm_->accept(this);
+
+	//Need to add function arguments to the symbols available in the scope
+	auto table = new st::Table(*(s->stm_->get_sym_table()));
+	for(auto arg : *(s->args_)){
+		table->PutSymbol(st::Symbol::ForArgument(arg));
+	}
+	s->stm_->set_sym_table(table);
 }
 void SymTabler::visit(ast::Field *s){
 	sym_table_.PutSymbol(st::Symbol::ForField(s));

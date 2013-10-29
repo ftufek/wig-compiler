@@ -90,6 +90,9 @@ Symbol Symbol::ForSchema(ast::Schema *schema){
 Symbol Symbol::ForField(ast::Field *field){
 	return Symbol(field->id_, field, field->type_->type_, SymbolType::FIELD);
 }
+Symbol Symbol::ForArgument(ast::Argument *arg){
+	return Symbol(arg->id_, arg, arg->type_->type_, SymbolType::ARGUMENT);
+}
 
 const std::string Symbol::get_name() const{
 	return name_;
