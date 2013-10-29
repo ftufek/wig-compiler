@@ -33,15 +33,4 @@ map<string, string> *mergeMap(map<string, string> *m1,
     return m1;
 }
 
-List *initList(Base *e){
-    List *l = new List();
-    l->getList()->push_front(e);
-    return l;
-}
-
-List *addBack(List *list, Base *exp){
-    list->getList()->push_back(exp);
-    return list;
-}
-
 }

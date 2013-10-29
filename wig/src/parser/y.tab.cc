@@ -1764,13 +1764,13 @@ yyreduce:
   case 5:
 /* Line 1787 of yacc.c  */
 #line 110 "wig.y"
-    { (yyval.listExp) = ast::initList((yyvsp[(1) - (1)].base)); }
+    { (yyval.listExp) = new ast::List((yyvsp[(1) - (1)].base)); }
     break;
 
   case 6:
 /* Line 1787 of yacc.c  */
 #line 112 "wig.y"
-    { (yyval.listExp) = ast::addBack((yyvsp[(1) - (2)].listExp), (yyvsp[(2) - (2)].base)); }
+    { (yyval.listExp) = (yyvsp[(1) - (2)].listExp); (yyvsp[(1) - (2)].listExp)->AddBack((yyvsp[(2) - (2)].base)); }
     break;
 
   case 7:
@@ -1947,13 +1947,13 @@ yyreduce:
   case 34:
 /* Line 1787 of yacc.c  */
 #line 188 "wig.y"
-    { (yyval.listExp) = ast::initList((yyvsp[(1) - (1)].base)); }
+    { (yyval.listExp) = new ast::List((yyvsp[(1) - (1)].base)); }
     break;
 
   case 35:
 /* Line 1787 of yacc.c  */
 #line 190 "wig.y"
-    { (yyval.listExp) = ast::addBack((yyvsp[(1) - (2)].listExp), (yyvsp[(2) - (2)].base)); }
+    { (yyval.listExp) = (yyvsp[(1) - (2)].listExp); (yyvsp[(1) - (2)].listExp)->AddBack((yyvsp[(2) - (2)].base)); }
     break;
 
   case 36:
@@ -1977,13 +1977,13 @@ yyreduce:
   case 39:
 /* Line 1787 of yacc.c  */
 #line 201 "wig.y"
-    { (yyval.listExp) = ast::initList((yyvsp[(1) - (1)].base)); }
+    { (yyval.listExp) = new ast::List((yyvsp[(1) - (1)].base)); }
     break;
 
   case 40:
 /* Line 1787 of yacc.c  */
 #line 203 "wig.y"
-    { (yyval.listExp) = ast::addBack((yyvsp[(1) - (2)].listExp), (yyvsp[(2) - (2)].base)); }
+    { (yyval.listExp) = (yyvsp[(1) - (2)].listExp); (yyvsp[(1) - (2)].listExp)->AddBack((yyvsp[(2) - (2)].base)); }
     break;
 
   case 41:
@@ -2037,7 +2037,7 @@ yyreduce:
   case 49:
 /* Line 1787 of yacc.c  */
 #line 225 "wig.y"
-    { (yyval.listExp) = ast::addBack((yyvsp[(1) - (2)].listExp), (yyvsp[(2) - (2)].listExp)); }
+    { (yyval.listExp) = (yyvsp[(1) - (2)].listExp); (yyvsp[(1) - (2)].listExp)->AddBack((yyvsp[(2) - (2)].listExp)); }
     break;
 
   case 50:
@@ -2046,7 +2046,7 @@ yyreduce:
     { (yyval.listExp) = new ast::List();
       std::list<std::string>::const_iterator it;
       for(it = (yyvsp[(2) - (3)].strList)->begin(); it != (yyvsp[(2) - (3)].strList)->end(); ++it){
-        (yyval.listExp) = ast::addBack((yyval.listExp), new ast::Variable(*it,
+        (yyval.listExp)->AddBack(new ast::Variable(*it,
                          (yyvsp[(1) - (3)].typeExp),
                          ast::kNoConstVar,
                          ast::kNoVal));
@@ -2071,7 +2071,7 @@ yyreduce:
   case 53:
 /* Line 1787 of yacc.c  */
 #line 246 "wig.y"
-    { (yyval.listExp) = ast::initList(new ast::Empty()); }
+    { (yyval.listExp) = new ast::List(new ast::Empty()); }
     break;
 
   case 54:
@@ -2083,13 +2083,13 @@ yyreduce:
   case 55:
 /* Line 1787 of yacc.c  */
 #line 251 "wig.y"
-    { (yyval.listExp) = ast::initList((yyvsp[(1) - (1)].base)); }
+    { (yyval.listExp) = new ast::List((yyvsp[(1) - (1)].base)); }
     break;
 
   case 56:
 /* Line 1787 of yacc.c  */
 #line 253 "wig.y"
-    { (yyval.listExp) = ast::addBack((yyvsp[(1) - (2)].listExp), (yyvsp[(2) - (2)].base)); }
+    { (yyval.listExp) = (yyvsp[(1) - (2)].listExp); (yyvsp[(1) - (2)].listExp)->AddBack((yyvsp[(2) - (2)].base)); }
     break;
 
   case 57:
@@ -2143,13 +2143,13 @@ yyreduce:
   case 65:
 /* Line 1787 of yacc.c  */
 #line 277 "wig.y"
-    { (yyval.listExp) = ast::initList((yyvsp[(1) - (1)].base)); }
+    { (yyval.listExp) = new ast::List((yyvsp[(1) - (1)].base)); }
     break;
 
   case 66:
 /* Line 1787 of yacc.c  */
 #line 279 "wig.y"
-    { (yyval.listExp) = ast::addBack((yyvsp[(1) - (2)].listExp), (yyvsp[(2) - (2)].base)); }
+    { (yyval.listExp) = (yyvsp[(1) - (2)].listExp); (yyvsp[(1) - (2)].listExp)->AddBack((yyvsp[(2) - (2)].base)); }
     break;
 
   case 67:

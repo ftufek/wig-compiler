@@ -19,9 +19,6 @@ std::map<std::string, std::string> *mergeMap(
         std::map<std::string, std::string> *m1,
         std::map<std::string, std::string> *m2);
 
-List *initList(Base *e);
-List *addBack(List *list, Base *exp);
-
 }
 
 #endif // AST_HELPERS_H

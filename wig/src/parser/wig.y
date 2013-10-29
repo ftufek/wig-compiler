@@ -107,9 +107,9 @@ service: tSERVICE '{' htmls schemas nevariables functions sessions '}'
        { yyerror("Error: doesn't contain any service."); }
 
 htmls: html
-       { $$ = ast::initList($1); }
+       { $$ = new ast::List($1); }
       | htmls html
-       { $$ = ast::addBack($1, $2); }
+       { $$ = $1; $1->AddBack($2); }
 
 html: tCONST ttHTML tID '=' tHtmlOpen nehtmlbodies tHtmlClose ';'
        { $$ = new ast::Variable(*$3,
@@ -185,9 +185,9 @@ schemas: /* empty */
        { $$ = $1; }
 
 neschemas: schema
-         { $$ = ast::initList($1); }
+         { $$ = new ast::List($1); }
          | neschemas schema
-         { $$ = ast::addBack($1, $2); }
+         { $$ = $1; $1->AddBack($2); }
 
 schema: tSchema tID '{' fields '}'
       { $$ = new ast::Schema(*$2, $4); delete($2); }
@@ -198,9 +198,9 @@ fields: /* empty */
       { $$ = $1; }
 
 nefields: field
-        { $$ = ast::initList($1); }
+        { $$ = new ast::List($1); }
         | nefields field
-        { $$ = ast::addBack($1, $2); }
+        { $$ = $1; $1->AddBack($2); }
 
 field: simpletype tID ';'
      { $$ = new ast::Field(new ast::Type($1), *$2); delete($2); }
@@ -222,13 +222,13 @@ type: simpletype
 nevariables: variable
     { $$ = $1; }
     | nevariables variable
-    { $$ = ast::addBack($1, $2); }
+    { $$ = $1; $1->AddBack($2); }
 
 variable: type identifiers ';'
     { $$ = new ast::List();
       std::list<std::string>::const_iterator it;
       for(it = $2->begin(); it != $2->end(); ++it){
-        $$ = ast::addBack($$, new ast::Variable(*it,
+        $$->AddBack(new ast::Variable(*it,
                          $1,
                          ast::kNoConstVar,
                          ast::kNoVal));
@@ -243,14 +243,14 @@ identifiers: tID
       $$ = $1; }
 
 functions: /* empty */
-    { $$ = ast::initList(new ast::Empty()); }
+    { $$ = new ast::List(new ast::Empty()); }
     | nefunctions
     { $$ = $1; }
 
 nefunctions: function
-    { $$ = ast::initList($1); }
+    { $$ = new ast::List($1); }
     | nefunctions function
-    { $$ = ast::addBack($1, $2); }
+    { $$ = $1; $1->AddBack($2); }
 
 function: type tID '(' arguments ')' compoundstm
     { $$ = new ast::Function($1, *$2, $4, $6); delete($2); }
@@ -274,9 +274,9 @@ compoundstm: '{' nevariables stms '}'
             { $$ = new ast::CompoundStm($2); }
 
 sessions: session
-    { $$ = ast::initList($1); }
+    { $$ = new ast::List($1); }
     | sessions session
-    { $$ = ast::addBack($1, $2); }
+    { $$ = $1; $1->AddBack($2); }
 
 session: tSESSION tID '(' ')' compoundstm
     { $$ = new ast::Session(*$2, $5); delete($2); }
