@@ -12,6 +12,7 @@
 #include <map>
 #include <stack>
 #include <string>
+#include <boost/optional.hpp>
 
 #include "../ast.h"
 
@@ -38,7 +39,7 @@ public:
 	~Symbol();
 
 	const std::string get_name() const;
-	const ast::Base *get_node() const;
+	ast::Base *get_node() const;
 	const ast::kType get_type() const;
 	const SymbolType get_sym_type() const;
 
@@ -77,7 +78,7 @@ public:
 	 * 			when there's no symbol with the same name in the current scope
 	 */
 	bool PutSymbol(Symbol sym);
-	bool ExistsSymbol(std::string name) const;
+	boost::optional<Symbol> FindSymbol(std::string name) const;
 	void PrettyPrint(std::ostream &out, bool last_scope_only = false) const;
 
 	Table get_table();

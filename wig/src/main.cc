@@ -6,6 +6,7 @@
 #include "pretty_printer.h"
 #include "error.h"
 #include "sym_tabler.h"
+#include "typechecker.h"
 #include "weeder.h"
 #include "parser/y.tab.h"
 
@@ -18,13 +19,14 @@ using namespace std;
 
 namespace {
 void printHelp(){
-	cout<<"Usage: fwig [options] <input>.wig "<<endl;
+	cout<<"Usage: fwig [options] <input_wig_file> "<<endl;
 	cout<<endl;
 	cout<<"Options: "<<endl;
 	cout<<" -o [file] : output to file instead of stdout"<<endl;
 	cout<<" -p : pretty-print (to stdout if -o [file] option isn't specified)"<<endl;
 	cout<<" -w : weed and output the report to stderr"<<endl;
 	cout<<" -s : enable symbol table (will print symbol table in pretty-printing)"<<endl;
+	cout<<" -t : enable typechecking (enables symbol table automatically)"<<endl;
 	cout<<endl;
 	cout<<"Example usage: "<<endl;
 	cout<<"fwig -p -w -o test.out test.wig  # will output pretty print result to"<<endl;
@@ -41,28 +43,28 @@ int main(int argc, char **argv){
 	bool prettyPrint = false;
 	bool weed = false;
 	bool symbol = false;
+	bool typecheck = false;
 	char *outfile = NULL;
 	char *infile = NULL;
 	int c;
 
-	while((c = getopt(argc, argv, "o:pws")) != -1){
+	while((c = getopt(argc, argv, "o:pwst")) != -1){
 		switch(c){
 		case 'o':
 			outfile = optarg;
 			break;
-
 		case 'p':
 			prettyPrint = true;
 			break;
-
 		case 'w':
 			weed = true;
 			break;
-
 		case 's':
 			symbol = true;
 			break;
-
+		case 't':
+			typecheck = true;
+			break;
 		case '?':
 			 if (optopt == 'o')
 			   fprintf (stderr, "Option -%c requires an argument.\n", optopt);
@@ -94,14 +96,18 @@ int main(int argc, char **argv){
     yyparse();
     fclose(yyin);
     if(success){
-    	if(symbol){
-    		visitors::SymTabler tabler = visitors::SymTabler();
+    	if(symbol || typecheck){
+    		auto tabler = visitors::SymTabler();
     		tabler.visit(EXP);
     	}
     	if(weed){
-			visitors::Weeder weeder = visitors::Weeder();
+			auto weeder = visitors::Weeder();
 			weeder.visit(EXP);
 		}
+    	if(typecheck){
+			auto typechecker = visitors::TypeChecker();
+			typechecker.visit(EXP);
+    	}
     	if(prettyPrint){
     		std::streambuf * buf;
     		std::ofstream of;
@@ -112,13 +118,9 @@ int main(int argc, char **argv){
     		    buf = std::cout.rdbuf();
     		}
     		std::ostream out(buf);
-    		visitors::PrettyPrinter pp = visitors::PrettyPrinter(out,symbol);
+    		auto pp = visitors::PrettyPrinter(out,symbol && !typecheck);
 			pp.visit(EXP);
 			of.close();
     	}
-
     }
-
-//    delete(EXP); TODO: hmm it's bizarre, when I try to call
-    //the destructor delete it, it creates more leaks. fix
 }

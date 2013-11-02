@@ -9,6 +9,18 @@ void Exp::accept(Visitor *v) { v->visit(this); }
 
 LValExp::LValExp(std::string lvalue):lvalue_(lvalue){}
 void LValExp::accept(Visitor *v) { v->visit(this); }
+bool LValExp::is_tuple_ref() const{
+	return lvalue_. find(".") < lvalue_.size();
+}
+std::string LValExp::get_tuple_name() const{
+	return lvalue_.substr(0, lvalue_.find("."));
+}
+std::string LValExp::get_field_name() const{
+	return lvalue_.substr(lvalue_.find(".")+1);
+}
+std::string LValExp::get_lvalue(){
+	return lvalue_;
+}
 
 
 BinopExp::BinopExp(Exp *left, kBinopType type, Exp *right)

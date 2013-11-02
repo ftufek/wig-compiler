@@ -21,6 +21,11 @@ public:
     LValExp(std::string lvalue);
     void accept(Visitor *v) override;
 
+    bool is_tuple_ref() const;
+    std::string get_tuple_name() const;
+    std::string get_field_name() const;
+    std::string get_lvalue();
+
     std::string lvalue_;
 };
 

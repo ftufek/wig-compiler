@@ -102,7 +102,7 @@ Symbol Symbol::ForArgument(ast::Argument *arg){
 const std::string Symbol::get_name() const{
 	return name_;
 }
-const ast::Base *Symbol::get_node() const{
+ast::Base *Symbol::get_node() const{
 	return node_;
 }
 const ast::kType Symbol::get_type() const{
@@ -142,18 +142,20 @@ bool Table::PutSymbol(Symbol sym){
 	}
 };
 
-bool Table::ExistsSymbol(std::string name) const{
+boost::optional<Symbol> Table::FindSymbol(std::string name) const{
+	boost::optional<Symbol> sym;
 	auto copy = table_; //copy table
 	auto scope = table_.top();
 	while(!copy.empty()){
 		scope = copy.top();
 		if(scope.find(name) != scope.end()){
-			return true;
+			sym.reset(scope.find(name)->second);
+			return sym;
 		}
 		copy.pop();
 	}
-	return false;
-};
+	return sym;
+}
 
 void Table::PrettyPrint(std::ostream &out, bool last_scope_only) const{
 	std::string offset = "          ------||| ";

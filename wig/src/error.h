@@ -40,7 +40,9 @@ namespace error {
 DEFINE_ENUM_WITH_STRING_CONVERSIONS(ErrorCode,
 		(NO_RETURN)
 		(SYMBOL_ALREADY_PRESENT)
-		(HTML_TAG_NOT_A_SYMBOL));
+		(HTML_TAG_NOT_A_SYMBOL)
+		/* typecheck error codes: */
+		(SHOULD_BE_BOOL));
 
 class Error
 {

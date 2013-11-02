@@ -46,11 +46,11 @@ def expected_results(ifile, ofile):
     return False
   return True
 
-print bc.HEADER + "Test fwig typecheck system" + bc.ENDC
+print bc.HEADER + "Test fwig compiler typecheck system" + bc.ENDC
 print
 
 for f in files:
-  system(fwig+" -s -w -p "+idir+f+" -o "+odir+f)
+  system(fwig+" -t -s -w -p -o "+odir+f+" "+idir+f)
   if expected_results(idir+f, odir+f):
     print bc.OKGREEN + "[" + check + "] " + f + bc.ENDC
   else:

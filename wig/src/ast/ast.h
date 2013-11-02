@@ -25,9 +25,8 @@ public:
 
     int at_line(){return at_line_;};
 
-    void set_sym_table(st::Table *table);
     const st::Table* get_sym_table() const;
-
+    void set_sym_table(st::Table *table);
 protected:
     int at_line_;
     st::Table *sym_table_;

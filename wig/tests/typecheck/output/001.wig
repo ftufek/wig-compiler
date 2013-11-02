@@ -1,0 +1,25 @@
+/* Produced errors: 
+SHOULD_BE_BOOL(i)
+SHOULD_BE_BOOL(s)
+SHOULD_BE_BOOL(i)
+*/
+service {
+  const html a = <html></html>;
+  session b () { 
+    int i;
+    bool d;
+    string s;
+    if (d) { 
+      
+    }
+    if (i) { 
+      
+    }
+    if (s) { 
+      if (i) { 
+        
+      }
+    }
+    exit a;
+  }
+}
