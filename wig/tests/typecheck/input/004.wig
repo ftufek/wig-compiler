@@ -1,0 +1,27 @@
+/* expected errors:
+TYPES_DONT_MATCH(b == s)
+SHOULD_BE_BOOL(b == s)
+TYPES_DONT_MATCH(s == b)
+SHOULD_BE_BOOL(s == b)
+TYPES_DONT_MATCH(i != b)
+SHOULD_BE_BOOL(i != b)
+*/
+service{
+const html a = <html></html>;
+
+session b(){
+int i;
+int i2;
+string s;
+string s2;
+bool b;
+bool b2;
+if(b == s){}
+if(b == b2){}
+if(s == s2){}
+if(s == b){}
+if(i == i2){}
+if(i != b){}
+exit a;
+}
+}

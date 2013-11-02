@@ -155,6 +155,21 @@ void TypeChecker::visit(ast::BinopExp *s){
 		}
 		break;
 	}
+
+	case ast::kBinopType::Equals:
+	case ast::kBinopType::NotEquals:{
+		s->left_->accept(this);
+		auto l_type = get_exp_type();
+		s->right_->accept(this);
+		if(l_type == get_exp_type()){
+			set_exp_type(ast::kType::BOOL);
+			return;
+		}else{
+			UNDEFINED();
+			error::GenerateError(error::TYPES_DONT_MATCH, PrettyPrint(s));
+		}
+		break;
+	}
 	default:
 		UNDEFINED();
 		break;
