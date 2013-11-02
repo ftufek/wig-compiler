@@ -1,6 +1,7 @@
 /* Produced errors: 
 SHOULD_BE_BOOL(my_item.name)
 SHOULD_BE_BOOL(my_item.price)
+SHOULD_BE_BOOL("thisisnotabool")
 */
 service {
   const html a = <html></html>;
@@ -21,6 +22,15 @@ service {
       
     }
     if (my_item.available) { 
+      
+    }
+    if (true) { 
+      
+    }
+    if (false) { 
+      
+    }
+    if ("thisisnotabool") { 
       
     }
     exit a;

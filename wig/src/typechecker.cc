@@ -141,9 +141,15 @@ void TypeChecker::visit(ast::UnopExp *s){}
 void TypeChecker::visit(ast::TupleopExp *s){}
 void TypeChecker::visit(ast::FunctionExp *s){}
 void TypeChecker::visit(ast::IntegerExp *s){}
-void TypeChecker::visit(ast::TrueExp *s){}
-void TypeChecker::visit(ast::FalseExp *s){}
-void TypeChecker::visit(ast::StringExp *s){}
+void TypeChecker::visit(ast::TrueExp *s){
+	set_exp_type(ast::kType::BOOL);
+}
+void TypeChecker::visit(ast::FalseExp *s){
+	set_exp_type(ast::kType::BOOL);
+}
+void TypeChecker::visit(ast::StringExp *s){
+	set_exp_type(ast::kType::STRING);
+}
 void TypeChecker::visit(ast::FieldValExp *s){}
 void TypeChecker::visit(ast::TupleExp *s){}
 
