@@ -1,0 +1,21 @@
+/* Produced errors:
+TYPES_DONT_MATCH(b1 = i2 + i3)
+*/
+service {
+const html a = <html></html>;
+
+session b(){
+int i1, i2, i3;
+bool b1, b2;
+string s1, s2;
+
+i1 = i2 + i3;
+i1 = (i2 - i3) * i2;
+i1 = i2 * i3 / i1;
+i1 = i2 % (i1 + i2);
+
+b1 = i2 + i3;
+s1 = s1+s2;
+exit a;
+}
+}

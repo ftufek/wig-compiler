@@ -88,13 +88,13 @@
 
 %start service
 
+%left '='
 %left '-' '+'
 %left '*' '/' '%'
 %left tLOR
 %left tLAND '!'
 %left tTCOMBINE tTKEEP tTDISCARD
 %left tEQ tNEQ tLEQ tHEQ '<' '>'
-%left '='
 %left UMINUS
 
 %%

@@ -140,14 +140,15 @@ void TypeChecker::visit(ast::LValExp *s){
 	}
 }
 void TypeChecker::visit(ast::BinopExp *s){
+	s->left_->accept(this);
+	auto l_type = get_exp_type();
+	s->right_->accept(this);
+	auto r_type = get_exp_type();
 	switch(s->type_){
 	case ast::kBinopType::Assignment:{
 		/* lvalue = exp */
-		s->left_->accept(this);
-		auto lvalue_type = get_exp_type();
-		s->right_->accept(this);
-		if(lvalue_type == get_exp_type()){
-			set_exp_type(lvalue_type);
+		if(l_type == r_type){
+			set_exp_type(l_type);
 			return;
 		}else{
 			UNDEFINED();
@@ -158,10 +159,7 @@ void TypeChecker::visit(ast::BinopExp *s){
 
 	case ast::kBinopType::Equals:
 	case ast::kBinopType::NotEquals:{
-		s->left_->accept(this);
-		auto l_type = get_exp_type();
-		s->right_->accept(this);
-		if(l_type == get_exp_type()){
+		if(l_type == r_type){
 			set_exp_type(ast::kType::BOOL);
 			return;
 		}else{
@@ -175,15 +173,38 @@ void TypeChecker::visit(ast::BinopExp *s){
 	case ast::kBinopType::LowerEquals:
 	case ast::kBinopType::HigherEquals:
 	case ast::kBinopType::HigherThan:{
-		s->left_->accept(this);
-		auto l_type = get_exp_type();
-		s->right_->accept(this);
-		if(l_type == ast::kType::INT && l_type == get_exp_type()){
+		if(l_type == ast::kType::INT && l_type == r_type){
 			set_exp_type(ast::kType::BOOL);
 			return;
 		}else{
 			UNDEFINED();
 			error::GenerateError(error::CAN_COMPARE_INTEGERS_ONLY,PrettyPrint(s));
+		}
+		break;
+	}
+
+	case ast::kBinopType::Add:{
+		if((l_type == ast::kType::INT || l_type == ast::kType::STRING)
+				&& l_type == r_type){
+			set_exp_type(l_type);
+			return;
+		}else{
+			UNDEFINED();
+			error::GenerateError(error::OP_INT_OR_STR_ONLY, PrettyPrint(s));
+		}
+		break;
+	}
+
+	case ast::kBinopType::Sub:
+	case ast::kBinopType::Mult:
+	case ast::kBinopType::Div:
+	case ast::kBinopType::Mod:{
+		if(l_type == ast::kType::INT && l_type == r_type){
+			set_exp_type(ast::kType::INT);
+			return;
+		}else{
+			UNDEFINED();
+			error::GenerateError(error::OP_INT_ONLY, PrettyPrint(s));
 		}
 		break;
 	}
