@@ -37,6 +37,10 @@ std::string TypeChecker::PrettyPrint(ast::Exp *node){
 	return ss.str();
 }
 
+void TypeChecker::UNDEFINED(){
+	set_exp_type(ast::kType::UNDEFINED);
+}
+
 void TypeChecker::visit(ast::Service *s){
 	UpdateSymTable(s);
 	s->functions_->accept(this);
@@ -107,7 +111,7 @@ void TypeChecker::visit(ast::LValExp *s){
 		if(sym){
 			set_exp_type(sym.get().get_type());
 		}else{
-			set_exp_type(ast::kType::UNDEFINED);
+			UNDEFINED();
 		}
 	}else{
 		//it's a tuple
@@ -129,18 +133,39 @@ void TypeChecker::visit(ast::LValExp *s){
 							return;
 						}
 					}
-					set_exp_type(ast::kType::UNDEFINED);
+					UNDEFINED();
 				}
 			}
 		}
 	}
 }
 void TypeChecker::visit(ast::BinopExp *s){
+	switch(s->type_){
+	case ast::kBinopType::Assignment:{
+		/* lvalue = exp */
+		s->left_->accept(this);
+		auto lvalue_type = get_exp_type();
+		s->right_->accept(this);
+		if(lvalue_type == get_exp_type()){
+			set_exp_type(lvalue_type);
+			return;
+		}else{
+			UNDEFINED();
+			error::GenerateError(error::TYPES_DONT_MATCH,PrettyPrint(s));
+		}
+		break;
+	}
+	default:
+		UNDEFINED();
+		break;
+	}
 }
 void TypeChecker::visit(ast::UnopExp *s){}
 void TypeChecker::visit(ast::TupleopExp *s){}
 void TypeChecker::visit(ast::FunctionExp *s){}
-void TypeChecker::visit(ast::IntegerExp *s){}
+void TypeChecker::visit(ast::IntegerExp *s){
+	set_exp_type(ast::kType::INT);
+}
 void TypeChecker::visit(ast::TrueExp *s){
 	set_exp_type(ast::kType::BOOL);
 }
@@ -151,6 +176,8 @@ void TypeChecker::visit(ast::StringExp *s){
 	set_exp_type(ast::kType::STRING);
 }
 void TypeChecker::visit(ast::FieldValExp *s){}
-void TypeChecker::visit(ast::TupleExp *s){}
+void TypeChecker::visit(ast::TupleExp *s){
+	set_exp_type(ast::kType::TUPLE);
+}
 
 }

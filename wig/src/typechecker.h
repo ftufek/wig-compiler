@@ -66,6 +66,7 @@ private:
     void set_exp_type(ast::kType type);
     std::string PrettyPrint(ast::Exp *node);
     void UpdateSymTable(ast::Base *node);
+    void UNDEFINED();
 
     st::Table sym_table_; //represents the symbol table in the current scope
     boost::optional<ast::kType> exp_type_;

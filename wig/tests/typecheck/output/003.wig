@@ -1,0 +1,51 @@
+/* Produced errors: 
+TYPES_DONT_MATCH(i = "a")
+TYPES_DONT_MATCH(i = true)
+TYPES_DONT_MATCH(i = false)
+TYPES_DONT_MATCH(i = tuple { name = "asd"})
+TYPES_DONT_MATCH(b = 1)
+TYPES_DONT_MATCH(b = "a")
+TYPES_DONT_MATCH(s = 1)
+TYPES_DONT_MATCH(s = true)
+TYPES_DONT_MATCH(s = false)
+TYPES_DONT_MATCH(t.name = 2)
+TYPES_DONT_MATCH(t.price = "b")
+TYPES_DONT_MATCH(t.available = "s")
+*/
+service {
+  const html a = <html></html>;
+  schema Item {
+    string name;
+    int price;
+    bool available;
+  }
+  session b () { 
+    tuple Item t;
+    int i;
+    bool b;
+    string s;
+    t = tuple { name = "asd", 
+      price = 3, 
+      available = false};
+    i = 2;
+    i = "a";
+    i = true;
+    i = false;
+    i = tuple { name = "asd"};
+    b = 1;
+    b = true;
+    b = false;
+    b = "a";
+    s = 1;
+    s = true;
+    s = false;
+    s = "a";
+    t.name = "a";
+    t.name = 2;
+    t.price = "b";
+    t.price = 3;
+    t.available = "s";
+    t.available = true;
+    exit a;
+  }
+}

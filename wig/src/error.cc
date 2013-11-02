@@ -30,7 +30,7 @@ bool ErrorsPresent(){
 	return errors_.size() > 0;
 }
 
-void GenerateError(enum ErrorCode code, std::string arg){
+void GenerateError(ErrorCode code, std::string arg){
 	errors_.push_back(Error(code, arg));
 }
 

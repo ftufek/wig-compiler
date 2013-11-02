@@ -11,6 +11,7 @@
 #include <boost/preprocessor.hpp>
 #include <string>
 #include <list>
+#include <initializer_list>
 
 // The following code for error code generation comes from:
 // http://stackoverflow.com/questions/5093460/how-to-convert-an-enum-type-variable-to-a-string
@@ -42,7 +43,8 @@ DEFINE_ENUM_WITH_STRING_CONVERSIONS(ErrorCode,
 		(SYMBOL_ALREADY_PRESENT)
 		(HTML_TAG_NOT_A_SYMBOL)
 		/* typecheck error codes: */
-		(SHOULD_BE_BOOL));
+		(SHOULD_BE_BOOL)
+		(TYPES_DONT_MATCH));
 
 class Error
 {
@@ -58,7 +60,7 @@ private:
 };
 
 bool ErrorsPresent();
-void GenerateError(ErrorCode code, std::string arg = "");
+void GenerateError(ErrorCode code, std::string str);
 void PrintErrors(std::ostream &out);
 
 }

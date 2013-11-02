@@ -33,6 +33,10 @@ std::string KTypeToStr(kType type){
 	case ast::kType::SCHEMA:
 		return "schema";
 		break;
+
+	case ast::kType::UNDEFINED:
+		return "undefined";
+		break;
 	}
 	return "";
 }
