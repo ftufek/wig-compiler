@@ -1,0 +1,24 @@
+/* expected errors:
+SHOULD_BE_BOOL(my_item.name)
+SHOULD_BE_BOOL(my_item.price)
+*/
+service{
+const html a = <html></html>;
+
+schema Item{
+	string name;
+int price;
+bool available;
+
+}
+
+session b(){
+tuple Item my_item;
+my_item = tuple { name="asd", price=3, available=false};
+
+if(my_item.name){}
+if(my_item.price){}
+if(my_item.available){}
+exit a;
+}
+}

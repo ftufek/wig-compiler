@@ -10,7 +10,7 @@ namespace ast {
 
 const bool kConstVar = true;
 const bool kNoConstVar = false;
-const std::nullptr_t kNoVal = nullptr;
+const auto kNoVal = nullptr;
 
 class Variable : public Base {
 public:

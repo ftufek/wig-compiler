@@ -59,7 +59,9 @@ void TypeChecker::visit(ast::List *s){
 		exp->accept(this);
 	}
 }
-void TypeChecker::visit(ast::Type *s){}
+void TypeChecker::visit(ast::Type *s){
+	set_exp_type(s->type_);
+}
 void TypeChecker::visit(ast::Session *s){
 	s->stm_->accept(this);
 }
@@ -69,8 +71,8 @@ void TypeChecker::visit(ast::EmptyStm *s){
 }
 
 void TypeChecker::visit(ast::CompoundStm *s){
-	UpdateSymTable(s);
 	for(auto stm : (*s->stms_)){
+		UpdateSymTable(s);
 		stm->accept(this);
 	}
 }
@@ -109,11 +111,27 @@ void TypeChecker::visit(ast::LValExp *s){
 		}
 	}else{
 		//it's a tuple
+		//TODO: the following is very ugly! fix when have time
 		auto sym = sym_table_.FindSymbol(s->get_tuple_name());
 		if(sym){
-			//TODO: fix the following, it might be something different than TExp
-			auto tuple = dynamic_cast<ast::TupleExp *>(sym.get().get_node());
-			tuple->accept(this);
+			auto tuple_var = dynamic_cast<ast::Variable *>(sym.get().get_node());
+			if(tuple_var){
+				auto schema_name = tuple_var->type_->tuple_id_;
+				auto schema = sym_table_.FindSymbol(schema_name);
+				if(schema){
+					auto schema_def = dynamic_cast<ast::Schema *>
+													(schema.get().get_node());
+					auto exps = schema_def->fields_->exps_;
+					for(auto exp : *exps){
+						ast::Field *field = dynamic_cast<ast::Field *>(exp);
+						if(field->id_ == s->get_field_name()){
+							set_exp_type(field->type_->type_);
+							return;
+						}
+					}
+					set_exp_type(ast::kType::UNDEFINED);
+				}
+			}
 		}
 	}
 }
