@@ -1,0 +1,44 @@
+/* Produced errors: 
+NOT_SAME_NUMBER_PARAMETERS(fa)
+NOT_A_FUNCTION(inexistent_func)
+NOT_A_FUNCTION(inexistent_func2)
+ARGUMENT_DONT_MATCH(fa(true, 1))
+NOT_A_FUNCTION(a)
+NOT_SAME_NUMBER_PARAMETERS(fb)
+ARGUMENT_DONT_MATCH(fc("true", "a"))
+ARGUMENT_DONT_MATCH(concatenate(1, 1))
+*/
+service {
+  const html a = <html></html>;
+  void fa(int b, bool c) { 
+    
+  }
+
+  int fb(int b, int i2) { 
+    return i2;
+  }
+
+  bool fc(bool d, string a) { 
+    return a == a;
+  }
+
+  string concatenate(string a, string b) { 
+    return a + b;
+  }
+
+  session test () { 
+    fa();
+    inexistent_func();
+    inexistent_func2(2);
+    fa(true, 1);
+    fa(1, true);
+    a(1);
+    fb(1, 2);
+    fb(1, 2, 3);
+    fc("true", "a");
+    fc(false, "asd");
+    concatenate(1, 1);
+    concatenate("a", "a");
+    exit a;
+  }
+}

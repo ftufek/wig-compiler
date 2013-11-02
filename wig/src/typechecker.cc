@@ -54,7 +54,9 @@ void TypeChecker::visit(ast::Function *s){
 void TypeChecker::visit(ast::Field *s){}
 void TypeChecker::visit(ast::Empty *s){}
 void TypeChecker::visit(ast::HtmlTag *s){}
-void TypeChecker::visit(ast::Argument *s){}
+void TypeChecker::visit(ast::Argument *s){
+	set_exp_type(s->type_->type_);
+}
 void TypeChecker::visit(ast::MetaTag *s){}
 void TypeChecker::visit(ast::Schema *s){}
 void TypeChecker::visit(ast::String *s){}
@@ -230,8 +232,41 @@ void TypeChecker::visit(ast::BinopExp *s){
 	}
 }
 void TypeChecker::visit(ast::UnopExp *s){}
-void TypeChecker::visit(ast::TupleopExp *s){}
-void TypeChecker::visit(ast::FunctionExp *s){}
+void TypeChecker::visit(ast::TupleopExp *s){
+	//TODO: typecheck KEEP and DISCARD
+}
+void TypeChecker::visit(ast::FunctionExp *s){
+	//Typechecking function call
+	auto f_sym = sym_table_.FindSymbol(s->id_);
+	if(f_sym){
+		ast::Function *function = dynamic_cast<ast::Function *>(f_sym.get().get_node());
+		if(function){
+			if(function->args_->size() != s->exps_->size()){
+				error::GenerateError(error::NOT_SAME_NUMBER_PARAMETERS,s->id_);
+			}else{
+				auto arg_it = function->args_->begin();
+				auto exp_it = s->exps_->begin();
+				for(int i = 0;
+						arg_it != function->args_->end();
+						++arg_it, ++exp_it, ++i){
+					(*arg_it)->accept(this);
+					auto arg_type = get_exp_type();
+					(*exp_it)->accept(this);
+					auto exp_type = get_exp_type();
+					if(arg_type != exp_type){
+						error::GenerateError(error::ARGUMENT_DONT_MATCH,
+								PrettyPrint(s));
+						break;
+					}
+				}
+			}
+		}else{
+			error::GenerateError(error::NOT_A_FUNCTION, s->id_);
+		}
+	}else{
+		error::GenerateError(error::NOT_A_FUNCTION, s->id_);
+	}
+}
 void TypeChecker::visit(ast::IntegerExp *s){
 	set_exp_type(ast::kType::INT);
 }
