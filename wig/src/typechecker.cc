@@ -170,6 +170,23 @@ void TypeChecker::visit(ast::BinopExp *s){
 		}
 		break;
 	}
+
+	case ast::kBinopType::LowerThan:
+	case ast::kBinopType::LowerEquals:
+	case ast::kBinopType::HigherEquals:
+	case ast::kBinopType::HigherThan:{
+		s->left_->accept(this);
+		auto l_type = get_exp_type();
+		s->right_->accept(this);
+		if(l_type == ast::kType::INT && l_type == get_exp_type()){
+			set_exp_type(ast::kType::BOOL);
+			return;
+		}else{
+			UNDEFINED();
+			error::GenerateError(error::CAN_COMPARE_INTEGERS_ONLY,PrettyPrint(s));
+		}
+		break;
+	}
 	default:
 		UNDEFINED();
 		break;

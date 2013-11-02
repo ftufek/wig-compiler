@@ -44,7 +44,8 @@ DEFINE_ENUM_WITH_STRING_CONVERSIONS(ErrorCode,
 		(HTML_TAG_NOT_A_SYMBOL)
 		/* typecheck error codes: */
 		(SHOULD_BE_BOOL)
-		(TYPES_DONT_MATCH));
+		(TYPES_DONT_MATCH)
+		(CAN_COMPARE_INTEGERS_ONLY));
 
 class Error
 {

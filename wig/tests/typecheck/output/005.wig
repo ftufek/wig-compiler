@@ -1,0 +1,46 @@
+/* Produced errors: 
+CAN_COMPARE_INTEGERS_ONLY(i1 >= b1)
+SHOULD_BE_BOOL(i1 >= b1)
+CAN_COMPARE_INTEGERS_ONLY(b2 < s1)
+SHOULD_BE_BOOL(b2 < s1)
+CAN_COMPARE_INTEGERS_ONLY(b1 <= b2)
+SHOULD_BE_BOOL(b1 <= b2)
+CAN_COMPARE_INTEGERS_ONLY(s1 >= s2)
+SHOULD_BE_BOOL(s1 >= s2)
+*/
+service {
+  const html a = <html></html>;
+  session b () { 
+    int i1;
+    int i2;
+    bool b1;
+    bool b2;
+    string s1;
+    string s2;
+    if (i1 <= i2) { 
+      
+    }
+    if (i1 < i2) { 
+      
+    }
+    if (i1 >= b1) { 
+      
+    }
+    if (b2 < s1) { 
+      
+    }
+    if (i1 > i2) { 
+      
+    }
+    if (i1 <= i2) { 
+      
+    }
+    if (b1 <= b2) { 
+      
+    }
+    if (s1 >= s2) { 
+      
+    }
+    exit a;
+  }
+}
