@@ -11,6 +11,7 @@ TYPES_DONT_MATCH(s = false)
 TYPES_DONT_MATCH(t.name = 2)
 TYPES_DONT_MATCH(t.price = "b")
 TYPES_DONT_MATCH(t.available = "s")
+SHOULD_BE_BOOL(i = 2)
 */
 service {
   const html a = <html></html>;
@@ -46,6 +47,9 @@ service {
     t.price = 3;
     t.available = "s";
     t.available = true;
+    if (i = 2) { 
+      
+    }
     exit a;
   }
 }
