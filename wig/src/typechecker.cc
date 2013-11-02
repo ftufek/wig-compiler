@@ -208,6 +208,22 @@ void TypeChecker::visit(ast::BinopExp *s){
 		}
 		break;
 	}
+
+	case ast::kBinopType::And:
+	case ast::kBinopType::Or:{
+		if(l_type == ast::kType::BOOL && l_type == r_type){
+			set_exp_type(ast::kType::BOOL);
+			return;
+		}else{
+			UNDEFINED();
+			error::GenerateError(error::OP_BOOL_ONLY, PrettyPrint(s));
+		}
+		break;
+	}
+
+	case ast::kBinopType::Combine:
+		//TODO: do this later...
+		break;
 	default:
 		UNDEFINED();
 		break;
