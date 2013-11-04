@@ -12,14 +12,28 @@ service {
 <html></html>;
   session a () { 
           ------||| Symbol table: 
+          ------||| noreturn	|sym_type: variable	|type: bool
           ------||| --------------
           ------||| a	|sym_type: variable	|type: html
           ------||| --------------
+    bool noreturn;
     if (true) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| noreturn	|sym_type: variable	|type: bool
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| --------------
       noreturn = true;
       return 2;
     }
     else { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| noreturn	|sym_type: variable	|type: bool
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| --------------
       return 1;
     }
   }

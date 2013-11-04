@@ -1,3 +1,6 @@
+/* Produced errors: 
+SHOULD_BE_HTML(a)
+*/
 service {
           ------||| Symbol table: 
           ------||| a	|sym_type: function	|type: int

@@ -1,3 +1,10 @@
+/* Produced errors: 
+OP_INT_ONLY(25173 * seed)
+OP_INT_OR_STR_ONLY(25173 * seed + 13849)
+OP_INT_ONLY(25173 * seed + 13849 % 65536)
+FUNCTION_RETURN_TYPE_DONT_MATCH(nextRandom)
+NOT_SAME_NUMBER_PARAMETERS(nextRandom)
+*/
 service {
           ------||| Symbol table: 
           ------||| Again	|sym_type: variable	|type: html
@@ -191,6 +198,29 @@ service {
     while (guess > 99)      show Retry receive [guess = guess];
 
     while (guess != number) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| guess	|sym_type: variable	|type: int
+          ------||| guesses	|sym_type: variable	|type: int
+          ------||| localholder	|sym_type: variable	|type: string
+          ------||| number	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| Again	|sym_type: variable	|type: html
+          ------||| Done	|sym_type: variable	|type: html
+          ------||| Finish	|sym_type: variable	|type: html
+          ------||| GameSeeded	|sym_type: variable	|type: html
+          ------||| GetSeed	|sym_type: variable	|type: html
+          ------||| Info	|sym_type: variable	|type: tuple
+          ------||| Init	|sym_type: variable	|type: html
+          ------||| List	|sym_type: variable	|type: html
+          ------||| Play	|sym_type: session	|type: void
+          ------||| Record	|sym_type: variable	|type: html
+          ------||| Retry	|sym_type: variable	|type: html
+          ------||| Seed	|sym_type: session	|type: void
+          ------||| infoS	|sym_type: schema	|type: schema
+          ------||| nextRandom	|sym_type: function	|type: int
+          ------||| seed	|sym_type: variable	|type: int
+          ------||| --------------
         guesses = guesses + 1;
         if (guess > number)        show plug Again[correction = "lower"] receive [guess = guess];
         else        show plug Again[correction = "higher"] receive [guess = guess];
@@ -200,6 +230,29 @@ service {
 
     show plug Done[trys = guesses];
     if (Info.record == 0 || Info.record > guesses) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| guess	|sym_type: variable	|type: int
+          ------||| guesses	|sym_type: variable	|type: int
+          ------||| localholder	|sym_type: variable	|type: string
+          ------||| number	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| Again	|sym_type: variable	|type: html
+          ------||| Done	|sym_type: variable	|type: html
+          ------||| Finish	|sym_type: variable	|type: html
+          ------||| GameSeeded	|sym_type: variable	|type: html
+          ------||| GetSeed	|sym_type: variable	|type: html
+          ------||| Info	|sym_type: variable	|type: tuple
+          ------||| Init	|sym_type: variable	|type: html
+          ------||| List	|sym_type: variable	|type: html
+          ------||| Play	|sym_type: session	|type: void
+          ------||| Record	|sym_type: variable	|type: html
+          ------||| Retry	|sym_type: variable	|type: html
+          ------||| Seed	|sym_type: session	|type: void
+          ------||| infoS	|sym_type: schema	|type: schema
+          ------||| nextRandom	|sym_type: function	|type: int
+          ------||| seed	|sym_type: variable	|type: int
+          ------||| --------------
       show plug Record[old = Info.record] receive [localholder = name];
       Info.holder = localholder;
       Info.record = guesses;

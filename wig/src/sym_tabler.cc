@@ -82,6 +82,9 @@ void SymTabler::visit(ast::CompoundStm *s){
 	for(auto it : *(s->vars_)){
 		it->accept(this);
 	}
+	for(auto stm : *(s->stms_)){
+		stm->accept(this);
+	}
 	s->set_sym_table(new st::Table(sym_table_));
 	sym_table_.UnScope();
 }
@@ -92,8 +95,15 @@ void SymTabler::visit(ast::InputStm *s){}
 void SymTabler::visit(ast::ReceiveStm *s){}
 void SymTabler::visit(ast::ExitStm *s){}
 void SymTabler::visit(ast::ReturnStm *s){}
-void SymTabler::visit(ast::IfStm *s){}
-void SymTabler::visit(ast::WhileStm *s){}
+void SymTabler::visit(ast::IfStm *s){
+	s->true_stm_->accept(this);
+	if(s->else_stm_){
+		s->else_stm_->accept(this);
+	}
+}
+void SymTabler::visit(ast::WhileStm *s){
+	s->stm_->accept(this);
+}
 void SymTabler::visit(ast::ExpStm *s){}
 
 void SymTabler::visit(ast::Exp *s){}

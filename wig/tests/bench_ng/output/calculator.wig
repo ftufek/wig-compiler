@@ -66,6 +66,19 @@ service {
     string operator;
     YorN = "";
     while (YorN != "no") { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| YorN	|sym_type: variable	|type: string
+          ------||| int1	|sym_type: variable	|type: int
+          ------||| int2	|sym_type: variable	|type: int
+          ------||| operator	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| Ans	|sym_type: variable	|type: int
+          ------||| ByeBye	|sym_type: variable	|type: html
+          ------||| Calculate	|sym_type: session	|type: void
+          ------||| Return	|sym_type: variable	|type: html
+          ------||| Setup	|sym_type: variable	|type: html
+          ------||| --------------
         show Setup receive [operator = operator, int1 = int1, int2 = int2];
         if (operator == "+")        Ans = int1 + int2;
         if (operator == "-")        Ans = int1 - int2;

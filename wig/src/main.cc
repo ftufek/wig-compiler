@@ -118,7 +118,7 @@ int main(int argc, char **argv){
     		    buf = std::cout.rdbuf();
     		}
     		std::ostream out(buf);
-    		auto pp = visitors::PrettyPrinter(out,symbol && !typecheck);
+    		auto pp = visitors::PrettyPrinter(out,symbol);
 			pp.visit(EXP);
 			of.close();
     	}

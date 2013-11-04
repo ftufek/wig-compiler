@@ -2,6 +2,7 @@
 SYMBOL_ALREADY_PRESENT(a)
 SYMBOL_ALREADY_PRESENT(a)
 NO_RETURN(a)
+FUNCTION_RETURN_TYPE_DONT_MATCH(a)
 */
 service {
           ------||| Symbol table: 

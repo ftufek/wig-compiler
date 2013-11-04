@@ -1,5 +1,6 @@
 /* Produced errors: 
 NO_RETURN(a)
+TYPES_DONT_MATCH(noreturn = true)
 */
 service {
           ------||| Symbol table: 
@@ -18,9 +19,21 @@ service {
           ------||| d	|sym_type: variable	|type: html
           ------||| --------------
     if (true) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| --------------
+          ------||| a	|sym_type: session	|type: void
+          ------||| d	|sym_type: variable	|type: html
+          ------||| --------------
       noreturn = true;
     }
     else { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| --------------
+          ------||| a	|sym_type: session	|type: void
+          ------||| d	|sym_type: variable	|type: html
+          ------||| --------------
       return 1;
     }
   }

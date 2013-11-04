@@ -33,6 +33,14 @@ service {
           ------||| wrong	|sym_type: variable	|type: html
           ------||| --------------
     if (n == 0) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| --------------
+          ------||| factorial	|sym_type: function	|type: int
+          ------||| right	|sym_type: variable	|type: html
+          ------||| status	|sym_type: variable	|type: html
+          ------||| wrong	|sym_type: variable	|type: html
+          ------||| --------------
       show status;
       return 1;
     }
@@ -52,6 +60,16 @@ service {
     int n;
     n = factorial(10);
     if (n != 3628800) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| n	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| Test	|sym_type: session	|type: void
+          ------||| factorial	|sym_type: function	|type: int
+          ------||| right	|sym_type: variable	|type: html
+          ------||| status	|sym_type: variable	|type: html
+          ------||| wrong	|sym_type: variable	|type: html
+          ------||| --------------
       exit plug wrong[n = n];
     }
     exit plug right[n = n];

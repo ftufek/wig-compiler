@@ -94,9 +94,48 @@ service {
     quit = "no";
     show Logon receive [name = name];
     while (quit != "yes") { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| connections	|sym_type: variable	|type: int
+          ------||| msg	|sym_type: variable	|type: string
+          ------||| name	|sym_type: variable	|type: string
+          ------||| quit	|sym_type: variable	|type: string
+          ------||| written	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| ByeBye	|sym_type: variable	|type: html
+          ------||| Chat	|sym_type: session	|type: void
+          ------||| Logon	|sym_type: variable	|type: html
+          ------||| Update	|sym_type: variable	|type: html
+          ------||| msg0	|sym_type: variable	|type: string
+          ------||| msg1	|sym_type: variable	|type: string
+          ------||| msg2	|sym_type: variable	|type: string
+          ------||| msg3	|sym_type: variable	|type: string
+          ------||| msg4	|sym_type: variable	|type: string
+          ------||| msg5	|sym_type: variable	|type: string
+          ------||| --------------
         show plug Update[msg0 = msg0, msg1 = msg1, msg2 = msg2, msg3 = msg3, msg4 = msg4, msg5 = msg5] receive [msg = msg, quit = quit];
         connections = connections + 1;
         if (msg != "") { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| --------------
+          ------||| connections	|sym_type: variable	|type: int
+          ------||| msg	|sym_type: variable	|type: string
+          ------||| name	|sym_type: variable	|type: string
+          ------||| quit	|sym_type: variable	|type: string
+          ------||| written	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| ByeBye	|sym_type: variable	|type: html
+          ------||| Chat	|sym_type: session	|type: void
+          ------||| Logon	|sym_type: variable	|type: html
+          ------||| Update	|sym_type: variable	|type: html
+          ------||| msg0	|sym_type: variable	|type: string
+          ------||| msg1	|sym_type: variable	|type: string
+          ------||| msg2	|sym_type: variable	|type: string
+          ------||| msg3	|sym_type: variable	|type: string
+          ------||| msg4	|sym_type: variable	|type: string
+          ------||| msg5	|sym_type: variable	|type: string
+          ------||| --------------
           written = written + 1;
           msg0 = msg1;
           msg1 = msg2;

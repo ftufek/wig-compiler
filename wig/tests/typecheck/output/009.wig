@@ -6,9 +6,31 @@ SHOULD_BE_HTML(b)
 SHOULD_BE_HTML(d)
 */
 service {
-  const html a = <html></html>;
-  const html b = <html><div></div></html>;
+          ------||| Symbol table: 
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: variable	|type: html
+          ------||| main	|sym_type: session	|type: void
+          ------||| --------------
+  const html a = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| --------------
+<html></html>;
+  const html b = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| --------------
+<html><div></div></html>;
   session main () { 
+          ------||| Symbol table: 
+          ------||| b	|sym_type: variable	|type: string
+          ------||| d	|sym_type: variable	|type: int
+          ------||| e	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: variable	|type: html
+          ------||| main	|sym_type: session	|type: void
+          ------||| --------------
     int d;
     string b;
     int e;

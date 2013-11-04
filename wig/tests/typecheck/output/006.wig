@@ -2,8 +2,28 @@
 TYPES_DONT_MATCH(b1 = i2 + i3)
 */
 service {
-  const html a = <html></html>;
+          ------||| Symbol table: 
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
+  const html a = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| --------------
+<html></html>;
   session b () { 
+          ------||| Symbol table: 
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| i3	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     int i1;
     int i2;
     int i3;

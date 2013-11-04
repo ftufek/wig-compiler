@@ -66,6 +66,7 @@ void TypeChecker::visit(ast::Variable *s){
 	set_exp_type(s->type_->type_);
 }
 void TypeChecker::visit(ast::Function *s){
+	UpdateSymTable(s);
 	s->stm_->accept(this);
 	auto ret_type = s->type_->type_;
 	if(ret_type != ast::kType::VOID && get_exp_type() != s->type_->type_){
@@ -85,7 +86,11 @@ void TypeChecker::visit(ast::MetaTag *s){}
 void TypeChecker::visit(ast::Schema *s){}
 void TypeChecker::visit(ast::String *s){}
 void TypeChecker::visit(ast::List *s){
+	auto scoped_syms = sym_table_;
 	for(auto exp : (*s->exps_)){
+		sym_table_ = scoped_syms; //this is needed since like when we're in
+						//a list of Functions, they can change the scope of the
+						//symbol tables and we need to reset them to the previous
 		exp->accept(this);
 	}
 }

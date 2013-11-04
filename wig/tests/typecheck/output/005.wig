@@ -9,8 +9,27 @@ CAN_COMPARE_INTEGERS_ONLY(s1 >= s2)
 SHOULD_BE_BOOL(s1 >= s2)
 */
 service {
-  const html a = <html></html>;
+          ------||| Symbol table: 
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
+  const html a = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| --------------
+<html></html>;
   session b () { 
+          ------||| Symbol table: 
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     int i1;
     int i2;
     bool b1;
@@ -18,20 +37,116 @@ service {
     string s1;
     string s2;
     if (i1 <= i2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (i1 < i2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (i1 >= b1) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (b2 < s1) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (i1 > i2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (i1 <= i2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (b1 <= b2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (s1 >= s2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s1	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     exit a;
   }

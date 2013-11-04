@@ -4,28 +4,98 @@ SHOULD_BE_BOOL(my_item.price)
 SHOULD_BE_BOOL("thisisnotabool")
 */
 service {
-  const html a = <html></html>;
+          ------||| Symbol table: 
+          ------||| Item	|sym_type: schema	|type: schema
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
+  const html a = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| --------------
+<html></html>;
   schema Item {
+------- Symbols inside the schema: 
+          ------||| Symbol table: 
+          ------||| available	|sym_type: field	|type: bool
+          ------||| name	|sym_type: field	|type: string
+          ------||| price	|sym_type: field	|type: int
+          ------||| --------------
     string name;
     int price;
     bool available;
   }
   session b () { 
+          ------||| Symbol table: 
+          ------||| my_item	|sym_type: variable	|type: tuple
+          ------||| --------------
+          ------||| Item	|sym_type: schema	|type: schema
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     tuple Item my_item;
     my_item = tuple { name = "asd", 
       price = 3, 
       available = false};
     if (my_item.name) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| my_item	|sym_type: variable	|type: tuple
+          ------||| --------------
+          ------||| Item	|sym_type: schema	|type: schema
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (my_item.price) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| my_item	|sym_type: variable	|type: tuple
+          ------||| --------------
+          ------||| Item	|sym_type: schema	|type: schema
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (my_item.available) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| my_item	|sym_type: variable	|type: tuple
+          ------||| --------------
+          ------||| Item	|sym_type: schema	|type: schema
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (true) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| my_item	|sym_type: variable	|type: tuple
+          ------||| --------------
+          ------||| Item	|sym_type: schema	|type: schema
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (false) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| my_item	|sym_type: variable	|type: tuple
+          ------||| --------------
+          ------||| Item	|sym_type: schema	|type: schema
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if ("thisisnotabool") { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| my_item	|sym_type: variable	|type: tuple
+          ------||| --------------
+          ------||| Item	|sym_type: schema	|type: schema
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     exit a;
   }

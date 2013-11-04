@@ -5,16 +5,59 @@ OP_BOOL_ONLY(i1 && b2)
 SHOULD_BE_BOOL(i1 && b2)
 */
 service {
-  const html a = <html></html>;
+          ------||| Symbol table: 
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
+  const html a = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| --------------
+<html></html>;
   session b () { 
+          ------||| Symbol table: 
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     bool b1;
     bool b2;
     int i1;
     if (b1 && b2 || b2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (b1 || i1) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (i1 && b2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b1	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i1	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     exit a;
   }

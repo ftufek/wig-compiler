@@ -7,8 +7,27 @@ TYPES_DONT_MATCH(i != b)
 SHOULD_BE_BOOL(i != b)
 */
 service {
-  const html a = <html></html>;
+          ------||| Symbol table: 
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
+  const html a = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| --------------
+<html></html>;
   session b () { 
+          ------||| Symbol table: 
+          ------||| b	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     int i;
     int i2;
     string s;
@@ -16,16 +35,88 @@ service {
     bool b;
     bool b2;
     if (b == s) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (b == b2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (s == s2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (s == b) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (i == i2) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     if (i != b) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| b	|sym_type: variable	|type: bool
+          ------||| b2	|sym_type: variable	|type: bool
+          ------||| i	|sym_type: variable	|type: int
+          ------||| i2	|sym_type: variable	|type: int
+          ------||| s	|sym_type: variable	|type: string
+          ------||| s2	|sym_type: variable	|type: string
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
     }
     exit a;
   }

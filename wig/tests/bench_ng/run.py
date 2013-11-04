@@ -50,7 +50,7 @@ print bc.HEADER + "Test fwig compiler error detection system" + bc.ENDC
 print
 
 for f in files:
-  system(fwig+" -s -w -p -o "+odir+f+" "+idir+f)
+  system(fwig+" -t -s -w -p -o "+odir+f+" "+idir+f)
   if expected_results(idir+f, odir+f):
     print bc.OKGREEN + "[" + check + "] " + f + bc.ENDC
   else:

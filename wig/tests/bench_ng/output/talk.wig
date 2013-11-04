@@ -104,6 +104,25 @@ service {
     correct = false;
     written = 0;
     while (!correct) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| correct	|sym_type: variable	|type: bool
+          ------||| msg	|sym_type: variable	|type: string
+          ------||| password	|sym_type: variable	|type: string
+          ------||| quit	|sym_type: variable	|type: string
+          ------||| username	|sym_type: variable	|type: string
+          ------||| written	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| ByeBye	|sym_type: variable	|type: html
+          ------||| Login	|sym_type: variable	|type: html
+          ------||| Talk	|sym_type: session	|type: void
+          ------||| Update	|sym_type: variable	|type: html
+          ------||| connections	|sym_type: variable	|type: int
+          ------||| incorrect	|sym_type: variable	|type: html
+          ------||| msg0	|sym_type: variable	|type: string
+          ------||| msg1	|sym_type: variable	|type: string
+          ------||| msg2	|sym_type: variable	|type: string
+          ------||| --------------
         show Login receive [username = username, password = password];
         if (username == "Ebrahim" && password == "group5" || username == "Abbas" && password == "password" || username == "guest" && password == "guest")        correct = true;
         if (!correct)        show plug incorrect[username = username];
@@ -111,8 +130,47 @@ service {
 
     quit = "no";
     while (quit != "yes") { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| correct	|sym_type: variable	|type: bool
+          ------||| msg	|sym_type: variable	|type: string
+          ------||| password	|sym_type: variable	|type: string
+          ------||| quit	|sym_type: variable	|type: string
+          ------||| username	|sym_type: variable	|type: string
+          ------||| written	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| ByeBye	|sym_type: variable	|type: html
+          ------||| Login	|sym_type: variable	|type: html
+          ------||| Talk	|sym_type: session	|type: void
+          ------||| Update	|sym_type: variable	|type: html
+          ------||| connections	|sym_type: variable	|type: int
+          ------||| incorrect	|sym_type: variable	|type: html
+          ------||| msg0	|sym_type: variable	|type: string
+          ------||| msg1	|sym_type: variable	|type: string
+          ------||| msg2	|sym_type: variable	|type: string
+          ------||| --------------
         show plug Update[msg0 = msg0, msg1 = msg1, msg2 = msg2] receive [msg = msg, quit = quit];
         if (msg != "") { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| --------------
+          ------||| correct	|sym_type: variable	|type: bool
+          ------||| msg	|sym_type: variable	|type: string
+          ------||| password	|sym_type: variable	|type: string
+          ------||| quit	|sym_type: variable	|type: string
+          ------||| username	|sym_type: variable	|type: string
+          ------||| written	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| ByeBye	|sym_type: variable	|type: html
+          ------||| Login	|sym_type: variable	|type: html
+          ------||| Talk	|sym_type: session	|type: void
+          ------||| Update	|sym_type: variable	|type: html
+          ------||| connections	|sym_type: variable	|type: int
+          ------||| incorrect	|sym_type: variable	|type: html
+          ------||| msg0	|sym_type: variable	|type: string
+          ------||| msg1	|sym_type: variable	|type: string
+          ------||| msg2	|sym_type: variable	|type: string
+          ------||| --------------
           written = written + 1;
           msg0 = msg1;
           msg1 = msg2;

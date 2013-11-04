@@ -195,6 +195,18 @@ service {
     int man;
     show Init receive [man = man];
     while (man != 5) { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| man	|sym_type: variable	|type: int
+          ------||| --------------
+          ------||| Access	|sym_type: session	|type: void
+          ------||| Blue	|sym_type: variable	|type: html
+          ------||| End	|sym_type: variable	|type: html
+          ------||| Green	|sym_type: variable	|type: html
+          ------||| Init	|sym_type: variable	|type: html
+          ------||| Purple	|sym_type: variable	|type: html
+          ------||| Red	|sym_type: variable	|type: html
+          ------||| --------------
         if (man == 1)        show Red receive [man = man];
         else        if (man == 2)        show Blue receive [man = man];
         else        if (man == 3)        show Green receive [man = man];
