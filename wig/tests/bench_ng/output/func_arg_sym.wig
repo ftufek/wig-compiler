@@ -1,6 +1,3 @@
-/* Produced errors: 
-SHOULD_BE_HTML(a)
-*/
 service {
           ------||| Symbol table: 
           ------||| a	|sym_type: function	|type: int
@@ -30,6 +27,6 @@ service {
           ------||| b	|sym_type: session	|type: void
           ------||| d	|sym_type: variable	|type: html
           ------||| --------------
-    exit a;
+    exit d;
   }
 }

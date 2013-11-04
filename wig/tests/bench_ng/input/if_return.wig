@@ -5,6 +5,7 @@ service{
 const html d = <html></html>;
 
 session a(){
+bool noreturn;
 if(true){
 noreturn = true;
 }else{
