@@ -1,0 +1,27 @@
+/* Produced errors: 
+SHOULD_BE_HTML(b)
+SHOULD_BE_HTML(d)
+SHOULD_BE_HTML(e)
+SHOULD_BE_HTML(b)
+SHOULD_BE_HTML(d)
+*/
+service {
+  const html a = <html></html>;
+  const html b = <html><div></div></html>;
+  session main () { 
+    int d;
+    string b;
+    int e;
+    show a    
+;
+    show b    
+;
+    show d    
+;
+    show e    
+;
+    exit a;
+    exit b;
+    exit d;
+  }
+}

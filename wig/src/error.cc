@@ -13,8 +13,8 @@ namespace error{
 
 std::list<Error> errors_ = std::list<Error>();
 
-Error::Error(ErrorCode code, std::string arg)
-	:code_(code), arg_(arg){};
+Error::Error(ErrorCode code, std::string arg, int lineno)
+	:code_(code), arg_(arg), lineno_(lineno){};
 
 Error::~Error(){};
 
@@ -30,8 +30,8 @@ bool ErrorsPresent(){
 	return errors_.size() > 0;
 }
 
-void GenerateError(ErrorCode code, std::string arg){
-	errors_.push_back(Error(code, arg));
+void GenerateError(ErrorCode code, std::string arg, int lineno){
+	errors_.push_back(Error(code, arg, lineno));
 }
 
 void PrintErrors(std::ostream &out){

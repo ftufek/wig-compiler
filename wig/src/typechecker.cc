@@ -7,11 +7,26 @@
 
 
 #include <sstream>
+#include <boost/optional.hpp>
 #include "typechecker.h"
 #include "error.h"
 #include "pretty_printer.h"
 
 namespace visitors {
+
+boost::optional<ast::Schema *> TypeChecker::sym2schema(st::Symbol sym){
+	boost::optional<ast::Schema *> schema_def;
+	auto tuple_var = dynamic_cast<ast::Variable *>(sym.get_node());
+	if(tuple_var){
+		auto schema_name = tuple_var->type_->tuple_id_;
+		auto schema = sym_table_.FindSymbol(schema_name);
+		if(schema){
+			schema_def.reset(dynamic_cast<ast::Schema *>
+											(schema.get().get_node()));
+		}
+	}
+	return schema_def;
+}
 
 TypeChecker::TypeChecker()
 	:sym_table_(st::Table()), exp_type_(ast::kType::UNDEFINED){}
@@ -47,7 +62,9 @@ void TypeChecker::visit(ast::Service *s){
 	s->sessions_->accept(this);
 }
 void TypeChecker::visit(ast::Whatever *s){}
-void TypeChecker::visit(ast::Variable *s){}
+void TypeChecker::visit(ast::Variable *s){
+	set_exp_type(s->type_->type_);
+}
 void TypeChecker::visit(ast::Function *s){
 	s->stm_->accept(this);
 }
@@ -82,18 +99,35 @@ void TypeChecker::visit(ast::CompoundStm *s){
 		stm->accept(this);
 	}
 }
-void TypeChecker::visit(ast::ShowStm *s){}
-void TypeChecker::visit(ast::DocumentStm *s){}
+void TypeChecker::visit(ast::ShowStm *s){
+	s->doc_->accept(this);
+}
+void TypeChecker::visit(ast::DocumentStm *s){
+	auto html_id = s->id_;
+	auto html_sym = sym_table_.FindSymbol(html_id);
+	if(html_sym){
+		UNDEFINED();
+		html_sym.get().get_node()->accept(this);
+		if(get_exp_type() != ast::kType::HTML){
+			UNDEFINED();
+			error::GenerateError(error::SHOULD_BE_HTML, html_id, s->at_line());
+		}
+	}else{
+		error::GenerateError(error::HTML_DOESNT_EXIST, html_id, s->at_line());
+	}
+}
 void TypeChecker::visit(ast::PlugStm *s){}
 void TypeChecker::visit(ast::InputStm *s){}
 void TypeChecker::visit(ast::ReceiveStm *s){}
-void TypeChecker::visit(ast::ExitStm *s){}
+void TypeChecker::visit(ast::ExitStm *s){
+	s->doc_->accept(this);
+}
 void TypeChecker::visit(ast::ReturnStm *s){}
 void TypeChecker::visit(ast::IfStm *s){
 	auto temp = get_exp_type();
 	s->condition_->accept(this);
 	if(get_exp_type() != ast::kType::BOOL){
-		error::GenerateError(error::SHOULD_BE_BOOL, PrettyPrint(s->condition_));
+		error::GenerateError(error::SHOULD_BE_BOOL, PrettyPrint(s->condition_), s->at_line());
 	}
 	set_exp_type(temp);
 	s->true_stm_->accept(this);
@@ -120,23 +154,18 @@ void TypeChecker::visit(ast::LValExp *s){
 		//TODO: the following is very ugly! fix when have time
 		auto sym = sym_table_.FindSymbol(s->get_tuple_name());
 		if(sym){
-			auto tuple_var = dynamic_cast<ast::Variable *>(sym.get().get_node());
-			if(tuple_var){
-				auto schema_name = tuple_var->type_->tuple_id_;
-				auto schema = sym_table_.FindSymbol(schema_name);
-				if(schema){
-					auto schema_def = dynamic_cast<ast::Schema *>
-													(schema.get().get_node());
-					auto exps = schema_def->fields_->exps_;
-					for(auto exp : *exps){
-						ast::Field *field = dynamic_cast<ast::Field *>(exp);
-						if(field->id_ == s->get_field_name()){
-							set_exp_type(field->type_->type_);
-							return;
-						}
+			auto schema = sym2schema(sym.get());
+			if(schema){
+				auto schema_def = schema.get();
+				auto exps = schema_def->fields_->exps_;
+				for(auto exp : *exps){
+					ast::Field *field = dynamic_cast<ast::Field *>(exp);
+					if(field->id_ == s->get_field_name()){
+						set_exp_type(field->type_->type_);
+						return;
 					}
-					UNDEFINED();
 				}
+				UNDEFINED();
 			}
 		}
 	}
@@ -154,7 +183,7 @@ void TypeChecker::visit(ast::BinopExp *s){
 			return;
 		}else{
 			UNDEFINED();
-			error::GenerateError(error::TYPES_DONT_MATCH,PrettyPrint(s));
+			error::GenerateError(error::TYPES_DONT_MATCH,PrettyPrint(s), s->at_line());
 		}
 		break;
 	}
@@ -166,7 +195,7 @@ void TypeChecker::visit(ast::BinopExp *s){
 			return;
 		}else{
 			UNDEFINED();
-			error::GenerateError(error::TYPES_DONT_MATCH, PrettyPrint(s));
+			error::GenerateError(error::TYPES_DONT_MATCH, PrettyPrint(s), s->at_line());
 		}
 		break;
 	}
@@ -180,7 +209,7 @@ void TypeChecker::visit(ast::BinopExp *s){
 			return;
 		}else{
 			UNDEFINED();
-			error::GenerateError(error::CAN_COMPARE_INTEGERS_ONLY,PrettyPrint(s));
+			error::GenerateError(error::CAN_COMPARE_INTEGERS_ONLY,PrettyPrint(s), s->at_line());
 		}
 		break;
 	}
@@ -192,7 +221,7 @@ void TypeChecker::visit(ast::BinopExp *s){
 			return;
 		}else{
 			UNDEFINED();
-			error::GenerateError(error::OP_INT_OR_STR_ONLY, PrettyPrint(s));
+			error::GenerateError(error::OP_INT_OR_STR_ONLY, PrettyPrint(s), s->at_line());
 		}
 		break;
 	}
@@ -206,7 +235,7 @@ void TypeChecker::visit(ast::BinopExp *s){
 			return;
 		}else{
 			UNDEFINED();
-			error::GenerateError(error::OP_INT_ONLY, PrettyPrint(s));
+			error::GenerateError(error::OP_INT_ONLY, PrettyPrint(s), s->at_line());
 		}
 		break;
 	}
@@ -218,7 +247,7 @@ void TypeChecker::visit(ast::BinopExp *s){
 			return;
 		}else{
 			UNDEFINED();
-			error::GenerateError(error::OP_BOOL_ONLY, PrettyPrint(s));
+			error::GenerateError(error::OP_BOOL_ONLY, PrettyPrint(s), s->at_line());
 		}
 		break;
 	}
@@ -242,7 +271,7 @@ void TypeChecker::visit(ast::FunctionExp *s){
 		ast::Function *function = dynamic_cast<ast::Function *>(f_sym.get().get_node());
 		if(function){
 			if(function->args_->size() != s->exps_->size()){
-				error::GenerateError(error::NOT_SAME_NUMBER_PARAMETERS,s->id_);
+				error::GenerateError(error::NOT_SAME_NUMBER_PARAMETERS,s->id_, s->at_line());
 			}else{
 				auto arg_it = function->args_->begin();
 				auto exp_it = s->exps_->begin();
@@ -254,17 +283,17 @@ void TypeChecker::visit(ast::FunctionExp *s){
 					(*exp_it)->accept(this);
 					auto exp_type = get_exp_type();
 					if(arg_type != exp_type){
-						error::GenerateError(error::ARGUMENT_DONT_MATCH,
-								PrettyPrint(s));
+						error::GenerateError(error::ARGUMENT_TYPE_DONT_MATCH,
+										PrettyPrint(s), s->at_line());
 						break;
 					}
 				}
 			}
 		}else{
-			error::GenerateError(error::NOT_A_FUNCTION, s->id_);
+			error::GenerateError(error::NOT_A_FUNCTION, s->id_, s->at_line());
 		}
 	}else{
-		error::GenerateError(error::NOT_A_FUNCTION, s->id_);
+		error::GenerateError(error::NOT_A_FUNCTION, s->id_, s->at_line());
 	}
 }
 void TypeChecker::visit(ast::IntegerExp *s){
@@ -281,6 +310,7 @@ void TypeChecker::visit(ast::StringExp *s){
 }
 void TypeChecker::visit(ast::FieldValExp *s){}
 void TypeChecker::visit(ast::TupleExp *s){
+	//TODO: typecheck each field
 	set_exp_type(ast::kType::TUPLE);
 }
 

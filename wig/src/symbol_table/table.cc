@@ -81,7 +81,7 @@ Symbol Symbol::ForHtmlTag(ast::HtmlTag *tag){
 		s = SymbolType::SELECT_TAG;
 		text = tag->get_arg("name");
 	}else{
-		error::GenerateError(error::HTML_TAG_NOT_A_SYMBOL, tag->id_);
+		error::GenerateError(error::HTML_TAG_NOT_A_SYMBOL, tag->id_, tag->at_line());
 		text = "";
 	}
 	return Symbol(text, tag, ast::kType::HTML, s);
@@ -137,7 +137,8 @@ bool Table::PutSymbol(Symbol sym){
 		table_.push(scope);
 		return true;
 	}else{
-		error::GenerateError(error::SYMBOL_ALREADY_PRESENT, sym.get_name());
+		error::GenerateError(error::SYMBOL_ALREADY_PRESENT, sym.get_name(),
+												sym.get_node()->at_line());
 		return false;
 	}
 };

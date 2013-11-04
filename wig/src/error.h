@@ -51,12 +51,14 @@ DEFINE_ENUM_WITH_STRING_CONVERSIONS(ErrorCode,
 		(OP_BOOL_ONLY)
 		(NOT_A_FUNCTION)
 		(NOT_SAME_NUMBER_PARAMETERS)
-		(ARGUMENT_DONT_MATCH));
+		(ARGUMENT_TYPE_DONT_MATCH)
+		(HTML_DOESNT_EXIST)
+		(SHOULD_BE_HTML));
 
 class Error
 {
 public:
-	Error(ErrorCode code, std::string arg);
+	Error(ErrorCode code, std::string arg, int lineno);
 	~Error();
 
 	ErrorCode get_code();
@@ -64,10 +66,11 @@ public:
 private:
 	ErrorCode code_;
 	std::string arg_;
+	int lineno_;
 };
 
 bool ErrorsPresent();
-void GenerateError(ErrorCode code, std::string str);
+void GenerateError(ErrorCode code, std::string str, int lineno);
 void PrintErrors(std::ostream &out);
 
 }

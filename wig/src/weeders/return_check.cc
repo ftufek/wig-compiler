@@ -28,7 +28,7 @@ void ReturnCheck::visit(ast::Function *s) {
 	s->stm_->accept(this);
 	if(!temp_ends_with_return_ && s->type_->type_ != ast::kType::VOID){
 		is_valid_ = false;
-		error::GenerateError(error::NO_RETURN, s->id_);
+		error::GenerateError(error::NO_RETURN, s->id_, s->at_line());
 	}
 	temp_ends_with_return_ = false;
 }
@@ -44,7 +44,7 @@ void ReturnCheck::visit(ast::Session *s){
     s->stm_->accept(this);
     if(!temp_ends_with_return_){
     	is_valid_ = false;
-    	error::GenerateError(error::NO_RETURN, s->id_);
+    	error::GenerateError(error::NO_RETURN, s->id_, s->at_line());
     }
     temp_ends_with_return_ = false;
 }
