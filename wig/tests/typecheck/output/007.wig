@@ -11,13 +11,10 @@ service {
     bool b2;
     int i1;
     if (b1 && b2 || b2) { 
-      
     }
     if (b1 || i1) { 
-      
     }
     if (i1 && b2) { 
-      
     }
     exit a;
   }

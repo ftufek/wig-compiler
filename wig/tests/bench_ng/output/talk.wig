@@ -106,8 +106,7 @@ service {
     while (!correct) { 
         show Login receive [username = username, password = password];
         if (username == "Ebrahim" && password == "group5" || username == "Abbas" && password == "password" || username == "guest" && password == "guest")        correct = true;
-        if (!correct)        show plug incorrect[username = username]        
-;
+        if (!correct)        show plug incorrect[username = username];
       }
 
     quit = "no";

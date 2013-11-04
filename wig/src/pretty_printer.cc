@@ -170,11 +170,9 @@ void PrettyPrinter::visit(ast::Session *s){
 }
 
 void PrettyPrinter::visit(ast::EmptyStm *s) {
-    PrintIndent();
     if(s->print_semicol_){
+    	PrintIndent();
         ppout<<";"<<endl;
-    }else{
-    	ppout<<endl;
     }
 }
 

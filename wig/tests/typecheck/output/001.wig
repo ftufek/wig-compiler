@@ -10,14 +10,11 @@ service {
     bool d;
     string s;
     if (d) { 
-      
     }
     if (i) { 
-      
     }
     if (s) { 
       if (i) { 
-        
       }
     }
     exit a;

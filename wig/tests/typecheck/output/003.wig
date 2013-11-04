@@ -48,7 +48,6 @@ service {
     t.available = "s";
     t.available = true;
     if (i = 2) { 
-      
     }
     exit a;
   }

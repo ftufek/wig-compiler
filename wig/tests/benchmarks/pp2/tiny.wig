@@ -13,8 +13,7 @@ service {
   session Contribute () { 
     int i;
     i = 87;
-    show Welcome    
-;
+    show Welcome;
     show Pledge receive [i = contribution];
     amount = amount + i;
     exit plug Total[total = amount];

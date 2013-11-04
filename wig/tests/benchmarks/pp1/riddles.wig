@@ -148,44 +148,32 @@ service {
     int i;
     total = 0;
     while (total != 3) { 
-        show Welcome        
-;
+        show Welcome;
         show Pick receive [i = choice];
         while (i > 5 || i == 0)          show Retry receive [i = choice];
 
         if (i == 1) { 
-          show Riddle1          
-;
-          show Riddle1Sol          
-;
+          show Riddle1;
+          show Riddle1Sol;
         }
         if (i == 2) { 
-          show Riddle2          
-;
-          show Riddle2Sol          
-;
+          show Riddle2;
+          show Riddle2Sol;
         }
         if (i == 3) { 
-          show Riddle3          
-;
-          show Riddle3Sol          
-;
+          show Riddle3;
+          show Riddle3Sol;
         }
         if (i == 4) { 
-          show Riddle4          
-;
-          show Riddle4Sol          
-;
+          show Riddle4;
+          show Riddle4Sol;
         }
         if (i == 5) { 
-          show Riddle5          
-;
-          show Riddle5Sol          
-;
+          show Riddle5;
+          show Riddle5Sol;
         }
         total = total + 1;
-        show plug Trials[trials = total]        
-;
+        show plug Trials[trials = total];
         if (total == 3) { 
           exit Fin;
         }

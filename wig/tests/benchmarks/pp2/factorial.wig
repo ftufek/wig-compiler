@@ -4,8 +4,7 @@ service {
   const html right = <html><body>You calculated 10! = <[n]><br>Congratulations! You have <b>passed</b> the show inside functions test!</body></html>;
   int factorial(int n) { 
     if (n == 0) { 
-      show status      
-;
+      show status;
       return 1;
     }
     return n * factorial(n - 1);

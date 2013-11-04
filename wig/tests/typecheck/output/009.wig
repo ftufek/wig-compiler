@@ -12,14 +12,10 @@ service {
     int d;
     string b;
     int e;
-    show a    
-;
-    show b    
-;
-    show d    
-;
-    show e    
-;
+    show a;
+    show b;
+    show d;
+    show e;
     exit a;
     exit b;
     exit d;

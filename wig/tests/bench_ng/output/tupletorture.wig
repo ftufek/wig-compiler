@@ -102,14 +102,11 @@ service {
     t1 = tuple { b = true, 
       i = 87, 
       s = "foo"};
-    show plug ShowSchema1[message = "t1 is: ", b = t1.b, i = t1.i, s = t1.s]    
-;
+    show plug ShowSchema1[message = "t1 is: ", b = t1.b, i = t1.i, s = t1.s];
     t2 = t1 \+ (b, i);
-    show plug ShowSchema2[message = "t2 is: ", b = t2.b, i = t2.i]    
-;
+    show plug ShowSchema2[message = "t2 is: ", b = t2.b, i = t2.i];
     t3 = t1 \- (s);
-    show plug ShowSchema2[message = "t3 is: ", b = t3.b, i = t3.i]    
-;
+    show plug ShowSchema2[message = "t3 is: ", b = t3.b, i = t3.i];
     exit Done;
   }
   session test2 () { 
@@ -134,15 +131,12 @@ service {
     tuple Scm3 g3;
     g2 = tuple { b = true, 
       i = 87};
-    show plug ShowSchema2[message = "g2 is: ", b = g2.b, i = g2.i]    
-;
+    show plug ShowSchema2[message = "g2 is: ", b = g2.b, i = g2.i];
     g3 = tuple { b = false, 
       s = "foo"};
-    show plug ShowSchema3[message = "g3 is: ", b = g3.b, s = g3.s]    
-;
+    show plug ShowSchema3[message = "g3 is: ", b = g3.b, s = g3.s];
     g1 = g2 << g3;
-    show plug ShowSchema1[message = "g1 is: ", b = g1.b, i = g1.i, s = g1.s]    
-;
+    show plug ShowSchema1[message = "g1 is: ", b = g1.b, i = g1.i, s = g1.s];
     exit Done;
   }
 }

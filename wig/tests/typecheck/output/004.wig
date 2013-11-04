@@ -16,22 +16,16 @@ service {
     bool b;
     bool b2;
     if (b == s) { 
-      
     }
     if (b == b2) { 
-      
     }
     if (s == s2) { 
-      
     }
     if (s == b) { 
-      
     }
     if (i == i2) { 
-      
     }
     if (i != b) { 
-      
     }
     exit a;
   }

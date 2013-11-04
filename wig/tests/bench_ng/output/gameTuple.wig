@@ -198,8 +198,7 @@ service {
 
       }
 
-    show plug Done[trys = guesses]    
-;
+    show plug Done[trys = guesses];
     if (Info.record == 0 || Info.record > guesses) { 
       show plug Record[old = Info.record] receive [localholder = name];
       Info.holder = localholder;

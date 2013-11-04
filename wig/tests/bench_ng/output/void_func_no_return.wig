@@ -16,7 +16,6 @@ service {
           ------||| a	|sym_type: function	|type: void
           ------||| c	|sym_type: variable	|type: html
           ------||| --------------
-    
   }
 
   session b () { 
