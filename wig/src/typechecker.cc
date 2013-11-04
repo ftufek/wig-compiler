@@ -67,6 +67,13 @@ void TypeChecker::visit(ast::Variable *s){
 }
 void TypeChecker::visit(ast::Function *s){
 	s->stm_->accept(this);
+	auto ret_type = s->type_->type_;
+	if(ret_type != ast::kType::VOID && get_exp_type() != s->type_->type_){
+		UNDEFINED();
+		error::GenerateError(error::FUNCTION_RETURN_TYPE_DONT_MATCH, s->id_, s->at_line());
+	}else if(ret_type == ast::kType::VOID){
+		set_exp_type(ast::kType::VOID);
+	}
 }
 void TypeChecker::visit(ast::Field *s){}
 void TypeChecker::visit(ast::Empty *s){}
@@ -122,7 +129,9 @@ void TypeChecker::visit(ast::ReceiveStm *s){}
 void TypeChecker::visit(ast::ExitStm *s){
 	s->doc_->accept(this);
 }
-void TypeChecker::visit(ast::ReturnStm *s){}
+void TypeChecker::visit(ast::ReturnStm *s){
+	s->exp_->accept(this);
+}
 void TypeChecker::visit(ast::IfStm *s){
 	auto temp = get_exp_type();
 	s->condition_->accept(this);
@@ -165,7 +174,7 @@ void TypeChecker::visit(ast::LValExp *s){
 						return;
 					}
 				}
-				UNDEFINED();
+				UNDEFINED(); //in case there's no such field
 			}
 		}
 	}

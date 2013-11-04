@@ -1,0 +1,49 @@
+/* Produced errors: 
+FUNCTION_RETURN_TYPE_DONT_MATCH(not_int)
+FUNCTION_RETURN_TYPE_DONT_MATCH(not_bool)
+FUNCTION_RETURN_TYPE_DONT_MATCH(not_wow)
+FUNCTION_RETURN_TYPE_DONT_MATCH(not_ret_tuple)
+*/
+service {
+  const html a = <html></html>;
+  schema Item {
+    string name;
+    int price;
+  }
+  int not_int() { 
+    return false;
+  }
+
+  int real_int(int a) { 
+    return a;
+  }
+
+  string cool() { 
+    return "a";
+  }
+
+  bool not_bool() { 
+    return 123123;
+  }
+
+  bool wow(bool a, int b) { 
+    return a;
+  }
+
+  bool not_wow(bool a, int b) { 
+    return b;
+  }
+
+  tuple Item return_tuple() { 
+    tuple Item item;
+    return item;
+  }
+
+  tuple Item not_ret_tuple() { 
+    return false;
+  }
+
+  session cool_session () { 
+    exit a;
+  }
+}
