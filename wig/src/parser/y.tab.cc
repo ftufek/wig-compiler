@@ -2490,7 +2490,7 @@ yyreduce:
   case 123:
 /* Line 1787 of yacc.c  */
 #line 411 "wig.y"
-    { (yyval.expList) = new std::list<ast::Exp *>{new ast::Exp()}; }
+    { (yyval.expList) = new std::list<ast::Exp *>{}; }
     break;
 
   case 124:

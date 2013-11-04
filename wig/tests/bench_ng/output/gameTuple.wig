@@ -1,10 +1,3 @@
-/* Produced errors: 
-OP_INT_ONLY(25173 * seed)
-OP_INT_OR_STR_ONLY(25173 * seed + 13849)
-OP_INT_ONLY(25173 * seed + 13849 % 65536)
-FUNCTION_RETURN_TYPE_DONT_MATCH(nextRandom)
-NOT_SAME_NUMBER_PARAMETERS(nextRandom)
-*/
 service {
           ------||| Symbol table: 
           ------||| Again	|sym_type: variable	|type: html
@@ -131,12 +124,14 @@ service {
           ------||| Finish	|sym_type: variable	|type: html
           ------||| GameSeeded	|sym_type: variable	|type: html
           ------||| GetSeed	|sym_type: variable	|type: html
+          ------||| Info	|sym_type: variable	|type: tuple
           ------||| Init	|sym_type: variable	|type: html
           ------||| List	|sym_type: variable	|type: html
           ------||| Record	|sym_type: variable	|type: html
           ------||| Retry	|sym_type: variable	|type: html
           ------||| infoS	|sym_type: schema	|type: schema
           ------||| nextRandom	|sym_type: function	|type: int
+          ------||| seed	|sym_type: variable	|type: int
           ------||| --------------
     int current;
     seed = 25173 * seed + 13849 % 65536;

@@ -2,6 +2,7 @@
 NO_RETURN(a)
 SYMBOL_ALREADY_PRESENT(a)
 SYMBOL_ALREADY_PRESENT(a)
+FUNCTION_RETURN_TYPE_DONT_MATCH(a)
 */
 service {
 const html a = <html></html>;

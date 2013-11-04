@@ -16,8 +16,8 @@ void SymTabler::visit(ast::Service *s){
 	sym_table_.Scope();
 	s->htmls_->accept(this);
 	s->schemas_->accept(this);
-	s->functions_->accept(this);
 	s->global_variables_->accept(this);
+	s->functions_->accept(this);
 	s->sessions_->accept(this);
 	s->set_sym_table(new st::Table(sym_table_));
 }

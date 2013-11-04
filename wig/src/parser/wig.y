@@ -408,7 +408,7 @@ fieldvalue: tID '=' exp
     { $$ = new ast::FieldValExp(*$1, $3); delete($1); }
 
 exps: /* empty */
-    { $$ = new std::list<ast::Exp *>{new ast::Exp()}; }
+    { $$ = new std::list<ast::Exp *>{}; }
     | neexps
     { $$ = $1; }
 
