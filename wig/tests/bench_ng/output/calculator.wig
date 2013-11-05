@@ -1,19 +1,5 @@
 service {
-          ------||| Symbol table: 
-          ------||| Ans	|sym_type: variable	|type: int
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Calculate	|sym_type: session	|type: void
-          ------||| Return	|sym_type: variable	|type: html
-          ------||| Setup	|sym_type: variable	|type: html
-          ------||| --------------
-  const html Setup = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "int1"	|sym_type: input_tag	|type: html
-          ------||| "int2"	|sym_type: input_tag	|type: html
-          ------||| "operator"	|sym_type: input_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Setup = <html> <body>
     <h1>A Simple Plus Minus Calculator</h1>
     <p>
     Enter your operator (+ or -):
@@ -25,13 +11,7 @@ service {
     Enter the second integer (-99 to 999):
     <input name="int2" size=3 type="text">
   </body> </html>;
-  const html Return = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "YorN"	|sym_type: input_tag	|type: html
-          ------||| Ans	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Return = <html> <body>
     <h1>The Answer</h1>
     <p>
     <b>Your answer is : <[Ans]> </b>
@@ -39,46 +19,17 @@ service {
     Would you like to do another calculation (yes or no)?
     <input name="YorN" size=5 type="text">
   </body> </html>;
-  const html ByeBye = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html> <body>
+  const html ByeBye = <html> <body>
     <h1>Thank you for using this calculator</h1>
   </body> </html>;
   int Ans;
   session Calculate () { 
-          ------||| Symbol table: 
-          ------||| YorN	|sym_type: variable	|type: string
-          ------||| int1	|sym_type: variable	|type: int
-          ------||| int2	|sym_type: variable	|type: int
-          ------||| operator	|sym_type: variable	|type: string
-          ------||| --------------
-          ------||| Ans	|sym_type: variable	|type: int
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Calculate	|sym_type: session	|type: void
-          ------||| Return	|sym_type: variable	|type: html
-          ------||| Setup	|sym_type: variable	|type: html
-          ------||| --------------
     string YorN;
     int int1;
     int int2;
     string operator;
     YorN = "";
     while (YorN != "no") { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| YorN	|sym_type: variable	|type: string
-          ------||| int1	|sym_type: variable	|type: int
-          ------||| int2	|sym_type: variable	|type: int
-          ------||| operator	|sym_type: variable	|type: string
-          ------||| --------------
-          ------||| Ans	|sym_type: variable	|type: int
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Calculate	|sym_type: session	|type: void
-          ------||| Return	|sym_type: variable	|type: html
-          ------||| Setup	|sym_type: variable	|type: html
-          ------||| --------------
         show Setup receive [operator = operator, int1 = int1, int2 = int2];
         if (operator == "+")        Ans = int1 + int2;
         if (operator == "-")        Ans = int1 - int2;

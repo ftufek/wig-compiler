@@ -1,105 +1,39 @@
 service {
-          ------||| Symbol table: 
-          ------||| Again	|sym_type: variable	|type: html
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| Finish	|sym_type: variable	|type: html
-          ------||| GameSeeded	|sym_type: variable	|type: html
-          ------||| GetSeed	|sym_type: variable	|type: html
-          ------||| HiScore	|sym_type: session	|type: void
-          ------||| Init	|sym_type: variable	|type: html
-          ------||| List	|sym_type: variable	|type: html
-          ------||| Play	|sym_type: session	|type: void
-          ------||| Record	|sym_type: variable	|type: html
-          ------||| Retry	|sym_type: variable	|type: html
-          ------||| Seed	|sym_type: session	|type: void
-          ------||| holder	|sym_type: variable	|type: string
-          ------||| nextRandom	|sym_type: function	|type: int
-          ------||| plays	|sym_type: variable	|type: int
-          ------||| record	|sym_type: variable	|type: int
-          ------||| seed	|sym_type: variable	|type: int
-          ------||| --------------
-  const html GetSeed = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "seed"	|sym_type: input_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html GetSeed = <html> <body>
     Please enter an integer seed for the random number generator: 
     <input name="seed" size=5 type="text">
   </body> </html>;
-  const html GameSeeded = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html> <body>
+  const html GameSeeded = <html> <body>
     Ok, now the game can proceed, the generator is seeded. 
   </body> </html>;
-  const html Init = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "guess"	|sym_type: input_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Init = <html> <body>
     Please guess a number between 0 and 99:
     <input name="guess" size=2 type="text">
   </body> </html>;
-  const html Retry = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "guess"	|sym_type: input_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Retry = <html> <body>
     That number is too large!
     <p>
     Please keep your guess between 0 and 99:
     <input name="guess" size=2 type="text">
   </body> </html>;
-  const html Again = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "guess"	|sym_type: input_tag	|type: html
-          ------||| correction	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Again = <html> <body>
     That is not correct. Try a <[correction]> number:
     <input name="guess" size=2 type="text">
   </body> </html>;
-  const html Done = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| trys	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Done = <html> <body>
     You got it, using <[trys]> guesses.
   </body> </html>;
-  const html Record = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "name"	|sym_type: input_tag	|type: html
-          ------||| old	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Record = <html> <body>
     That makes you the new record holder,
     beating the old record of <[old]> guesses.
     <p>
     Please enter your name for the hi-score list
     <input name="name" size=20 type="text">
   </body> </html>;
-  const html Finish = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html> <body>
+  const html Finish = <html> <body>
     Thanks for playing this exciting game.
   </body> </html>;
-  const html List = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| holder	|sym_type: hole_tag	|type: html
-          ------||| plays	|sym_type: hole_tag	|type: html
-          ------||| record	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html List = <html> <body>
     In <[plays]> plays of this game, the record
     holder is <[holder]> with <[record]> guesses.
   </body> </html>;
@@ -108,75 +42,16 @@ service {
   int seed;
   string holder;
   int nextRandom() { 
-          ------||| Symbol table: 
-          ------||| current	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| Again	|sym_type: variable	|type: html
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| Finish	|sym_type: variable	|type: html
-          ------||| GameSeeded	|sym_type: variable	|type: html
-          ------||| GetSeed	|sym_type: variable	|type: html
-          ------||| Init	|sym_type: variable	|type: html
-          ------||| List	|sym_type: variable	|type: html
-          ------||| Record	|sym_type: variable	|type: html
-          ------||| Retry	|sym_type: variable	|type: html
-          ------||| holder	|sym_type: variable	|type: string
-          ------||| nextRandom	|sym_type: function	|type: int
-          ------||| plays	|sym_type: variable	|type: int
-          ------||| record	|sym_type: variable	|type: int
-          ------||| seed	|sym_type: variable	|type: int
-          ------||| --------------
     int current;
     seed = 25173 * seed + 13849 % 65536;
     return seed;
   }
 
   session Seed () { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| Again	|sym_type: variable	|type: html
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| Finish	|sym_type: variable	|type: html
-          ------||| GameSeeded	|sym_type: variable	|type: html
-          ------||| GetSeed	|sym_type: variable	|type: html
-          ------||| Init	|sym_type: variable	|type: html
-          ------||| List	|sym_type: variable	|type: html
-          ------||| Record	|sym_type: variable	|type: html
-          ------||| Retry	|sym_type: variable	|type: html
-          ------||| Seed	|sym_type: session	|type: void
-          ------||| holder	|sym_type: variable	|type: string
-          ------||| nextRandom	|sym_type: function	|type: int
-          ------||| plays	|sym_type: variable	|type: int
-          ------||| record	|sym_type: variable	|type: int
-          ------||| seed	|sym_type: variable	|type: int
-          ------||| --------------
     show GetSeed receive [seed = seed];
     exit GameSeeded;
   }
   session Play () { 
-          ------||| Symbol table: 
-          ------||| guess	|sym_type: variable	|type: int
-          ------||| guesses	|sym_type: variable	|type: int
-          ------||| localholder	|sym_type: variable	|type: string
-          ------||| number	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| Again	|sym_type: variable	|type: html
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| Finish	|sym_type: variable	|type: html
-          ------||| GameSeeded	|sym_type: variable	|type: html
-          ------||| GetSeed	|sym_type: variable	|type: html
-          ------||| Init	|sym_type: variable	|type: html
-          ------||| List	|sym_type: variable	|type: html
-          ------||| Play	|sym_type: session	|type: void
-          ------||| Record	|sym_type: variable	|type: html
-          ------||| Retry	|sym_type: variable	|type: html
-          ------||| Seed	|sym_type: session	|type: void
-          ------||| holder	|sym_type: variable	|type: string
-          ------||| nextRandom	|sym_type: function	|type: int
-          ------||| plays	|sym_type: variable	|type: int
-          ------||| record	|sym_type: variable	|type: int
-          ------||| seed	|sym_type: variable	|type: int
-          ------||| --------------
     int number;
     int guesses;
     int guess;
@@ -188,30 +63,6 @@ service {
     while (guess > 99)      show Retry receive [guess = guess];
 
     while (guess != number) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| guess	|sym_type: variable	|type: int
-          ------||| guesses	|sym_type: variable	|type: int
-          ------||| localholder	|sym_type: variable	|type: string
-          ------||| number	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| Again	|sym_type: variable	|type: html
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| Finish	|sym_type: variable	|type: html
-          ------||| GameSeeded	|sym_type: variable	|type: html
-          ------||| GetSeed	|sym_type: variable	|type: html
-          ------||| Init	|sym_type: variable	|type: html
-          ------||| List	|sym_type: variable	|type: html
-          ------||| Play	|sym_type: session	|type: void
-          ------||| Record	|sym_type: variable	|type: html
-          ------||| Retry	|sym_type: variable	|type: html
-          ------||| Seed	|sym_type: session	|type: void
-          ------||| holder	|sym_type: variable	|type: string
-          ------||| nextRandom	|sym_type: function	|type: int
-          ------||| plays	|sym_type: variable	|type: int
-          ------||| record	|sym_type: variable	|type: int
-          ------||| seed	|sym_type: variable	|type: int
-          ------||| --------------
         guesses = guesses + 1;
         if (guess > number)        show plug Again[correction = "lower"] receive [guess = guess];
         else        show plug Again[correction = "higher"] receive [guess = guess];
@@ -221,30 +72,6 @@ service {
 
     show plug Done[trys = guesses];
     if (record == 0 || record > guesses) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| guess	|sym_type: variable	|type: int
-          ------||| guesses	|sym_type: variable	|type: int
-          ------||| localholder	|sym_type: variable	|type: string
-          ------||| number	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| Again	|sym_type: variable	|type: html
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| Finish	|sym_type: variable	|type: html
-          ------||| GameSeeded	|sym_type: variable	|type: html
-          ------||| GetSeed	|sym_type: variable	|type: html
-          ------||| Init	|sym_type: variable	|type: html
-          ------||| List	|sym_type: variable	|type: html
-          ------||| Play	|sym_type: session	|type: void
-          ------||| Record	|sym_type: variable	|type: html
-          ------||| Retry	|sym_type: variable	|type: html
-          ------||| Seed	|sym_type: session	|type: void
-          ------||| holder	|sym_type: variable	|type: string
-          ------||| nextRandom	|sym_type: function	|type: int
-          ------||| plays	|sym_type: variable	|type: int
-          ------||| record	|sym_type: variable	|type: int
-          ------||| seed	|sym_type: variable	|type: int
-          ------||| --------------
       show plug Record[old = record] receive [localholder = name];
       holder = localholder;
       record = guesses;
@@ -252,26 +79,6 @@ service {
     exit Finish;
   }
   session HiScore () { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| Again	|sym_type: variable	|type: html
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| Finish	|sym_type: variable	|type: html
-          ------||| GameSeeded	|sym_type: variable	|type: html
-          ------||| GetSeed	|sym_type: variable	|type: html
-          ------||| HiScore	|sym_type: session	|type: void
-          ------||| Init	|sym_type: variable	|type: html
-          ------||| List	|sym_type: variable	|type: html
-          ------||| Play	|sym_type: session	|type: void
-          ------||| Record	|sym_type: variable	|type: html
-          ------||| Retry	|sym_type: variable	|type: html
-          ------||| Seed	|sym_type: session	|type: void
-          ------||| holder	|sym_type: variable	|type: string
-          ------||| nextRandom	|sym_type: function	|type: int
-          ------||| plays	|sym_type: variable	|type: int
-          ------||| record	|sym_type: variable	|type: int
-          ------||| seed	|sym_type: variable	|type: int
-          ------||| --------------
     exit plug List[plays = plays, holder = holder, record = record];
   }
 }

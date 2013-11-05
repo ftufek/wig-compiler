@@ -2,38 +2,14 @@
 SYMBOL_ALREADY_PRESENT(a)
 */
 service {
-          ------||| Symbol table: 
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
-  const html a = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html></html>;
+  const html a = <html></html>;
   session a () { 
-          ------||| Symbol table: 
-          ------||| noreturn	|sym_type: variable	|type: bool
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
     bool noreturn;
     if (true) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| noreturn	|sym_type: variable	|type: bool
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
       noreturn = true;
       return 2;
     }
     else { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| noreturn	|sym_type: variable	|type: bool
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
       return 1;
     }
   }

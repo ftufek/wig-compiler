@@ -9,78 +9,23 @@ ARGUMENT_TYPE_DONT_MATCH(fc("true", "a"))
 ARGUMENT_TYPE_DONT_MATCH(concatenate(1, 1))
 */
 service {
-          ------||| Symbol table: 
-          ------||| a	|sym_type: variable	|type: html
-          ------||| concatenate	|sym_type: function	|type: string
-          ------||| fa	|sym_type: function	|type: void
-          ------||| fb	|sym_type: function	|type: int
-          ------||| fc	|sym_type: function	|type: bool
-          ------||| test	|sym_type: session	|type: void
-          ------||| --------------
-  const html a = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html></html>;
+  const html a = <html></html>;
   void fa(int b, bool c) { 
-          ------||| Symbol table: 
-          ------||| b	|sym_type: argument	|type: int
-          ------||| c	|sym_type: argument	|type: bool
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| fa	|sym_type: function	|type: void
-          ------||| --------------
   }
 
   int fb(int b, int i2) { 
-          ------||| Symbol table: 
-          ------||| b	|sym_type: argument	|type: int
-          ------||| i2	|sym_type: argument	|type: int
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| fa	|sym_type: function	|type: void
-          ------||| fb	|sym_type: function	|type: int
-          ------||| --------------
     return i2;
   }
 
   bool fc(bool d, string a) { 
-          ------||| Symbol table: 
-          ------||| a	|sym_type: argument	|type: string
-          ------||| d	|sym_type: argument	|type: bool
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| fa	|sym_type: function	|type: void
-          ------||| fb	|sym_type: function	|type: int
-          ------||| fc	|sym_type: function	|type: bool
-          ------||| --------------
     return a == a;
   }
 
   string concatenate(string a, string b) { 
-          ------||| Symbol table: 
-          ------||| a	|sym_type: argument	|type: string
-          ------||| b	|sym_type: argument	|type: string
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| concatenate	|sym_type: function	|type: string
-          ------||| fa	|sym_type: function	|type: void
-          ------||| fb	|sym_type: function	|type: int
-          ------||| fc	|sym_type: function	|type: bool
-          ------||| --------------
     return a + b;
   }
 
   session test () { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| concatenate	|sym_type: function	|type: string
-          ------||| fa	|sym_type: function	|type: void
-          ------||| fb	|sym_type: function	|type: int
-          ------||| fc	|sym_type: function	|type: bool
-          ------||| test	|sym_type: session	|type: void
-          ------||| --------------
     fa();
     inexistent_func();
     inexistent_func2(2);

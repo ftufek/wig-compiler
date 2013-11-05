@@ -14,38 +14,13 @@ TYPES_DONT_MATCH(t.available = "s")
 SHOULD_BE_BOOL(i = 2)
 */
 service {
-          ------||| Symbol table: 
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
-  const html a = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html></html>;
+  const html a = <html></html>;
   schema Item {
-------- Symbols inside the schema: 
-          ------||| Symbol table: 
-          ------||| available	|sym_type: field	|type: bool
-          ------||| name	|sym_type: field	|type: string
-          ------||| price	|sym_type: field	|type: int
-          ------||| --------------
     string name;
     int price;
     bool available;
   }
   session b () { 
-          ------||| Symbol table: 
-          ------||| b	|sym_type: variable	|type: bool
-          ------||| i	|sym_type: variable	|type: int
-          ------||| s	|sym_type: variable	|type: string
-          ------||| t	|sym_type: variable	|type: tuple
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
     tuple Item t;
     int i;
     bool b;
@@ -73,17 +48,6 @@ service {
     t.available = "s";
     t.available = true;
     if (i = 2) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| b	|sym_type: variable	|type: bool
-          ------||| i	|sym_type: variable	|type: int
-          ------||| s	|sym_type: variable	|type: string
-          ------||| t	|sym_type: variable	|type: tuple
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
     }
     exit a;
   }

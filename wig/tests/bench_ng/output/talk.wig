@@ -1,22 +1,5 @@
 service {
-          ------||| Symbol table: 
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Login	|sym_type: variable	|type: html
-          ------||| Talk	|sym_type: session	|type: void
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| connections	|sym_type: variable	|type: int
-          ------||| incorrect	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| --------------
-  const html Login = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "password"	|sym_type: input_tag	|type: html
-          ------||| "username"	|sym_type: input_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Login = <html> <body>
     <h1>Welcome to The Talk Room</h1>
     <p>
     Enter your user name:
@@ -25,25 +8,11 @@ service {
     Enter your password:
     <input name="password" size=25 type="text">
   </body> </html>;
-  const html incorrect = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| username	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html incorrect = <html> <body>
     <h1>I'm sorry <[username]>, permission denied! </h1>
 
   </body> </html>;
-  const html Update = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "msg"	|sym_type: input_tag	|type: html
-          ------||| "quit"	|sym_type: input_tag	|type: html
-          ------||| msg0	|sym_type: hole_tag	|type: html
-          ------||| msg1	|sym_type: hole_tag	|type: html
-          ------||| msg2	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Update = <html> <body>
     <h1>The Talk Room Service</h1>
     <hr>
     <b>Messages so far:</b>
@@ -58,14 +27,7 @@ service {
     <p>
     <input name="quit" type="radio" value="yes"> Quit now
   </body> </html>;
-  const html ByeBye = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| conns	|sym_type: hole_tag	|type: html
-          ------||| msgs	|sym_type: hole_tag	|type: html
-          ------||| username	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html ByeBye = <html> <body>
     <h1>Thanks for visiting, <[username]>. </h1>
     There have been <[conns]> connections so far.
      <p>
@@ -76,24 +38,6 @@ service {
   string msg2;
   int connections;
   session Talk () { 
-          ------||| Symbol table: 
-          ------||| correct	|sym_type: variable	|type: bool
-          ------||| msg	|sym_type: variable	|type: string
-          ------||| password	|sym_type: variable	|type: string
-          ------||| quit	|sym_type: variable	|type: string
-          ------||| username	|sym_type: variable	|type: string
-          ------||| written	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Login	|sym_type: variable	|type: html
-          ------||| Talk	|sym_type: session	|type: void
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| connections	|sym_type: variable	|type: int
-          ------||| incorrect	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| --------------
     string username;
     string password;
     string msg;
@@ -104,25 +48,6 @@ service {
     correct = false;
     written = 0;
     while (!correct) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| correct	|sym_type: variable	|type: bool
-          ------||| msg	|sym_type: variable	|type: string
-          ------||| password	|sym_type: variable	|type: string
-          ------||| quit	|sym_type: variable	|type: string
-          ------||| username	|sym_type: variable	|type: string
-          ------||| written	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Login	|sym_type: variable	|type: html
-          ------||| Talk	|sym_type: session	|type: void
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| connections	|sym_type: variable	|type: int
-          ------||| incorrect	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| --------------
         show Login receive [username = username, password = password];
         if (username == "Ebrahim" && password == "group5" || username == "Abbas" && password == "password" || username == "guest" && password == "guest")        correct = true;
         if (!correct)        show plug incorrect[username = username];
@@ -130,47 +55,8 @@ service {
 
     quit = "no";
     while (quit != "yes") { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| correct	|sym_type: variable	|type: bool
-          ------||| msg	|sym_type: variable	|type: string
-          ------||| password	|sym_type: variable	|type: string
-          ------||| quit	|sym_type: variable	|type: string
-          ------||| username	|sym_type: variable	|type: string
-          ------||| written	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Login	|sym_type: variable	|type: html
-          ------||| Talk	|sym_type: session	|type: void
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| connections	|sym_type: variable	|type: int
-          ------||| incorrect	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| --------------
         show plug Update[msg0 = msg0, msg1 = msg1, msg2 = msg2] receive [msg = msg, quit = quit];
         if (msg != "") { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| --------------
-          ------||| correct	|sym_type: variable	|type: bool
-          ------||| msg	|sym_type: variable	|type: string
-          ------||| password	|sym_type: variable	|type: string
-          ------||| quit	|sym_type: variable	|type: string
-          ------||| username	|sym_type: variable	|type: string
-          ------||| written	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Login	|sym_type: variable	|type: html
-          ------||| Talk	|sym_type: session	|type: void
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| connections	|sym_type: variable	|type: int
-          ------||| incorrect	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| --------------
           written = written + 1;
           msg0 = msg1;
           msg1 = msg2;

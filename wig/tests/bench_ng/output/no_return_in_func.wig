@@ -5,27 +5,11 @@ NO_RETURN(a)
 FUNCTION_RETURN_TYPE_DONT_MATCH(a)
 */
 service {
-          ------||| Symbol table: 
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
-  const html a = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html></html>;
+  const html a = <html></html>;
   int a(bool a) { 
-          ------||| Symbol table: 
-          ------||| a	|sym_type: argument	|type: bool
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
   }
 
   session a () { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
     return 1 + 1;
   }
 }

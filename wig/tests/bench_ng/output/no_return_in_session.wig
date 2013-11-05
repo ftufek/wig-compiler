@@ -3,19 +3,8 @@ SYMBOL_ALREADY_PRESENT(a)
 NO_RETURN(a)
 */
 service {
-          ------||| Symbol table: 
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
-  const html a = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html><div></div></html>;
+  const html a = <html><div></div></html>;
   session a () { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| --------------
     return 1 + 1;
     ;
   }

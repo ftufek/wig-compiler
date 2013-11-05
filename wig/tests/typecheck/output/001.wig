@@ -4,70 +4,17 @@ SHOULD_BE_BOOL(s)
 SHOULD_BE_BOOL(i)
 */
 service {
-          ------||| Symbol table: 
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
-  const html a = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html></html>;
+  const html a = <html></html>;
   session b () { 
-          ------||| Symbol table: 
-          ------||| d	|sym_type: variable	|type: bool
-          ------||| i	|sym_type: variable	|type: int
-          ------||| s	|sym_type: variable	|type: string
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
     int i;
     bool d;
     string s;
     if (d) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| d	|sym_type: variable	|type: bool
-          ------||| i	|sym_type: variable	|type: int
-          ------||| s	|sym_type: variable	|type: string
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
     }
     if (i) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| d	|sym_type: variable	|type: bool
-          ------||| i	|sym_type: variable	|type: int
-          ------||| s	|sym_type: variable	|type: string
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
     }
     if (s) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| d	|sym_type: variable	|type: bool
-          ------||| i	|sym_type: variable	|type: int
-          ------||| s	|sym_type: variable	|type: string
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
       if (i) { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| --------------
-          ------||| d	|sym_type: variable	|type: bool
-          ------||| i	|sym_type: variable	|type: int
-          ------||| s	|sym_type: variable	|type: string
-          ------||| --------------
-          ------||| a	|sym_type: variable	|type: html
-          ------||| b	|sym_type: session	|type: void
-          ------||| --------------
       }
     }
     exit a;

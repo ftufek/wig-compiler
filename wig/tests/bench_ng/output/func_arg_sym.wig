@@ -1,32 +1,10 @@
 service {
-          ------||| Symbol table: 
-          ------||| a	|sym_type: function	|type: int
-          ------||| b	|sym_type: session	|type: void
-          ------||| d	|sym_type: variable	|type: html
-          ------||| --------------
-  const html d = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html></html>;
+  const html d = <html></html>;
   int a(int a, bool b) { 
-          ------||| Symbol table: 
-          ------||| a	|sym_type: argument	|type: int
-          ------||| b	|sym_type: argument	|type: bool
-          ------||| --------------
-          ------||| a	|sym_type: function	|type: int
-          ------||| d	|sym_type: variable	|type: html
-          ------||| --------------
     return a + 2;
   }
 
   session b () { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| a	|sym_type: function	|type: int
-          ------||| b	|sym_type: session	|type: void
-          ------||| d	|sym_type: variable	|type: html
-          ------||| --------------
     exit d;
   }
 }

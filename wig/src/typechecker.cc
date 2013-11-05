@@ -162,7 +162,14 @@ void TypeChecker::visit(ast::IfStm *s){
 		s->else_stm_->accept(this);
 	}
 }
-void TypeChecker::visit(ast::WhileStm *s){}
+void TypeChecker::visit(ast::WhileStm *s){
+	UNDEFINED();
+	s->condition_->accept(this);
+	if(get_exp_type() != ast::kType::BOOL){
+		error::GenerateError(error::SHOULD_BE_BOOL, PrettyPrint(s->condition_),
+											s->condition_->at_line());
+	}
+}
 void TypeChecker::visit(ast::ExpStm *s){
 	s->exp_->accept(this);
 }
@@ -287,7 +294,27 @@ void TypeChecker::visit(ast::BinopExp *s){
 		break;
 	}
 }
-void TypeChecker::visit(ast::UnopExp *s){}
+void TypeChecker::visit(ast::UnopExp *s){
+	switch(s->type_){
+	case ast::kUnopType::LogicNegate:
+		s->exp_->accept(this);
+		if(get_exp_type() != ast::kType::BOOL){
+			error::GenerateError(error::SHOULD_BE_BOOL, PrettyPrint(s->exp_),
+										s->at_line());
+		}
+		break;
+
+	case ast::kUnopType::Minus:
+		s->exp_->accept(this);
+		if(get_exp_type() != ast::kType::INT){
+			error::GenerateError(error::OP_INT_ONLY, PrettyPrint(s->exp_), s->at_line());
+		}
+		break;
+
+	default:
+		break;
+	}
+}
 void TypeChecker::visit(ast::TupleopExp *s){
 	//TODO: typecheck KEEP and DISCARD
 }

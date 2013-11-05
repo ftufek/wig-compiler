@@ -1,39 +1,10 @@
 service {
-          ------||| Symbol table: 
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Chat	|sym_type: session	|type: void
-          ------||| Logon	|sym_type: variable	|type: html
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| msg3	|sym_type: variable	|type: string
-          ------||| msg4	|sym_type: variable	|type: string
-          ------||| msg5	|sym_type: variable	|type: string
-          ------||| --------------
-  const html Logon = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "name"	|sym_type: input_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Logon = <html> <body>
     <h1>Welcome to The Chat Room</h1>
     Please enter your on-line name:
     <input name="name" size=25 type="text">
   </body> </html>;
-  const html Update = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| "msg"	|sym_type: input_tag	|type: html
-          ------||| "quit"	|sym_type: input_tag	|type: html
-          ------||| msg0	|sym_type: hole_tag	|type: html
-          ------||| msg1	|sym_type: hole_tag	|type: html
-          ------||| msg2	|sym_type: hole_tag	|type: html
-          ------||| msg3	|sym_type: hole_tag	|type: html
-          ------||| msg4	|sym_type: hole_tag	|type: html
-          ------||| msg5	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Update = <html> <body>
     <h1>The Chat Room Service</h1>
     <hr>
     <b>Messages so far:</b>
@@ -48,13 +19,7 @@ service {
     <p>
     <input name="quit" type="radio" value="yes"> Quit now
   </body> </html>;
-  const html ByeBye = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| conns	|sym_type: hole_tag	|type: html
-          ------||| msgs	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html ByeBye = <html> <body>
     <h1>Thanks for using The Chat Room</h1>
     You made <[conns]> connections
     and wrote <[msgs]> messages.
@@ -66,24 +31,6 @@ service {
   string msg4;
   string msg5;
   session Chat () { 
-          ------||| Symbol table: 
-          ------||| connections	|sym_type: variable	|type: int
-          ------||| msg	|sym_type: variable	|type: string
-          ------||| name	|sym_type: variable	|type: string
-          ------||| quit	|sym_type: variable	|type: string
-          ------||| written	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Chat	|sym_type: session	|type: void
-          ------||| Logon	|sym_type: variable	|type: html
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| msg3	|sym_type: variable	|type: string
-          ------||| msg4	|sym_type: variable	|type: string
-          ------||| msg5	|sym_type: variable	|type: string
-          ------||| --------------
     string name;
     string msg;
     string quit;
@@ -94,48 +41,9 @@ service {
     quit = "no";
     show Logon receive [name = name];
     while (quit != "yes") { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| connections	|sym_type: variable	|type: int
-          ------||| msg	|sym_type: variable	|type: string
-          ------||| name	|sym_type: variable	|type: string
-          ------||| quit	|sym_type: variable	|type: string
-          ------||| written	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Chat	|sym_type: session	|type: void
-          ------||| Logon	|sym_type: variable	|type: html
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| msg3	|sym_type: variable	|type: string
-          ------||| msg4	|sym_type: variable	|type: string
-          ------||| msg5	|sym_type: variable	|type: string
-          ------||| --------------
         show plug Update[msg0 = msg0, msg1 = msg1, msg2 = msg2, msg3 = msg3, msg4 = msg4, msg5 = msg5] receive [msg = msg, quit = quit];
         connections = connections + 1;
         if (msg != "") { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| --------------
-          ------||| connections	|sym_type: variable	|type: int
-          ------||| msg	|sym_type: variable	|type: string
-          ------||| name	|sym_type: variable	|type: string
-          ------||| quit	|sym_type: variable	|type: string
-          ------||| written	|sym_type: variable	|type: int
-          ------||| --------------
-          ------||| ByeBye	|sym_type: variable	|type: html
-          ------||| Chat	|sym_type: session	|type: void
-          ------||| Logon	|sym_type: variable	|type: html
-          ------||| Update	|sym_type: variable	|type: html
-          ------||| msg0	|sym_type: variable	|type: string
-          ------||| msg1	|sym_type: variable	|type: string
-          ------||| msg2	|sym_type: variable	|type: string
-          ------||| msg3	|sym_type: variable	|type: string
-          ------||| msg4	|sym_type: variable	|type: string
-          ------||| msg5	|sym_type: variable	|type: string
-          ------||| --------------
           written = written + 1;
           msg0 = msg1;
           msg1 = msg2;

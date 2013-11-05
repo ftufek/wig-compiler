@@ -1,27 +1,11 @@
 service {
-          ------||| Symbol table: 
-          ------||| Access	|sym_type: session	|type: void
-          ------||| Nikolaj	|sym_type: variable	|type: html
-          ------||| counter	|sym_type: variable	|type: int
-          ------||| --------------
-  const html Nikolaj = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| no	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html Nikolaj = <html> <body>
      <img src="http://www.brics.dk/~mis/babybath.jpg">
      <p>
      <i>You are visitor number <[no]></i>
   </body> </html>;
   int counter;
   session Access () { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| Access	|sym_type: session	|type: void
-          ------||| Nikolaj	|sym_type: variable	|type: html
-          ------||| counter	|sym_type: variable	|type: int
-          ------||| --------------
     counter = counter + 1;
     exit plug Nikolaj[no = counter];
   }

@@ -5,163 +5,45 @@ FUNCTION_RETURN_TYPE_DONT_MATCH(not_wow)
 FUNCTION_RETURN_TYPE_DONT_MATCH(not_ret_tuple)
 */
 service {
-          ------||| Symbol table: 
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| cool	|sym_type: function	|type: string
-          ------||| cool_session	|sym_type: session	|type: void
-          ------||| not_bool	|sym_type: function	|type: bool
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| not_ret_tuple	|sym_type: function	|type: tuple
-          ------||| not_wow	|sym_type: function	|type: bool
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| return_tuple	|sym_type: function	|type: tuple
-          ------||| wow	|sym_type: function	|type: bool
-          ------||| --------------
-  const html a = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html></html>;
+  const html a = <html></html>;
   schema Item {
-------- Symbols inside the schema: 
-          ------||| Symbol table: 
-          ------||| name	|sym_type: field	|type: string
-          ------||| price	|sym_type: field	|type: int
-          ------||| --------------
     string name;
     int price;
   }
   int not_int() { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| --------------
     return false;
   }
 
   int real_int(int a) { 
-          ------||| Symbol table: 
-          ------||| a	|sym_type: argument	|type: int
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| --------------
     return a;
   }
 
   string cool() { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| cool	|sym_type: function	|type: string
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| --------------
     return "a";
   }
 
   bool not_bool() { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| cool	|sym_type: function	|type: string
-          ------||| not_bool	|sym_type: function	|type: bool
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| --------------
     return 123123;
   }
 
   bool wow(bool a, int b) { 
-          ------||| Symbol table: 
-          ------||| a	|sym_type: argument	|type: bool
-          ------||| b	|sym_type: argument	|type: int
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| cool	|sym_type: function	|type: string
-          ------||| not_bool	|sym_type: function	|type: bool
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| wow	|sym_type: function	|type: bool
-          ------||| --------------
     return a;
   }
 
   bool not_wow(bool a, int b) { 
-          ------||| Symbol table: 
-          ------||| a	|sym_type: argument	|type: bool
-          ------||| b	|sym_type: argument	|type: int
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| cool	|sym_type: function	|type: string
-          ------||| not_bool	|sym_type: function	|type: bool
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| not_wow	|sym_type: function	|type: bool
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| wow	|sym_type: function	|type: bool
-          ------||| --------------
     return b;
   }
 
   tuple Item return_tuple() { 
-          ------||| Symbol table: 
-          ------||| item	|sym_type: variable	|type: tuple
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| cool	|sym_type: function	|type: string
-          ------||| not_bool	|sym_type: function	|type: bool
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| not_wow	|sym_type: function	|type: bool
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| return_tuple	|sym_type: function	|type: tuple
-          ------||| wow	|sym_type: function	|type: bool
-          ------||| --------------
     tuple Item item;
     return item;
   }
 
   tuple Item not_ret_tuple() { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| cool	|sym_type: function	|type: string
-          ------||| not_bool	|sym_type: function	|type: bool
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| not_ret_tuple	|sym_type: function	|type: tuple
-          ------||| not_wow	|sym_type: function	|type: bool
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| return_tuple	|sym_type: function	|type: tuple
-          ------||| wow	|sym_type: function	|type: bool
-          ------||| --------------
     return false;
   }
 
   session cool_session () { 
-          ------||| Symbol table: 
-          ------||| --------------
-          ------||| Item	|sym_type: schema	|type: schema
-          ------||| a	|sym_type: variable	|type: html
-          ------||| cool	|sym_type: function	|type: string
-          ------||| cool_session	|sym_type: session	|type: void
-          ------||| not_bool	|sym_type: function	|type: bool
-          ------||| not_int	|sym_type: function	|type: int
-          ------||| not_ret_tuple	|sym_type: function	|type: tuple
-          ------||| not_wow	|sym_type: function	|type: bool
-          ------||| real_int	|sym_type: function	|type: int
-          ------||| return_tuple	|sym_type: function	|type: tuple
-          ------||| wow	|sym_type: function	|type: bool
-          ------||| --------------
     exit a;
   }
 }

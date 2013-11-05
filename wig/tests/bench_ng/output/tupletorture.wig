@@ -1,101 +1,27 @@
 service {
-          ------||| Symbol table: 
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| PrintString	|sym_type: variable	|type: html
-          ------||| Scm1	|sym_type: schema	|type: schema
-          ------||| Scm2	|sym_type: schema	|type: schema
-          ------||| Scm3	|sym_type: schema	|type: schema
-          ------||| ShowSchema1	|sym_type: variable	|type: html
-          ------||| ShowSchema2	|sym_type: variable	|type: html
-          ------||| ShowSchema3	|sym_type: variable	|type: html
-          ------||| test1	|sym_type: session	|type: void
-          ------||| test2	|sym_type: session	|type: void
-          ------||| --------------
-  const html ShowSchema1 = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| b	|sym_type: hole_tag	|type: html
-          ------||| i	|sym_type: hole_tag	|type: html
-          ------||| message	|sym_type: hole_tag	|type: html
-          ------||| s	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html ShowSchema1 = <html> <body>
     <[message]> b: <[b]>  i: <[i]>  s: <[s]>  </body> </html>;
-  const html ShowSchema2 = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| b	|sym_type: hole_tag	|type: html
-          ------||| i	|sym_type: hole_tag	|type: html
-          ------||| message	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html ShowSchema2 = <html> <body>
    <[message]>  b: <[b]>  i: <[i]>  </body> </html>;
-  const html ShowSchema3 = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| b	|sym_type: hole_tag	|type: html
-          ------||| message	|sym_type: hole_tag	|type: html
-          ------||| s	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html ShowSchema3 = <html> <body>
    <[message]>  b: <[b]>  s: <[s]>  </body> </html>;
-  const html PrintString = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| message	|sym_type: hole_tag	|type: html
-          ------||| --------------
-<html> <body>
+  const html PrintString = <html> <body>
    <[message]>  </body> </html>;
-  const html Done = 
- ---- Symbols inside the HTML
-          ------||| Symbol table: 
-          ------||| --------------
-<html> <body> Done! </body> </html>;
+  const html Done = <html> <body> Done! </body> </html>;
   schema Scm1 {
-------- Symbols inside the schema: 
-          ------||| Symbol table: 
-          ------||| b	|sym_type: field	|type: bool
-          ------||| i	|sym_type: field	|type: int
-          ------||| s	|sym_type: field	|type: string
-          ------||| --------------
     bool b;
     int i;
     string s;
   }
   schema Scm2 {
-------- Symbols inside the schema: 
-          ------||| Symbol table: 
-          ------||| b	|sym_type: field	|type: bool
-          ------||| i	|sym_type: field	|type: int
-          ------||| --------------
     bool b;
     int i;
   }
   schema Scm3 {
-------- Symbols inside the schema: 
-          ------||| Symbol table: 
-          ------||| b	|sym_type: field	|type: bool
-          ------||| s	|sym_type: field	|type: string
-          ------||| --------------
     bool b;
     string s;
   }
   session test1 () { 
-          ------||| Symbol table: 
-          ------||| t1	|sym_type: variable	|type: tuple
-          ------||| t2	|sym_type: variable	|type: tuple
-          ------||| t3	|sym_type: variable	|type: tuple
-          ------||| --------------
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| PrintString	|sym_type: variable	|type: html
-          ------||| Scm1	|sym_type: schema	|type: schema
-          ------||| Scm2	|sym_type: schema	|type: schema
-          ------||| Scm3	|sym_type: schema	|type: schema
-          ------||| ShowSchema1	|sym_type: variable	|type: html
-          ------||| ShowSchema2	|sym_type: variable	|type: html
-          ------||| ShowSchema3	|sym_type: variable	|type: html
-          ------||| test1	|sym_type: session	|type: void
-          ------||| --------------
     tuple Scm1 t1;
     tuple Scm2 t2;
     tuple Scm2 t3;
@@ -110,22 +36,6 @@ service {
     exit Done;
   }
   session test2 () { 
-          ------||| Symbol table: 
-          ------||| g1	|sym_type: variable	|type: tuple
-          ------||| g2	|sym_type: variable	|type: tuple
-          ------||| g3	|sym_type: variable	|type: tuple
-          ------||| --------------
-          ------||| Done	|sym_type: variable	|type: html
-          ------||| PrintString	|sym_type: variable	|type: html
-          ------||| Scm1	|sym_type: schema	|type: schema
-          ------||| Scm2	|sym_type: schema	|type: schema
-          ------||| Scm3	|sym_type: schema	|type: schema
-          ------||| ShowSchema1	|sym_type: variable	|type: html
-          ------||| ShowSchema2	|sym_type: variable	|type: html
-          ------||| ShowSchema3	|sym_type: variable	|type: html
-          ------||| test1	|sym_type: session	|type: void
-          ------||| test2	|sym_type: session	|type: void
-          ------||| --------------
     tuple Scm1 g1;
     tuple Scm2 g2;
     tuple Scm3 g3;

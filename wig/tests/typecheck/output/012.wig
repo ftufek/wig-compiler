@@ -1,0 +1,35 @@
+/* Produced errors: 
+SHOULD_BE_BOOL("a")
+SHOULD_BE_BOOL(2)
+SHOULD_BE_BOOL(i1)
+*/
+service {
+  const html a = <html></html>;
+  session b () { 
+    bool b;
+    int i1;
+    int i2;
+    while (i1 == i2) { 
+      }
+
+    while (b) { 
+      }
+
+    while ("a") { 
+      }
+
+    while (2) { 
+      }
+
+    while (true) { 
+      }
+
+    while (false) { 
+      }
+
+    while (i1) { 
+      }
+
+    exit a;
+  }
+}
