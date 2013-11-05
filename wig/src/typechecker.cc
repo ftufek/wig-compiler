@@ -76,7 +76,9 @@ void TypeChecker::visit(ast::Function *s){
 		set_exp_type(ast::kType::VOID);
 	}
 }
-void TypeChecker::visit(ast::Field *s){}
+void TypeChecker::visit(ast::Field *s){
+	set_exp_type(s->type_->type_);
+}
 void TypeChecker::visit(ast::Empty *s){}
 void TypeChecker::visit(ast::HtmlTag *s){}
 void TypeChecker::visit(ast::Argument *s){
@@ -127,8 +129,19 @@ void TypeChecker::visit(ast::DocumentStm *s){
 	}else{
 		error::GenerateError(error::HTML_DOESNT_EXIST, html_id, s->at_line());
 	}
+	if(s->plugs_->size() > 0){
+		for(auto plug : *(s->plugs_)){
+			plug->accept(this);
+		}
+	}
 }
-void TypeChecker::visit(ast::PlugStm *s){}
+void TypeChecker::visit(ast::PlugStm *s){
+	UNDEFINED();
+	s->exp_->accept(this);
+	if(get_exp_type() == ast::kType::UNDEFINED){
+		error::GenerateError(error::PLUG_TYPE_UNDEFINED, s->id_, s->at_line());
+	}
+}
 void TypeChecker::visit(ast::InputStm *s){}
 void TypeChecker::visit(ast::ReceiveStm *s){}
 void TypeChecker::visit(ast::ExitStm *s){

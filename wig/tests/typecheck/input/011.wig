@@ -1,0 +1,15 @@
+/* Produced errors: 
+OP_INT_OR_STR_ONLY(2 + true)
+PLUG_TYPE_UNDEFINED(gap)
+*/
+service{
+const html a = <html><[gap]></html>;
+
+session b(){
+show plug a [gap=2+true];
+show plug a [gap=2];
+show plug a [gap=true];
+show plug a [gap="asd"];
+exit a;
+}
+}

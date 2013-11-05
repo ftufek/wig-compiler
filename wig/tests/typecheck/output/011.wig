@@ -1,0 +1,28 @@
+/* Produced errors: 
+OP_INT_OR_STR_ONLY(2 + true)
+PLUG_TYPE_UNDEFINED(gap)
+*/
+service {
+          ------||| Symbol table: 
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
+  const html a = 
+ ---- Symbols inside the HTML
+          ------||| Symbol table: 
+          ------||| gap	|sym_type: hole_tag	|type: html
+          ------||| --------------
+<html><[gap]></html>;
+  session b () { 
+          ------||| Symbol table: 
+          ------||| --------------
+          ------||| a	|sym_type: variable	|type: html
+          ------||| b	|sym_type: session	|type: void
+          ------||| --------------
+    show plug a[gap = 2 + true];
+    show plug a[gap = 2];
+    show plug a[gap = true];
+    show plug a[gap = "asd"];
+    exit a;
+  }
+}
