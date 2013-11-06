@@ -179,6 +179,7 @@ void TypeChecker::visit(ast::WhileStm *s){
 		error::GenerateError(error::SHOULD_BE_BOOL, PrettyPrint(s->condition_),
 											s->condition_->at_line());
 	}
+	s->stm_->accept(this);
 }
 void TypeChecker::visit(ast::ExpStm *s){
 	s->exp_->accept(this);
@@ -195,8 +196,7 @@ void TypeChecker::visit(ast::LValExp *s){
 			UNDEFINED();
 		}
 	}else{
-		//it's a tuple
-		//TODO: the following is very ugly! fix when have time
+		//the LVal refers to a tuple
 		auto sym = sym_table_.FindSymbol(s->get_tuple_name());
 		if(sym){
 			auto schema = sym2schema(sym.get());
