@@ -1,0 +1,33 @@
+/* Produced errors: 
+SCHEMA_DONT_HAVE_FIELD(inexistent = false)
+TYPES_DONT_MATCH(name = true)
+TYPES_DONT_MATCH(price = "a")
+TYPES_DONT_MATCH(available = 2)
+SCHEMA_DONT_HAVE_FIELD(aaaa = "maybe")
+*/
+service {
+  const html a = <html></html>;
+  schema Item {
+    string name;
+    int price;
+    bool available;
+  }
+  session d () { 
+    tuple Item mi1;
+    tuple Item mi2;
+    tuple Item mi3;
+    mi1 = tuple { name = "a", 
+      price = 3, 
+      available = true, 
+      inexistent = false};
+    mi2 = tuple { name = true, 
+      price = "a", 
+      available = 2, 
+      aaaa = "maybe"};
+    mi3 = mi1;
+    mi3 = tuple { name = "a", 
+      price = 1, 
+      available = true};
+    exit a;
+  }
+}

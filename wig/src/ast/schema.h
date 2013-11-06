@@ -3,6 +3,7 @@
 
 #include <string>
 #include "ast.h"
+#include "field.h"
 #include "list.h"
 
 namespace ast {
@@ -12,6 +13,7 @@ public:
     Schema(std::string id_,
            List *fields_ = new List());
     ~Schema();
+    Field *GetField(std::string field_name);
     void accept(Visitor *v) override;
 
     std::string id_;

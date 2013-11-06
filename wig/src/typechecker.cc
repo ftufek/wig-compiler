@@ -7,6 +7,7 @@
 
 
 #include <sstream>
+#include <string>
 #include <boost/optional.hpp>
 #include "typechecker.h"
 #include "error.h"
@@ -64,6 +65,15 @@ void TypeChecker::visit(ast::Service *s){
 void TypeChecker::visit(ast::Whatever *s){}
 void TypeChecker::visit(ast::Variable *s){
 	set_exp_type(s->type_->type_);
+	if(s->type_->type_ == ast::kType::TUPLE){
+		auto schema_sym = sym_table_.FindSymbol(s->type_->tuple_id_);
+		if(schema_sym){
+			schema_.reset(dynamic_cast<ast::Schema *>(schema_sym.get().get_node()));
+		}else{
+			error::GenerateError(error::SCHEMA_NOT_DEFINED, s->type_->tuple_id_, s->at_line());
+			UNDEFINED();
+		}
+	}
 }
 void TypeChecker::visit(ast::Function *s){
 	UpdateSymTable(s);
@@ -179,7 +189,8 @@ void TypeChecker::visit(ast::LValExp *s){
 	if(!s->is_tuple_ref()){
 		auto sym = sym_table_.FindSymbol(s->get_lvalue());
 		if(sym){
-			set_exp_type(sym.get().get_type());
+//			set_exp_type(sym.get().get_type());
+			sym.get().get_node()->accept(this);
 		}else{
 			UNDEFINED();
 		}
@@ -191,13 +202,10 @@ void TypeChecker::visit(ast::LValExp *s){
 			auto schema = sym2schema(sym.get());
 			if(schema){
 				auto schema_def = schema.get();
-				auto exps = schema_def->fields_->exps_;
-				for(auto exp : *exps){
-					ast::Field *field = dynamic_cast<ast::Field *>(exp);
-					if(field->id_ == s->get_field_name()){
-						set_exp_type(field->type_->type_);
-						return;
-					}
+				auto field = schema_def->GetField(s->get_field_name());
+				if(field){
+					set_exp_type(field->type_->type_);
+					return;
 				}
 				UNDEFINED(); //in case there's no such field
 			}
@@ -362,9 +370,26 @@ void TypeChecker::visit(ast::FalseExp *s){
 void TypeChecker::visit(ast::StringExp *s){
 	set_exp_type(ast::kType::STRING);
 }
-void TypeChecker::visit(ast::FieldValExp *s){}
+void TypeChecker::visit(ast::FieldValExp *s){
+	if(schema_){
+		auto schema = schema_.get();
+		auto field = schema->GetField(s->id_);
+		if(field){
+			s->exp_->accept(this);
+			if(get_exp_type() != field->type_->type_){
+				error::GenerateError(error::TYPES_DONT_MATCH, PrettyPrint(s), s->at_line());
+			}
+		}else{
+			error::GenerateError(error::SCHEMA_DONT_HAVE_FIELD, PrettyPrint(s), s->at_line());
+		}
+	}
+}
 void TypeChecker::visit(ast::TupleExp *s){
-	//TODO: typecheck each field
+	if(schema_){
+		for(auto field : *(s->field_vals_)){
+			field->accept(this);
+		}
+	}
 	set_exp_type(ast::kType::TUPLE);
 }
 

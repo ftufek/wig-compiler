@@ -71,6 +71,7 @@ private:
 
     st::Table sym_table_; //represents the symbol table in the current scope
     boost::optional<ast::kType> exp_type_;
+    boost::optional<ast::Schema *> schema_;
 };
 
 }

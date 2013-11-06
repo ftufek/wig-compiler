@@ -7,6 +7,7 @@ service {
   session b () { 
     show plug a[gap = 2 + true];
     show plug a[gap = 2];
+    show plug a[gap = "aaa" + "bbb"];
     show plug a[gap = true];
     show plug a[gap = "asd"];
     exit a;
