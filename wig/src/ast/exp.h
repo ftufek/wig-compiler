@@ -4,6 +4,7 @@
 #include <string>
 #include <list>
 #include "ast.h"
+#include "type.h"
 
 namespace ast{
 
@@ -12,6 +13,13 @@ class Exp : public Base
 public:
     Exp();
     void accept(Visitor *v) override;
+
+    void set_type(kType type);
+    kType get_type() const;
+    void reset_type();
+
+private:
+    kType type_;
 };
 
 

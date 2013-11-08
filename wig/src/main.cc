@@ -22,11 +22,12 @@ void printHelp(){
 	cout<<"Usage: fwig [options] <input_wig_file> "<<endl;
 	cout<<endl;
 	cout<<"Options: "<<endl;
-	cout<<" -o [file] : output to file instead of stdout"<<endl;
+	cout<<" -o [file] : output (the result of pretty-printing) to file instead of stdout"<<endl;
 	cout<<" -p : pretty-print (to stdout if -o [file] option isn't specified)"<<endl;
 	cout<<" -w : weed and output the report to stderr"<<endl;
-	cout<<" -s : enable symbol table (will print symbol table in pretty-printing)"<<endl;
-	cout<<" -t : enable typechecking (enables symbol table automatically)"<<endl;
+	cout<<" -s : enable symbol table generation"<<endl;
+	cout<<" -t : enable typechecking (enables symbol table generation automatically)"<<endl;
+	cout<<" -v : verbose (prints symbol table and types when pretty-printing)"<<endl;
 	cout<<endl;
 	cout<<"Example usage: "<<endl;
 	cout<<"fwig -p -w -o test.out test.wig  # will output pretty print result to"<<endl;
@@ -44,11 +45,12 @@ int main(int argc, char **argv){
 	bool weed = false;
 	bool symbol = false;
 	bool typecheck = false;
+	bool verbose = false;
 	char *outfile = NULL;
 	char *infile = NULL;
 	int c;
 
-	while((c = getopt(argc, argv, "o:pwst")) != -1){
+	while((c = getopt(argc, argv, "o:pwstv")) != -1){
 		switch(c){
 		case 'o':
 			outfile = optarg;
@@ -65,6 +67,10 @@ int main(int argc, char **argv){
 		case 't':
 			typecheck = true;
 			break;
+		case 'v':
+			verbose = true;
+			break;
+
 		case '?':
 			 if (optopt == 'o')
 			   fprintf (stderr, "Option -%c requires an argument.\n", optopt);
@@ -118,7 +124,7 @@ int main(int argc, char **argv){
     		    buf = std::cout.rdbuf();
     		}
     		std::ostream out(buf);
-    		auto pp = visitors::PrettyPrinter(out,symbol && !typecheck);
+    		auto pp = visitors::PrettyPrinter(out, verbose);
 			pp.visit(EXP);
 			of.close();
     	}

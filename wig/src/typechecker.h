@@ -20,6 +20,9 @@ public:
 	TypeChecker();
 	virtual ~TypeChecker();
 
+    ast::kType get_exp_type();
+    void UpdateExpType(ast::Exp *exp);
+
     virtual void visit(ast::Service *s);
     virtual void visit(ast::Whatever *s);
     virtual void visit(ast::Variable *s);
@@ -62,7 +65,6 @@ public:
     virtual void visit(ast::TupleExp *s);
 
 private:
-    ast::kType get_exp_type();
     void set_exp_type(ast::kType type);
     std::string PrettyPrint(ast::Exp *node);
     void UpdateSymTable(ast::Base *node);

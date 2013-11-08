@@ -2,14 +2,15 @@
 #include <string>
 #include "symbol_table/table.h"
 #include "pretty_printer.h"
+#include "typechecker.h"
 #include "error.h"
 
 using namespace std;
 
 namespace visitors {
 
-PrettyPrinter::PrettyPrinter(std::ostream &out, bool print_sym_table)
-	:ppout(out), print_sym_table_(print_sym_table){}
+PrettyPrinter::PrettyPrinter(std::ostream &out, bool verbose)
+	:ppout(out), verbose_(verbose){}
 
 void PrettyPrinter::Indent(){
     indent_.append("  ");
@@ -25,9 +26,19 @@ void PrettyPrinter::PrintIndent(){
     ppout<<indent_;
 }
 
-void PrettyPrinter::PrintSymTable(ast::Base *s, bool last_scope_only) const{
-	if(print_sym_table_){
+void PrettyPrinter::PrintSymTable(ast::Base *s, bool last_scope_only){
+	if(verbose_){
 		s->get_sym_table()->PrettyPrint(ppout, last_scope_only);
+	}
+}
+
+void PrettyPrinter::PrintType(ast::Exp *s){
+	PrintType(s->get_type());
+}
+
+void PrettyPrinter::PrintType(ast::kType type){
+	if(verbose_){
+		ppout<<"/* "<<ast::KTypeToStr(type)<<" */";
 	}
 }
 
@@ -60,7 +71,7 @@ void PrettyPrinter::visit(ast::Variable *s) {
     ppout<<" "<<s->name_;
     if(s->value_){
         ppout<<" = ";
-        if(print_sym_table_ && s->type_->type_ == ast::kType::HTML){
+        if(verbose_ && s->type_->type_ == ast::kType::HTML){
         	//If the variable is an HTML const
         	ppout<<std::endl;
         	ppout<<" ---- Symbols inside the HTML"<<std::endl;
@@ -136,7 +147,7 @@ void PrettyPrinter::visit(ast::Schema *s) {
     PrintIndent();
     ppout<<"schema "<<s->id_<<" {"<<endl;
     Indent();
-    if(print_sym_table_){
+    if(verbose_){
     	ppout<<"------- Symbols inside the schema: "<<endl;
         PrintSymTable(s, true);
     }
@@ -291,6 +302,7 @@ void PrettyPrinter::visit(ast::Exp *){
 
 void PrettyPrinter::visit(ast::LValExp *s){
     ppout<<s->lvalue_;
+    PrintType(s);
 }
 
 void PrettyPrinter::visit(ast::BinopExp *s){
@@ -362,6 +374,8 @@ void PrettyPrinter::visit(ast::BinopExp *s){
     }
 
     s->right_->accept(this);
+
+    PrintType(s);
 }
 
 void PrettyPrinter::visit(ast::UnopExp *s){
@@ -379,6 +393,8 @@ void PrettyPrinter::visit(ast::UnopExp *s){
     }
 
     s->exp_->accept(this);
+
+    PrintType(s);
 }
 
 void PrettyPrinter::visit(ast::TupleopExp *s){
@@ -424,22 +440,32 @@ void PrettyPrinter::visit(ast::FunctionExp *s){
         (*it)->accept(this);
     }
     ppout<<")";
+
+    PrintType(s);
 }
 
 void PrettyPrinter::visit(ast::IntegerExp *s){
     ppout<<s->i_;
+
+    PrintType(s);
 }
 
-void PrettyPrinter::visit(ast::TrueExp *){
+void PrettyPrinter::visit(ast::TrueExp *s){
     ppout<<"true";
+
+    PrintType(s);
 }
 
-void PrettyPrinter::visit(ast::FalseExp *){
+void PrettyPrinter::visit(ast::FalseExp *s){
     ppout<<"false";
+
+    PrintType(s);
 }
 
 void PrettyPrinter::visit(ast::StringExp *s){
     ppout<<s->str_;
+
+    PrintType(s);
 }
 
 void PrettyPrinter::visit(ast::FieldValExp *s){

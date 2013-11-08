@@ -45,6 +45,10 @@ void TypeChecker::set_exp_type(ast::kType type){
 	exp_type_.reset(type);
 }
 
+void TypeChecker::UpdateExpType(ast::Exp *exp){
+	exp->set_type(get_exp_type());
+}
+
 std::string TypeChecker::PrettyPrint(ast::Exp *node){
 	std::ostringstream ss;
 	auto printer = visitors::PrettyPrinter(ss, false);
@@ -205,12 +209,14 @@ void TypeChecker::visit(ast::LValExp *s){
 				auto field = schema_def->GetField(s->get_field_name());
 				if(field){
 					set_exp_type(field->type_->type_);
-					return;
+				}else{
+					UNDEFINED(); //in case there's no such field
 				}
-				UNDEFINED(); //in case there's no such field
 			}
 		}
 	}
+
+	UpdateExpType(s);
 }
 void TypeChecker::visit(ast::BinopExp *s){
 	s->left_->accept(this);
@@ -222,7 +228,6 @@ void TypeChecker::visit(ast::BinopExp *s){
 		/* lvalue = exp */
 		if(l_type == r_type){
 			set_exp_type(l_type);
-			return;
 		}else{
 			UNDEFINED();
 			error::GenerateError(error::TYPES_DONT_MATCH,PrettyPrint(s), s->at_line());
@@ -234,7 +239,6 @@ void TypeChecker::visit(ast::BinopExp *s){
 	case ast::kBinopType::NotEquals:{
 		if(l_type == r_type){
 			set_exp_type(ast::kType::BOOL);
-			return;
 		}else{
 			UNDEFINED();
 			error::GenerateError(error::TYPES_DONT_MATCH, PrettyPrint(s), s->at_line());
@@ -248,7 +252,6 @@ void TypeChecker::visit(ast::BinopExp *s){
 	case ast::kBinopType::HigherThan:{
 		if(l_type == ast::kType::INT && l_type == r_type){
 			set_exp_type(ast::kType::BOOL);
-			return;
 		}else{
 			UNDEFINED();
 			error::GenerateError(error::CAN_COMPARE_INTEGERS_ONLY,PrettyPrint(s), s->at_line());
@@ -260,7 +263,6 @@ void TypeChecker::visit(ast::BinopExp *s){
 		if((l_type == ast::kType::INT || l_type == ast::kType::STRING)
 				&& l_type == r_type){
 			set_exp_type(l_type);
-			return;
 		}else{
 			UNDEFINED();
 			error::GenerateError(error::OP_INT_OR_STR_ONLY, PrettyPrint(s), s->at_line());
@@ -274,7 +276,6 @@ void TypeChecker::visit(ast::BinopExp *s){
 	case ast::kBinopType::Mod:{
 		if(l_type == ast::kType::INT && l_type == r_type){
 			set_exp_type(ast::kType::INT);
-			return;
 		}else{
 			UNDEFINED();
 			error::GenerateError(error::OP_INT_ONLY, PrettyPrint(s), s->at_line());
@@ -286,7 +287,6 @@ void TypeChecker::visit(ast::BinopExp *s){
 	case ast::kBinopType::Or:{
 		if(l_type == ast::kType::BOOL && l_type == r_type){
 			set_exp_type(ast::kType::BOOL);
-			return;
 		}else{
 			UNDEFINED();
 			error::GenerateError(error::OP_BOOL_ONLY, PrettyPrint(s), s->at_line());
@@ -296,11 +296,14 @@ void TypeChecker::visit(ast::BinopExp *s){
 
 	case ast::kBinopType::Combine:
 		//TODO: do this later...
+		set_exp_type(ast::kType::TUPLE);
 		break;
 	default:
 		UNDEFINED();
 		break;
 	}
+
+	UpdateExpType(s);
 }
 void TypeChecker::visit(ast::UnopExp *s){
 	switch(s->type_){
@@ -322,6 +325,8 @@ void TypeChecker::visit(ast::UnopExp *s){
 	default:
 		break;
 	}
+
+	UpdateExpType(s);
 }
 void TypeChecker::visit(ast::TupleopExp *s){
 	//TODO: typecheck KEEP and DISCARD
@@ -357,18 +362,28 @@ void TypeChecker::visit(ast::FunctionExp *s){
 	}else{
 		error::GenerateError(error::NOT_A_FUNCTION, s->id_, s->at_line());
 	}
+
+	UpdateExpType(s);
 }
 void TypeChecker::visit(ast::IntegerExp *s){
 	set_exp_type(ast::kType::INT);
+
+	UpdateExpType(s);
 }
 void TypeChecker::visit(ast::TrueExp *s){
 	set_exp_type(ast::kType::BOOL);
+
+	UpdateExpType(s);
 }
 void TypeChecker::visit(ast::FalseExp *s){
 	set_exp_type(ast::kType::BOOL);
+
+	UpdateExpType(s);
 }
 void TypeChecker::visit(ast::StringExp *s){
 	set_exp_type(ast::kType::STRING);
+
+	UpdateExpType(s);
 }
 void TypeChecker::visit(ast::FieldValExp *s){
 	if(schema_){
@@ -391,6 +406,8 @@ void TypeChecker::visit(ast::TupleExp *s){
 		}
 	}
 	set_exp_type(ast::kType::TUPLE);
+
+	UpdateExpType(s);
 }
 
 }

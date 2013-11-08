@@ -3,8 +3,17 @@
 
 namespace ast{
 
-Exp::Exp(){}
+Exp::Exp():type_(kType::UNDEFINED){}
 void Exp::accept(Visitor *v) { v->visit(this); }
+void Exp::set_type(kType type){
+	type_ = type;
+}
+kType Exp::get_type() const{
+	return type_;
+}
+void Exp::reset_type(){
+	type_ = kType::UNDEFINED;
+}
 
 
 LValExp::LValExp(std::string lvalue):lvalue_(lvalue){}
