@@ -23,7 +23,14 @@ std::string _t_state_vars();
 std::string _t_schema_class(const std::string &name,
 							const std::list<std::pair<std::string, std::string>> &fields);
 
+std::string _t_html_layout();
 std::string _t_html_function(const std::string &name,
 							 const std::string &html_text);
+
+
+std::string _t_save_session(const std::string &name);
+std::string _t_init_session(const std::string &name);
+std::string _t_load_session(const std::string &name);
+std::string _t_session(const std::string &name);
 
 #endif /* TEMPLATE_H_ */

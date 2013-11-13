@@ -24,7 +24,9 @@ void CodeGenerator::visit(ast::Service *s){
 		 <<_t_enable_cgi()<<_t_state_vars()<<endl;
 
 	s->schemas_->accept(this);
+	cgout<<_t_html_layout()<<endl;
 	s->htmls_->accept(this);
+	s->sessions_->accept(this);
 }
 
 void CodeGenerator::visit(ast::Whatever *s ) {
@@ -33,7 +35,7 @@ void CodeGenerator::visit(ast::Whatever *s ) {
 void CodeGenerator::visit(ast::Variable *s) {
 	if(s->type_->type_ == ast::kType::HTML){
 		//Generate html function
-		cgout<<_t_html_function(s->name_, PrettyPrint(s->value_));
+		cgout<<_t_html_function(s->name_, PrettyPrint(s->value_))<<endl;
 	}
 }
 
@@ -91,6 +93,10 @@ void CodeGenerator::visit(ast::Type *s) {
 }
 
 void CodeGenerator::visit(ast::Session *s){
+	cgout<<_t_save_session(s->id_)<<endl
+			<<_t_init_session(s->id_)<<endl
+			<<_t_load_session(s->id_)<<endl
+			<<_t_session(s->id_)<<endl;
 }
 
 void CodeGenerator::visit(ast::EmptyStm *s) {

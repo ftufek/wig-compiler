@@ -15,8 +15,8 @@ using namespace std;
 string cgi_input = "__cg_input";
 string session = "__session";
 string vars = "__vars";
-string sids = "__sids";
-string next_logics = "__next_logics";
+string sid = "__sid";
+string next_logic = "__next_logic";
 
 std::string indent(int number){
 	return string(number, '\t');
@@ -67,8 +67,8 @@ std::string _t_state_vars(){
 	 */
 	stringstream ss;
 	ss<<vars<<" = {}"<<endl
-		<<sids<<" = {}"<<endl
-		<<next_logics<<" = {}"<<endl;
+		<<sid<<" = 0"<<endl
+		<<next_logic<<" = 1"<<endl;
 	return ss.str();
 }
 
@@ -86,6 +86,15 @@ std::string _t_schema_class(const std::string &name,
 	return ss.str();
 }
 
+std::string _t_html_layout(){
+	stringstream ss;
+	ss<<"def layout(page):"<<endl
+	  <<indent(1)<<"return \"\"\"<html><form action=\"\" method=\"POST\">\n"
+	  <<indent(1)<<"{page} <input type=\"submit\" value=\"go\">"<<endl
+	  <<indent(1)<<"</form></html>\"\"\".format(page=page)"<<endl;
+	return ss.str();
+}
+
 std::string _t_html_function(const std::string &name,
 							 const std::string &html_text){
 	stringstream ss;
@@ -96,7 +105,85 @@ std::string _t_html_function(const std::string &name,
 	boost::replace_all(copy, "<[", "{");
 	boost::replace_all(copy, "]>", "}");
 
+	//Remove html tags because there's a layout function that will add them
+	boost::replace_all(copy, "<html>","");
+	boost::replace_all(copy, "</html>","");
+
 	ss<<indent(1)<<"return \"\"\""<<copy<<"\"\"\".format(**(__varDict))";
 	ss<<endl;
+	return ss.str();
+}
+
+std::string _t_save_session(const std::string &name){
+	stringstream ss;
+
+	ss<<"def save_session_"<<name<<"():"<<endl;
+	ss<<indent(1)<<"session_file = \""<<name<<"$\"+str(sid)"<<endl;
+	ss<<indent(1)<<"open(session_file, 'w').close()"<<endl;
+	ss<<indent(1)<<"with open(session_file, \"w\") as f:"<<endl;
+
+	ss<<indent(2)<<"pickle.dump("<<vars<<", f)"<<endl;
+	ss<<indent(2)<<"pickle.dump("<<next_logic<<", f)"<<endl;
+
+	ss<<indent(1)<<"return"<<endl;
+
+	return ss.str();
+}
+std::string _t_init_session(const std::string &name){
+	stringstream ss;
+	ss<<"def init_"<<name<<"_shop():"<<endl;
+	ss<<indent(1)<<"global "<<sid<<endl;
+	ss<<indent(1)<<"global "<<next_logic<<endl;
+	ss<<indent(1)<<sid<<" = str(uuid.uuid4())"<<endl;
+	ss<<indent(1)<<next_logic<<" = 1"<<endl;
+	ss<<indent(1)<<"save_session_"<<name<<endl;
+	ss<<indent(1)<<"_logic_session_"<<name<<"_1()"<<endl;
+	return ss.str();
+}
+std::string _t_load_session(const std::string &name){
+	/*
+def load_session_shop(session_id):
+  global vars
+  global next_logic
+  global sid
+  sid = session_id
+  with open("Shop$"+str(sid), "r") as f:
+    global_vars = pickle.load(f)
+    session_vars = pickle.load(f)
+    next_logic = pickle.load(f)
+
+  globals()["_logic_session_shop_"+str(next_logic)]()*/
+	stringstream ss;
+	ss<<"def load_session_"<<name<<"(session_id):"<<endl;
+	for(auto global : list<string>{vars, next_logic, sid}){
+		ss<<indent(1)<<global<<endl;
+	}
+	ss<<indent(1)<<sid<<" = session_id"<<endl;
+	ss<<indent(1)<<"with open(\""<<name<<"$\"+str(sid), \"r\") as f:"<<endl;
+	for(auto load : list<string>{vars, next_logic}){
+		ss<<indent(2)<<load<<" = pickle.load(f)"<<endl;
+	}
+	ss<<indent(1)<<"globals()[\"_logic_session_"<<name<<"_\"+str(next_logic)]()"<<endl;
+	return ss.str();
+}
+
+std::string _t_session(const std::string &name){
+	/*
+	 *
+def session_shop():
+  sid = cgi_input.getvalue("sid", "")
+  if sid == "":
+    init_session_shop()
+  else:
+    load_session_shop(sid)
+	 *
+	 */
+	stringstream ss;
+	ss<<"def session_"<<name<<"():"<<endl;
+	ss<<indent(1)<<"sid = cgi_input.getvalue(\"sid\", \"\")"<<endl;
+	ss<<indent(1)<<"if sid == "":"<<endl;
+	ss<<indent(2)<<"init_session_"<<name<<"()"<<endl;
+	ss<<indent(1)<<"else:"<<endl;
+	ss<<indent(2)<<"load_session_"<<name<<"(sid)"<<endl;
 	return ss.str();
 }
