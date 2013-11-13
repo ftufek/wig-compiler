@@ -7,6 +7,7 @@
 #include "error.h"
 #include "sym_tabler.h"
 #include "typechecker.h"
+#include "codegen.h"
 #include "weeder.h"
 #include "parser/y.tab.h"
 
@@ -28,6 +29,7 @@ void printHelp(){
 	cout<<" -s : enable symbol table generation"<<endl;
 	cout<<" -t : enable typechecking (enables symbol table generation automatically)"<<endl;
 	cout<<" -v : verbose (prints symbol table and types when pretty-printing)"<<endl;
+	cout<<" -c : code generation (will disable pretty-printing)"<<endl;
 	cout<<endl;
 	cout<<"Example usage: "<<endl;
 	cout<<"fwig -p -w -o test.out test.wig  # will output pretty print result to"<<endl;
@@ -46,11 +48,12 @@ int main(int argc, char **argv){
 	bool symbol = false;
 	bool typecheck = false;
 	bool verbose = false;
+	bool genCode = false;
 	char *outfile = NULL;
 	char *infile = NULL;
 	int c;
 
-	while((c = getopt(argc, argv, "o:pwstv")) != -1){
+	while((c = getopt(argc, argv, "o:pwstvc")) != -1){
 		switch(c){
 		case 'o':
 			outfile = optarg;
@@ -69,6 +72,10 @@ int main(int argc, char **argv){
 			break;
 		case 'v':
 			verbose = true;
+			break;
+
+		case 'c':
+			genCode = true;
 			break;
 
 		case '?':
@@ -114,7 +121,7 @@ int main(int argc, char **argv){
 			auto typechecker = visitors::TypeChecker();
 			typechecker.visit(EXP);
     	}
-    	if(prettyPrint){
+    	if(prettyPrint && !genCode){
     		std::streambuf * buf;
     		std::ofstream of;
     		if(outfile) {
@@ -125,6 +132,20 @@ int main(int argc, char **argv){
     		}
     		std::ostream out(buf);
     		auto pp = visitors::PrettyPrinter(out, verbose);
+			pp.visit(EXP);
+			of.close();
+    	}
+    	if(genCode){
+    		std::streambuf * buf;
+			std::ofstream of;
+			if(outfile && genCode) {
+				of.open(outfile, std::fstream::out);
+				buf = of.rdbuf();
+			} else {
+				buf = std::cout.rdbuf();
+			}
+			std::ostream out(buf);
+			auto pp = visitors::CodeGenerator(out);
 			pp.visit(EXP);
 			of.close();
     	}

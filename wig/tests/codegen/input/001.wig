@@ -1,0 +1,10 @@
+service{
+const html a = <html></html>;
+
+session b(){
+bool d;
+if(d){}
+
+exit a;
+}
+}
