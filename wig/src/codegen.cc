@@ -9,6 +9,9 @@ namespace visitors {
 CodeGenerator::CodeGenerator(std::ostream &out):cgout(out){}
 
 void CodeGenerator::visit(ast::Service *s){
+	cgout<<_t_env()
+		 <<_t_imports(std::list<std::string> {"cgi","cgitb","os","uuid","pickle"})
+		 <<_t_enable_cgi();
 }
 
 void CodeGenerator::visit(ast::Whatever *s ) {

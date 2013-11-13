@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "ast.h"
+#include "codegen/template.h"
 
 namespace visitors {
 

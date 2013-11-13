@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+import cgi
+import cgitb
+import os
+import uuid
+import pickle
+cgitb.enable()
+cgi_input = cgi.FieldStorage()
+session = os.environ["QUERY_STRING"].split("&")[0]
