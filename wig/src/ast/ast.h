@@ -22,9 +22,8 @@ class Base : public Visitable{
 public:
     Base();
     virtual ~Base();
-
     int at_line(){return at_line_;};
-
+    virtual void accept(Visitor *v){};
     const st::Table* get_sym_table() const;
     void set_sym_table(st::Table *table);
 protected:

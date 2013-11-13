@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include "codegen.h"
+#include "pretty_printer.h"
 
 using namespace std;
 
@@ -9,18 +11,30 @@ namespace visitors {
 CodeGenerator::CodeGenerator(std::ostream &out)
 	:cgout(out),_fields({}){}
 
+std::string CodeGenerator::PrettyPrint(ast::Base *s){
+	stringstream ss;
+	auto printer = visitors::PrettyPrinter(ss, false);
+	s->accept(&printer);
+	return ss.str();
+}
+
 void CodeGenerator::visit(ast::Service *s){
 	cgout<<_t_env()
 		 <<_t_imports(std::list<std::string> {"cgi","cgitb","os","uuid","pickle"})
-		 <<_t_enable_cgi()<<endl;
+		 <<_t_enable_cgi()<<_t_state_vars()<<endl;
 
 	s->schemas_->accept(this);
+	s->htmls_->accept(this);
 }
 
 void CodeGenerator::visit(ast::Whatever *s ) {
 }
 
 void CodeGenerator::visit(ast::Variable *s) {
+	if(s->type_->type_ == ast::kType::HTML){
+		//Generate html function
+		cgout<<_t_html_function(s->name_, PrettyPrint(s->value_));
+	}
 }
 
 void CodeGenerator::visit(ast::Function *s) {
@@ -36,7 +50,7 @@ void CodeGenerator::visit(ast::Field *s) {
 		break;
 
 	case ast::kType::BOOL:
-		field_default_value = "false";
+		field_default_value = "False";
 		break;
 
 	default:

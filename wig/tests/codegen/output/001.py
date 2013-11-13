@@ -5,12 +5,15 @@ import os
 import uuid
 import pickle
 cgitb.enable()
-cgi_input = cgi.FieldStorage()
-session = os.environ["QUERY_STRING"].split("&")[0]
+__cg_input = cgi.FieldStorage()
+__session = os.environ["QUERY_STRING"].split("&")[0]
+__vars = {}
+__sids = {}
+__next_logics = {}
 
 class Item():
 	name = ""
-	available = false
+	available = False
 	price = 0
 
 	def __init__(self, dict):
@@ -21,10 +24,14 @@ class A():
 	name = ""
 	a = ""
 	b = ""
-	a = false
+	a = False
 	price = 0
 
 	def __init__(self, dict):
 		for k, v in dict.items():
 			setattr(self, k, v)
 
+def a(__varDict):
+	return """<html></html>""".format(**(__varDict))
+def b(__varDict):
+	return """<html>{gap}</html>""".format(**(__varDict))

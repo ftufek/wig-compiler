@@ -2,6 +2,8 @@
 service{
 const html a = <html></html>;
 
+const html b = <html><[gap]></html>;
+
 schema Item{
 string name;
 bool available;

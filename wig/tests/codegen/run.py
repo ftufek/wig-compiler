@@ -33,5 +33,7 @@ print bc.HEADER + "Test fwig compiler codegen system" + bc.ENDC
 print
 
 for f in files:
-  system(fwig+" -c -t -s -w -p -o "+odir+f+" "+idir+f)
+  py_out = f.split(".wig")[0]
+  system(fwig+" -c -t -s -w -p -o "+odir+py_out+".py "+idir+f)
+  system("chmod +x "+odir+py_out+".py")
   print bc.OKGREEN + "[" + check + "] " + f + bc.ENDC

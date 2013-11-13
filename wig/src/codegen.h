@@ -57,6 +57,8 @@ public:
 private:
     std::ostream &cgout;
 
+    std::string PrettyPrint(ast::Base *s);
+
 
     //info for schema to python class generation
     std::list<std::pair<std::string, std::string>> _fields;
