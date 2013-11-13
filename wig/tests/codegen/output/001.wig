@@ -7,3 +7,24 @@ import pickle
 cgitb.enable()
 cgi_input = cgi.FieldStorage()
 session = os.environ["QUERY_STRING"].split("&")[0]
+
+class Item():
+	name = ""
+	available = false
+	price = 0
+
+	def __init__(self, dict):
+		for k, v in dict.items():
+			setattr(self, k, v)
+
+class A():
+	name = ""
+	a = ""
+	b = ""
+	a = false
+	price = 0
+
+	def __init__(self, dict):
+		for k, v in dict.items():
+			setattr(self, k, v)
+

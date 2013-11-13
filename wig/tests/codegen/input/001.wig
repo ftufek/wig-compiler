@@ -1,5 +1,20 @@
+/* schema to class generation test */
 service{
 const html a = <html></html>;
+
+schema Item{
+string name;
+bool available;
+int price;
+}
+
+schema A{
+	string name;
+	string a;
+	string b;
+	bool a;
+	int price;
+}
 
 session b(){
 bool d;

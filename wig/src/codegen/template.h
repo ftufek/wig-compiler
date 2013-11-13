@@ -12,8 +12,15 @@
 #include <list>
 
 std::string _t_env();
-std::string _t_imports(std::list<std::string> to_import);
+std::string _t_imports(const std::list<std::string> &to_import);
 std::string _t_enable_cgi();
+
+std::string _t_schema_class(const std::string &name,
+							const std::list<std::pair<std::string, std::string>> &fields);
+
+std::string indent(int number); /* return '\t' number times */
+std::string indent(const std::string &str, int number);
+std::string deindent(const std::string &str, int number);
 
 
 #endif /* TEMPLATE_H_ */

@@ -56,6 +56,10 @@ public:
 
 private:
     std::ostream &cgout;
+
+
+    //info for schema to python class generation
+    std::list<std::pair<std::string, std::string>> _fields;
 };
 
 }
