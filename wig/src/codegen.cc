@@ -9,7 +9,7 @@ using namespace std;
 namespace visitors {
 
 CodeGenerator::CodeGenerator(std::ostream &out)
-	:cgout(out),_fields({}){}
+	:cgout(out),_fields({}), _sessions({}){}
 
 std::string CodeGenerator::PrettyPrint(ast::Base *s){
 	stringstream ss;
@@ -27,6 +27,8 @@ void CodeGenerator::visit(ast::Service *s){
 	cgout<<_t_html_layout()<<endl;
 	s->htmls_->accept(this);
 	s->sessions_->accept(this);
+
+	cgout<<_t_main_print_stms(_sessions)<<endl;
 }
 
 void CodeGenerator::visit(ast::Whatever *s ) {
@@ -93,6 +95,7 @@ void CodeGenerator::visit(ast::Type *s) {
 }
 
 void CodeGenerator::visit(ast::Session *s){
+	_sessions.push_back(s->id_);
 	cgout<<_t_save_session(s->id_)<<endl
 			<<_t_init_session(s->id_)<<endl
 			<<_t_load_session(s->id_)<<endl

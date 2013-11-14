@@ -86,12 +86,27 @@ std::string _t_schema_class(const std::string &name,
 	return ss.str();
 }
 
+std::string _t_layout_helpers(){
+	stringstream ss;
+	ss<<"def str_sid():"<<endl;
+	ss<<indent(1)<<"if "<<sid<<" != 0:"<<endl;
+	ss<<indent(2)<<"return \"&sid=\"+str("<<sid<<")"<<endl;
+	ss<<indent(1)<<"else:"<<endl;
+	ss<<indent(2)<<"return \"\""<<endl;
+	ss<<endl;
+	ss<<"def action_name():"<<endl;
+	ss<<indent(1)<<"return os.path.basename(__file__)+\"?\"+"<<session
+			<<"+str_sid()"<<endl;
+	return ss.str();
+}
+
 std::string _t_html_layout(){
 	stringstream ss;
+	ss<<_t_layout_helpers()<<endl;
 	ss<<"def layout(page):"<<endl
-	  <<indent(1)<<"return \"\"\"<html><form action=\"\" method=\"POST\">\n"
+	  <<indent(1)<<"return \"\"\"<html><form action=\"{action}\" method=\"POST\">\n"
 	  <<indent(1)<<"{page} <input type=\"submit\" value=\"go\">"<<endl
-	  <<indent(1)<<"</form></html>\"\"\".format(page=page)"<<endl;
+	  <<indent(1)<<"</form></html>\"\"\".format(action=action_name(),page=page)"<<endl;
 	return ss.str();
 }
 
@@ -131,7 +146,7 @@ std::string _t_save_session(const std::string &name){
 }
 std::string _t_init_session(const std::string &name){
 	stringstream ss;
-	ss<<"def init_"<<name<<"_shop():"<<endl;
+	ss<<"def init_session_"<<name<<"():"<<endl;
 	ss<<indent(1)<<"global "<<sid<<endl;
 	ss<<indent(1)<<"global "<<next_logic<<endl;
 	ss<<indent(1)<<sid<<" = str(uuid.uuid4())"<<endl;
@@ -141,18 +156,6 @@ std::string _t_init_session(const std::string &name){
 	return ss.str();
 }
 std::string _t_load_session(const std::string &name){
-	/*
-def load_session_shop(session_id):
-  global vars
-  global next_logic
-  global sid
-  sid = session_id
-  with open("Shop$"+str(sid), "r") as f:
-    global_vars = pickle.load(f)
-    session_vars = pickle.load(f)
-    next_logic = pickle.load(f)
-
-  globals()["_logic_session_shop_"+str(next_logic)]()*/
 	stringstream ss;
 	ss<<"def load_session_"<<name<<"(session_id):"<<endl;
 	for(auto global : list<string>{vars, next_logic, sid}){
@@ -168,22 +171,35 @@ def load_session_shop(session_id):
 }
 
 std::string _t_session(const std::string &name){
-	/*
-	 *
-def session_shop():
-  sid = cgi_input.getvalue("sid", "")
-  if sid == "":
-    init_session_shop()
-  else:
-    load_session_shop(sid)
-	 *
-	 */
 	stringstream ss;
 	ss<<"def session_"<<name<<"():"<<endl;
-	ss<<indent(1)<<"sid = cgi_input.getvalue(\"sid\", \"\")"<<endl;
-	ss<<indent(1)<<"if sid == "":"<<endl;
+	ss<<indent(1)<<"sid = "<<cgi_input<<".getvalue(\"sid\", \"\")"<<endl;
+	ss<<indent(1)<<"if sid == \"\":"<<endl;
 	ss<<indent(2)<<"init_session_"<<name<<"()"<<endl;
 	ss<<indent(1)<<"else:"<<endl;
 	ss<<indent(2)<<"load_session_"<<name<<"(sid)"<<endl;
+	return ss.str();
+}
+
+std::string _t_main_print_stms(const std::list<std::string> &sessions){
+	if(sessions.size() <= 0){
+		return "ERROR: no sessions are passed to code generation!";
+	}
+	stringstream ss;
+	ss<<"print \"Content-type: text/html\""<<endl;
+	ss<<"print"<<endl;
+	for(auto session_name : sessions){
+		ss<<"if "<<session<<" == \""<<session_name<<"\":"<<endl;
+		ss<<indent(1)<<"session_"<<session_name<<"()"<<endl;
+	}
+	ss<<"else:"<<endl;
+	ss<<indent(1)<<"print layout(\"Please select one of the following sessions: ";
+	auto it = sessions.begin();
+	ss<<*it;
+	++it;
+	while(it != sessions.end()){
+		ss<<", "<<*it;
+	}
+	ss<<"\")"<<endl;
 	return ss.str();
 }

@@ -33,4 +33,6 @@ std::string _t_init_session(const std::string &name);
 std::string _t_load_session(const std::string &name);
 std::string _t_session(const std::string &name);
 
+std::string _t_main_print_stms(const std::list<std::string> &sessions);
+
 #endif /* TEMPLATE_H_ */

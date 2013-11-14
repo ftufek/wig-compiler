@@ -31,10 +31,19 @@ class A():
 		for k, v in dict.items():
 			setattr(self, k, v)
 
+def str_sid():
+	if __sid != 0:
+		return "&sid="+str(__sid)
+	else:
+		return ""
+
+def action_name():
+	return os.path.basename(__file__)+"?"+__session+str_sid()
+
 def layout(page):
-	return """<html><form action="" method="POST">
+	return """<html><form action="{action}" method="POST">
 	{page} <input type="submit" value="go">
-	</form></html>""".format(page=page)
+	</form></html>""".format(action=action_name(),page=page)
 
 def a(__varDict):
 	return """""".format(**(__varDict))
@@ -50,7 +59,7 @@ def save_session_b():
 		pickle.dump(__next_logic, f)
 	return
 
-def init_b_shop():
+def init_session_b():
 	global __sid
 	global __next_logic
 	__sid = str(uuid.uuid4())
@@ -69,9 +78,18 @@ def load_session_b(session_id):
 	globals()["_logic_session_b_"+str(next_logic)]()
 
 def session_b():
-	sid = cgi_input.getvalue("sid", "")
-	if sid == :
+	sid = __cg_input.getvalue("sid", "")
+	if sid == "":
 		init_session_b()
 	else:
 		load_session_b(sid)
+def _logic_session_b_1():
+	print layout("a")
+
+print "Content-type: text/html"
+print
+if __session == "b":
+	session_b()
+else:
+	print layout("Please select one of the following sessions: b")
 

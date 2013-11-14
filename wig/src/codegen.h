@@ -62,6 +62,9 @@ private:
 
     //info for schema to python class generation
     std::list<std::pair<std::string, std::string>> _fields;
+
+    //info for main print stm generation
+    std::list<std::string> _sessions;
 };
 
 }
