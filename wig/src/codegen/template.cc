@@ -133,7 +133,7 @@ std::string _t_save_session(const std::string &name){
 	stringstream ss;
 
 	ss<<"def save_session_"<<name<<"():"<<endl;
-	ss<<indent(1)<<"session_file = \""<<name<<"$\"+str(sid)"<<endl;
+	ss<<indent(1)<<"session_file = \""<<name<<"$\"+str("<<sid<<")"<<endl;
 	ss<<indent(1)<<"open(session_file, 'w').close()"<<endl;
 	ss<<indent(1)<<"with open(session_file, \"w\") as f:"<<endl;
 
@@ -151,7 +151,7 @@ std::string _t_init_session(const std::string &name){
 	ss<<indent(1)<<"global "<<next_logic<<endl;
 	ss<<indent(1)<<sid<<" = str(uuid.uuid4())"<<endl;
 	ss<<indent(1)<<next_logic<<" = 1"<<endl;
-	ss<<indent(1)<<"save_session_"<<name<<endl;
+	ss<<indent(1)<<"save_session_"<<name<<"()"<<endl;
 	ss<<indent(1)<<"_logic_session_"<<name<<"_1()"<<endl;
 	return ss.str();
 }
@@ -159,14 +159,14 @@ std::string _t_load_session(const std::string &name){
 	stringstream ss;
 	ss<<"def load_session_"<<name<<"(session_id):"<<endl;
 	for(auto global : list<string>{vars, next_logic, sid}){
-		ss<<indent(1)<<global<<endl;
+		ss<<indent(1)<<"global "<<global<<endl;
 	}
 	ss<<indent(1)<<sid<<" = session_id"<<endl;
-	ss<<indent(1)<<"with open(\""<<name<<"$\"+str(sid), \"r\") as f:"<<endl;
+	ss<<indent(1)<<"with open(\""<<name<<"$\"+str("<<sid<<"), \"r\") as f:"<<endl;
 	for(auto load : list<string>{vars, next_logic}){
 		ss<<indent(2)<<load<<" = pickle.load(f)"<<endl;
 	}
-	ss<<indent(1)<<"globals()[\"_logic_session_"<<name<<"_\"+str(next_logic)]()"<<endl;
+	ss<<indent(1)<<"globals()[\"_logic_session_"<<name<<"_\"+str("<<next_logic<<")]()"<<endl;
 	return ss.str();
 }
 

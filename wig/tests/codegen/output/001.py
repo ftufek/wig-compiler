@@ -52,7 +52,7 @@ def b(__varDict):
 	return """{gap}""".format(**(__varDict))
 
 def save_session_b():
-	session_file = "b$"+str(sid)
+	session_file = "b$"+str(__sid)
 	open(session_file, 'w').close()
 	with open(session_file, "w") as f:
 		pickle.dump(__vars, f)
@@ -64,18 +64,18 @@ def init_session_b():
 	global __next_logic
 	__sid = str(uuid.uuid4())
 	__next_logic = 1
-	save_session_b
+	save_session_b()
 	_logic_session_b_1()
 
 def load_session_b(session_id):
-	__vars
-	__next_logic
-	__sid
+	global __vars
+	global __next_logic
+	global __sid
 	__sid = session_id
-	with open("b$"+str(sid), "r") as f:
+	with open("b$"+str(__sid), "r") as f:
 		__vars = pickle.load(f)
 		__next_logic = pickle.load(f)
-	globals()["_logic_session_b_"+str(next_logic)]()
+	globals()["_logic_session_b_"+str(__next_logic)]()
 
 def session_b():
 	sid = __cg_input.getvalue("sid", "")
@@ -83,6 +83,7 @@ def session_b():
 		init_session_b()
 	else:
 		load_session_b(sid)
+
 def _logic_session_b_1():
 	print layout("a")
 
