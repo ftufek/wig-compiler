@@ -9,6 +9,7 @@
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
 #include <sstream>
+#include "../codegen.h"
 
 using namespace std;
 
@@ -34,6 +35,21 @@ std::string deindent(const std::string &str, int number){
 	}
 	boost::replace_all(copy, "\n"+indent(number),"\n");
 	return copy;
+}
+
+std::string _t_py_fn_call(const std::string &name,
+						  std::list<std::string> args){
+	stringstream ss;
+	ss<<name<<"(";
+	if(args.size() > 0){
+		ss<<args.front();
+		args.pop_front();
+	}
+	for(auto arg : args){
+		ss<<","<<arg;
+	}
+	ss<<")";
+	return ss.str();
 }
 
 std::string _t_env(){
@@ -88,25 +104,25 @@ std::string _t_schema_class(const std::string &name,
 
 std::string _t_layout_helpers(){
 	stringstream ss;
-	ss<<"def str_sid():"<<endl;
+	ss<<"def __str_sid():"<<endl;
 	ss<<indent(1)<<"if "<<sid<<" != 0:"<<endl;
 	ss<<indent(2)<<"return \"&sid=\"+str("<<sid<<")"<<endl;
 	ss<<indent(1)<<"else:"<<endl;
 	ss<<indent(2)<<"return \"\""<<endl;
 	ss<<endl;
-	ss<<"def action_name():"<<endl;
+	ss<<"def __action_name():"<<endl;
 	ss<<indent(1)<<"return os.path.basename(__file__)+\"?\"+"<<session
-			<<"+str_sid()"<<endl;
+			<<"+__str_sid()"<<endl;
 	return ss.str();
 }
 
 std::string _t_html_layout(){
 	stringstream ss;
 	ss<<_t_layout_helpers()<<endl;
-	ss<<"def layout(page):"<<endl
+	ss<<"def __layout(page):"<<endl
 	  <<indent(1)<<"return \"\"\"<html><form action=\"{action}\" method=\"POST\">\n"
 	  <<indent(1)<<"{page} <input type=\"submit\" value=\"go\">"<<endl
-	  <<indent(1)<<"</form></html>\"\"\".format(action=action_name(),page=page)"<<endl;
+	  <<indent(1)<<"</form></html>\"\"\".format(action=__action_name(),page=page)"<<endl;
 	return ss.str();
 }
 
@@ -114,7 +130,7 @@ std::string _t_html_function(const std::string &name,
 							 const std::string &html_text){
 	stringstream ss;
 	auto copy = string(html_text);
-	ss<<"def "<<name<<"(__varDict):"<<endl;
+	ss<<"def __"<<name<<"(__varDict):"<<endl;
 
 	//Replace gaps with "{" and "}" for python string interpolation
 	boost::replace_all(copy, "<[", "{");
@@ -132,7 +148,7 @@ std::string _t_html_function(const std::string &name,
 std::string _t_save_session(const std::string &name){
 	stringstream ss;
 
-	ss<<"def save_session_"<<name<<"():"<<endl;
+	ss<<"def __save_session_"<<name<<"():"<<endl;
 	ss<<indent(1)<<"session_file = \""<<name<<"$\"+str("<<sid<<")"<<endl;
 	ss<<indent(1)<<"open(session_file, 'w').close()"<<endl;
 	ss<<indent(1)<<"with open(session_file, \"w\") as f:"<<endl;
@@ -146,18 +162,18 @@ std::string _t_save_session(const std::string &name){
 }
 std::string _t_init_session(const std::string &name){
 	stringstream ss;
-	ss<<"def init_session_"<<name<<"():"<<endl;
+	ss<<"def __init_session_"<<name<<"():"<<endl;
 	ss<<indent(1)<<"global "<<sid<<endl;
 	ss<<indent(1)<<"global "<<next_logic<<endl;
 	ss<<indent(1)<<sid<<" = str(uuid.uuid4())"<<endl;
 	ss<<indent(1)<<next_logic<<" = 1"<<endl;
-	ss<<indent(1)<<"save_session_"<<name<<"()"<<endl;
-	ss<<indent(1)<<"_logic_session_"<<name<<"_1()"<<endl;
+	ss<<indent(1)<<"__save_session_"<<name<<"()"<<endl;
+	ss<<indent(1)<<"__logic_session_"<<name<<"_1()"<<endl;
 	return ss.str();
 }
 std::string _t_load_session(const std::string &name){
 	stringstream ss;
-	ss<<"def load_session_"<<name<<"(session_id):"<<endl;
+	ss<<"def __load_session_"<<name<<"(session_id):"<<endl;
 	for(auto global : list<string>{vars, next_logic, sid}){
 		ss<<indent(1)<<"global "<<global<<endl;
 	}
@@ -166,19 +182,46 @@ std::string _t_load_session(const std::string &name){
 	for(auto load : list<string>{vars, next_logic}){
 		ss<<indent(2)<<load<<" = pickle.load(f)"<<endl;
 	}
-	ss<<indent(1)<<"globals()[\"_logic_session_"<<name<<"_\"+str("<<next_logic<<")]()"<<endl;
+	ss<<indent(1)<<"globals()[\"__logic_session_"<<name<<"_\"+str("<<next_logic<<")]()"<<endl;
 	return ss.str();
 }
 
 std::string _t_session(const std::string &name){
 	stringstream ss;
-	ss<<"def session_"<<name<<"():"<<endl;
+	ss<<"def __session_"<<name<<"():"<<endl;
 	ss<<indent(1)<<"sid = "<<cgi_input<<".getvalue(\"sid\", \"\")"<<endl;
 	ss<<indent(1)<<"if sid == \"\":"<<endl;
-	ss<<indent(2)<<"init_session_"<<name<<"()"<<endl;
+	ss<<indent(2)<<"__init_session_"<<name<<"()"<<endl;
 	ss<<indent(1)<<"else:"<<endl;
-	ss<<indent(2)<<"load_session_"<<name<<"(sid)"<<endl;
+	ss<<indent(2)<<"__load_session_"<<name<<"(sid)"<<endl;
 	return ss.str();
+}
+
+std::string _t_session_stm_stack(const std::string &session_name,
+								 const int label,
+								 const std::list<std::string> &stms){
+	stringstream ss;
+	ss<<"def __logic_session_"<<session_name<<"_"<<label<<"():"<<endl;
+	for(auto stm : stms){
+		ss<<indent(stm, 1)<<endl;
+	}
+	return ss.str();
+}
+
+std::string _t_print_html(const std::string &name,
+						  std::list<std::string> args){
+	string args_str = "{";
+	if(args.size()){
+		args_str.append(args.front());
+		args.pop_front();
+	}
+	for(auto arg : args){
+		args_str.append(","+arg+"\n");
+	}
+	args_str.append("}");
+	auto layout = _t_py_fn_call("__layout",
+			list<string>{_t_py_fn_call("__"+name,list<string>{args_str})});
+	return _t_py_fn_call("print", list<string>{layout});
 }
 
 std::string _t_main_print_stms(const std::list<std::string> &sessions){
@@ -188,17 +231,21 @@ std::string _t_main_print_stms(const std::list<std::string> &sessions){
 	stringstream ss;
 	ss<<"print \"Content-type: text/html\""<<endl;
 	ss<<"print"<<endl;
+	bool firstif = true;
 	for(auto session_name : sessions){
+		if(!firstif){ss<<"el";}
+		firstif=false;
 		ss<<"if "<<session<<" == \""<<session_name<<"\":"<<endl;
-		ss<<indent(1)<<"session_"<<session_name<<"()"<<endl;
+		ss<<indent(1)<<"__session_"<<session_name<<"()"<<endl;
 	}
 	ss<<"else:"<<endl;
-	ss<<indent(1)<<"print layout(\"Please select one of the following sessions: ";
+	ss<<indent(1)<<"print __layout(\"Please select one of the following sessions: ";
 	auto it = sessions.begin();
 	ss<<*it;
 	++it;
 	while(it != sessions.end()){
 		ss<<", "<<*it;
+		++it;
 	}
 	ss<<"\")"<<endl;
 	return ss.str();

@@ -2,6 +2,7 @@
 #define CODE_GENERATOR_H
 
 #include <iostream>
+#include <stack>
 #include <fstream>
 #include "ast.h"
 #include "codegen/template.h"
@@ -59,12 +60,22 @@ private:
 
     std::string PrettyPrint(ast::Base *s);
 
-
     //info for schema to python class generation
     std::list<std::pair<std::string, std::string>> _fields;
 
     //info for main print stm generation
     std::list<std::string> _sessions;
+
+    //info for session generation
+    std::string _in_session;
+    int _current_label;
+    int get_label() const;
+    int new_label();
+    int reset_label();
+    std::list<std::string> _label_stms;
+
+    //info for DocumentStm generation
+    std::list<std::string> _plugs;
 };
 
 }

@@ -10,6 +10,7 @@
 
 #include <string>
 #include <list>
+#include <stack>
 
 std::string indent(int number); /* return '\t' number times */
 std::string indent(const std::string &str, int number);
@@ -33,6 +34,16 @@ std::string _t_init_session(const std::string &name);
 std::string _t_load_session(const std::string &name);
 std::string _t_session(const std::string &name);
 
+std::string _t_session_stm_stack(const std::string &session_name,
+								 const int label,
+								 const std::list<std::string> &stms);
+
+std::string _t_print_html(const std::string &name,
+						  std::list<std::string> args);
+
 std::string _t_main_print_stms(const std::list<std::string> &sessions);
+
+//std::string _t_py_fn_call(const std::string &name,
+//						  std::list<std::string> args);
 
 #endif /* TEMPLATE_H_ */

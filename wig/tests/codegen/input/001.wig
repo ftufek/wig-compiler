@@ -19,9 +19,10 @@ schema A{
 }
 
 session b(){
-bool d;
-if(d){}
-
 exit a;
+}
+
+session c(){
+exit plug b[gap="a"];
 }
 }

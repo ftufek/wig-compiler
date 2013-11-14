@@ -9,13 +9,26 @@ using namespace std;
 namespace visitors {
 
 CodeGenerator::CodeGenerator(std::ostream &out)
-	:cgout(out),_fields({}), _sessions({}){}
+	:cgout(out),_fields({}), _sessions({}), _in_session({}),
+	 _current_label(1), _label_stms({}) {}
 
 std::string CodeGenerator::PrettyPrint(ast::Base *s){
 	stringstream ss;
 	auto printer = visitors::PrettyPrinter(ss, false);
 	s->accept(&printer);
 	return ss.str();
+}
+
+int CodeGenerator::get_label() const{
+	return _current_label;
+}
+int CodeGenerator::new_label(){
+	_current_label++;
+	return _current_label;
+}
+int CodeGenerator::reset_label(){
+	_current_label = 1;
+	return _current_label;
 }
 
 void CodeGenerator::visit(ast::Service *s){
@@ -100,21 +113,39 @@ void CodeGenerator::visit(ast::Session *s){
 			<<_t_init_session(s->id_)<<endl
 			<<_t_load_session(s->id_)<<endl
 			<<_t_session(s->id_)<<endl;
+
+	_in_session = s->id_;
+	_label_stms.clear();
+	reset_label();
+	s->stm_->accept(this);
+	_in_session = {};
 }
 
 void CodeGenerator::visit(ast::EmptyStm *s) {
+	//NOTHING TO DO
 }
 
 void CodeGenerator::visit(ast::CompoundStm *s) {
+	for(auto stm : *(s->stms_)){
+		stm->accept(this);
+	}
 }
 
 void CodeGenerator::visit(ast::ShowStm *s) {
 }
 
 void CodeGenerator::visit(ast::DocumentStm *s){
+	_plugs.clear();
+	for(auto plug : *(s->plugs_)){
+		plug->accept(this);
+	}
+	_label_stms.push_back(_t_print_html(s->id_,_plugs));
 }
 
 void CodeGenerator::visit(ast::PlugStm *s){
+	string plug = "'" + s->id_ + "':";
+	plug.append(PrettyPrint(s->exp_));
+	_plugs.push_back(plug);
 }
 
 void CodeGenerator::visit(ast::ReceiveStm *s){
@@ -124,6 +155,11 @@ void CodeGenerator::visit(ast::InputStm *s){
 }
 
 void CodeGenerator::visit(ast::ExitStm *s){
+	if(_in_session.size()){
+		s->doc_->accept(this);
+		cgout<<_t_session_stm_stack(_in_session, get_label(), _label_stms);
+		new_label();
+	}
 }
 
 void CodeGenerator::visit(ast::ReturnStm *s){
