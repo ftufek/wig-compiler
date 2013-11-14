@@ -6,6 +6,7 @@
 #include <fstream>
 #include "ast.h"
 #include "codegen/template.h"
+#include "sym_tabler.h"
 
 namespace visitors {
 
@@ -69,13 +70,24 @@ private:
     //info for session generation
     std::string _in_session;
     int _current_label;
-    int get_label() const;
-    int new_label();
-    int reset_label();
+    int NewLabel();
+    void ResetLabel();
     std::list<std::string> _label_stms;
+    void ClearStms();
+    void PrintLabelStms(const int label,
+    					std::list<std::string> stms,
+    					bool jump_to_next_label = true);
 
     //info for DocumentStm generation
     std::list<std::string> _plugs;
+
+    //info for Exp generation
+    std::list<std::string> _exps;
+    std::string ExpToStr(ast::Exp *s);
+
+    //symbol tables
+    void UpdateSymTable(ast::Base *node);
+    st::Table _sym_table; //represents the symbol table in the current scope
 };
 
 }

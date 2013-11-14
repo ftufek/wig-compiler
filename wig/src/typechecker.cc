@@ -194,7 +194,6 @@ void TypeChecker::visit(ast::LValExp *s){
 	if(!s->is_tuple_ref()){
 		auto sym = sym_table_.FindSymbol(s->get_lvalue());
 		if(sym){
-//			set_exp_type(sym.get().get_type());
 			sym.get().get_node()->accept(this);
 		}else{
 			UNDEFINED();

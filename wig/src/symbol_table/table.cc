@@ -5,6 +5,7 @@
  *      Author: user
  */
 
+#include <sstream>
 #include "table.h"
 #include "../error.h"
 
@@ -59,7 +60,7 @@ std::string SymTypeToStr(SymbolType type){
 }
 
 Symbol::Symbol(std::string name, ast::Base *node, ast::kType type, SymbolType sym_type)
-	:name_(name), node_(node), type_(type), sym_type_(sym_type){}
+	:name_(name), node_(node), type_(type), sym_type_(sym_type),scope_n_(0){}
 Symbol::~Symbol(){};
 
 Symbol Symbol::ForVariable(ast::Variable *var){
@@ -112,17 +113,26 @@ const SymbolType Symbol::get_sym_type() const{
 	return sym_type_;
 }
 
+void Symbol::set_scope_n(int scope_n){
+	scope_n_ = scope_n;
+}
+const int Symbol::get_scope_n() const{
+	return scope_n_;
+}
 
-Table::Table(SymTable table) : table_(table){
+
+Table::Table(SymTable table) : table_(table), _scope_n(0){
 }
 Table::~Table(){};
 
 void Table::Scope(){
 	table_.push(std::map<std::string, Symbol>());
+	_scope_n++;
 };
 
 void Table::UnScope(){
 	table_.pop();
+	_scope_n++;
 };
 
 bool Table::PutSymbol(Symbol sym){
@@ -132,6 +142,7 @@ bool Table::PutSymbol(Symbol sym){
 			|| sym.get_sym_type() == SymbolType::INPUT_TAG
 			|| sym.get_sym_type() == SymbolType::SELECT_TAG){
 		//TODO: input and select html tags can appear multiple times, fix it
+		sym.set_scope_n(_scope_n);
 		scope.insert(std::make_pair(sym.get_name(), sym));
 		table_.pop();
 		table_.push(scope);
@@ -179,6 +190,18 @@ void Table::PrettyPrint(std::ostream &out, bool last_scope_only) const{
 		if(last_scope_only){break;}
 	}
 };
+
+boost::optional<std::string> Table::GetUniqueKeySymbol(const std::string &name) const{
+	boost::optional<std::string> result;
+	auto opt_sym = FindSymbol(name);
+	if(!opt_sym){return result;}
+
+	auto sym = opt_sym.get();
+	std::stringstream ss;
+	ss<<name<<"_"<<sym.get_node()->at_line()<<"_"<<sym.get_scope_n();
+	result.reset(ss.str());
+	return result;
+}
 
 Table Table::get_table(){
 	return Table(table_);

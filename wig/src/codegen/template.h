@@ -37,6 +37,12 @@ std::string _t_session(const std::string &name);
 std::string _t_session_stm_stack(const std::string &session_name,
 								 const int label,
 								 const std::list<std::string> &stms);
+std::string _t_var(const std::string &uniq_key);
+std::string _t_next_logic(const int n);
+std::string _t_call_next_logic(const std::string &session_name, const int n);
+std::string _t_if_stm(const std::string &condition,
+					  const std::list<std::string> &stms,
+					  const std::list<std::string> &else_stms);
 
 std::string _t_print_html(const std::string &name,
 						  std::list<std::string> args);

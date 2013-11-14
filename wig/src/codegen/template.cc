@@ -202,8 +202,46 @@ std::string _t_session_stm_stack(const std::string &session_name,
 								 const std::list<std::string> &stms){
 	stringstream ss;
 	ss<<"def __logic_session_"<<session_name<<"_"<<label<<"():"<<endl;
+	for(auto global : list<string>{vars, next_logic}){
+		ss<<indent(1)<<"global "<<global<<endl;
+	}
 	for(auto stm : stms){
 		ss<<indent(stm, 1)<<endl;
+	}
+	return ss.str();
+}
+
+std::string _t_var(const std::string &uniq_key){
+	return vars+"[\""+uniq_key+"\"]";
+}
+
+std::string _t_next_logic(const int n){
+	stringstream ss;
+	ss<<next_logic<<" = "<<n;
+	return ss.str();
+}
+
+std::string _t_call_next_logic(const std::string &session_name, const int n){
+	stringstream ss;
+	ss<<_t_next_logic(n)<<endl;
+	ss<<"__save_session_"<<session_name<<"()"<<endl;
+	ss<<"__logic_session_"<<session_name<<"_"<<n<<"()";
+	return ss.str();
+}
+
+std::string _t_if_stm(const std::string &condition,
+					  const std::list<std::string> &stms,
+					  const std::list<std::string> &else_stms){
+	stringstream ss;
+	ss<<"if "<<condition<<":"<<endl;
+	for(auto stm : stms){
+		ss<<indent(stm, 1)<<endl;
+	}
+	if(else_stms.size()){
+		ss<<"else:"<<endl;
+		for(auto stm : else_stms){
+			ss<<indent(stm, 1)<<endl;
+		}
 	}
 	return ss.str();
 }

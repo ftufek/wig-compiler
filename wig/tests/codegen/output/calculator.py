@@ -88,7 +88,13 @@ def __session_Calculate():
 		__load_session_Calculate(sid)
 
 def __logic_session_Calculate_1():
+	global __vars
+	global __next_logic
+	__vars["YorN_31_8"]=""
 	print(__layout(__ByeBye({})))
+	__next_logic = 2
+	__save_session_Calculate()
+	__logic_session_Calculate_2()
 print "Content-type: text/html"
 print
 if __session == "Calculate":

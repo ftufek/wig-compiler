@@ -43,6 +43,9 @@ public:
 	const ast::kType get_type() const;
 	const SymbolType get_sym_type() const;
 
+	void set_scope_n(int scope_n);
+	const int get_scope_n() const;
+
 	static Symbol ForVariable(ast::Variable *var);
 	static Symbol ForFunction(ast::Function *f);
 	static Symbol ForHtmlTag(ast::HtmlTag *tag);
@@ -58,6 +61,8 @@ private:
 	ast::Base *node_;
 	ast::kType type_;
 	SymbolType sym_type_;
+
+	int scope_n_;
 };
 
 typedef std::stack<std::map<std::string, Symbol>> SymTable;
@@ -80,6 +85,7 @@ public:
 	bool PutSymbol(Symbol sym);
 	boost::optional<Symbol> FindSymbol(std::string name) const;
 	void PrettyPrint(std::ostream &out, bool last_scope_only = false) const;
+	boost::optional<std::string> GetUniqueKeySymbol(const std::string &name) const;
 
 	Table get_table();
 private:
@@ -91,6 +97,8 @@ private:
 	 * to symbols in this scope.
 	 */
 	SymTable table_;
+
+	int _scope_n;
 };
 
 }
