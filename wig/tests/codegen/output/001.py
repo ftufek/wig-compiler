@@ -121,12 +121,49 @@ def __session_c():
 
 def __logic_session_c_1():
 	print(__layout(__b({'gap':"a"})))
+def __save_session_d():
+	session_file = "d$"+str(__sid)
+	open(session_file, 'w').close()
+	with open(session_file, "w") as f:
+		pickle.dump(__vars, f)
+		pickle.dump(__next_logic, f)
+	return
+
+def __init_session_d():
+	global __sid
+	global __next_logic
+	__sid = str(uuid.uuid4())
+	__next_logic = 1
+	__save_session_d()
+	__logic_session_d_1()
+
+def __load_session_d(session_id):
+	global __vars
+	global __next_logic
+	global __sid
+	__sid = session_id
+	with open("d$"+str(__sid), "r") as f:
+		__vars = pickle.load(f)
+		__next_logic = pickle.load(f)
+	globals()["__logic_session_d_"+str(__next_logic)]()
+
+def __session_d():
+	sid = __cg_input.getvalue("sid", "")
+	if sid == "":
+		__init_session_d()
+	else:
+		__load_session_d(sid)
+
+def __logic_session_d_1():
+	print(__layout(__b({'gap':222})))
 print "Content-type: text/html"
 print
 if __session == "b":
 	__session_b()
 elif __session == "c":
 	__session_c()
+elif __session == "d":
+	__session_d()
 else:
-	print __layout("Please select one of the following sessions: b, c")
+	print __layout("Please select one of the following sessions: b, c, d")
 

@@ -25,4 +25,8 @@ exit a;
 session c(){
 exit plug b[gap="a"];
 }
+
+session d(){
+exit plug b[gap=222];
+}
 }
