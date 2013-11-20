@@ -27,5 +27,6 @@ src/weeders \
 src \
 src/symbol_table \
 src/parser \
+src/codegen \
 src/ast \
 

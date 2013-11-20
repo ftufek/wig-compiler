@@ -1,4 +1,4 @@
-BUILD_DIR=Debug
+BUILD_DIR=Release
 
 all: code check
 

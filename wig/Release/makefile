@@ -11,6 +11,7 @@ RM := rm -rf
 -include src/weeders/subdir.mk
 -include src/symbol_table/subdir.mk
 -include src/parser/subdir.mk
+-include src/codegen/subdir.mk
 -include src/ast/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
