@@ -40,6 +40,9 @@ def __a(__varDict):
 def __b(__varDict):
 	return """{gap}""".format(**(__varDict))
 
+def __c(__varDict):
+	return """{g},{a}""".format(**(__varDict))
+
 def __save_session_b():
 	session_file = "b$"+str(__sid)
 	open(session_file, 'w').close()
@@ -76,41 +79,69 @@ def __session_b():
 def __logic_session_b_1():
 	global __vars
 	global __next_logic
-	__vars["counter_14_8"]=4
-	__vars["a_15_8"]=3
+	__vars["counter_16_10"]=4
+	__vars["inner_counter_17_10"]=2
+	__vars["a_18_10"]=3
 	__next_logic = 2
 	__save_session_b()
 	__logic_session_b_2()
 def __logic_session_b_3():
 	global __vars
 	global __next_logic
-	__vars["counter_14_8"]=__vars["counter_14_8"]-1
-	print(__layout(__b({'gap':__vars["counter_14_8"]})))
+	__vars["counter_16_10"]=__vars["counter_16_10"]-1
 	__next_logic = 4
 	__save_session_b()
+	__logic_session_b_4()
+def __logic_session_b_5():
+	global __vars
+	global __next_logic
+	__vars["inner_counter_17_10"]=__vars["inner_counter_17_10"]-1
+	print(__layout(__c({'g':__vars["counter_16_10"],'a':__vars["inner_counter_17_10"]
+	})))
+	__next_logic = 6
+	__save_session_b()
+def __logic_session_b_6():
+	global __vars
+	global __next_logic
+	__next_logic = 4
+	__save_session_b()
+	__logic_session_b_4()
 def __logic_session_b_4():
 	global __vars
 	global __next_logic
+	if __vars["inner_counter_17_10"]>0:
+		__next_logic = 5
+		__save_session_b()
+		__logic_session_b_5()
+	else:
+		__next_logic = 7
+		__save_session_b()
+		__logic_session_b_7()
+	
+def __logic_session_b_7():
+	global __vars
+	global __next_logic
+	__vars["inner_counter_17_10"]=2
 	__next_logic = 2
 	__save_session_b()
 	__logic_session_b_2()
 def __logic_session_b_2():
 	global __vars
 	global __next_logic
-	if __vars["counter_14_8"]>0:
+	if __vars["counter_16_10"]>0:
 		__next_logic = 3
 		__save_session_b()
 		__logic_session_b_3()
 	else:
-		__next_logic = 5
+		__next_logic = 8
 		__save_session_b()
-		__logic_session_b_5()
+		__logic_session_b_8()
 	
-def __logic_session_b_5():
+def __logic_session_b_8():
 	global __vars
 	global __next_logic
-	print(__layout(__b({'gap':__vars["counter_14_8"]})))
-	__next_logic = 6
+	print(__layout(__b({'gap':__vars["counter_16_10"]})))
+	__next_logic = 9
 	__save_session_b()
 print "Content-type: text/html"
 print

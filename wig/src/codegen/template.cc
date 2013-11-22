@@ -215,16 +215,16 @@ std::string _t_var(const std::string &uniq_key){
 	return vars+"[\""+uniq_key+"\"]";
 }
 
-std::string _t_next_logic(const int n){
+std::string _t_next_logic(const std::string &session_name, const int n){
 	stringstream ss;
-	ss<<next_logic<<" = "<<n;
+	ss<<next_logic<<" = "<<n<<endl;
+	ss<<"__save_session_"<<session_name<<"()";
 	return ss.str();
 }
 
 std::string _t_call_next_logic(const std::string &session_name, const int n){
 	stringstream ss;
-	ss<<_t_next_logic(n)<<endl;
-	ss<<"__save_session_"<<session_name<<"()"<<endl;
+	ss<<_t_next_logic(session_name, n)<<endl;
 	ss<<"__logic_session_"<<session_name<<"_"<<n<<"()";
 	return ss.str();
 }

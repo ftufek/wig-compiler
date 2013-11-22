@@ -76,7 +76,7 @@ private:
     void ClearStms();
     void PrintLabelStms(const int label,
     					std::list<std::string> stms,
-    					bool jump_to_next_label = true);
+    					bool jump_to_next_label = false);
 
     //info for DocumentStm generation
     std::list<std::string> _plugs;

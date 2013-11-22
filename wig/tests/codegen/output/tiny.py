@@ -81,14 +81,12 @@ def __logic_session_Contribute_1():
 	print(__layout(__Welcome({})))
 	__next_logic = 2
 	__save_session_Contribute()
-	__logic_session_Contribute_2()
 def __logic_session_Contribute_2():
 	global __vars
 	global __next_logic
 	print(__layout(__Pledge({})))
 	__next_logic = 3
 	__save_session_Contribute()
-	__logic_session_Contribute_3()
 def __logic_session_Contribute_3():
 	global __vars
 	global __next_logic
@@ -96,7 +94,6 @@ def __logic_session_Contribute_3():
 	print(__layout(__Total({'total':__vars["amount_15_7"]})))
 	__next_logic = 4
 	__save_session_Contribute()
-	__logic_session_Contribute_4()
 print "Content-type: text/html"
 print
 if __session == "Contribute":

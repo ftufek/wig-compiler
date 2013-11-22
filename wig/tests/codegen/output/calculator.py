@@ -91,10 +91,45 @@ def __logic_session_Calculate_1():
 	global __vars
 	global __next_logic
 	__vars["YorN_31_8"]=""
-	print(__layout(__ByeBye({})))
 	__next_logic = 2
 	__save_session_Calculate()
 	__logic_session_Calculate_2()
+def __logic_session_Calculate_3():
+	global __vars
+	global __next_logic
+	print(__layout(__Setup({})))
+	__next_logic = 4
+	__save_session_Calculate()
+def __logic_session_Calculate_4():
+	global __vars
+	global __next_logic
+	print(__layout(__Return({'Ans':__vars["Ans_28_7"]})))
+	__next_logic = 5
+	__save_session_Calculate()
+def __logic_session_Calculate_5():
+	global __vars
+	global __next_logic
+	__next_logic = 2
+	__save_session_Calculate()
+	__logic_session_Calculate_2()
+def __logic_session_Calculate_2():
+	global __vars
+	global __next_logic
+	if __vars["YorN_31_8"]!="no":
+		__next_logic = 3
+		__save_session_Calculate()
+		__logic_session_Calculate_3()
+	else:
+		__next_logic = 6
+		__save_session_Calculate()
+		__logic_session_Calculate_6()
+	
+def __logic_session_Calculate_6():
+	global __vars
+	global __next_logic
+	print(__layout(__ByeBye({})))
+	__next_logic = 7
+	__save_session_Calculate()
 print "Content-type: text/html"
 print
 if __session == "Calculate":

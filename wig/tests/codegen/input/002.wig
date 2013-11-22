@@ -4,6 +4,8 @@ const html a = <html></html>;
 
 const html b = <html><[gap]></html>;
 
+const html c = <html><[g]>,<[a]></html>;
+
 schema Item{
 string name;
 bool available;
@@ -12,12 +14,18 @@ int price;
 int counter;
 session b(){
 int counter;
+int inner_counter;
 int a;
 counter = 4;
+inner_counter = 2;
 a = 3;
 while(counter>0){
 counter = counter - 1;
-show plug b[gap=counter];
+while(inner_counter > 0){
+inner_counter = inner_counter - 1;
+show plug c[g=counter,a=inner_counter];
+}
+inner_counter = 2;
 }
 exit plug b[gap=counter];
 }

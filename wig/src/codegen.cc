@@ -8,6 +8,8 @@ using namespace std;
 
 namespace visitors {
 
+#define DEF_JUMP_NEXT_LABEL true
+
 CodeGenerator::CodeGenerator(std::ostream &out)
 	:cgout(out),_fields({}), _sessions({}), _in_session({}),
 	 _current_label(0), _label_stms({}), _exps({}),_sym_table(st::Table()) {}
@@ -37,7 +39,7 @@ void CodeGenerator::PrintLabelStms(const int label,
 		if(already_contains_jump){
 			cerr<<"Trying to insert jump to next when there's already a jump present"<<endl;
 		}else{
-			stms.push_back(_t_call_next_logic(_in_session, label+1));
+			stms.push_back(_t_next_logic(_in_session, label+1));
 		}
 	}
 	cgout<<_t_session_stm_stack(_in_session, label, stms);
@@ -156,7 +158,6 @@ void CodeGenerator::visit(ast::CompoundStm *s) {
 void CodeGenerator::visit(ast::ShowStm *s) {
 	if(!_in_session.empty()){
 		s->doc_->accept(this);
-		PrintLabelStms(NewLabel(), _label_stms);
 		if(s->receive_){
 			s->receive_->accept(this);
 		}
@@ -169,6 +170,7 @@ void CodeGenerator::visit(ast::DocumentStm *s){
 		plug->accept(this);
 	}
 	_label_stms.push_back(_t_print_html(s->id_,_plugs));
+	PrintLabelStms(NewLabel(), _label_stms, DEF_JUMP_NEXT_LABEL);
 }
 
 void CodeGenerator::visit(ast::PlugStm *s){
@@ -188,7 +190,6 @@ void CodeGenerator::visit(ast::InputStm *s){
 void CodeGenerator::visit(ast::ExitStm *s){
 	if(!_in_session.empty()){
 		s->doc_->accept(this);
-		PrintLabelStms(NewLabel(), _label_stms);
 	}
 }
 
@@ -201,7 +202,19 @@ void CodeGenerator::visit(ast::IfStm *s){
 }
 
 void CodeGenerator::visit(ast::WhileStm *s){
-	//TODO: implement
+	int before_while_label = NewLabel();
+	int while_label = NewLabel();
+	_label_stms.push_back(_t_call_next_logic(_in_session, while_label));
+	PrintLabelStms(before_while_label, _label_stms); //print everything before now
+
+	s->stm_->accept(this);
+	_label_stms.push_back(_t_call_next_logic(_in_session, while_label));
+	PrintLabelStms(NewLabel(), _label_stms);
+
+	_label_stms.push_back(_t_if_stm(ExpToStr(s->condition_),
+									list<string>{_t_call_next_logic(_in_session, while_label+1)},
+									list<string>{_t_call_next_logic(_in_session, _current_label+1)}));
+	PrintLabelStms(while_label, _label_stms);
 }
 
 void CodeGenerator::visit(ast::ExpStm *s){
