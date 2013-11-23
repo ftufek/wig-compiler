@@ -305,6 +305,10 @@ std::string _t_cgi_input(const std::string &name){
 	return cgi_input+".getvalue(\""+name+"\")";
 }
 
+std::string _t_cgi_input(const std::string &name, const std::string &typecast){
+	return typecast+"("+cgi_input+".getvalue(\""+name+"\")"+")";
+}
+
 std::string _t_main_print_stms(const std::list<std::string> &sessions){
 	if(sessions.size() <= 0){
 		return "ERROR: no sessions are passed to code generation!";

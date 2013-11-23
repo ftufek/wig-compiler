@@ -217,7 +217,17 @@ void CodeGenerator::visit(ast::InputStm *s){
 	auto sym = _sym_table.GetUniqueKeySymbol(s->lvalue_);
 	if(sym){
 		string var = _t_var(sym.get());
+
+		auto var_ast = static_cast<ast::Variable *>(
+						_sym_table.FindSymbol(s->lvalue_).get().get_node());
 		string input = _t_cgi_input(s->id_);
+		switch(var_ast->type_->type_){
+		case ast::kType::INT:
+			input = _t_cgi_input(s->id_, "int");
+			break;
+		default:
+			break;
+		}
 		_label_stms.push_back(var + " = " + input);
 	}
 }
@@ -233,7 +243,19 @@ void CodeGenerator::visit(ast::ReturnStm *s){
 }
 
 void CodeGenerator::visit(ast::IfStm *s){
+	int before_if_label = NewLabel();
+	int if_label = NewLabel();
+	_label_stms.push_back(_t_call_next_logic(_in_session, if_label));
+	PrintLabelStms(before_if_label, _label_stms); //print everything before now
 
+	s->true_stm_->accept(this);
+	_label_stms.push_back(_t_call_next_logic(_in_session, _current_label+2));
+	PrintLabelStms(NewLabel(), _label_stms);
+
+	_label_stms.push_back(_t_if_stm(ExpToStr(s->condition_),
+									list<string>{_t_call_next_logic(_in_session, if_label+1)},
+									list<string>{_t_call_next_logic(_in_session, _current_label+1)}));
+	PrintLabelStms(if_label, _label_stms);
 }
 
 void CodeGenerator::visit(ast::WhileStm *s){

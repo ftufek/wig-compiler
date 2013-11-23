@@ -49,6 +49,7 @@ std::string _t_if_stm(const std::string &condition,
 std::string _t_print_html(const std::string &name,
 						  std::list<std::string> args);
 std::string _t_cgi_input(const std::string &name);
+std::string _t_cgi_input(const std::string &name, const std::string &typecast);
 
 std::string _t_main_print_stms(const std::list<std::string> &sessions);
 
