@@ -252,10 +252,15 @@ void CodeGenerator::visit(ast::ReturnStm *s){
 }
 
 void CodeGenerator::visit(ast::IfStm *s){
-	int before_if_label = NewLabel();
-	int if_label = NewLabel();
-	_label_stms.push_back(_t_call_next_logic(_in_session, if_label));
-	PrintLabelStms(before_if_label, _label_stms); //print everything before now
+	int if_label;
+	if(_label_stms.size() > 0){
+		int before_if_label = NewLabel();
+		if_label = NewLabel();
+		_label_stms.push_back(_t_call_next_logic(_in_session, if_label));
+		PrintLabelStms(before_if_label, _label_stms); //print everything before now
+	}else{
+		if_label = NewLabel();
+	}
 
 	s->true_stm_->accept(this);
 	auto true_stms = _label_stms;
@@ -383,11 +388,11 @@ void CodeGenerator::visit(ast::BinopExp *s){
 		break;
 
 	case ast::kBinopType::And:
-		op = "&&";
+		op = "and";
 		break;
 
 	case ast::kBinopType::Or:
-		op = "||";
+		op = "or";
 		break;
 
 	case ast::kBinopType::Combine:
@@ -396,7 +401,7 @@ void CodeGenerator::visit(ast::BinopExp *s){
 	default:
 		break;
 	}
-	_exps.push_back(left + op + right);
+	_exps.push_back(left + " " + op + " " + right);
 }
 
 void CodeGenerator::visit(ast::UnopExp *s){

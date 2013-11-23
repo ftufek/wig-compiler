@@ -58,7 +58,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_a7fed1bd-ca81-42ac-9b7d-3fef42078044"
+	global_vars_file = "GLOBAL_9d6a2434-51e6-46ec-a475-092ea209309e"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -67,7 +67,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_a7fed1bd-ca81-42ac-9b7d-3fef42078044"
+	global_vars_file = "GLOBAL_9d6a2434-51e6-46ec-a475-092ea209309e"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -125,9 +125,9 @@ def __session_Chat():
 def __logic_session_Chat_1():
 	global __vars
 	global __next_logic
-	__vars["connections_34_8"]=0
-	__vars["written_34_8"]=0
-	__vars["quit_33_8"]="no"
+	__vars["connections_34_8"] = 0
+	__vars["written_34_8"] = 0
+	__vars["quit_33_8"] = "no"
 	print(__layout(__Logon({})))
 	__next_logic = 2
 	__save_session_Chat()
@@ -166,27 +166,27 @@ def __logic_session_Chat_6():
 def __logic_session_Chat_7():
 	global __vars
 	global __next_logic
-	__vars["connections_34_8"]=__vars["connections_34_8"]+1
+	__vars["connections_34_8"] = __vars["connections_34_8"] + 1
 	__next_logic = 8
 	__save_session_Chat()
 	__logic_session_Chat_8()
 def __logic_session_Chat_9():
 	global __vars
 	global __next_logic
-	__vars["written_34_8"]=__vars["written_34_8"]+1
-	__vars["msg0_30_7"]=__vars["msg1_30_7"]
-	__vars["msg1_30_7"]=__vars["msg2_30_7"]
-	__vars["msg2_30_7"]=__vars["msg3_30_7"]
-	__vars["msg3_30_7"]=__vars["msg4_30_7"]
-	__vars["msg4_30_7"]=__vars["msg5_30_7"]
-	__vars["msg5_30_7"]=__vars["name_33_8"]+"> "+__vars["msg_33_8"]
+	__vars["written_34_8"] = __vars["written_34_8"] + 1
+	__vars["msg0_30_7"] = __vars["msg1_30_7"]
+	__vars["msg1_30_7"] = __vars["msg2_30_7"]
+	__vars["msg2_30_7"] = __vars["msg3_30_7"]
+	__vars["msg3_30_7"] = __vars["msg4_30_7"]
+	__vars["msg4_30_7"] = __vars["msg5_30_7"]
+	__vars["msg5_30_7"] = __vars["name_33_8"] + "> " + __vars["msg_33_8"]
 	__next_logic = 10
 	__save_session_Chat()
 	__logic_session_Chat_10()
 def __logic_session_Chat_8():
 	global __vars
 	global __next_logic
-	if __vars["msg_33_8"]!="":
+	if __vars["msg_33_8"] != "":
 		__next_logic = 9
 		__save_session_Chat()
 		__logic_session_Chat_9()
@@ -204,7 +204,7 @@ def __logic_session_Chat_10():
 def __logic_session_Chat_4():
 	global __vars
 	global __next_logic
-	if __vars["quit_33_8"]!="yes":
+	if __vars["quit_33_8"] != "yes":
 		__next_logic = 5
 		__save_session_Chat()
 		__logic_session_Chat_5()

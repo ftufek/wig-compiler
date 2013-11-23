@@ -42,7 +42,7 @@ def __b(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_da1b8048-eb55-47ec-b6a4-2c6733247250"
+	global_vars_file = "GLOBAL_1ae8b51a-96db-4e63-aa6a-14a6cbb786e7"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -51,7 +51,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_da1b8048-eb55-47ec-b6a4-2c6733247250"
+	global_vars_file = "GLOBAL_1ae8b51a-96db-4e63-aa6a-14a6cbb786e7"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -99,15 +99,15 @@ def __session_b():
 def __logic_session_b_1():
 	global __vars
 	global __next_logic
-	__vars["counter_14_8"]=4
-	__vars["a_15_8"]=3
+	__vars["counter_14_8"] = 4
+	__vars["a_15_8"] = 3
 	__next_logic = 2
 	__save_session_b()
 	__logic_session_b_2()
 def __logic_session_b_3():
 	global __vars
 	global __next_logic
-	__vars["counter_14_8"]=__vars["counter_14_8"]-1
+	__vars["counter_14_8"] = __vars["counter_14_8"] - 1
 	print(__layout(__b({'gap':__vars["counter_14_8"]})))
 	__next_logic = 4
 	__save_session_b()
@@ -120,7 +120,7 @@ def __logic_session_b_4():
 def __logic_session_b_2():
 	global __vars
 	global __next_logic
-	if __vars["counter_14_8"]>0:
+	if __vars["counter_14_8"] > 0:
 		__next_logic = 3
 		__save_session_b()
 		__logic_session_b_3()

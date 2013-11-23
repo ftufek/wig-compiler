@@ -45,7 +45,7 @@ def __c(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_fa4b2e79-25c4-4b1c-928e-d5453e846091"
+	global_vars_file = "GLOBAL_6307aa2f-0a2d-493f-b380-e85803a6d991"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -54,7 +54,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_fa4b2e79-25c4-4b1c-928e-d5453e846091"
+	global_vars_file = "GLOBAL_6307aa2f-0a2d-493f-b380-e85803a6d991"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -102,23 +102,23 @@ def __session_b():
 def __logic_session_b_1():
 	global __vars
 	global __next_logic
-	__vars["counter_16_10"]=4
-	__vars["inner_counter_17_10"]=2
-	__vars["a_18_10"]=3
+	__vars["counter_16_10"] = 4
+	__vars["inner_counter_17_10"] = 2
+	__vars["a_18_10"] = 3
 	__next_logic = 2
 	__save_session_b()
 	__logic_session_b_2()
 def __logic_session_b_3():
 	global __vars
 	global __next_logic
-	__vars["counter_16_10"]=__vars["counter_16_10"]-1
+	__vars["counter_16_10"] = __vars["counter_16_10"] - 1
 	__next_logic = 4
 	__save_session_b()
 	__logic_session_b_4()
 def __logic_session_b_5():
 	global __vars
 	global __next_logic
-	__vars["inner_counter_17_10"]=__vars["inner_counter_17_10"]-1
+	__vars["inner_counter_17_10"] = __vars["inner_counter_17_10"] - 1
 	print(__layout(__c({'g':__vars["counter_16_10"],'a':__vars["inner_counter_17_10"]
 	})))
 	__next_logic = 6
@@ -132,7 +132,7 @@ def __logic_session_b_6():
 def __logic_session_b_4():
 	global __vars
 	global __next_logic
-	if __vars["inner_counter_17_10"]>0:
+	if __vars["inner_counter_17_10"] > 0:
 		__next_logic = 5
 		__save_session_b()
 		__logic_session_b_5()
@@ -144,14 +144,14 @@ def __logic_session_b_4():
 def __logic_session_b_7():
 	global __vars
 	global __next_logic
-	__vars["inner_counter_17_10"]=2
+	__vars["inner_counter_17_10"] = 2
 	__next_logic = 2
 	__save_session_b()
 	__logic_session_b_2()
 def __logic_session_b_2():
 	global __vars
 	global __next_logic
-	if __vars["counter_16_10"]>0:
+	if __vars["counter_16_10"] > 0:
 		__next_logic = 3
 		__save_session_b()
 		__logic_session_b_3()

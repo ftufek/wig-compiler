@@ -182,7 +182,7 @@ def __End(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_34ef73e9-f94d-4b4f-bf9b-79d660817e15"
+	global_vars_file = "GLOBAL_fccfd83c-de55-494e-8545-0042b6c5a657"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -191,7 +191,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_34ef73e9-f94d-4b4f-bf9b-79d660817e15"
+	global_vars_file = "GLOBAL_fccfd83c-de55-494e-8545-0042b6c5a657"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -253,54 +253,49 @@ def __logic_session_Access_3():
 	__next_logic = 4
 	__save_session_Access()
 	__logic_session_Access_4()
-def __logic_session_Access_5():
-	global __vars
-	global __next_logic
-	__next_logic = 6
-	__save_session_Access()
-	__logic_session_Access_6()
-def __logic_session_Access_7():
+def __logic_session_Access_6():
 	global __vars
 	global __next_logic
 	print(__layout(__Red({})))
-	__next_logic = 8
+	__next_logic = 7
 	__save_session_Access()
-def __logic_session_Access_8():
+def __logic_session_Access_7():
 	global __vars
 	global __next_logic
 	__vars["man_157_14"] = int(__cgi_input.getvalue("man"))
-	__next_logic = 9
+	__next_logic = 8
 	__save_session_Access()
-	__logic_session_Access_9()
+	__logic_session_Access_8()
 def __logic_session_Access_9():
 	global __vars
 	global __next_logic
+	print(__layout(__Blue({})))
 	__next_logic = 10
 	__save_session_Access()
-	__logic_session_Access_10()
-def __logic_session_Access_11():
-	global __vars
-	global __next_logic
-	print(__layout(__Blue({})))
-	__next_logic = 12
-	__save_session_Access()
-def __logic_session_Access_12():
+def __logic_session_Access_10():
 	global __vars
 	global __next_logic
 	__vars["man_157_14"] = int(__cgi_input.getvalue("man"))
+	__next_logic = 11
+	__save_session_Access()
+	__logic_session_Access_11()
+def __logic_session_Access_12():
+	global __vars
+	global __next_logic
+	print(__layout(__Green({})))
 	__next_logic = 13
 	__save_session_Access()
-	__logic_session_Access_13()
 def __logic_session_Access_13():
 	global __vars
 	global __next_logic
+	__vars["man_157_14"] = int(__cgi_input.getvalue("man"))
 	__next_logic = 14
 	__save_session_Access()
 	__logic_session_Access_14()
 def __logic_session_Access_15():
 	global __vars
 	global __next_logic
-	print(__layout(__Green({})))
+	print(__layout(__Purple({})))
 	__next_logic = 16
 	__save_session_Access()
 def __logic_session_Access_16():
@@ -316,36 +311,65 @@ def __logic_session_Access_17():
 	__next_logic = 18
 	__save_session_Access()
 	__logic_session_Access_18()
+def __logic_session_Access_14():
+	global __vars
+	global __next_logic
+	if __vars["man_157_14"] == 4:
+		__next_logic = 15
+		__save_session_Access()
+		__logic_session_Access_15()
+	else:
+		__next_logic = 18
+		__save_session_Access()
+		__logic_session_Access_18()
+	
+def __logic_session_Access_18():
+	global __vars
+	global __next_logic
+	__next_logic = 20
+	__save_session_Access()
+	__logic_session_Access_20()
 def __logic_session_Access_19():
 	global __vars
 	global __next_logic
-	print(__layout(__Purple({})))
 	__next_logic = 20
 	__save_session_Access()
+	__logic_session_Access_20()
+def __logic_session_Access_11():
+	global __vars
+	global __next_logic
+	if __vars["man_157_14"] == 3:
+		__next_logic = 12
+		__save_session_Access()
+		__logic_session_Access_12()
+	else:
+		__next_logic = 14
+		__save_session_Access()
+		__logic_session_Access_14()
+	
 def __logic_session_Access_20():
 	global __vars
 	global __next_logic
-	__vars["man_157_14"] = int(__cgi_input.getvalue("man"))
-	__next_logic = 21
+	__next_logic = 22
 	__save_session_Access()
-	__logic_session_Access_21()
+	__logic_session_Access_22()
 def __logic_session_Access_21():
 	global __vars
 	global __next_logic
 	__next_logic = 22
 	__save_session_Access()
 	__logic_session_Access_22()
-def __logic_session_Access_18():
+def __logic_session_Access_8():
 	global __vars
 	global __next_logic
-	if __vars["man_157_14"]==4:
-		__next_logic = 19
+	if __vars["man_157_14"] == 2:
+		__next_logic = 9
 		__save_session_Access()
-		__logic_session_Access_19()
+		__logic_session_Access_9()
 	else:
-		__next_logic = 22
+		__next_logic = 11
 		__save_session_Access()
-		__logic_session_Access_22()
+		__logic_session_Access_11()
 	
 def __logic_session_Access_22():
 	global __vars
@@ -359,67 +383,19 @@ def __logic_session_Access_23():
 	__next_logic = 24
 	__save_session_Access()
 	__logic_session_Access_24()
-def __logic_session_Access_14():
+def __logic_session_Access_5():
 	global __vars
 	global __next_logic
-	if __vars["man_157_14"]==3:
-		__next_logic = 15
+	if __vars["man_157_14"] == 1:
+		__next_logic = 6
 		__save_session_Access()
-		__logic_session_Access_15()
+		__logic_session_Access_6()
 	else:
-		__next_logic = 17
+		__next_logic = 8
 		__save_session_Access()
-		__logic_session_Access_17()
+		__logic_session_Access_8()
 	
 def __logic_session_Access_24():
-	global __vars
-	global __next_logic
-	__next_logic = 26
-	__save_session_Access()
-	__logic_session_Access_26()
-def __logic_session_Access_25():
-	global __vars
-	global __next_logic
-	__next_logic = 26
-	__save_session_Access()
-	__logic_session_Access_26()
-def __logic_session_Access_10():
-	global __vars
-	global __next_logic
-	if __vars["man_157_14"]==2:
-		__next_logic = 11
-		__save_session_Access()
-		__logic_session_Access_11()
-	else:
-		__next_logic = 13
-		__save_session_Access()
-		__logic_session_Access_13()
-	
-def __logic_session_Access_26():
-	global __vars
-	global __next_logic
-	__next_logic = 28
-	__save_session_Access()
-	__logic_session_Access_28()
-def __logic_session_Access_27():
-	global __vars
-	global __next_logic
-	__next_logic = 28
-	__save_session_Access()
-	__logic_session_Access_28()
-def __logic_session_Access_6():
-	global __vars
-	global __next_logic
-	if __vars["man_157_14"]==1:
-		__next_logic = 7
-		__save_session_Access()
-		__logic_session_Access_7()
-	else:
-		__next_logic = 9
-		__save_session_Access()
-		__logic_session_Access_9()
-	
-def __logic_session_Access_28():
 	global __vars
 	global __next_logic
 	__next_logic = 4
@@ -428,27 +404,27 @@ def __logic_session_Access_28():
 def __logic_session_Access_4():
 	global __vars
 	global __next_logic
-	if __vars["man_157_14"]!=5:
+	if __vars["man_157_14"] != 5:
 		__next_logic = 5
 		__save_session_Access()
 		__logic_session_Access_5()
 	else:
-		__next_logic = 29
+		__next_logic = 25
 		__save_session_Access()
-		__logic_session_Access_29()
+		__logic_session_Access_25()
 	
-def __logic_session_Access_29():
+def __logic_session_Access_25():
 	global __vars
 	global __next_logic
 	print(__layout(__End({})))
-	__next_logic = 30
+	__next_logic = 26
 	__save_session_Access()
-def __logic_session_Access_30():
+def __logic_session_Access_26():
 	global __vars
 	global __next_logic
-	__next_logic = 29
+	__next_logic = 25
 	__save_session_Access()
-	__logic_session_Access_29()
+	__logic_session_Access_25()
 print "Content-type: text/html"
 print
 __load_global_vars()

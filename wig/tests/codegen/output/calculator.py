@@ -56,7 +56,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_32f52f44-f9a1-4286-b621-88052e1647e6"
+	global_vars_file = "GLOBAL_1c770915-c939-491b-aa69-3e67e63b7edf"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -65,7 +65,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_32f52f44-f9a1-4286-b621-88052e1647e6"
+	global_vars_file = "GLOBAL_1c770915-c939-491b-aa69-3e67e63b7edf"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -113,7 +113,7 @@ def __session_Calculate():
 def __logic_session_Calculate_1():
 	global __vars
 	global __next_logic
-	__vars["YorN_31_8"]=""
+	__vars["YorN_31_8"] = ""
 	__next_logic = 2
 	__save_session_Calculate()
 	__logic_session_Calculate_2()
@@ -132,70 +132,58 @@ def __logic_session_Calculate_4():
 	__next_logic = 5
 	__save_session_Calculate()
 	__logic_session_Calculate_5()
-def __logic_session_Calculate_5():
-	global __vars
-	global __next_logic
-	__next_logic = 6
-	__save_session_Calculate()
-	__logic_session_Calculate_6()
-def __logic_session_Calculate_7():
-	global __vars
-	global __next_logic
-	__vars["Ans_28_7"]=__vars["int1_32_8"]+__vars["int2_32_8"]
-	__next_logic = 8
-	__save_session_Calculate()
-	__logic_session_Calculate_8()
 def __logic_session_Calculate_6():
 	global __vars
 	global __next_logic
-	if __vars["operator_33_8"]=="+":
+	__vars["Ans_28_7"] = __vars["int1_32_8"] + __vars["int2_32_8"]
+	__next_logic = 7
+	__save_session_Calculate()
+	__logic_session_Calculate_7()
+def __logic_session_Calculate_5():
+	global __vars
+	global __next_logic
+	if __vars["operator_33_8"] == "+":
+		__next_logic = 6
+		__save_session_Calculate()
+		__logic_session_Calculate_6()
+	else:
 		__next_logic = 7
 		__save_session_Calculate()
 		__logic_session_Calculate_7()
-	else:
-		__next_logic = 8
-		__save_session_Calculate()
-		__logic_session_Calculate_8()
 	
 def __logic_session_Calculate_8():
 	global __vars
 	global __next_logic
+	__vars["Ans_28_7"] = __vars["int1_32_8"] - __vars["int2_32_8"]
 	__next_logic = 9
 	__save_session_Calculate()
 	__logic_session_Calculate_9()
-def __logic_session_Calculate_10():
+def __logic_session_Calculate_7():
 	global __vars
 	global __next_logic
-	__vars["Ans_28_7"]=__vars["int1_32_8"]-__vars["int2_32_8"]
-	__next_logic = 11
-	__save_session_Calculate()
-	__logic_session_Calculate_11()
+	if __vars["operator_33_8"] == "-":
+		__next_logic = 8
+		__save_session_Calculate()
+		__logic_session_Calculate_8()
+	else:
+		__next_logic = 9
+		__save_session_Calculate()
+		__logic_session_Calculate_9()
+	
 def __logic_session_Calculate_9():
 	global __vars
 	global __next_logic
-	if __vars["operator_33_8"]=="-":
-		__next_logic = 10
-		__save_session_Calculate()
-		__logic_session_Calculate_10()
-	else:
-		__next_logic = 11
-		__save_session_Calculate()
-		__logic_session_Calculate_11()
-	
-def __logic_session_Calculate_11():
-	global __vars
-	global __next_logic
 	print(__layout(__Return({'Ans':__vars["Ans_28_7"]})))
-	__next_logic = 12
+	__next_logic = 10
 	__save_session_Calculate()
-def __logic_session_Calculate_12():
+def __logic_session_Calculate_10():
 	global __vars
 	global __next_logic
 	__vars["YorN_31_8"] = __cgi_input.getvalue("YorN")
-	__next_logic = 13
+	__next_logic = 11
 	__save_session_Calculate()
-	__logic_session_Calculate_13()
-def __logic_session_Calculate_13():
+	__logic_session_Calculate_11()
+def __logic_session_Calculate_11():
 	global __vars
 	global __next_logic
 	__next_logic = 2
@@ -204,27 +192,27 @@ def __logic_session_Calculate_13():
 def __logic_session_Calculate_2():
 	global __vars
 	global __next_logic
-	if __vars["YorN_31_8"]!="no":
+	if __vars["YorN_31_8"] != "no":
 		__next_logic = 3
 		__save_session_Calculate()
 		__logic_session_Calculate_3()
 	else:
-		__next_logic = 14
+		__next_logic = 12
 		__save_session_Calculate()
-		__logic_session_Calculate_14()
+		__logic_session_Calculate_12()
 	
-def __logic_session_Calculate_14():
+def __logic_session_Calculate_12():
 	global __vars
 	global __next_logic
 	print(__layout(__ByeBye({})))
-	__next_logic = 15
+	__next_logic = 13
 	__save_session_Calculate()
-def __logic_session_Calculate_15():
+def __logic_session_Calculate_13():
 	global __vars
 	global __next_logic
-	__next_logic = 14
+	__next_logic = 12
 	__save_session_Calculate()
-	__logic_session_Calculate_14()
+	__logic_session_Calculate_12()
 print "Content-type: text/html"
 print
 __load_global_vars()

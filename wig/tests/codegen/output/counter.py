@@ -34,7 +34,7 @@ def __Nikolaj(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_3a725849-b5fc-4b34-9d6a-a6e5e603e5f2"
+	global_vars_file = "GLOBAL_e5f47f1f-85f6-4d4b-95c7-76f0ad05b5e4"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -43,7 +43,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_3a725849-b5fc-4b34-9d6a-a6e5e603e5f2"
+	global_vars_file = "GLOBAL_e5f47f1f-85f6-4d4b-95c7-76f0ad05b5e4"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -91,7 +91,7 @@ def __session_Access():
 def __logic_session_Access_1():
 	global __vars
 	global __next_logic
-	__vars["counter_8_3"]=__vars["counter_8_3"]+1
+	__vars["counter_8_3"] = __vars["counter_8_3"] + 1
 	print(__layout(__Nikolaj({'no':__vars["counter_8_3"]})))
 	__next_logic = 2
 	__save_session_Access()
