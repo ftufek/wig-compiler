@@ -58,7 +58,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_c6040c47-9b46-4fbb-86c5-df006bfaca21"
+	global_vars_file = "GLOBAL_8eeddb44-84a2-4388-b1a4-f5553b1c4bd2"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -67,7 +67,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_c6040c47-9b46-4fbb-86c5-df006bfaca21"
+	global_vars_file = "GLOBAL_8eeddb44-84a2-4388-b1a4-f5553b1c4bd2"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)

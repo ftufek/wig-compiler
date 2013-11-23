@@ -182,6 +182,8 @@ void CodeGenerator::visit(ast::Session *s){
 	_label_stms.push_back(_t_call_next_logic(_in_session, _current_label));
 	PrintLabelStms(NewLabel(), _label_stms);
 
+	_label_stms.clear();
+	_current_label = 0;
 	_in_session = "";
 }
 
