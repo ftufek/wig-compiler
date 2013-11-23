@@ -45,7 +45,7 @@ def __c(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_1e86e344-bc19-4d37-8688-4c300b355e38"
+	global_vars_file = "GLOBAL_0faa9efd-e2ea-45f4-9021-b78e50028e79"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -54,7 +54,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_1e86e344-bc19-4d37-8688-4c300b355e38"
+	global_vars_file = "GLOBAL_0faa9efd-e2ea-45f4-9021-b78e50028e79"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -166,6 +166,12 @@ def __logic_session_b_8():
 	print(__layout(__b({'gap':__vars["counter_16_10"]})))
 	__next_logic = 9
 	__save_session_b()
+def __logic_session_b_9():
+	global __vars
+	global __next_logic
+	__next_logic = 8
+	__save_session_b()
+	__logic_session_b_8()
 print "Content-type: text/html"
 print
 __load_global_vars()

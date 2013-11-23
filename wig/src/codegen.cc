@@ -171,6 +171,13 @@ void CodeGenerator::visit(ast::Session *s){
 	_in_session = s->id_;
 	_label_stms.clear();
 	s->stm_->accept(this);
+
+	//The following is necessary, because the way I designed session logic is
+	//at the end there's always a jump to next label. But once everything is
+	//generated, there's no next label. So I need to revert it
+	_label_stms.push_back(_t_call_next_logic(_in_session, _current_label));
+	PrintLabelStms(NewLabel(), _label_stms);
+
 	_in_session = "";
 }
 

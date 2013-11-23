@@ -56,7 +56,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_8c41de80-6f9f-41a7-a59e-ca4065c17759"
+	global_vars_file = "GLOBAL_ee2e6bad-8443-4266-ab71-1718b3882029"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -65,7 +65,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_8c41de80-6f9f-41a7-a59e-ca4065c17759"
+	global_vars_file = "GLOBAL_ee2e6bad-8443-4266-ab71-1718b3882029"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -207,6 +207,12 @@ def __logic_session_Calculate_12():
 	print(__layout(__ByeBye({})))
 	__next_logic = 13
 	__save_session_Calculate()
+def __logic_session_Calculate_13():
+	global __vars
+	global __next_logic
+	__next_logic = 12
+	__save_session_Calculate()
+	__logic_session_Calculate_12()
 print "Content-type: text/html"
 print
 __load_global_vars()
