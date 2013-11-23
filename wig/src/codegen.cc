@@ -208,11 +208,18 @@ void CodeGenerator::visit(ast::PlugStm *s){
 }
 
 void CodeGenerator::visit(ast::ReceiveStm *s){
-	//TODO: implement
+	for(auto input : *(s->inputs_)){
+		input->accept(this);
+	}
 }
 
 void CodeGenerator::visit(ast::InputStm *s){
-	//TODO: implement
+	auto sym = _sym_table.GetUniqueKeySymbol(s->lvalue_);
+	if(sym){
+		string var = _t_var(sym.get());
+		string input = _t_cgi_input(s->id_);
+		_label_stms.push_back(var + " = " + input);
+	}
 }
 
 void CodeGenerator::visit(ast::ExitStm *s){

@@ -5,7 +5,7 @@ import os
 import uuid
 import pickle
 cgitb.enable()
-__cg_input = cgi.FieldStorage()
+__cgi_input = cgi.FieldStorage()
 __session = os.environ["QUERY_STRING"].split("&")[0]
 __vars = {}
 __sid = 0
@@ -56,7 +56,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_c305b52b-5f6a-4285-9ae9-06db45fab99a"
+	global_vars_file = "GLOBAL_565610b0-4ece-46d7-8f61-de2c236ace76"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -65,7 +65,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_c305b52b-5f6a-4285-9ae9-06db45fab99a"
+	global_vars_file = "GLOBAL_565610b0-4ece-46d7-8f61-de2c236ace76"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -104,7 +104,7 @@ def __load_session_Calculate(session_id):
 	globals()["__logic_session_Calculate_"+str(__next_logic)]()
 
 def __session_Calculate():
-	sid = __cg_input.getvalue("sid", "")
+	sid = __cgi_input.getvalue("sid", "")
 	if sid == "":
 		__init_session_Calculate()
 	else:
@@ -126,12 +126,16 @@ def __logic_session_Calculate_3():
 def __logic_session_Calculate_4():
 	global __vars
 	global __next_logic
+	__vars["operator_33_8"] = __cgi_input.getvalue("operator")
+	__vars["int1_32_8"] = __cgi_input.getvalue("int1")
+	__vars["int2_32_8"] = __cgi_input.getvalue("int2")
 	print(__layout(__Return({'Ans':__vars["Ans_28_7"]})))
 	__next_logic = 5
 	__save_session_Calculate()
 def __logic_session_Calculate_5():
 	global __vars
 	global __next_logic
+	__vars["YorN_31_8"] = __cgi_input.getvalue("YorN")
 	__next_logic = 2
 	__save_session_Calculate()
 	__logic_session_Calculate_2()

@@ -5,7 +5,7 @@ import os
 import uuid
 import pickle
 cgitb.enable()
-__cg_input = cgi.FieldStorage()
+__cgi_input = cgi.FieldStorage()
 __session = os.environ["QUERY_STRING"].split("&")[0]
 __vars = {}
 __sid = 0
@@ -45,7 +45,7 @@ def __c(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_37be783b-708f-4962-836f-10a96ac866fe"
+	global_vars_file = "GLOBAL_fc1262ef-b616-4541-b74b-8aa3bfd9ee12"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -54,7 +54,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_37be783b-708f-4962-836f-10a96ac866fe"
+	global_vars_file = "GLOBAL_fc1262ef-b616-4541-b74b-8aa3bfd9ee12"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -93,7 +93,7 @@ def __load_session_b(session_id):
 	globals()["__logic_session_b_"+str(__next_logic)]()
 
 def __session_b():
-	sid = __cg_input.getvalue("sid", "")
+	sid = __cgi_input.getvalue("sid", "")
 	if sid == "":
 		__init_session_b()
 	else:

@@ -5,7 +5,7 @@ import os
 import uuid
 import pickle
 cgitb.enable()
-__cg_input = cgi.FieldStorage()
+__cgi_input = cgi.FieldStorage()
 __session = os.environ["QUERY_STRING"].split("&")[0]
 __vars = {}
 __sid = 0
@@ -43,7 +43,7 @@ def __Total(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_557e2b2a-25a4-4314-a264-d4d3033c7ff7"
+	global_vars_file = "GLOBAL_cc537bd3-6c57-4dc5-92be-f4e44d7e1458"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -52,7 +52,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_557e2b2a-25a4-4314-a264-d4d3033c7ff7"
+	global_vars_file = "GLOBAL_cc537bd3-6c57-4dc5-92be-f4e44d7e1458"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -91,7 +91,7 @@ def __load_session_Contribute(session_id):
 	globals()["__logic_session_Contribute_"+str(__next_logic)]()
 
 def __session_Contribute():
-	sid = __cg_input.getvalue("sid", "")
+	sid = __cgi_input.getvalue("sid", "")
 	if sid == "":
 		__init_session_Contribute()
 	else:
@@ -113,6 +113,7 @@ def __logic_session_Contribute_2():
 def __logic_session_Contribute_3():
 	global __vars
 	global __next_logic
+	__vars["i_18_8"] = __cgi_input.getvalue("contribution")
 	__vars["amount_15_7"]=__vars["amount_15_7"]+__vars["i_18_8"]
 	print(__layout(__Total({'total':__vars["amount_15_7"]})))
 	__next_logic = 4

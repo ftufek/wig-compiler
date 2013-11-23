@@ -16,7 +16,7 @@
 
 using namespace std;
 
-string cgi_input = "__cg_input";
+string cgi_input = "__cgi_input";
 string session = "__session";
 string vars = "__vars";
 string sid = "__sid";
@@ -250,12 +250,8 @@ std::string _t_session_stm_stack(const std::string &session_name,
 	return ss.str();
 }
 
-std::string _t_var(const std::string &uniq_key, bool is_global){
-	stringstream ss;
-	if(is_global){ss<<"__global_vars[\"";}
-	else{ss<<vars<<"[\"";}
-	ss<<uniq_key<<"\"]";
-	return ss.str();
+std::string _t_var(const std::string &uniq_key){
+	return vars+"[\""+uniq_key+"\"]";
 }
 
 std::string _t_next_logic(const std::string &session_name, const int n){
@@ -303,6 +299,10 @@ std::string _t_print_html(const std::string &name,
 	auto layout = _t_py_fn_call("__layout",
 			list<string>{_t_py_fn_call("__"+name,list<string>{args_str})});
 	return _t_py_fn_call("print", list<string>{layout});
+}
+
+std::string _t_cgi_input(const std::string &name){
+	return cgi_input+".getvalue(\""+name+"\")";
 }
 
 std::string _t_main_print_stms(const std::list<std::string> &sessions){
