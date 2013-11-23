@@ -71,7 +71,7 @@ std::string _t_imports(const std::list<std::string> &to_import){
 std::string _t_enable_cgi(){
 	stringstream ss;
 	ss<<"cgitb.enable()"<<endl
-		<<cgi_input<<" = cgi.FieldStorage()"<<endl
+		<<cgi_input<<" = cgi.FieldStorage(keep_blank_values=1)"<<endl
 		<<session<<" = os.environ[\"QUERY_STRING\"].split(\"&\")[0]"<<endl;
 	return ss.str();
 }

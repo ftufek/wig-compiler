@@ -5,7 +5,7 @@ import os
 import uuid
 import pickle
 cgitb.enable()
-__cgi_input = cgi.FieldStorage()
+__cgi_input = cgi.FieldStorage(keep_blank_values=1)
 __session = os.environ["QUERY_STRING"].split("&")[0]
 __vars = {}
 __sid = 0
@@ -34,7 +34,7 @@ def __Nikolaj(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_e5f47f1f-85f6-4d4b-95c7-76f0ad05b5e4"
+	global_vars_file = "GLOBAL_c8c52164-c1b6-450b-bf58-0865481572e1"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -43,7 +43,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_e5f47f1f-85f6-4d4b-95c7-76f0ad05b5e4"
+	global_vars_file = "GLOBAL_c8c52164-c1b6-450b-bf58-0865481572e1"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)

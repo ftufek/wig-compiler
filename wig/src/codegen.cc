@@ -58,9 +58,13 @@ int CodeGenerator::NewLabel(){
 
 std::string CodeGenerator::ExpToStr(ast::Exp *s){
 	s->accept(this);
-	auto e = _exps.back();
-	_exps.pop_back();
-	return e;
+	if(_exps.size()){
+		auto e = _exps.back();
+		_exps.pop_back();
+		return e;
+	}else{
+		return "ERROR_IN_EXP_TO_STR";
+	}
 }
 
 void CodeGenerator::visit(ast::Service *s){
@@ -405,7 +409,17 @@ void CodeGenerator::visit(ast::BinopExp *s){
 }
 
 void CodeGenerator::visit(ast::UnopExp *s){
-	//TODO: implement
+	auto val = ExpToStr(s->exp_);
+	switch(s->type_){
+	case ast::kUnopType::LogicNegate:
+		_exps.push_back("not "+val);
+		break;
+	case ast::kUnopType::Minus:
+		_exps.push_back("-"+val);
+		break;
+	default:
+		break;
+	}
 }
 
 void CodeGenerator::visit(ast::TupleopExp *s){
