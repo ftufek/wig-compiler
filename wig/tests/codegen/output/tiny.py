@@ -41,11 +41,33 @@ def __Total(__varDict):
     The total is now {total}.
   </body> """.format(**(__varDict))
 
+__global_vars = []
+def __save_global_vars():
+	global_vars_file = "GLOBAL_557e2b2a-25a4-4314-a264-d4d3033c7ff7"
+	open(global_vars_file, 'w').close()
+	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
+	with open(global_vars_file, "w") as f:
+		pickle.dump(global_vars, f)
+	return
+
+def __load_global_vars():
+	global __vars
+	global_vars_file = "GLOBAL_557e2b2a-25a4-4314-a264-d4d3033c7ff7"
+	try:
+		with open(global_vars_file, "r") as f:
+			global_vars = pickle.load(f)
+			__vars = dict(__vars.items() + global_vars.items())
+	except IOError:
+		return
+
+__vars["amount_15_7"] = 0
+__global_vars.append("amount_15_7")
 def __save_session_Contribute():
 	session_file = "Contribute$"+str(__sid)
 	open(session_file, 'w').close()
+	session_vars = dict((k, __vars[k]) for k in __vars if k not in __global_vars)
 	with open(session_file, "w") as f:
-		pickle.dump(__vars, f)
+		pickle.dump(session_vars, f)
 		pickle.dump(__next_logic, f)
 	return
 
@@ -63,8 +85,9 @@ def __load_session_Contribute(session_id):
 	global __sid
 	__sid = session_id
 	with open("Contribute$"+str(__sid), "r") as f:
-		__vars = pickle.load(f)
+		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
+		__vars = dict(__vars.items() + session_vars.items())
 	globals()["__logic_session_Contribute_"+str(__next_logic)]()
 
 def __session_Contribute():
@@ -96,8 +119,10 @@ def __logic_session_Contribute_3():
 	__save_session_Contribute()
 print "Content-type: text/html"
 print
+__load_global_vars()
 if __session == "Contribute":
 	__session_Contribute()
 else:
 	print __layout("Please select one of the following sessions: Contribute")
+__save_global_vars()
 

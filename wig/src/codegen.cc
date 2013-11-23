@@ -12,7 +12,8 @@ namespace visitors {
 
 CodeGenerator::CodeGenerator(std::ostream &out)
 	:cgout(out),_fields({}), _sessions({}), _in_session({}),
-	 _current_label(0), _label_stms({}), _exps({}),_sym_table(st::Table()) {}
+	 _current_label(0), _label_stms({}), _exps({}),_sym_table(st::Table()),
+	 _is_generating_global_variables(false) {}
 
 std::string CodeGenerator::PrettyPrint(ast::Base *s){
 	stringstream ss;
@@ -70,7 +71,12 @@ void CodeGenerator::visit(ast::Service *s){
 
 	s->schemas_->accept(this);
 	cgout<<_t_html_layout()<<endl;
+
+	_is_generating_global_variables = true;
 	s->htmls_->accept(this);
+	cgout<<_t_global_vars_helpers()<<endl;
+	s->global_variables_->accept(this);
+	_is_generating_global_variables = false;
 
 	s->sessions_->accept(this);
 
@@ -80,11 +86,33 @@ void CodeGenerator::visit(ast::Service *s){
 void CodeGenerator::visit(ast::Whatever *s ) {}
 
 void CodeGenerator::visit(ast::Variable *s) {
-	if(s->type_->type_ == ast::kType::HTML){
-		//Generate html function
-		cgout<<_t_html_function(s->name_, PrettyPrint(s->value_))<<endl;
+	if(_is_generating_global_variables){
+		if(s->type_->type_ == ast::kType::HTML){
+			//Generate html function
+			cgout<<_t_html_function(s->name_, PrettyPrint(s->value_))<<endl;
+		}else{
+			string def_val{"\"\""};
+			switch(s->type_->type_){
+			//INT, BOOL, STRING, VOID, TUPLE, HTML, SCHEMA, UNDEFINED
+			case ast::kType::INT:
+				def_val = "0";
+				break;
+
+			case ast::kType::BOOL:
+				def_val = "False";
+				break;
+
+			default:
+				break;
+			}
+			auto key = _sym_table.GetUniqueKeySymbol(s->name_);
+			if(key){
+				cgout<<_t_global_var(key.get(), def_val)<<endl;
+			}else{
+				cerr<<"ERROR_IN_CODEGEN";
+			}
+		}
 	}
-	//TODO: implement global variables (tiny.wig in benchmarks for more info...)
 }
 
 void CodeGenerator::visit(ast::Function *s) {

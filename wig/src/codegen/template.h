@@ -20,6 +20,8 @@ std::string _t_env();
 std::string _t_imports(const std::list<std::string> &to_import);
 std::string _t_enable_cgi();
 std::string _t_state_vars();
+std::string _t_global_vars_helpers();
+std::string _t_global_var(const std::string &name, const std::string &def_val);
 
 std::string _t_schema_class(const std::string &name,
 							const std::list<std::pair<std::string, std::string>> &fields);
@@ -37,7 +39,7 @@ std::string _t_session(const std::string &name);
 std::string _t_session_stm_stack(const std::string &session_name,
 								 const int label,
 								 const std::list<std::string> &stms);
-std::string _t_var(const std::string &uniq_key);
+std::string _t_var(const std::string &uniq_key, bool is_global = false);
 std::string _t_next_logic(const std::string &session_name, const int n);
 std::string _t_call_next_logic(const std::string &session_name, const int n);
 std::string _t_if_stm(const std::string &condition,

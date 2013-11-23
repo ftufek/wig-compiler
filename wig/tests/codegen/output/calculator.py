@@ -54,11 +54,33 @@ def __ByeBye(__varDict):
     <h1>Thank you for using this calculator</h1>
   </body> """.format(**(__varDict))
 
+__global_vars = []
+def __save_global_vars():
+	global_vars_file = "GLOBAL_c305b52b-5f6a-4285-9ae9-06db45fab99a"
+	open(global_vars_file, 'w').close()
+	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
+	with open(global_vars_file, "w") as f:
+		pickle.dump(global_vars, f)
+	return
+
+def __load_global_vars():
+	global __vars
+	global_vars_file = "GLOBAL_c305b52b-5f6a-4285-9ae9-06db45fab99a"
+	try:
+		with open(global_vars_file, "r") as f:
+			global_vars = pickle.load(f)
+			__vars = dict(__vars.items() + global_vars.items())
+	except IOError:
+		return
+
+__vars["Ans_28_7"] = 0
+__global_vars.append("Ans_28_7")
 def __save_session_Calculate():
 	session_file = "Calculate$"+str(__sid)
 	open(session_file, 'w').close()
+	session_vars = dict((k, __vars[k]) for k in __vars if k not in __global_vars)
 	with open(session_file, "w") as f:
-		pickle.dump(__vars, f)
+		pickle.dump(session_vars, f)
 		pickle.dump(__next_logic, f)
 	return
 
@@ -76,8 +98,9 @@ def __load_session_Calculate(session_id):
 	global __sid
 	__sid = session_id
 	with open("Calculate$"+str(__sid), "r") as f:
-		__vars = pickle.load(f)
+		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
+		__vars = dict(__vars.items() + session_vars.items())
 	globals()["__logic_session_Calculate_"+str(__next_logic)]()
 
 def __session_Calculate():
@@ -132,8 +155,10 @@ def __logic_session_Calculate_6():
 	__save_session_Calculate()
 print "Content-type: text/html"
 print
+__load_global_vars()
 if __session == "Calculate":
 	__session_Calculate()
 else:
 	print __layout("Please select one of the following sessions: Calculate")
+__save_global_vars()
 

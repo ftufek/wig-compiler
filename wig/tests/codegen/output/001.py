@@ -40,11 +40,33 @@ def __a(__varDict):
 def __b(__varDict):
 	return """{gap}""".format(**(__varDict))
 
+__global_vars = []
+def __save_global_vars():
+	global_vars_file = "GLOBAL_30c46836-a3a9-43e0-8fec-f7266916ca04"
+	open(global_vars_file, 'w').close()
+	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
+	with open(global_vars_file, "w") as f:
+		pickle.dump(global_vars, f)
+	return
+
+def __load_global_vars():
+	global __vars
+	global_vars_file = "GLOBAL_30c46836-a3a9-43e0-8fec-f7266916ca04"
+	try:
+		with open(global_vars_file, "r") as f:
+			global_vars = pickle.load(f)
+			__vars = dict(__vars.items() + global_vars.items())
+	except IOError:
+		return
+
+__vars["counter_12_7"] = 0
+__global_vars.append("counter_12_7")
 def __save_session_b():
 	session_file = "b$"+str(__sid)
 	open(session_file, 'w').close()
+	session_vars = dict((k, __vars[k]) for k in __vars if k not in __global_vars)
 	with open(session_file, "w") as f:
-		pickle.dump(__vars, f)
+		pickle.dump(session_vars, f)
 		pickle.dump(__next_logic, f)
 	return
 
@@ -62,8 +84,9 @@ def __load_session_b(session_id):
 	global __sid
 	__sid = session_id
 	with open("b$"+str(__sid), "r") as f:
-		__vars = pickle.load(f)
+		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
+		__vars = dict(__vars.items() + session_vars.items())
 	globals()["__logic_session_b_"+str(__next_logic)]()
 
 def __session_b():
@@ -114,8 +137,10 @@ def __logic_session_b_5():
 	__save_session_b()
 print "Content-type: text/html"
 print
+__load_global_vars()
 if __session == "b":
 	__session_b()
 else:
 	print __layout("Please select one of the following sessions: b")
+__save_global_vars()
 

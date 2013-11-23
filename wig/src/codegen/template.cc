@@ -8,6 +8,9 @@
 #include "template.h"
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include <sstream>
 #include "../codegen.h"
 
@@ -76,15 +79,49 @@ std::string _t_enable_cgi(){
 std::string _t_state_vars(){
 	/* vars: represents differents variables at different scopes using a dictionary.
 	 *
-	 * sids: unique ids for each session
+	 * sid: unique id for each session
 	 *
-	 * next_logics: next_logics for each session
+	 * next_logic: next_logic for each session
 	 *
 	 */
 	stringstream ss;
 	ss<<vars<<" = {}"<<endl
 		<<sid<<" = 0"<<endl
 		<<next_logic<<" = 1"<<endl;
+	return ss.str();
+}
+
+std::string _t_global_vars_helpers(){
+	stringstream ss;
+	boost::uuids::uuid globals_filename = boost::uuids::random_generator()();
+
+	ss<<"__global_vars = []"<<endl;
+
+	ss<<"def __save_global_vars():"<<endl;
+	ss<<indent(1)<<"global_vars_file = \"GLOBAL_"<<globals_filename<<"\""<<endl;
+	ss<<indent(1)<<"open(global_vars_file, 'w').close()"<<endl;
+	ss<<indent(1)<<"global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)"<<endl;
+	ss<<indent(1)<<"with open(global_vars_file, \"w\") as f:"<<endl;
+	ss<<indent(2)<<"pickle.dump(global_vars, f)"<<endl;
+	ss<<indent(1)<<"return"<<endl<<endl;
+
+	ss<<"def __load_global_vars():"<<endl;
+	ss<<indent(1)<<"global __vars"<<endl;
+	ss<<indent(1)<<"global_vars_file = \"GLOBAL_"<<globals_filename<<"\""<<endl;
+	ss<<indent(1)<<"try:"<<endl;
+	ss<<indent(2)<<"with open(global_vars_file, \"r\") as f:"<<endl;
+	ss<<indent(3)<<"global_vars = pickle.load(f)"<<endl;
+	ss<<indent(3)<<"__vars = dict(__vars.items() + global_vars.items())"<<endl;
+	ss<<indent(1)<<"except IOError:"<<endl;
+	ss<<indent(2)<<"return"<<endl;
+
+	return ss.str();
+}
+
+std::string _t_global_var(const std::string &name, const std::string &def_val){
+	stringstream ss;
+	ss<<"__vars[\""<<name<<"\"] = "<<def_val<<endl;
+	ss<<"__global_vars.append(\""<<name<<"\")";
 	return ss.str();
 }
 
@@ -151,9 +188,10 @@ std::string _t_save_session(const std::string &name){
 	ss<<"def __save_session_"<<name<<"():"<<endl;
 	ss<<indent(1)<<"session_file = \""<<name<<"$\"+str("<<sid<<")"<<endl;
 	ss<<indent(1)<<"open(session_file, 'w').close()"<<endl;
+	ss<<indent(1)<<"session_vars = dict((k, __vars[k]) for k in __vars if k not in __global_vars)"<<endl;
 	ss<<indent(1)<<"with open(session_file, \"w\") as f:"<<endl;
 
-	ss<<indent(2)<<"pickle.dump("<<vars<<", f)"<<endl;
+	ss<<indent(2)<<"pickle.dump(session_vars, f)"<<endl;
 	ss<<indent(2)<<"pickle.dump("<<next_logic<<", f)"<<endl;
 
 	ss<<indent(1)<<"return"<<endl;
@@ -179,9 +217,10 @@ std::string _t_load_session(const std::string &name){
 	}
 	ss<<indent(1)<<sid<<" = session_id"<<endl;
 	ss<<indent(1)<<"with open(\""<<name<<"$\"+str("<<sid<<"), \"r\") as f:"<<endl;
-	for(auto load : list<string>{vars, next_logic}){
+	for(auto load : list<string>{"session_vars", next_logic}){
 		ss<<indent(2)<<load<<" = pickle.load(f)"<<endl;
 	}
+	ss<<indent(2)<<"__vars = dict(__vars.items() + session_vars.items())"<<endl;
 	ss<<indent(1)<<"globals()[\"__logic_session_"<<name<<"_\"+str("<<next_logic<<")]()"<<endl;
 	return ss.str();
 }
@@ -211,8 +250,12 @@ std::string _t_session_stm_stack(const std::string &session_name,
 	return ss.str();
 }
 
-std::string _t_var(const std::string &uniq_key){
-	return vars+"[\""+uniq_key+"\"]";
+std::string _t_var(const std::string &uniq_key, bool is_global){
+	stringstream ss;
+	if(is_global){ss<<"__global_vars[\"";}
+	else{ss<<vars<<"[\"";}
+	ss<<uniq_key<<"\"]";
+	return ss.str();
 }
 
 std::string _t_next_logic(const std::string &session_name, const int n){
@@ -269,6 +312,7 @@ std::string _t_main_print_stms(const std::list<std::string> &sessions){
 	stringstream ss;
 	ss<<"print \"Content-type: text/html\""<<endl;
 	ss<<"print"<<endl;
+	ss<<"__load_global_vars()"<<endl;
 	bool firstif = true;
 	for(auto session_name : sessions){
 		if(!firstif){ss<<"el";}
@@ -286,5 +330,6 @@ std::string _t_main_print_stms(const std::list<std::string> &sessions){
 		++it;
 	}
 	ss<<"\")"<<endl;
+	ss<<"__save_global_vars()"<<endl;
 	return ss.str();
 }

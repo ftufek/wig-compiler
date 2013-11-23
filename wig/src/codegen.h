@@ -88,6 +88,9 @@ private:
     //symbol tables
     void UpdateSymTable(ast::Base *node);
     st::Table _sym_table; //represents the symbol table in the current scope
+
+    //info for global variable generation
+    bool _is_generating_global_variables;
 };
 
 }
