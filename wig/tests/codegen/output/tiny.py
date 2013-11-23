@@ -43,7 +43,7 @@ def __Total(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_7fe78f16-1f00-481a-be42-f839833446b7"
+	global_vars_file = "GLOBAL_b9658243-f5f1-4102-afe1-b21f54e4930d"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -52,7 +52,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_7fe78f16-1f00-481a-be42-f839833446b7"
+	global_vars_file = "GLOBAL_b9658243-f5f1-4102-afe1-b21f54e4930d"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -114,16 +114,22 @@ def __logic_session_Contribute_3():
 	global __vars
 	global __next_logic
 	__vars["i_18_8"] = int(__cgi_input.getvalue("contribution"))
-	__vars["amount_15_7"]=__vars["amount_15_7"]+__vars["i_18_8"]
-	print(__layout(__Total({'total':__vars["amount_15_7"]})))
 	__next_logic = 4
 	__save_session_Contribute()
+	__logic_session_Contribute_4()
 def __logic_session_Contribute_4():
 	global __vars
 	global __next_logic
-	__next_logic = 3
+	__vars["amount_15_7"]=__vars["amount_15_7"]+__vars["i_18_8"]
+	print(__layout(__Total({'total':__vars["amount_15_7"]})))
+	__next_logic = 5
 	__save_session_Contribute()
-	__logic_session_Contribute_3()
+def __logic_session_Contribute_5():
+	global __vars
+	global __next_logic
+	__next_logic = 4
+	__save_session_Contribute()
+	__logic_session_Contribute_4()
 print "Content-type: text/html"
 print
 __load_global_vars()

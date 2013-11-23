@@ -218,6 +218,8 @@ void CodeGenerator::visit(ast::ReceiveStm *s){
 	for(auto input : *(s->inputs_)){
 		input->accept(this);
 	}
+	_label_stms.push_back(_t_call_next_logic(_in_session, _current_label+2));
+	PrintLabelStms(NewLabel(), _label_stms);
 }
 
 void CodeGenerator::visit(ast::InputStm *s){
