@@ -258,13 +258,32 @@ void CodeGenerator::visit(ast::IfStm *s){
 	PrintLabelStms(before_if_label, _label_stms); //print everything before now
 
 	s->true_stm_->accept(this);
-	_label_stms.push_back(_t_call_next_logic(_in_session, _current_label+2));
-	PrintLabelStms(NewLabel(), _label_stms);
+	auto true_stms = _label_stms;
+	_label_stms.clear();
+	if(s->else_stm_){
+		int else_label = _current_label+1;
+		s->else_stm_->accept(this);
+		auto else_stms = _label_stms;
 
-	_label_stms.push_back(_t_if_stm(ExpToStr(s->condition_),
-									list<string>{_t_call_next_logic(_in_session, if_label+1)},
-									list<string>{_t_call_next_logic(_in_session, _current_label+1)}));
-	PrintLabelStms(if_label, _label_stms);
+		true_stms.push_back(_t_call_next_logic(_in_session, _current_label+3));
+		PrintLabelStms(NewLabel(), true_stms);
+
+		else_stms.push_back(_t_call_next_logic(_in_session, _current_label+2));
+		PrintLabelStms(NewLabel(), else_stms);
+
+		_label_stms.push_back(_t_if_stm(ExpToStr(s->condition_),
+								list<string>{_t_call_next_logic(_in_session, if_label+1)},
+								list<string>{_t_call_next_logic(_in_session, else_label)}));
+		PrintLabelStms(if_label, _label_stms);
+	}else{
+		true_stms.push_back(_t_call_next_logic(_in_session, _current_label+2));
+		PrintLabelStms(NewLabel(), true_stms);
+
+		_label_stms.push_back(_t_if_stm(ExpToStr(s->condition_),
+										list<string>{_t_call_next_logic(_in_session, if_label+1)},
+										list<string>{_t_call_next_logic(_in_session, _current_label+1)}));
+		PrintLabelStms(if_label, _label_stms);
+	}
 }
 
 void CodeGenerator::visit(ast::WhileStm *s){
