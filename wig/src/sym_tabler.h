@@ -8,6 +8,7 @@
 #ifndef SYM_TABLER_H_
 #define SYM_TABLER_H_
 
+#include <list>
 #include "ast.h"
 #include "symbol_table/table.h"
 
@@ -77,6 +78,8 @@ public:
 
 private:
 	st::Table sym_table_;
+
+	std::list<st::Symbol> _function_arg_syms;
 };
 
 }

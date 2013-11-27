@@ -182,7 +182,7 @@ def __End(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_6724e2f5-7469-4ba5-9157-69d59e82743a"
+	global_vars_file = "GLOBAL_3b186732-005f-4d3b-82dc-819bcb3814b5"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -191,13 +191,29 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_6724e2f5-7469-4ba5-9157-69d59e82743a"
+	global_vars_file = "GLOBAL_3b186732-005f-4d3b-82dc-819bcb3814b5"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
 			__vars = dict(__vars.items() + global_vars.items())
 	except IOError:
 		return
+
+__vars["__call_stack"] = []
+__vars["__return_value"] = 0
+__returned_from_fn = False
+
+def __call_fn(fn_name):
+	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
+
+def __inc_fn_logic():
+	__vars["__call_stack"][-1]["next_logic"] += 1
+
+def __return_from_fn(return_value):
+	global __returned_from_fn
+	__returned_from_fn = True
+	__vars["__return_value"] = return_value
+	__vars["__call_stack"].pop()
 
 def __save_session_Access():
 	session_file = "Access$"+str(__sid)

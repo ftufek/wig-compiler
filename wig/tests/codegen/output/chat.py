@@ -58,7 +58,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_8eeddb44-84a2-4388-b1a4-f5553b1c4bd2"
+	global_vars_file = "GLOBAL_f8d4fb3b-9cfe-43b3-8690-2c300e4d3787"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -67,7 +67,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_8eeddb44-84a2-4388-b1a4-f5553b1c4bd2"
+	global_vars_file = "GLOBAL_f8d4fb3b-9cfe-43b3-8690-2c300e4d3787"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -87,6 +87,22 @@ __vars["msg4_30_7"] = ""
 __global_vars.append("msg4_30_7")
 __vars["msg5_30_7"] = ""
 __global_vars.append("msg5_30_7")
+__vars["__call_stack"] = []
+__vars["__return_value"] = 0
+__returned_from_fn = False
+
+def __call_fn(fn_name):
+	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
+
+def __inc_fn_logic():
+	__vars["__call_stack"][-1]["next_logic"] += 1
+
+def __return_from_fn(return_value):
+	global __returned_from_fn
+	__returned_from_fn = True
+	__vars["__return_value"] = return_value
+	__vars["__call_stack"].pop()
+
 def __save_session_Chat():
 	session_file = "Chat$"+str(__sid)
 	open(session_file, 'w').close()

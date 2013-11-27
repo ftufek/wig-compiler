@@ -268,6 +268,55 @@ std::string _t_call_next_logic(const std::string &session_name, const int n){
 	return ss.str();
 }
 
+std::string _t_fn_helpers(){
+	return "__vars[\"__call_stack\"] = []\n"
+			"__vars[\"__return_value\"] = 0\n"
+			"__returned_from_fn = False\n"
+			"\n"
+			"def __call_fn(fn_name):\n"
+			"	__vars[\"__call_stack\"].append({\"name\":fn_name,\"next_logic\":1})\n"
+			"\n"
+			"def __inc_fn_logic():\n"
+			"	__vars[\"__call_stack\"][-1][\"next_logic\"] += 1\n"
+			"\n"
+			"def __return_from_fn(return_value):\n"
+			"	global __returned_from_fn\n"
+			"	__returned_from_fn = True\n"
+			"	__vars[\"__return_value\"] = return_value\n"
+			"	__vars[\"__call_stack\"].pop()\n";
+}
+
+std::string _t_fn_decl(const std::string &name,
+					   const int label,
+					   const std::list<std::string> &stms,
+					   const std::list<std::string> &args){
+	stringstream ss;
+	ss<<"def __logic_fn_"<<name<<"_"<<label<<"(";
+	auto arg_it = args.begin();
+	if(arg_it != args.end()){
+		ss<<*arg_it;
+		++arg_it;
+	}
+	while(arg_it != args.end()){
+		ss<<", "<<*arg_it;
+		++arg_it;
+	}
+	ss<<"):"<<endl;
+	for(auto global : list<string>{vars, next_logic}){
+		ss<<indent(1)<<"global "<<global<<endl;
+	}
+	for(auto stm : stms){
+		ss<<indent(stm, 1)<<endl;
+	}
+	return ss.str();
+}
+
+std::string _t_next_fn(const std::string &fn_name, const int n){
+	stringstream ss;
+	ss<<"__logic_fn_"<<fn_name<<"_"<<n<<"()";
+	return ss.str();
+}
+
 std::string _t_if_stm(const std::string &condition,
 					  const std::list<std::string> &stms,
 					  const std::list<std::string> &else_stms){
@@ -283,6 +332,10 @@ std::string _t_if_stm(const std::string &condition,
 		}
 	}
 	return ss.str();
+}
+
+std::string _t_return_stm(const std::string &exp){
+	return "__return_from_fn("+exp+")";
 }
 
 std::string _t_print_html(const std::string &name,

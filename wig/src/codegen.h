@@ -10,6 +10,17 @@
 
 namespace visitors {
 
+class FnCall{
+public:
+	FnCall(std::string fn_name,
+		   std::string key,
+		   std::string fn_call_exp):fn_name(fn_name),
+		   unique_key(key), fn_call_exp(fn_call_exp){}
+	std::string fn_name;
+	std::string unique_key;
+	std::string fn_call_exp;
+};
+
 class CodeGenerator : public ast::Visitor
 {
 public:
@@ -77,6 +88,11 @@ private:
     void PrintLabelStms(const int label,
     					std::list<std::string> stms,
     					bool jump_to_next_label = false);
+
+    //info for function generation
+    std::string _in_fn;
+    std::list<FnCall> _fn_call_stms;
+    void PrintFnCallStms();
 
     //info for DocumentStm generation
     std::list<std::string> _plugs;

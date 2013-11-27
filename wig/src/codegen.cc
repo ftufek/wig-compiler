@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include "codegen.h"
 #include "pretty_printer.h"
 
@@ -11,9 +15,9 @@ namespace visitors {
 #define DEF_JUMP_NEXT_LABEL true
 
 CodeGenerator::CodeGenerator(std::ostream &out)
-	:cgout(out),_fields({}), _sessions({}), _in_session({}),
-	 _current_label(0), _label_stms({}), _exps({}),_sym_table(st::Table()),
-	 _is_generating_global_variables(false) {}
+	:cgout(out),_fields({}), _sessions({}), _in_session({}), _current_label(0),
+	 _label_stms({}), _in_fn({}), _plugs({}), _exps({}),
+	 _sym_table(st::Table()), _is_generating_global_variables(false) {}
 
 std::string CodeGenerator::PrettyPrint(ast::Base *s){
 	stringstream ss;
@@ -29,22 +33,59 @@ void CodeGenerator::UpdateSymTable(ast::Base *s){
 void CodeGenerator::PrintLabelStms(const int label,
 								   std::list<std::string> stms,
 								   bool jump_to_next_label){
-	if(jump_to_next_label){
-		bool already_contains_jump = false;
+	if(_in_session.size()){
+		if(jump_to_next_label){
+			bool already_contains_jump = false;
+			for(auto stm : stms){
+				if(stm.find("next_logic") != std::string::npos){
+					already_contains_jump = true;
+					break;
+				}
+			}
+			if(already_contains_jump){
+				cerr<<"Trying to insert jump to next when there's already a jump present"<<endl;
+			}else{
+				stms.push_back(_t_next_logic(_in_session, label+1));
+			}
+		}
+		cgout<<_t_session_stm_stack(_in_session, label, stms);
+	}else if(_in_fn.size()){
+		bool contains_return = false;
 		for(auto stm : stms){
-			if(stm.find("next_logic") != std::string::npos){
-				already_contains_jump = true;
+			if(stm.find("return") != std::string::npos){
+				contains_return = true;
 				break;
 			}
 		}
-		if(already_contains_jump){
-			cerr<<"Trying to insert jump to next when there's already a jump present"<<endl;
-		}else{
-			stms.push_back(_t_next_logic(_in_session, label+1));
+		if(!contains_return){
+			stms.push_back(_t_next_fn(_in_fn, label+1));
+		}
+		cgout<<_t_fn_decl(_in_fn, label, stms);
+	}
+	ClearStms();
+}
+
+void CodeGenerator::PrintFnCallStms(){
+	if(_label_stms.size() && _fn_call_stms.size()){
+		//print what was previously there
+		PrintLabelStms(NewLabel(), _label_stms, true);
+	}
+	if(_fn_call_stms.size()){
+		for(auto call : _fn_call_stms){
+			_label_stms.push_back("__call_fn(\""+call.fn_name+"\")");
+			_label_stms.push_back(call.fn_call_exp);
+			_label_stms.push_back(_t_call_next_logic(_in_session, _current_label+2));
+			PrintLabelStms(NewLabel(), _label_stms);
+
+			_label_stms.push_back(_t_if_stm("__returned_from_fn",
+									list<string>{
+										_t_var(call.unique_key) + " = " + _t_var("__return_value"),
+										_t_call_next_logic(_in_session, _current_label+2)},
+									list<string>{}));
+			PrintLabelStms(NewLabel(), _label_stms);
 		}
 	}
-	cgout<<_t_session_stm_stack(_in_session, label, stms);
-	ClearStms();
+	_fn_call_stms.clear();
 }
 
 void CodeGenerator::ClearStms(){
@@ -81,6 +122,9 @@ void CodeGenerator::visit(ast::Service *s){
 	cgout<<_t_global_vars_helpers()<<endl;
 	s->global_variables_->accept(this);
 	_is_generating_global_variables = false;
+
+	cgout<<_t_fn_helpers()<<endl;
+	s->functions_->accept(this);
 
 	s->sessions_->accept(this);
 
@@ -120,7 +164,27 @@ void CodeGenerator::visit(ast::Variable *s) {
 }
 
 void CodeGenerator::visit(ast::Function *s) {
-	UpdateSymTable(s);
+	UpdateSymTable(s->stm_);
+	_in_fn = s->id_;
+	_label_stms.clear();
+
+	std::list<std::string> args{};
+	for(auto arg : *(s->args_)){
+		args.push_back("_arg_"+arg->id_);
+		auto sym = _sym_table.GetUniqueKeySymbol(arg->id_);
+		if(sym){
+			_label_stms.push_back(_t_var(sym.get()) + " = " + "_arg_"+arg->id_);
+		}else{
+			cerr<<"ERROR function argument isn't in the symbol table!"<<endl;
+		}
+	}
+	_label_stms.push_back(_t_next_fn(_in_fn, _current_label+2));
+	cgout<<_t_fn_decl(s->id_, NewLabel(), _label_stms, args);
+	_label_stms.clear();
+	s->stm_->accept(this);
+	_label_stms.clear();
+	_current_label = 0;
+	_in_fn = "";
 }
 
 void CodeGenerator::visit(ast::Field *s) {
@@ -190,6 +254,7 @@ void CodeGenerator::visit(ast::Session *s){
 void CodeGenerator::visit(ast::EmptyStm *s) {/* NOTHING TO DO */}
 
 void CodeGenerator::visit(ast::CompoundStm *s) {
+	UpdateSymTable(s);
 	for(auto stm : *(s->stms_)){
 		UpdateSymTable(s);
 		stm->accept(this);
@@ -217,6 +282,7 @@ void CodeGenerator::visit(ast::DocumentStm *s){
 void CodeGenerator::visit(ast::PlugStm *s){
 	string plug = "'" + s->id_ + "':";
 	plug.append(ExpToStr(s->exp_));
+	PrintFnCallStms();
 	_plugs.push_back(plug);
 }
 
@@ -254,7 +320,8 @@ void CodeGenerator::visit(ast::ExitStm *s){
 }
 
 void CodeGenerator::visit(ast::ReturnStm *s){
-	//TODO: implement
+	_label_stms.push_back(_t_return_stm(ExpToStr(s->exp_)));
+	PrintLabelStms(NewLabel(), _label_stms);
 }
 
 void CodeGenerator::visit(ast::IfStm *s){
@@ -298,19 +365,21 @@ void CodeGenerator::visit(ast::IfStm *s){
 }
 
 void CodeGenerator::visit(ast::WhileStm *s){
-	int before_while_label = NewLabel();
-	int while_label = NewLabel();
-	_label_stms.push_back(_t_call_next_logic(_in_session, while_label));
-	PrintLabelStms(before_while_label, _label_stms); //print everything before now
+	_label_stms.push_back(_t_call_next_logic(_in_session, _current_label+2));
+	PrintLabelStms(NewLabel(), _label_stms); //print everything before now
+	int while_label = _current_label+1;
+	string condition = ExpToStr(s->condition_);
+	PrintFnCallStms();
+	int while_label_condition_tail = NewLabel();
 
 	s->stm_->accept(this);
 	_label_stms.push_back(_t_call_next_logic(_in_session, while_label));
 	PrintLabelStms(NewLabel(), _label_stms);
 
-	_label_stms.push_back(_t_if_stm(ExpToStr(s->condition_),
-									list<string>{_t_call_next_logic(_in_session, while_label+1)},
+	_label_stms.push_back(_t_if_stm(condition,
+									list<string>{_t_call_next_logic(_in_session, while_label_condition_tail+1)},
 									list<string>{_t_call_next_logic(_in_session, _current_label+1)}));
-	PrintLabelStms(while_label, _label_stms);
+	PrintLabelStms(while_label_condition_tail, _label_stms);
 }
 
 void CodeGenerator::visit(ast::ExpStm *s){
@@ -329,7 +398,8 @@ void CodeGenerator::visit(ast::LValExp *s){
 		if(key){
 			_exps.push_back(_t_var(key.get()));
 		}else{
-			cerr<<"ERROR_IN_CODEGEN";
+			_sym_table.PrettyPrint(std::cerr);
+			cerr<<"ERROR_IN_CODEGEN_FOR_LVALUE:"<<s->lvalue_;
 		}
 	}else{
 		//TODO: implement
@@ -429,7 +499,26 @@ void CodeGenerator::visit(ast::TupleopExp *s){
 }
 
 void CodeGenerator::visit(ast::FunctionExp *s){
-	//TODO: implement
+	string fn_call_id = boost::lexical_cast<std::string>(
+								boost::uuids::random_generator()());
+
+	stringstream ss;
+	ss<<"__logic_fn_"<<s->id_<<"_1";
+	ss<<"(";
+
+	auto it = s->exps_->begin();
+	if(it != s->exps_->end()){
+		ss<<ExpToStr(*it);
+		++it;
+	}
+
+	for(; it != s->exps_->end(); ++it){
+		ss<<", ";
+		ss<<ExpToStr(*it);
+	}
+	ss<<")";
+	_fn_call_stms.push_back(FnCall(s->id_, fn_call_id, ss.str()));
+	_exps.push_back(_t_var(fn_call_id));
 }
 
 void CodeGenerator::visit(ast::IntegerExp *s){

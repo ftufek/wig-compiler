@@ -83,7 +83,7 @@ def __List(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_b77ca8a8-8c1c-4015-89b8-870190314aa2"
+	global_vars_file = "GLOBAL_cd99c0da-ff98-4f4d-99f0-c45715e7e85a"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -92,7 +92,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_b77ca8a8-8c1c-4015-89b8-870190314aa2"
+	global_vars_file = "GLOBAL_cd99c0da-ff98-4f4d-99f0-c45715e7e85a"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -108,6 +108,31 @@ __vars["seed_50_19"] = 0
 __global_vars.append("seed_50_19")
 __vars["holder_51_19"] = ""
 __global_vars.append("holder_51_19")
+__vars["__call_stack"] = []
+__vars["__return_value"] = 0
+__returned_from_fn = False
+
+def __call_fn(fn_name):
+	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
+
+def __inc_fn_logic():
+	__vars["__call_stack"][-1]["next_logic"] += 1
+
+def __return_from_fn(return_value):
+	global __returned_from_fn
+	__returned_from_fn = True
+	__vars["__return_value"] = return_value
+	__vars["__call_stack"].pop()
+
+def __logic_fn_nextRandom_1():
+	global __vars
+	global __next_logic
+	__logic_fn_nextRandom_2()
+def __logic_fn_nextRandom_2():
+	global __vars
+	global __next_logic
+	__vars["seed_50_19"] = 25173 * __vars["seed_50_19"] + 13849 % 65536
+	__return_from_fn(__vars["seed_50_19"])
 def __save_session_Seed():
 	session_file = "Seed$"+str(__sid)
 	open(session_file, 'w').close()
@@ -206,7 +231,7 @@ def __session_Play():
 def __logic_session_Play_1():
 	global __vars
 	global __next_logic
-	__vars["number_66_24"] = ERROR_IN_EXP_TO_STR % 100
+	__vars["number_66_24"] = __vars["bc44c1fb-c5c5-4edb-9483-68beaf12eda2"] % 100
 	__vars["plays_49_19"] = __vars["plays_49_19"] + 1
 	__vars["guesses_66_24"] = 1
 	print(__layout(__Init({})))
@@ -225,67 +250,71 @@ def __logic_session_Play_3():
 	__next_logic = 4
 	__save_session_Play()
 	__logic_session_Play_4()
+def __logic_session_Play_4():
+	global __vars
+	global __next_logic
+	__call_fn("nextRandom")
+	__logic_fn_nextRandom_1()
+	__next_logic = 5
+	__save_session_Play()
+	__logic_session_Play_5()
 def __logic_session_Play_5():
 	global __vars
 	global __next_logic
+	if __returned_from_fn:
+		__vars["bc44c1fb-c5c5-4edb-9483-68beaf12eda2"] = __vars["__return_value"]
+		__next_logic = 6
+		__save_session_Play()
+		__logic_session_Play_6()
+	
+def __logic_session_Play_7():
+	global __vars
+	global __next_logic
 	print(__layout(__Retry({})))
-	__next_logic = 6
+	__next_logic = 8
 	__save_session_Play()
-def __logic_session_Play_6():
+def __logic_session_Play_8():
 	global __vars
 	global __next_logic
 	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
-	__next_logic = 7
+	__next_logic = 9
 	__save_session_Play()
-	__logic_session_Play_7()
-def __logic_session_Play_7():
+	__logic_session_Play_9()
+def __logic_session_Play_9():
 	global __vars
 	global __next_logic
 	__next_logic = 4
 	__save_session_Play()
 	__logic_session_Play_4()
-def __logic_session_Play_4():
+def __logic_session_Play_6():
 	global __vars
 	global __next_logic
 	if __vars["guess_66_24"] > 99:
-		__next_logic = 5
+		__next_logic = 7
 		__save_session_Play()
-		__logic_session_Play_5()
+		__logic_session_Play_7()
 	else:
-		__next_logic = 8
+		__next_logic = 10
 		__save_session_Play()
-		__logic_session_Play_8()
+		__logic_session_Play_10()
 	
-def __logic_session_Play_8():
-	global __vars
-	global __next_logic
-	__next_logic = 9
-	__save_session_Play()
-	__logic_session_Play_9()
 def __logic_session_Play_10():
 	global __vars
 	global __next_logic
-	__vars["guesses_66_24"] = __vars["guesses_66_24"] + 1
 	__next_logic = 11
 	__save_session_Play()
 	__logic_session_Play_11()
 def __logic_session_Play_12():
 	global __vars
 	global __next_logic
-	print(__layout(__Again({'correction':"lower"})))
+	__vars["guesses_66_24"] = __vars["guesses_66_24"] + 1
 	__next_logic = 13
 	__save_session_Play()
-def __logic_session_Play_13():
-	global __vars
-	global __next_logic
-	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
-	__next_logic = 14
-	__save_session_Play()
-	__logic_session_Play_14()
+	__logic_session_Play_13()
 def __logic_session_Play_14():
 	global __vars
 	global __next_logic
-	print(__layout(__Again({'correction':"higher"})))
+	print(__layout(__Again({'correction':"lower"})))
 	__next_logic = 15
 	__save_session_Play()
 def __logic_session_Play_15():
@@ -298,133 +327,146 @@ def __logic_session_Play_15():
 def __logic_session_Play_16():
 	global __vars
 	global __next_logic
-	__next_logic = 18
+	print(__layout(__Again({'correction':"higher"})))
+	__next_logic = 17
 	__save_session_Play()
-	__logic_session_Play_18()
 def __logic_session_Play_17():
 	global __vars
 	global __next_logic
+	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
 	__next_logic = 18
 	__save_session_Play()
 	__logic_session_Play_18()
-def __logic_session_Play_11():
+def __logic_session_Play_18():
+	global __vars
+	global __next_logic
+	__next_logic = 20
+	__save_session_Play()
+	__logic_session_Play_20()
+def __logic_session_Play_19():
+	global __vars
+	global __next_logic
+	__next_logic = 20
+	__save_session_Play()
+	__logic_session_Play_20()
+def __logic_session_Play_13():
 	global __vars
 	global __next_logic
 	if __vars["guess_66_24"] > __vars["number_66_24"]:
+		__next_logic = 14
+		__save_session_Play()
+		__logic_session_Play_14()
+	else:
+		__next_logic = 16
+		__save_session_Play()
+		__logic_session_Play_16()
+	
+def __logic_session_Play_20():
+	global __vars
+	global __next_logic
+	__next_logic = 21
+	__save_session_Play()
+	__logic_session_Play_21()
+def __logic_session_Play_22():
+	global __vars
+	global __next_logic
+	print(__layout(__Retry({})))
+	__next_logic = 23
+	__save_session_Play()
+def __logic_session_Play_23():
+	global __vars
+	global __next_logic
+	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
+	__next_logic = 24
+	__save_session_Play()
+	__logic_session_Play_24()
+def __logic_session_Play_24():
+	global __vars
+	global __next_logic
+	__next_logic = 21
+	__save_session_Play()
+	__logic_session_Play_21()
+def __logic_session_Play_21():
+	global __vars
+	global __next_logic
+	if __vars["guess_66_24"] > 99:
+		__next_logic = 22
+		__save_session_Play()
+		__logic_session_Play_22()
+	else:
+		__next_logic = 25
+		__save_session_Play()
+		__logic_session_Play_25()
+	
+def __logic_session_Play_25():
+	global __vars
+	global __next_logic
+	__next_logic = 11
+	__save_session_Play()
+	__logic_session_Play_11()
+def __logic_session_Play_11():
+	global __vars
+	global __next_logic
+	if __vars["guess_66_24"] != __vars["number_66_24"]:
 		__next_logic = 12
 		__save_session_Play()
 		__logic_session_Play_12()
 	else:
-		__next_logic = 14
+		__next_logic = 26
 		__save_session_Play()
-		__logic_session_Play_14()
+		__logic_session_Play_26()
 	
-def __logic_session_Play_18():
-	global __vars
-	global __next_logic
-	__next_logic = 19
-	__save_session_Play()
-	__logic_session_Play_19()
-def __logic_session_Play_20():
-	global __vars
-	global __next_logic
-	print(__layout(__Retry({})))
-	__next_logic = 21
-	__save_session_Play()
-def __logic_session_Play_21():
-	global __vars
-	global __next_logic
-	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
-	__next_logic = 22
-	__save_session_Play()
-	__logic_session_Play_22()
-def __logic_session_Play_22():
-	global __vars
-	global __next_logic
-	__next_logic = 19
-	__save_session_Play()
-	__logic_session_Play_19()
-def __logic_session_Play_19():
-	global __vars
-	global __next_logic
-	if __vars["guess_66_24"] > 99:
-		__next_logic = 20
-		__save_session_Play()
-		__logic_session_Play_20()
-	else:
-		__next_logic = 23
-		__save_session_Play()
-		__logic_session_Play_23()
-	
-def __logic_session_Play_23():
-	global __vars
-	global __next_logic
-	__next_logic = 9
-	__save_session_Play()
-	__logic_session_Play_9()
-def __logic_session_Play_9():
-	global __vars
-	global __next_logic
-	if __vars["guess_66_24"] != __vars["number_66_24"]:
-		__next_logic = 10
-		__save_session_Play()
-		__logic_session_Play_10()
-	else:
-		__next_logic = 24
-		__save_session_Play()
-		__logic_session_Play_24()
-	
-def __logic_session_Play_24():
-	global __vars
-	global __next_logic
-	print(__layout(__Done({'trys':__vars["guesses_66_24"]})))
-	__next_logic = 25
-	__save_session_Play()
 def __logic_session_Play_26():
 	global __vars
 	global __next_logic
-	print(__layout(__Record({'old':__vars["record_49_19"]})))
+	print(__layout(__Done({'trys':__vars["guesses_66_24"]})))
 	__next_logic = 27
 	__save_session_Play()
-def __logic_session_Play_27():
+def __logic_session_Play_28():
+	global __vars
+	global __next_logic
+	print(__layout(__Record({'old':__vars["record_49_19"]})))
+	__next_logic = 29
+	__save_session_Play()
+def __logic_session_Play_29():
 	global __vars
 	global __next_logic
 	__vars["localholder_67_24"] = __cgi_input.getvalue("name")
-	__next_logic = 28
+	__next_logic = 30
 	__save_session_Play()
-	__logic_session_Play_28()
-def __logic_session_Play_28():
+	__logic_session_Play_30()
+def __logic_session_Play_30():
 	global __vars
 	global __next_logic
 	__vars["holder_51_19"] = __vars["localholder_67_24"]
 	__vars["record_49_19"] = __vars["guesses_66_24"]
-	__next_logic = 29
+	__next_logic = 31
 	__save_session_Play()
-	__logic_session_Play_29()
-def __logic_session_Play_25():
+	__logic_session_Play_31()
+def __logic_session_Play_27():
 	global __vars
 	global __next_logic
 	if __vars["record_49_19"] == 0 or __vars["record_49_19"] > __vars["guesses_66_24"]:
-		__next_logic = 26
+		__next_logic = 28
 		__save_session_Play()
-		__logic_session_Play_26()
+		__logic_session_Play_28()
 	else:
-		__next_logic = 29
+		__next_logic = 31
 		__save_session_Play()
-		__logic_session_Play_29()
+		__logic_session_Play_31()
 	
-def __logic_session_Play_29():
+def __logic_session_Play_31():
 	global __vars
 	global __next_logic
 	print(__layout(__Finish({})))
-	__next_logic = 30
+	__next_logic = 32
 	__save_session_Play()
-def __logic_session_Play_30():
+def __logic_session_Play_32():
 	global __vars
 	global __next_logic
-	__next_logic = 29
+	__next_logic = 31
 	__save_session_Play()
-	__logic_session_Play_29()
+	__logic_session_Play_31()
 def __save_session_HiScore():
 	session_file = "HiScore$"+str(__sid)
 	open(session_file, 'w').close()

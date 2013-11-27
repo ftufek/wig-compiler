@@ -1,0 +1,20 @@
+/* func_gen test */
+service{
+const html a = <html><[gap]></html>;
+
+int f(int a){
+return a+2;
+}
+int add(int a, int b){
+return a+b;
+}
+session A(){
+int counter;
+counter = 2;
+while(f(counter)>0 && add(counter,1) > 1){
+show plug a[gap=add(10,counter)];
+counter = counter - 1;
+}
+exit plug a[gap=f(3)];
+}
+}

@@ -34,7 +34,7 @@ def __Nikolaj(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_11d8f6e8-577a-4977-882c-6a6003051397"
+	global_vars_file = "GLOBAL_15a70f0b-10c8-4385-ad24-d5cb3cf2783a"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -43,7 +43,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_11d8f6e8-577a-4977-882c-6a6003051397"
+	global_vars_file = "GLOBAL_15a70f0b-10c8-4385-ad24-d5cb3cf2783a"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -53,6 +53,22 @@ def __load_global_vars():
 
 __vars["counter_8_3"] = 0
 __global_vars.append("counter_8_3")
+__vars["__call_stack"] = []
+__vars["__return_value"] = 0
+__returned_from_fn = False
+
+def __call_fn(fn_name):
+	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
+
+def __inc_fn_logic():
+	__vars["__call_stack"][-1]["next_logic"] += 1
+
+def __return_from_fn(return_value):
+	global __returned_from_fn
+	__returned_from_fn = True
+	__vars["__return_value"] = return_value
+	__vars["__call_stack"].pop()
+
 def __save_session_Access():
 	session_file = "Access$"+str(__sid)
 	open(session_file, 'w').close()
