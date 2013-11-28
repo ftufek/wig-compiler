@@ -4,6 +4,7 @@ import cgitb
 import os
 import uuid
 import pickle
+import copy
 cgitb.enable()
 __cgi_input = cgi.FieldStorage(keep_blank_values=1)
 __session = os.environ["QUERY_STRING"].split("&")[0]
@@ -30,7 +31,7 @@ def __a(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_cb612d3c-09e4-47d3-93d6-5198ce363971"
+	global_vars_file = "GLOBAL_f1f2da46-0d92-407d-b12b-ecf7f0f1dda7"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -39,7 +40,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_cb612d3c-09e4-47d3-93d6-5198ce363971"
+	global_vars_file = "GLOBAL_f1f2da46-0d92-407d-b12b-ecf7f0f1dda7"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -132,7 +133,12 @@ def __logic_session_A_1():
 def __logic_session_A_2():
 	global __vars
 	global __next_logic
+	global __vars
+	copy_of_vars = copy.deepcopy(__vars)
 	__logic_fn_f_1(__vars["counter_12_8"])
+	return_val = __vars["__return_value"]
+	__vars = copy_of_vars
+	__vars["__return_value"] = return_val
 	__next_logic = 3
 	__save_session_A()
 	__logic_session_A_3()
@@ -141,7 +147,7 @@ def __logic_session_A_3():
 	global __next_logic
 	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["7c81a8ec-22c9-41a4-bc2a-bd2825a58165"] = __vars["__return_value"]
+		__vars["9cd2a230-227f-46c3-8c87-573b28c4edf1"] = __vars["__return_value"]
 		__next_logic = 4
 		__save_session_A()
 		__logic_session_A_4()
@@ -149,7 +155,12 @@ def __logic_session_A_3():
 def __logic_session_A_4():
 	global __vars
 	global __next_logic
+	global __vars
+	copy_of_vars = copy.deepcopy(__vars)
 	__logic_fn_add_1(__vars["counter_12_8"], 1)
+	return_val = __vars["__return_value"]
+	__vars = copy_of_vars
+	__vars["__return_value"] = return_val
 	__next_logic = 5
 	__save_session_A()
 	__logic_session_A_5()
@@ -158,7 +169,7 @@ def __logic_session_A_5():
 	global __next_logic
 	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["d84d3d11-bba9-48ba-8994-06883c628276"] = __vars["__return_value"]
+		__vars["12f1ff0c-38a1-41c8-8c20-4bba8570ee7b"] = __vars["__return_value"]
 		__next_logic = 6
 		__save_session_A()
 		__logic_session_A_6()
@@ -166,7 +177,12 @@ def __logic_session_A_5():
 def __logic_session_A_7():
 	global __vars
 	global __next_logic
+	global __vars
+	copy_of_vars = copy.deepcopy(__vars)
 	__logic_fn_add_1(10, __vars["counter_12_8"])
+	return_val = __vars["__return_value"]
+	__vars = copy_of_vars
+	__vars["__return_value"] = return_val
 	__next_logic = 8
 	__save_session_A()
 	__logic_session_A_8()
@@ -175,7 +191,7 @@ def __logic_session_A_8():
 	global __next_logic
 	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["f9bca696-9c60-45b9-b6c9-b9ea1cab73af"] = __vars["__return_value"]
+		__vars["469d5e72-60a6-4755-96ed-6c7f80b4e132"] = __vars["__return_value"]
 		__next_logic = 9
 		__save_session_A()
 		__logic_session_A_9()
@@ -183,7 +199,7 @@ def __logic_session_A_8():
 def __logic_session_A_9():
 	global __vars
 	global __next_logic
-	print(__layout(__a({'gap':__vars["f9bca696-9c60-45b9-b6c9-b9ea1cab73af"]})))
+	print(__layout(__a({'gap':__vars["469d5e72-60a6-4755-96ed-6c7f80b4e132"]})))
 	__next_logic = 10
 	__save_session_A()
 def __logic_session_A_10():
@@ -196,7 +212,7 @@ def __logic_session_A_10():
 def __logic_session_A_6():
 	global __vars
 	global __next_logic
-	if __vars["7c81a8ec-22c9-41a4-bc2a-bd2825a58165"] > 0 and __vars["d84d3d11-bba9-48ba-8994-06883c628276"] > 1:
+	if __vars["9cd2a230-227f-46c3-8c87-573b28c4edf1"] > 0 and __vars["12f1ff0c-38a1-41c8-8c20-4bba8570ee7b"] > 1:
 		__next_logic = 7
 		__save_session_A()
 		__logic_session_A_7()
@@ -208,7 +224,12 @@ def __logic_session_A_6():
 def __logic_session_A_11():
 	global __vars
 	global __next_logic
+	global __vars
+	copy_of_vars = copy.deepcopy(__vars)
 	__logic_fn_f_1(3)
+	return_val = __vars["__return_value"]
+	__vars = copy_of_vars
+	__vars["__return_value"] = return_val
 	__next_logic = 12
 	__save_session_A()
 	__logic_session_A_12()
@@ -217,7 +238,7 @@ def __logic_session_A_12():
 	global __next_logic
 	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["126bcf07-f112-4fa1-9017-e5e992bf0adc"] = __vars["__return_value"]
+		__vars["9f55a0e8-5881-40aa-977d-983c9d2fdf0b"] = __vars["__return_value"]
 		__next_logic = 13
 		__save_session_A()
 		__logic_session_A_13()
@@ -225,7 +246,7 @@ def __logic_session_A_12():
 def __logic_session_A_13():
 	global __vars
 	global __next_logic
-	print(__layout(__a({'gap':__vars["126bcf07-f112-4fa1-9017-e5e992bf0adc"]})))
+	print(__layout(__a({'gap':__vars["9f55a0e8-5881-40aa-977d-983c9d2fdf0b"]})))
 	__next_logic = 14
 	__save_session_A()
 def __logic_session_A_14():

@@ -4,6 +4,7 @@ import cgitb
 import os
 import uuid
 import pickle
+import copy
 cgitb.enable()
 __cgi_input = cgi.FieldStorage(keep_blank_values=1)
 __session = os.environ["QUERY_STRING"].split("&")[0]
@@ -36,7 +37,7 @@ def __right(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_632ffc7d-6907-4b91-aa98-093be9f653f3"
+	global_vars_file = "GLOBAL_e8e3c7d5-1cb0-41ed-969f-ab1335951653"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -45,7 +46,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_632ffc7d-6907-4b91-aa98-093be9f653f3"
+	global_vars_file = "GLOBAL_e8e3c7d5-1cb0-41ed-969f-ab1335951653"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -97,20 +98,25 @@ def __logic_fn_factorial_2():
 def __logic_fn_factorial_5():
 	global __vars
 	global __next_logic
+	global __vars
+	copy_of_vars = copy.deepcopy(__vars)
 	__logic_fn_factorial_1(__vars["n_9_8"] - 1)
+	return_val = __vars["__return_value"]
+	__vars = copy_of_vars
+	__vars["__return_value"] = return_val
 	__logic_fn_factorial_6()
 def __logic_fn_factorial_6():
 	global __vars
 	global __next_logic
 	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["aee0db27-532d-49d7-9199-693d2a546163"] = __vars["__return_value"]
+		__vars["1e4e695f-e8e3-45f3-854f-e6b117dd3e5a"] = __vars["__return_value"]
 		__logic_fn_factorial_7()
 	
 def __logic_fn_factorial_7():
 	global __vars
 	global __next_logic
-	__return_from_fn(__vars["n_9_8"] * __vars["aee0db27-532d-49d7-9199-693d2a546163"])
+	__return_from_fn(__vars["n_9_8"] * __vars["1e4e695f-e8e3-45f3-854f-e6b117dd3e5a"])
 def __save_session_Test():
 	session_file = "Test$"+str(__sid)
 	open(session_file, 'w').close()
@@ -149,7 +155,12 @@ def __session_Test():
 def __logic_session_Test_1():
 	global __vars
 	global __next_logic
-	__logic_fn_factorial_1(2)
+	global __vars
+	copy_of_vars = copy.deepcopy(__vars)
+	__logic_fn_factorial_1(10)
+	return_val = __vars["__return_value"]
+	__vars = copy_of_vars
+	__vars["__return_value"] = return_val
 	__next_logic = 2
 	__save_session_Test()
 	__logic_session_Test_2()
@@ -158,7 +169,7 @@ def __logic_session_Test_2():
 	global __next_logic
 	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["e9b92d9e-a55c-4796-b024-411210e267e5"] = __vars["__return_value"]
+		__vars["ea2749a3-ca9d-4e84-af7a-0a80c7f9dd79"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_Test()
 		__logic_session_Test_3()
@@ -166,7 +177,7 @@ def __logic_session_Test_2():
 def __logic_session_Test_3():
 	global __vars
 	global __next_logic
-	__vars["n_20_12"] = __vars["e9b92d9e-a55c-4796-b024-411210e267e5"]
+	__vars["n_20_12"] = __vars["ea2749a3-ca9d-4e84-af7a-0a80c7f9dd79"]
 	__next_logic = 4
 	__save_session_Test()
 	__logic_session_Test_4()
@@ -185,7 +196,7 @@ def __logic_session_Test_6():
 def __logic_session_Test_4():
 	global __vars
 	global __next_logic
-	if __vars["n_20_12"] != 2:
+	if __vars["n_20_12"] != 3628800:
 		__next_logic = 5
 		__save_session_Test()
 		__logic_session_Test_5()

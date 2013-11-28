@@ -4,6 +4,7 @@ import cgitb
 import os
 import uuid
 import pickle
+import copy
 cgitb.enable()
 __cgi_input = cgi.FieldStorage(keep_blank_values=1)
 __session = os.environ["QUERY_STRING"].split("&")[0]
@@ -56,7 +57,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_6b7fb935-7410-4e40-a50a-8f3f05fc0f1b"
+	global_vars_file = "GLOBAL_8b8982c2-1616-4f8d-95f7-bb55f2eece2a"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -65,7 +66,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_6b7fb935-7410-4e40-a50a-8f3f05fc0f1b"
+	global_vars_file = "GLOBAL_8b8982c2-1616-4f8d-95f7-bb55f2eece2a"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)

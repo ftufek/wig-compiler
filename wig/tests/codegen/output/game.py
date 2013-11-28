@@ -4,6 +4,7 @@ import cgitb
 import os
 import uuid
 import pickle
+import copy
 cgitb.enable()
 __cgi_input = cgi.FieldStorage(keep_blank_values=1)
 __session = os.environ["QUERY_STRING"].split("&")[0]
@@ -83,7 +84,7 @@ def __List(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_0924df72-3e91-4042-8577-99f6e25589e3"
+	global_vars_file = "GLOBAL_21d48e83-2ac0-41aa-9d50-d9e5f8dc6ad0"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -92,7 +93,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_0924df72-3e91-4042-8577-99f6e25589e3"
+	global_vars_file = "GLOBAL_21d48e83-2ac0-41aa-9d50-d9e5f8dc6ad0"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -235,7 +236,12 @@ def __session_Play():
 def __logic_session_Play_1():
 	global __vars
 	global __next_logic
+	global __vars
+	copy_of_vars = copy.deepcopy(__vars)
 	__logic_fn_nextRandom_1()
+	return_val = __vars["__return_value"]
+	__vars = copy_of_vars
+	__vars["__return_value"] = return_val
 	__next_logic = 2
 	__save_session_Play()
 	__logic_session_Play_2()
@@ -244,7 +250,7 @@ def __logic_session_Play_2():
 	global __next_logic
 	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["8afc52ab-cd81-4ca2-9a41-0eb46b16d28a"] = __vars["__return_value"]
+		__vars["b3c3780a-47f3-4105-aa4a-fedaa0512aea"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_Play()
 		__logic_session_Play_3()
@@ -252,7 +258,7 @@ def __logic_session_Play_2():
 def __logic_session_Play_3():
 	global __vars
 	global __next_logic
-	__vars["number_66_24"] = __vars["8afc52ab-cd81-4ca2-9a41-0eb46b16d28a"] % 100
+	__vars["number_66_24"] = __vars["b3c3780a-47f3-4105-aa4a-fedaa0512aea"] % 100
 	__vars["plays_49_19"] = __vars["plays_49_19"] + 1
 	__vars["guesses_66_24"] = 1
 	print(__layout(__Init({})))

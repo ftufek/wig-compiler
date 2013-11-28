@@ -85,7 +85,12 @@ void CodeGenerator::PrintFnCallStms(){
 	}
 	if(_fn_call_stms.size()){
 		for(auto call : _fn_call_stms){
+			_label_stms.push_back("global __vars");
+			_label_stms.push_back("copy_of_vars = copy.deepcopy(__vars)");
 			_label_stms.push_back(call.fn_call_exp);
+			_label_stms.push_back("return_val = __vars[\"__return_value\"]");
+			_label_stms.push_back("__vars = copy_of_vars");
+			_label_stms.push_back("__vars[\"__return_value\"] = return_val");
 			_label_stms.push_back(CallNextLogic(_current_label+2));
 			PrintLabelStms(NewLabel(), _label_stms);
 
@@ -132,7 +137,7 @@ void CodeGenerator::visit(ast::Service *s){
 
 	UpdateSymTable(s);
 	cgout<<_t_env()
-		 <<_t_imports(std::list<std::string> {"cgi","cgitb","os","uuid","pickle"})
+		 <<_t_imports(std::list<std::string> {"cgi","cgitb","os","uuid","pickle","copy"})
 		 <<_t_enable_cgi()<<_t_state_vars()<<endl;
 
 	s->schemas_->accept(this);
