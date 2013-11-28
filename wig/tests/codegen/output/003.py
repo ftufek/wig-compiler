@@ -30,7 +30,7 @@ def __a(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_7cfbfa48-4985-4c71-9495-976650e71b09"
+	global_vars_file = "GLOBAL_cb612d3c-09e4-47d3-93d6-5198ce363971"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -39,7 +39,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_7cfbfa48-4985-4c71-9495-976650e71b09"
+	global_vars_file = "GLOBAL_cb612d3c-09e4-47d3-93d6-5198ce363971"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -52,13 +52,16 @@ __vars["__return_value"] = 0
 __returned_from_fn = False
 
 def __call_fn(fn_name):
+	global __vars
 	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
 
 def __inc_fn_logic():
+	global __vars
 	__vars["__call_stack"][-1]["next_logic"] += 1
 
 def __return_from_fn(return_value):
 	global __returned_from_fn
+	global __vars
 	__returned_from_fn = True
 	__vars["__return_value"] = return_value
 	__vars["__call_stack"].pop()
@@ -67,6 +70,7 @@ def __logic_fn_f_1(_arg_a):
 	global __vars
 	global __next_logic
 	__vars["a_5_4"] = _arg_a
+	__call_fn("f")
 	__logic_fn_f_2()
 def __logic_fn_f_2():
 	global __vars
@@ -77,6 +81,7 @@ def __logic_fn_add_1(_arg_a, _arg_b):
 	global __next_logic
 	__vars["a_8_6"] = _arg_a
 	__vars["b_8_6"] = _arg_b
+	__call_fn("add")
 	__logic_fn_add_2()
 def __logic_fn_add_2():
 	global __vars
@@ -127,7 +132,6 @@ def __logic_session_A_1():
 def __logic_session_A_2():
 	global __vars
 	global __next_logic
-	__call_fn("f")
 	__logic_fn_f_1(__vars["counter_12_8"])
 	__next_logic = 3
 	__save_session_A()
@@ -135,8 +139,9 @@ def __logic_session_A_2():
 def __logic_session_A_3():
 	global __vars
 	global __next_logic
+	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["a7f6f083-beb2-4554-bd9a-8721f6c0aedc"] = __vars["__return_value"]
+		__vars["7c81a8ec-22c9-41a4-bc2a-bd2825a58165"] = __vars["__return_value"]
 		__next_logic = 4
 		__save_session_A()
 		__logic_session_A_4()
@@ -144,7 +149,6 @@ def __logic_session_A_3():
 def __logic_session_A_4():
 	global __vars
 	global __next_logic
-	__call_fn("add")
 	__logic_fn_add_1(__vars["counter_12_8"], 1)
 	__next_logic = 5
 	__save_session_A()
@@ -152,8 +156,9 @@ def __logic_session_A_4():
 def __logic_session_A_5():
 	global __vars
 	global __next_logic
+	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["7bda0e8b-7e92-4d75-a4f0-fb29720526b4"] = __vars["__return_value"]
+		__vars["d84d3d11-bba9-48ba-8994-06883c628276"] = __vars["__return_value"]
 		__next_logic = 6
 		__save_session_A()
 		__logic_session_A_6()
@@ -161,7 +166,6 @@ def __logic_session_A_5():
 def __logic_session_A_7():
 	global __vars
 	global __next_logic
-	__call_fn("add")
 	__logic_fn_add_1(10, __vars["counter_12_8"])
 	__next_logic = 8
 	__save_session_A()
@@ -169,8 +173,9 @@ def __logic_session_A_7():
 def __logic_session_A_8():
 	global __vars
 	global __next_logic
+	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["10277357-a6f1-44fc-a1ec-55921a7f2199"] = __vars["__return_value"]
+		__vars["f9bca696-9c60-45b9-b6c9-b9ea1cab73af"] = __vars["__return_value"]
 		__next_logic = 9
 		__save_session_A()
 		__logic_session_A_9()
@@ -178,7 +183,7 @@ def __logic_session_A_8():
 def __logic_session_A_9():
 	global __vars
 	global __next_logic
-	print(__layout(__a({'gap':__vars["10277357-a6f1-44fc-a1ec-55921a7f2199"]})))
+	print(__layout(__a({'gap':__vars["f9bca696-9c60-45b9-b6c9-b9ea1cab73af"]})))
 	__next_logic = 10
 	__save_session_A()
 def __logic_session_A_10():
@@ -191,7 +196,7 @@ def __logic_session_A_10():
 def __logic_session_A_6():
 	global __vars
 	global __next_logic
-	if __vars["a7f6f083-beb2-4554-bd9a-8721f6c0aedc"] > 0 and __vars["7bda0e8b-7e92-4d75-a4f0-fb29720526b4"] > 1:
+	if __vars["7c81a8ec-22c9-41a4-bc2a-bd2825a58165"] > 0 and __vars["d84d3d11-bba9-48ba-8994-06883c628276"] > 1:
 		__next_logic = 7
 		__save_session_A()
 		__logic_session_A_7()
@@ -203,7 +208,6 @@ def __logic_session_A_6():
 def __logic_session_A_11():
 	global __vars
 	global __next_logic
-	__call_fn("f")
 	__logic_fn_f_1(3)
 	__next_logic = 12
 	__save_session_A()
@@ -211,8 +215,9 @@ def __logic_session_A_11():
 def __logic_session_A_12():
 	global __vars
 	global __next_logic
+	global __returned_from_fn
 	if __returned_from_fn:
-		__vars["f12340fd-23fa-46aa-84e2-daef173bb2f3"] = __vars["__return_value"]
+		__vars["126bcf07-f112-4fa1-9017-e5e992bf0adc"] = __vars["__return_value"]
 		__next_logic = 13
 		__save_session_A()
 		__logic_session_A_13()
@@ -220,7 +225,7 @@ def __logic_session_A_12():
 def __logic_session_A_13():
 	global __vars
 	global __next_logic
-	print(__layout(__a({'gap':__vars["f12340fd-23fa-46aa-84e2-daef173bb2f3"]})))
+	print(__layout(__a({'gap':__vars["126bcf07-f112-4fa1-9017-e5e992bf0adc"]})))
 	__next_logic = 14
 	__save_session_A()
 def __logic_session_A_14():

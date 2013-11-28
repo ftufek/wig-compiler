@@ -94,6 +94,8 @@ private:
     std::list<FnCall> _fn_call_stms;
     void PrintFnCallStms();
 
+    std::string CallNextLogic(const int label);
+
     //info for DocumentStm generation
     std::list<std::string> _plugs;
 
@@ -107,6 +109,10 @@ private:
 
     //info for global variable generation
     bool _is_generating_global_variables;
+
+    //DEBUGGING helpers
+    void DEBUG(const std::string msg);
+    bool _enable_debug = false;
 };
 
 }

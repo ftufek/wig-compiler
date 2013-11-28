@@ -83,7 +83,7 @@ def __List(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_cd99c0da-ff98-4f4d-99f0-c45715e7e85a"
+	global_vars_file = "GLOBAL_0924df72-3e91-4042-8577-99f6e25589e3"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -92,7 +92,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_cd99c0da-ff98-4f4d-99f0-c45715e7e85a"
+	global_vars_file = "GLOBAL_0924df72-3e91-4042-8577-99f6e25589e3"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -113,13 +113,16 @@ __vars["__return_value"] = 0
 __returned_from_fn = False
 
 def __call_fn(fn_name):
+	global __vars
 	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
 
 def __inc_fn_logic():
+	global __vars
 	__vars["__call_stack"][-1]["next_logic"] += 1
 
 def __return_from_fn(return_value):
 	global __returned_from_fn
+	global __vars
 	__returned_from_fn = True
 	__vars["__return_value"] = return_value
 	__vars["__call_stack"].pop()
@@ -127,6 +130,7 @@ def __return_from_fn(return_value):
 def __logic_fn_nextRandom_1():
 	global __vars
 	global __next_logic
+	__call_fn("nextRandom")
 	__logic_fn_nextRandom_2()
 def __logic_fn_nextRandom_2():
 	global __vars
@@ -231,42 +235,42 @@ def __session_Play():
 def __logic_session_Play_1():
 	global __vars
 	global __next_logic
-	__vars["number_66_24"] = __vars["bc44c1fb-c5c5-4edb-9483-68beaf12eda2"] % 100
-	__vars["plays_49_19"] = __vars["plays_49_19"] + 1
-	__vars["guesses_66_24"] = 1
-	print(__layout(__Init({})))
+	__logic_fn_nextRandom_1()
 	__next_logic = 2
 	__save_session_Play()
+	__logic_session_Play_2()
 def __logic_session_Play_2():
 	global __vars
 	global __next_logic
-	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
-	__next_logic = 3
-	__save_session_Play()
-	__logic_session_Play_3()
+	global __returned_from_fn
+	if __returned_from_fn:
+		__vars["8afc52ab-cd81-4ca2-9a41-0eb46b16d28a"] = __vars["__return_value"]
+		__next_logic = 3
+		__save_session_Play()
+		__logic_session_Play_3()
+	
 def __logic_session_Play_3():
 	global __vars
 	global __next_logic
+	__vars["number_66_24"] = __vars["8afc52ab-cd81-4ca2-9a41-0eb46b16d28a"] % 100
+	__vars["plays_49_19"] = __vars["plays_49_19"] + 1
+	__vars["guesses_66_24"] = 1
+	print(__layout(__Init({})))
 	__next_logic = 4
 	__save_session_Play()
-	__logic_session_Play_4()
 def __logic_session_Play_4():
 	global __vars
 	global __next_logic
-	__call_fn("nextRandom")
-	__logic_fn_nextRandom_1()
+	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
 	__next_logic = 5
 	__save_session_Play()
 	__logic_session_Play_5()
 def __logic_session_Play_5():
 	global __vars
 	global __next_logic
-	if __returned_from_fn:
-		__vars["bc44c1fb-c5c5-4edb-9483-68beaf12eda2"] = __vars["__return_value"]
-		__next_logic = 6
-		__save_session_Play()
-		__logic_session_Play_6()
-	
+	__next_logic = 6
+	__save_session_Play()
+	__logic_session_Play_6()
 def __logic_session_Play_7():
 	global __vars
 	global __next_logic
@@ -283,9 +287,9 @@ def __logic_session_Play_8():
 def __logic_session_Play_9():
 	global __vars
 	global __next_logic
-	__next_logic = 4
+	__next_logic = 6
 	__save_session_Play()
-	__logic_session_Play_4()
+	__logic_session_Play_6()
 def __logic_session_Play_6():
 	global __vars
 	global __next_logic

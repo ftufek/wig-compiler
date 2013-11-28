@@ -77,14 +77,15 @@ void SymTabler::visit(ast::Session *s){
 void SymTabler::visit(ast::EmptyStm *s){}
 void SymTabler::visit(ast::CompoundStm *s){
 	sym_table_.Scope();
+	for(auto sym : _function_arg_syms){
+		sym_table_.PutSymbol(sym);
+	}
+	_function_arg_syms.clear();
 	for(auto it : *(s->vars_)){
 		it->accept(this);
 	}
 	for(auto stm : *(s->stms_)){
 		stm->accept(this);
-	}
-	for(auto sym : _function_arg_syms){
-		sym_table_.PutSymbol(sym);
 	}
 	s->set_sym_table(new st::Table(sym_table_));
 	sym_table_.UnScope();

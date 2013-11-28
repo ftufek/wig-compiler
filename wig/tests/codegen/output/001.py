@@ -42,7 +42,7 @@ def __b(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_89c881bd-4d47-46a7-b414-e99ff16d1a60"
+	global_vars_file = "GLOBAL_6316a989-758c-447f-9a70-bd962fd23d0b"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -51,7 +51,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_89c881bd-4d47-46a7-b414-e99ff16d1a60"
+	global_vars_file = "GLOBAL_6316a989-758c-447f-9a70-bd962fd23d0b"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -66,13 +66,16 @@ __vars["__return_value"] = 0
 __returned_from_fn = False
 
 def __call_fn(fn_name):
+	global __vars
 	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
 
 def __inc_fn_logic():
+	global __vars
 	__vars["__call_stack"][-1]["next_logic"] += 1
 
 def __return_from_fn(return_value):
 	global __returned_from_fn
+	global __vars
 	__returned_from_fn = True
 	__vars["__return_value"] = return_value
 	__vars["__call_stack"].pop()
