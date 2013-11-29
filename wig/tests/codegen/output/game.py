@@ -87,7 +87,7 @@ def __List(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_0377c816-426b-4624-a4d1-a6143a577b1c"
+	global_vars_file = "GLOBAL_71c68350-c0d2-4e06-acc2-6ca2b0ef16e7"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -96,7 +96,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_0377c816-426b-4624-a4d1-a6143a577b1c"
+	global_vars_file = "GLOBAL_71c68350-c0d2-4e06-acc2-6ca2b0ef16e7"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -273,7 +273,7 @@ def __logic_session_Play_2():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["2e50cb3f-da43-4439-9225-f24ede1b87ae"] = __vars["__return_value"]
+		__vars["a5e5729c-0149-4302-bd05-2ca9874bfd51"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_Play()
 		__logic_session_Play_3()
@@ -283,7 +283,7 @@ def __logic_session_Play_2():
 def __logic_session_Play_3():
 	global __vars
 	global __next_logic
-	__vars["number_66_24"] = __vars["2e50cb3f-da43-4439-9225-f24ede1b87ae"] % 100
+	__vars["number_66_24"] = __vars["a5e5729c-0149-4302-bd05-2ca9874bfd51"] % 100
 	__vars["plays_49_19"] = __vars["plays_49_19"] + 1
 	__vars["guesses_66_24"] = 1
 	print(__layout(__Init({})))

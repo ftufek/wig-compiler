@@ -1,20 +1,32 @@
 /* func_gen test */
 service{
-const html a = <html><[gap]></html>;
+	const html a = <html><[gap]></html>;
 
-int f(int a){
-return a+2;
-}
-int add(int a, int b){
-return a+b;
-}
-session A(){
-int counter;
-counter = 2;
-while(f(counter)>0 && add(counter,1) > 1){
-show plug a[gap=add(10,counter)];
-counter = counter - 1;
-}
-exit plug a[gap=f(3)];
-}
+	const html going_to_add = <html>
+		We're going to add: <[n1]> + <[n2]></html>;
+
+	const html result = <html>The result is: <[result]></html>;
+
+	const html only_positive = <html>
+		We can only add positive integer!</html>;
+
+	int recursive_add(int a, int b){
+		if(a < 0 || b < 0){
+			show only_positive;
+			return 0;
+		}else{
+			show plug going_to_add[n1=a, n2=b];
+			if(b > 0){
+				return recursive_add(a, b-1) + 1;
+			}else{
+				return a;
+			}
+		}
+	}
+
+	session A(){
+		int result;
+		result = recursive_add(2,2);
+		exit plug a[gap=result];
+	}
 }

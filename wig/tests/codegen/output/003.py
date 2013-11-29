@@ -32,9 +32,20 @@ def __layout(page):
 def __a(__varDict):
 	return """{gap}""".format(**(__varDict))
 
+def __going_to_add(__varDict):
+	return """
+		We're going to add: {n1} + {n2}""".format(**(__varDict))
+
+def __result(__varDict):
+	return """The result is: {result}""".format(**(__varDict))
+
+def __only_positive(__varDict):
+	return """
+		We can only add positive integer!""".format(**(__varDict))
+
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_458f6071-0987-4fa3-99d7-b1a4b9f202f7"
+	global_vars_file = "GLOBAL_a19aeece-7b93-4977-8712-5611d620fce3"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -43,7 +54,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_458f6071-0987-4fa3-99d7-b1a4b9f202f7"
+	global_vars_file = "GLOBAL_a19aeece-7b93-4977-8712-5611d620fce3"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -88,33 +99,109 @@ def __continue_stack_execution():
 		if not __returned_from_fn:
 			break
 
-def __logic_fn_f_1(_arg_a):
+def __logic_fn_recursive_add_1(_arg_a, _arg_b):
 	global __vars
 	global __next_logic
 	
-	__call_fn("f")
-	__vars["a_5_4"] = _arg_a
+	__call_fn("recursive_add")
+	__vars["a_13_10"] = _arg_a
+	__vars["b_13_10"] = _arg_b
 	__set_fn_logic(2)
-	__logic_fn_f_2()
-def __logic_fn_f_2():
+	__logic_fn_recursive_add_2()
+def __logic_fn_recursive_add_3():
 	global __vars
 	global __next_logic
 	
-	__return_from_fn(__vars["a_5_4"] + 2)
-def __logic_fn_add_1(_arg_a, _arg_b):
+	print(__layout(__only_positive({})))
+	__set_fn_logic(4)
+def __logic_fn_recursive_add_4():
 	global __vars
 	global __next_logic
 	
-	__call_fn("add")
-	__vars["a_8_6"] = _arg_a
-	__vars["b_8_6"] = _arg_b
-	__set_fn_logic(2)
-	__logic_fn_add_2()
-def __logic_fn_add_2():
+	__return_from_fn(0)
+def __logic_fn_recursive_add_5():
 	global __vars
 	global __next_logic
 	
-	__return_from_fn(__vars["a_8_6"] + __vars["b_8_6"])
+	print(__layout(__going_to_add({'n1':__vars["a_13_10"],'n2':__vars["b_13_10"]
+	})))
+	__set_fn_logic(6)
+def __logic_fn_recursive_add_7():
+	global __vars
+	global __next_logic
+	
+	global __vars
+	__set_fn_logic(8)
+	
+	__logic_fn_recursive_add_1(__vars["a_13_10"], __vars["b_13_10"] - 1)
+	__logic_fn_recursive_add_8()
+def __logic_fn_recursive_add_8():
+	global __vars
+	global __next_logic
+	
+	global __returned_from_fn
+	if __returned_from_fn:
+		__returned_from_fn = False
+		__vars["9a98673c-7f1c-4349-b769-4fae577eec0b"] = __vars["__return_value"]
+		__set_fn_logic(9)
+		__logic_fn_recursive_add_9()
+	
+def __logic_fn_recursive_add_9():
+	global __vars
+	global __next_logic
+	
+	__return_from_fn(__vars["9a98673c-7f1c-4349-b769-4fae577eec0b"] + 1)
+def __logic_fn_recursive_add_10():
+	global __vars
+	global __next_logic
+	
+	__return_from_fn(__vars["a_13_10"])
+def __logic_fn_recursive_add_11():
+	global __vars
+	global __next_logic
+	
+	__set_fn_logic(13)
+	__logic_fn_recursive_add_13()
+def __logic_fn_recursive_add_12():
+	global __vars
+	global __next_logic
+	
+	__set_fn_logic(13)
+	__logic_fn_recursive_add_13()
+def __logic_fn_recursive_add_6():
+	global __vars
+	global __next_logic
+	
+	if __vars["b_13_10"] > 0:
+		__set_fn_logic(7)
+		__logic_fn_recursive_add_7()
+	else:
+		__set_fn_logic(10)
+		__logic_fn_recursive_add_10()
+	
+def __logic_fn_recursive_add_13():
+	global __vars
+	global __next_logic
+	
+	__set_fn_logic(15)
+	__logic_fn_recursive_add_15()
+def __logic_fn_recursive_add_14():
+	global __vars
+	global __next_logic
+	
+	__set_fn_logic(15)
+	__logic_fn_recursive_add_15()
+def __logic_fn_recursive_add_2():
+	global __vars
+	global __next_logic
+	
+	if __vars["a_13_10"] < 0 or __vars["b_13_10"] < 0:
+		__set_fn_logic(3)
+		__logic_fn_recursive_add_3()
+	else:
+		__set_fn_logic(5)
+		__logic_fn_recursive_add_5()
+	
 def __save_session_A():
 	session_file = "A$"+str(__sid)
 	open(session_file, 'w').close()
@@ -154,131 +241,37 @@ def __session_A():
 def __logic_session_A_1():
 	global __vars
 	global __next_logic
-	__vars["counter_12_8"] = 2
+	global __vars
+	__logic_fn_recursive_add_1(2, 2)
 	__next_logic = 2
 	__save_session_A()
 	__logic_session_A_2()
 def __logic_session_A_2():
 	global __vars
 	global __next_logic
-	global __vars
-	__logic_fn_f_1(__vars["counter_12_8"])
-	__next_logic = 3
-	__save_session_A()
-	__logic_session_A_3()
+	global __returned_from_fn
+	if __returned_from_fn:
+		__returned_from_fn = False
+		__vars["2a131053-3835-4bc6-8868-1acc9bc0d16f"] = __vars["__return_value"]
+		__next_logic = 3
+		__save_session_A()
+		__logic_session_A_3()
+	else:
+		__save_session_A()
+	
 def __logic_session_A_3():
 	global __vars
 	global __next_logic
-	global __returned_from_fn
-	if __returned_from_fn:
-		__returned_from_fn = False
-		__vars["8a5f1cbe-dd07-4fd6-b2f5-3c5fa003575f"] = __vars["__return_value"]
-		__next_logic = 4
-		__save_session_A()
-		__logic_session_A_4()
-	else:
-		__save_session_A()
-	
+	__vars["result_28_20"] = __vars["2a131053-3835-4bc6-8868-1acc9bc0d16f"]
+	print(__layout(__a({'gap':__vars["result_28_20"]})))
+	__next_logic = 4
+	__save_session_A()
 def __logic_session_A_4():
 	global __vars
 	global __next_logic
-	global __vars
-	__logic_fn_add_1(__vars["counter_12_8"], 1)
-	__next_logic = 5
+	__next_logic = 3
 	__save_session_A()
-	__logic_session_A_5()
-def __logic_session_A_5():
-	global __vars
-	global __next_logic
-	global __returned_from_fn
-	if __returned_from_fn:
-		__returned_from_fn = False
-		__vars["fe50dc2d-5c33-4f6a-8b1e-388fc911ccaa"] = __vars["__return_value"]
-		__next_logic = 6
-		__save_session_A()
-		__logic_session_A_6()
-	else:
-		__save_session_A()
-	
-def __logic_session_A_7():
-	global __vars
-	global __next_logic
-	global __vars
-	__logic_fn_add_1(10, __vars["counter_12_8"])
-	__next_logic = 8
-	__save_session_A()
-	__logic_session_A_8()
-def __logic_session_A_8():
-	global __vars
-	global __next_logic
-	global __returned_from_fn
-	if __returned_from_fn:
-		__returned_from_fn = False
-		__vars["1df4c727-f539-4a32-92c5-3b85144fb354"] = __vars["__return_value"]
-		__next_logic = 9
-		__save_session_A()
-		__logic_session_A_9()
-	else:
-		__save_session_A()
-	
-def __logic_session_A_9():
-	global __vars
-	global __next_logic
-	print(__layout(__a({'gap':__vars["1df4c727-f539-4a32-92c5-3b85144fb354"]})))
-	__next_logic = 10
-	__save_session_A()
-def __logic_session_A_10():
-	global __vars
-	global __next_logic
-	__vars["counter_12_8"] = __vars["counter_12_8"] - 1
-	__next_logic = 2
-	__save_session_A()
-	__logic_session_A_2()
-def __logic_session_A_6():
-	global __vars
-	global __next_logic
-	if __vars["8a5f1cbe-dd07-4fd6-b2f5-3c5fa003575f"] > 0 and __vars["fe50dc2d-5c33-4f6a-8b1e-388fc911ccaa"] > 1:
-		__next_logic = 7
-		__save_session_A()
-		__logic_session_A_7()
-	else:
-		__next_logic = 11
-		__save_session_A()
-		__logic_session_A_11()
-	
-def __logic_session_A_11():
-	global __vars
-	global __next_logic
-	global __vars
-	__logic_fn_f_1(3)
-	__next_logic = 12
-	__save_session_A()
-	__logic_session_A_12()
-def __logic_session_A_12():
-	global __vars
-	global __next_logic
-	global __returned_from_fn
-	if __returned_from_fn:
-		__returned_from_fn = False
-		__vars["3bd4f470-787a-4119-82b3-32a2213a29a5"] = __vars["__return_value"]
-		__next_logic = 13
-		__save_session_A()
-		__logic_session_A_13()
-	else:
-		__save_session_A()
-	
-def __logic_session_A_13():
-	global __vars
-	global __next_logic
-	print(__layout(__a({'gap':__vars["3bd4f470-787a-4119-82b3-32a2213a29a5"]})))
-	__next_logic = 14
-	__save_session_A()
-def __logic_session_A_14():
-	global __vars
-	global __next_logic
-	__next_logic = 13
-	__save_session_A()
-	__logic_session_A_13()
+	__logic_session_A_3()
 print "Content-type: text/html"
 print
 __load_global_vars()
