@@ -135,13 +135,27 @@ std::string _t_schema_class(const std::string &name,
 							const std::list<std::pair<std::string, std::string>> &fields){
 	std::stringstream ss;
 	ss<<"class "<<name<<"():"<<endl;
-	for(auto field : fields){
-		ss<<indent(1)<<field.first<<" = "<<field.second<<endl;
-	}
-	ss<<endl;
 	ss<<indent(1)<<"def __init__(self, dict):"<<endl;
 	ss<<indent(2)<<"for k, v in dict.items():"<<endl;
 	ss<<indent(3)<<"setattr(self, k, v)"<<endl;
+	ss<<endl;
+	ss<<indent(1)<<"def keep(self, list_to_keep):"<<endl;
+	ss<<indent(2)<<"__copy = copy.deepcopy(self)"<<endl;
+	ss<<indent(2)<<"__schema_vars = []"<<endl;
+	for(auto field : fields){
+		ss<<indent(2)<<"__schema_vars.append(\""<<field.first<<"\")"<<endl;
+	}
+	ss<<indent(2)<<"for keep in __schema_vars:"<<endl;
+	ss<<indent(3)<<"if keep not in list_to_keep:"<<endl;
+	ss<<indent(4)<<"__copy.keep = None"<<endl;
+	ss<<indent(2)<<"return __copy"<<endl;
+	ss<<endl;
+	ss<<indent(1)<<"def discard(self, list_to_discard):"<<endl;
+	ss<<indent(2)<<"__copy = copy.deepcopy(self)"<<endl;
+	ss<<indent(2)<<"for discard in list_to_discard:"<<endl;
+	ss<<indent(3)<<"__copy.discard = None"<<endl;
+	ss<<indent(2)<<"return __copy"<<endl;
+	ss<<endl;
 	return ss.str();
 }
 

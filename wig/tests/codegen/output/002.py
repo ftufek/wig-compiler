@@ -16,13 +16,27 @@ __sid = 0
 __next_logic = 1
 
 class Item():
-	name = ""
-	available = False
-	price = 0
-
 	def __init__(self, dict):
 		for k, v in dict.items():
 			setattr(self, k, v)
+
+	def keep(self, list_to_keep):
+		__copy = copy.deepcopy(self)
+		__schema_vars = []
+		__schema_vars.append("name")
+		__schema_vars.append("available")
+		__schema_vars.append("price")
+		for keep in __schema_vars:
+			if keep not in list_to_keep:
+				__copy.keep = None
+		return __copy
+
+	def discard(self, list_to_discard):
+		__copy = copy.deepcopy(self)
+		for discard in list_to_discard:
+			__copy.discard = None
+		return __copy
+
 
 def __str_sid():
 	if __sid != 0:
@@ -49,7 +63,7 @@ def __c(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_6b4673ab-01d6-4bf3-8d7c-73901d89b921"
+	global_vars_file = "GLOBAL_08759f32-fede-4f98-b96f-fe8a220e8545"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -58,7 +72,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_6b4673ab-01d6-4bf3-8d7c-73901d89b921"
+	global_vars_file = "GLOBAL_08759f32-fede-4f98-b96f-fe8a220e8545"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)

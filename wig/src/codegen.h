@@ -74,6 +74,9 @@ private:
 
     //info for schema to python class generation
     std::list<std::pair<std::string, std::string>> _fields;
+    boost::optional<ast::Schema *> schema_;
+    std::list<std::string> _fields_for_tupleopexp = {};
+    bool _is_tupleopexp_keep = false;
 
     //info for main print stm generation
     std::list<std::string> _sessions;

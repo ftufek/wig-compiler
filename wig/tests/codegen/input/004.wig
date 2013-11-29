@@ -1,0 +1,16 @@
+/* this tests codegen for tuples */
+service{
+	const html a = <html><[gap]></html>;
+
+	schema Item{
+		bool available;
+		int price;
+		string title;
+	}
+	
+	session A(){
+		tuple Item a;
+		a = tuple {available=true, price=2, title="aaa"};
+		exit plug a[gap=a.price];
+	}
+}

@@ -23,9 +23,9 @@ class Item():
 	def keep(self, list_to_keep):
 		__copy = copy.deepcopy(self)
 		__schema_vars = []
-		__schema_vars.append("name")
 		__schema_vars.append("available")
 		__schema_vars.append("price")
+		__schema_vars.append("title")
 		for keep in __schema_vars:
 			if keep not in list_to_keep:
 				__copy.keep = None
@@ -53,14 +53,11 @@ def __layout(page):
 	</form></html>""".format(action=__action_name(),page=page)
 
 def __a(__varDict):
-	return """""".format(**(__varDict))
-
-def __b(__varDict):
 	return """{gap}""".format(**(__varDict))
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_2f88f5c9-65e4-448c-b0a0-65c4e6c583a9"
+	global_vars_file = "GLOBAL_eec59513-113b-4824-b807-acc5698032f7"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -69,7 +66,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_2f88f5c9-65e4-448c-b0a0-65c4e6c583a9"
+	global_vars_file = "GLOBAL_eec59513-113b-4824-b807-acc5698032f7"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -77,8 +74,6 @@ def __load_global_vars():
 	except IOError:
 		return
 
-__vars["counter_12_7"] = 0
-__global_vars.append("counter_12_7")
 __vars["__call_stack"] = []
 __vars["__return_value"] = 0
 __returned_from_fn = False
@@ -116,8 +111,8 @@ def __continue_stack_execution():
 		if not __returned_from_fn:
 			break
 
-def __save_session_b():
-	session_file = "b$"+str(__sid)
+def __save_session_A():
+	session_file = "A$"+str(__sid)
 	open(session_file, 'w').close()
 	session_vars = dict((k, __vars[k]) for k in __vars if k not in __global_vars)
 	with open(session_file, "w") as f:
@@ -125,84 +120,55 @@ def __save_session_b():
 		pickle.dump(__next_logic, f)
 	return
 
-def __init_session_b():
+def __init_session_A():
 	global __sid
 	global __next_logic
 	__sid = str(uuid.uuid4())
 	__next_logic = 1
-	__save_session_b()
-	__logic_session_b_1()
+	__save_session_A()
+	__logic_session_A_1()
 
-def __load_session_b(session_id):
+def __load_session_A(session_id):
 	global __vars
 	global __next_logic
 	global __sid
 	__sid = session_id
-	with open("b$"+str(__sid), "r") as f:
+	with open("A$"+str(__sid), "r") as f:
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
 	__continue_stack_execution()
-	globals()["__logic_session_b_"+str(__next_logic)]()
+	globals()["__logic_session_A_"+str(__next_logic)]()
 
-def __session_b():
+def __session_A():
 	sid = __cgi_input.getvalue("sid", "")
 	if sid == "":
-		__init_session_b()
+		__init_session_A()
 	else:
-		__load_session_b(sid)
+		__load_session_A(sid)
 
-def __logic_session_b_1():
+def __logic_session_A_1():
 	global __vars
 	global __next_logic
-	__vars["counter_14_8"] = 4
-	__vars["a_15_8"] = 3
+	__vars["a_12_6"] = Item({
+			'available':True, 
+			'price':2, 
+			'title':"aaa"})
+	print(__layout(__a({'gap':__vars["a_12_6"].price})))
 	__next_logic = 2
-	__save_session_b()
-	__logic_session_b_2()
-def __logic_session_b_3():
+	__save_session_A()
+def __logic_session_A_2():
 	global __vars
 	global __next_logic
-	__vars["counter_14_8"] = __vars["counter_14_8"] - 1
-	print(__layout(__b({'gap':__vars["counter_14_8"]})))
-	__next_logic = 4
-	__save_session_b()
-def __logic_session_b_4():
-	global __vars
-	global __next_logic
-	__next_logic = 2
-	__save_session_b()
-	__logic_session_b_2()
-def __logic_session_b_2():
-	global __vars
-	global __next_logic
-	if __vars["counter_14_8"] > 0:
-		__next_logic = 3
-		__save_session_b()
-		__logic_session_b_3()
-	else:
-		__next_logic = 5
-		__save_session_b()
-		__logic_session_b_5()
-	
-def __logic_session_b_5():
-	global __vars
-	global __next_logic
-	print(__layout(__b({'gap':__vars["counter_14_8"]})))
-	__next_logic = 6
-	__save_session_b()
-def __logic_session_b_6():
-	global __vars
-	global __next_logic
-	__next_logic = 5
-	__save_session_b()
-	__logic_session_b_5()
+	__next_logic = 1
+	__save_session_A()
+	__logic_session_A_1()
 print "Content-type: text/html"
 print
 __load_global_vars()
-if __session == "b":
-	__session_b()
+if __session == "A":
+	__session_A()
 else:
-	print __layout("Please select one of the following sessions: b")
+	print __layout("Please select one of the following sessions: A")
 __save_global_vars()
 

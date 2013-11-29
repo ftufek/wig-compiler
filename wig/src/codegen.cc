@@ -208,22 +208,7 @@ void CodeGenerator::visit(ast::Function *s) {
 }
 
 void CodeGenerator::visit(ast::Field *s) {
-	string field_name = s->id_;
-	string field_default_value{"\"\""};
-	switch(s->type_->type_){
-	//INT, BOOL, STRING, VOID, TUPLE, HTML, SCHEMA, UNDEFINED
-	case ast::kType::INT:
-		field_default_value = "0";
-		break;
-
-	case ast::kType::BOOL:
-		field_default_value = "False";
-		break;
-
-	default:
-		break;
-	}
-	_fields.push_back(make_pair(field_name, field_default_value));
+	_fields.push_back(make_pair(s->id_, "None"));
 }
 
 void CodeGenerator::visit(ast::Empty *) {}
@@ -293,6 +278,7 @@ void CodeGenerator::visit(ast::DocumentStm *s){
 	for(auto plug : *(s->plugs_)){
 		plug->accept(this);
 	}
+	PrintFnCallStms();
 	_label_stms.push_back(_t_print_html(s->id_,_plugs));
 	PrintLabelStms(NewLabel(), _label_stms, DEF_JUMP_NEXT_LABEL);
 }
@@ -300,7 +286,6 @@ void CodeGenerator::visit(ast::DocumentStm *s){
 void CodeGenerator::visit(ast::PlugStm *s){
 	string plug = "'" + s->id_ + "':";
 	plug.append(ExpToStr(s->exp_));
-	PrintFnCallStms();
 	_plugs.push_back(plug);
 }
 
@@ -418,16 +403,23 @@ void CodeGenerator::visit(ast::LValExp *s){
 	if(!s->is_tuple_ref()){
 		auto key = _sym_table.GetUniqueKeySymbol(s->lvalue_);
 		if(key){
+			auto sym = dynamic_cast<ast::Variable *>(
+							_sym_table.FindSymbol(s->lvalue_).get().get_node());
+			if(sym && sym->type_->type_ == ast::kType::TUPLE){
+				auto schema_sym = _sym_table.FindSymbol(sym->type_->tuple_id_);
+				if(schema_sym){
+					schema_.reset(dynamic_cast<ast::Schema *>(schema_sym.get().get_node()));
+				}
+			}
 			_exps.push_back(_t_var(key.get()));
 		}else{
 			_sym_table.PrettyPrint(std::cerr);
 			cerr<<"ERROR_IN_CODEGEN_FOR_LVALUE:"<<s->lvalue_;
 		}
 	}else{
-		//TODO: implement
 		auto key = _sym_table.GetUniqueKeySymbol(s->get_tuple_name());
 		if(key){
-
+			_exps.push_back(_t_var(key.get())+"."+s->get_field_name());
 		}
 	}
 }
@@ -517,7 +509,32 @@ void CodeGenerator::visit(ast::UnopExp *s){
 }
 
 void CodeGenerator::visit(ast::TupleopExp *s){
-	//TODO: implement
+	stringstream ss;
+	ss<<ExpToStr(s->exp_);
+	switch(s->type_){
+	case ast::kTupleopType::Keep:
+		ss<<".keep([";
+		break;
+
+	case ast::kTupleopType::Discard:
+		ss<<".discard([";
+		break;
+
+	default:
+		break;
+	}
+
+	auto it = s->ids_->begin();
+	if(it != s->ids_->end()){
+		ss<<"\""<<*it<<"\"";
+		++it;
+	}
+	for(; it != s->ids_->end(); ++it){
+		ss<<", ";
+		ss<<"\""<<*it<<"\"";
+	}
+	ss<<"])";
+	_exps.push_back(ss.str());
 }
 
 void CodeGenerator::visit(ast::FunctionExp *s){
@@ -562,11 +579,26 @@ void CodeGenerator::visit(ast::StringExp *s){
 }
 
 void CodeGenerator::visit(ast::FieldValExp *s){
-	//TODO: implement
+	_exps.push_back("'"+s->id_+"':"+ExpToStr(s->exp_));
 }
 
 void CodeGenerator::visit(ast::TupleExp *s){
-	//TODO: implement
+	if(schema_){
+		stringstream ss;
+		auto schema = schema_.get();
+		ss<<schema->id_<<"({"<<endl;
+		auto it = s->field_vals_->begin();
+		if(it != s->field_vals_->end()){
+			ss<<indent(2)<<ExpToStr(*it);
+			++it;
+		}
+		for(; it != s->field_vals_->end(); ++it){
+			ss<<", "<<endl;
+			ss<<indent(2)<<ExpToStr(*it);
+		}
+		ss<<"})";
+		_exps.push_back(ss.str());
+	}
 }
 
 }
