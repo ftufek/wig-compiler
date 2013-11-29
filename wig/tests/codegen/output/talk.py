@@ -73,7 +73,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_e412cdae-7994-448d-a794-9cf91f37df77"
+	global_vars_file = "GLOBAL_318c4c7c-0bae-4bec-96e6-5c68b7ce4722"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -82,7 +82,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_e412cdae-7994-448d-a794-9cf91f37df77"
+	global_vars_file = "GLOBAL_318c4c7c-0bae-4bec-96e6-5c68b7ce4722"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -104,7 +104,11 @@ __returned_from_fn = False
 
 def __call_fn(fn_name):
 	global __vars
-	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
+	call_stack_copy = copy.deepcopy(__vars["__call_stack"])
+	del __vars["__call_stack"]
+	old_vars = copy.deepcopy(__vars)
+	__vars["__call_stack"] = call_stack_copy
+	__vars["__call_stack"].append({"name":fn_name,"next_logic":1, "old_vars":old_vars})
 
 def __set_fn_logic(n):
 	global __vars
@@ -113,17 +117,23 @@ def __set_fn_logic(n):
 def __return_from_fn(return_value):
 	global __returned_from_fn
 	global __vars
+	call_stack_copy = copy.deepcopy(__vars["__call_stack"])
+	__vars = __vars["__call_stack"][-1]["old_vars"]
+	call_stack_copy.pop()
+	__vars["__call_stack"] = call_stack_copy
 	__returned_from_fn = True
 	__vars["__return_value"] = return_value
-	__vars["__call_stack"].pop()
 
 def __continue_stack_execution():
-	if __vars["__call_stack"]:
-		fn_name = __vars["__call_stack"][-1]["name"]
-		fn_ln = __vars["__call_stack"][-1]["next_logic"]
-		print >>sys.stderr, "going to call " + fn_name + " "
-		print >>sys.stderr, fn_ln
-		globals()["__logic_fn_"+fn_name+"_"+str(fn_ln)]()
+	while True:
+		if __vars["__call_stack"]:
+			fn_name = __vars["__call_stack"][-1]["name"]
+			fn_ln = __vars["__call_stack"][-1]["next_logic"]
+			globals()["__logic_fn_"+fn_name+"_"+str(fn_ln)]()
+		else:
+			break
+		if not __returned_from_fn:
+			break
 
 def __save_session_Talk():
 	session_file = "Talk$"+str(__sid)

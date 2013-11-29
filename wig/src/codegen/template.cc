@@ -41,7 +41,8 @@ std::string deindent(const std::string &str, int number){
 }
 
 std::string DEBUG_STR(){
-	return "print \"\\n\\n\\n-------------\"; print __vars; print \"\"; traceback.print_stack()";
+//	return "print \"\\n\\n\\n-------------\"; print __vars; print \"\"; traceback.print_stack()";
+	return "";
 }
 
 std::string _t_py_fn_call(const std::string &name,
@@ -281,7 +282,12 @@ std::string _t_fn_helpers(){
 			"\n"
 			"def __call_fn(fn_name):\n"
 			"	global __vars\n"
-			"	__vars[\"__call_stack\"].append({\"name\":fn_name,\"next_logic\":1})\n"
+			"	call_stack_copy = copy.deepcopy(__vars[\"__call_stack\"])\n"
+			"	del __vars[\"__call_stack\"]\n"
+			"	old_vars = copy.deepcopy(__vars)\n"
+			"	__vars[\"__call_stack\"] = call_stack_copy\n"
+			"	__vars[\"__call_stack\"].append({\"name\":fn_name,"
+			"\"next_logic\":1, \"old_vars\":old_vars})\n"
 			"\n"
 			"def __set_fn_logic(n):\n"
 			"	global __vars\n"
@@ -290,17 +296,23 @@ std::string _t_fn_helpers(){
 			"def __return_from_fn(return_value):\n"
 			"	global __returned_from_fn\n"
 			"	global __vars\n"
+			"	call_stack_copy = copy.deepcopy(__vars[\"__call_stack\"])\n"
+			"	__vars = __vars[\"__call_stack\"][-1][\"old_vars\"]\n"
+			"	call_stack_copy.pop()\n"
+			"	__vars[\"__call_stack\"] = call_stack_copy\n"
 			"	__returned_from_fn = True\n"
 			"	__vars[\"__return_value\"] = return_value\n"
-			"	__vars[\"__call_stack\"].pop()\n"
 			"\n"
 			"def __continue_stack_execution():\n"
-			"	if __vars[\"__call_stack\"]:\n"
-			"		fn_name = __vars[\"__call_stack\"][-1][\"name\"]\n"
-			"		fn_ln = __vars[\"__call_stack\"][-1][\"next_logic\"]\n"
-			"		print >>sys.stderr, \"going to call \" + fn_name + \" \"\n"
-			"		print >>sys.stderr, fn_ln\n"
-			"		globals()[\"__logic_fn_\"+fn_name+\"_\"+str(fn_ln)]()\n";
+			"	while True:\n"
+			"		if __vars[\"__call_stack\"]:\n"
+			"			fn_name = __vars[\"__call_stack\"][-1][\"name\"]\n"
+			"			fn_ln = __vars[\"__call_stack\"][-1][\"next_logic\"]\n"
+			"			globals()[\"__logic_fn_\"+fn_name+\"_\"+str(fn_ln)]()\n"
+			"		else:\n"
+			"			break\n"
+			"		if not __returned_from_fn:\n"
+			"			break\n";
 }
 
 std::string _t_fn_decl(const std::string &name,
@@ -333,6 +345,18 @@ std::string _t_next_fn(const std::string &fn_name, const int n){
 	stringstream ss;
 	ss<<"__set_fn_logic("<<n<<")"<<endl;
 	ss<<"__logic_fn_"<<fn_name<<"_"<<n<<"()";
+	return ss.str();
+}
+
+std::string _t_call_logic_fn(const std::string &fn_name, const int n){
+	stringstream ss;
+	ss<<"__logic_fn_"<<fn_name<<"_"<<n<<"()";
+	return ss.str();
+}
+
+std::string _t_set_next_fn_logic(const int n){
+	stringstream ss;
+	ss<<"__set_fn_logic("<<n<<")"<<endl;
 	return ss.str();
 }
 

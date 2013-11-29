@@ -49,6 +49,8 @@ std::string _t_fn_decl(const std::string &name,
 					   const std::list<std::string> &stms,
 					   const std::list<std::string> &args = {});
 std::string _t_next_fn(const std::string &fn_name, const int n);
+std::string _t_call_logic_fn(const std::string &fn_name, const int n);
+std::string _t_set_next_fn_logic(const int n);
 
 std::string _t_if_stm(const std::string &condition,
 					  const std::list<std::string> &stms,

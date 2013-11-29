@@ -94,7 +94,7 @@ private:
     std::list<FnCall> _fn_call_stms;
     void PrintFnCallStms();
 
-    std::string CallNextLogic(const int label);
+    std::string CallNextLogic(const int label, const bool with_set = true);
 
     //info for DocumentStm generation
     std::list<std::string> _plugs;

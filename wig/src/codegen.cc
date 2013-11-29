@@ -30,11 +30,15 @@ void CodeGenerator::UpdateSymTable(ast::Base *s){
 	_sym_table = st::Table(*s->get_sym_table());
 }
 
-std::string CodeGenerator::CallNextLogic(const int label){
+std::string CodeGenerator::CallNextLogic(const int label, const bool with_set){
 	if(_in_session.size()){
 		return _t_call_next_logic(_in_session, label);
 	}else if(_in_fn.size()){
-		return _t_next_fn(_in_fn, label);
+		if(with_set){
+			return _t_next_fn(_in_fn, label);
+		}else{
+			return _t_call_logic_fn(_in_fn, label);
+		}
 	}
 	return "";
 }
@@ -77,16 +81,11 @@ void CodeGenerator::PrintFnCallStms(){
 	if(_fn_call_stms.size()){
 		for(auto call : _fn_call_stms){
 			_label_stms.push_back("global __vars");
-			string copy_vars_id = boost::lexical_cast<std::string>(
-											boost::uuids::random_generator()());
-			_label_stms.push_back("__vars[\""+copy_vars_id + "\"] = copy.deepcopy(__vars)");
+			if(_in_fn.size()){
+				_label_stms.push_back(_t_set_next_fn_logic(_current_label+2));
+			}
 			_label_stms.push_back(call.fn_call_exp);
-			_label_stms.push_back("return_val = __vars[\"__return_value\"]");
-			_label_stms.push_back("call_stack = __vars[\"__call_stack\"]");
-			_label_stms.push_back("__vars = __vars[\""+copy_vars_id + "\"]");
-			_label_stms.push_back("__vars[\"__return_value\"] = return_val");
-			_label_stms.push_back("__vars[\"__call_stack\"] = call_stack");
-			_label_stms.push_back(CallNextLogic(_current_label+2));
+			_label_stms.push_back(CallNextLogic(_current_label+2, false));
 			PrintLabelStms(NewLabel(), _label_stms);
 
 			_label_stms.push_back("global __returned_from_fn");
@@ -188,7 +187,7 @@ void CodeGenerator::visit(ast::Function *s) {
 	UpdateSymTable(s->stm_);
 	_in_fn = s->id_;
 	_label_stms.clear();
-
+	_label_stms.push_back("__call_fn(\""+s->id_+"\")");
 	std::list<std::string> args{};
 	for(auto arg : *(s->args_)){
 		args.push_back("_arg_"+arg->id_);
@@ -199,7 +198,6 @@ void CodeGenerator::visit(ast::Function *s) {
 			cerr<<"ERROR function argument isn't in the symbol table!"<<endl;
 		}
 	}
-	_label_stms.push_back("__call_fn(\""+s->id_+"\")");
 	_label_stms.push_back(_t_next_fn(_in_fn, _current_label+2));
 	cgout<<_t_fn_decl(s->id_, NewLabel(), _label_stms, args);
 	_label_stms.clear();

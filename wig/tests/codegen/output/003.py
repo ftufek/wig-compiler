@@ -34,7 +34,7 @@ def __a(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_a915d1f9-e90b-4fe2-98a1-0702600e15cd"
+	global_vars_file = "GLOBAL_458f6071-0987-4fa3-99d7-b1a4b9f202f7"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -43,7 +43,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_a915d1f9-e90b-4fe2-98a1-0702600e15cd"
+	global_vars_file = "GLOBAL_458f6071-0987-4fa3-99d7-b1a4b9f202f7"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -57,7 +57,11 @@ __returned_from_fn = False
 
 def __call_fn(fn_name):
 	global __vars
-	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
+	call_stack_copy = copy.deepcopy(__vars["__call_stack"])
+	del __vars["__call_stack"]
+	old_vars = copy.deepcopy(__vars)
+	__vars["__call_stack"] = call_stack_copy
+	__vars["__call_stack"].append({"name":fn_name,"next_logic":1, "old_vars":old_vars})
 
 def __set_fn_logic(n):
 	global __vars
@@ -66,44 +70,50 @@ def __set_fn_logic(n):
 def __return_from_fn(return_value):
 	global __returned_from_fn
 	global __vars
+	call_stack_copy = copy.deepcopy(__vars["__call_stack"])
+	__vars = __vars["__call_stack"][-1]["old_vars"]
+	call_stack_copy.pop()
+	__vars["__call_stack"] = call_stack_copy
 	__returned_from_fn = True
 	__vars["__return_value"] = return_value
-	__vars["__call_stack"].pop()
 
 def __continue_stack_execution():
-	if __vars["__call_stack"]:
-		fn_name = __vars["__call_stack"][-1]["name"]
-		fn_ln = __vars["__call_stack"][-1]["next_logic"]
-		print >>sys.stderr, "going to call " + fn_name + " "
-		print >>sys.stderr, fn_ln
-		globals()["__logic_fn_"+fn_name+"_"+str(fn_ln)]()
+	while True:
+		if __vars["__call_stack"]:
+			fn_name = __vars["__call_stack"][-1]["name"]
+			fn_ln = __vars["__call_stack"][-1]["next_logic"]
+			globals()["__logic_fn_"+fn_name+"_"+str(fn_ln)]()
+		else:
+			break
+		if not __returned_from_fn:
+			break
 
 def __logic_fn_f_1(_arg_a):
 	global __vars
 	global __next_logic
-	print "\n\n\n-------------"; print __vars; print ""; traceback.print_stack()
-	__vars["a_5_4"] = _arg_a
+	
 	__call_fn("f")
+	__vars["a_5_4"] = _arg_a
 	__set_fn_logic(2)
 	__logic_fn_f_2()
 def __logic_fn_f_2():
 	global __vars
 	global __next_logic
-	print "\n\n\n-------------"; print __vars; print ""; traceback.print_stack()
+	
 	__return_from_fn(__vars["a_5_4"] + 2)
 def __logic_fn_add_1(_arg_a, _arg_b):
 	global __vars
 	global __next_logic
-	print "\n\n\n-------------"; print __vars; print ""; traceback.print_stack()
+	
+	__call_fn("add")
 	__vars["a_8_6"] = _arg_a
 	__vars["b_8_6"] = _arg_b
-	__call_fn("add")
 	__set_fn_logic(2)
 	__logic_fn_add_2()
 def __logic_fn_add_2():
 	global __vars
 	global __next_logic
-	print "\n\n\n-------------"; print __vars; print ""; traceback.print_stack()
+	
 	__return_from_fn(__vars["a_8_6"] + __vars["b_8_6"])
 def __save_session_A():
 	session_file = "A$"+str(__sid)
@@ -152,13 +162,7 @@ def __logic_session_A_2():
 	global __vars
 	global __next_logic
 	global __vars
-	__vars["80f5c7b2-335f-4faa-945a-38922acfc3cf"] = copy.deepcopy(__vars)
 	__logic_fn_f_1(__vars["counter_12_8"])
-	return_val = __vars["__return_value"]
-	call_stack = __vars["__call_stack"]
-	__vars = __vars["80f5c7b2-335f-4faa-945a-38922acfc3cf"]
-	__vars["__return_value"] = return_val
-	__vars["__call_stack"] = call_stack
 	__next_logic = 3
 	__save_session_A()
 	__logic_session_A_3()
@@ -168,7 +172,7 @@ def __logic_session_A_3():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["635f8014-57fa-4e7e-943b-c2d86f46a248"] = __vars["__return_value"]
+		__vars["8a5f1cbe-dd07-4fd6-b2f5-3c5fa003575f"] = __vars["__return_value"]
 		__next_logic = 4
 		__save_session_A()
 		__logic_session_A_4()
@@ -179,13 +183,7 @@ def __logic_session_A_4():
 	global __vars
 	global __next_logic
 	global __vars
-	__vars["9e94e022-bec3-427b-9168-a8407eb5000b"] = copy.deepcopy(__vars)
 	__logic_fn_add_1(__vars["counter_12_8"], 1)
-	return_val = __vars["__return_value"]
-	call_stack = __vars["__call_stack"]
-	__vars = __vars["9e94e022-bec3-427b-9168-a8407eb5000b"]
-	__vars["__return_value"] = return_val
-	__vars["__call_stack"] = call_stack
 	__next_logic = 5
 	__save_session_A()
 	__logic_session_A_5()
@@ -195,7 +193,7 @@ def __logic_session_A_5():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["f2b249ad-c9e4-436a-a07b-cf0e92d46485"] = __vars["__return_value"]
+		__vars["fe50dc2d-5c33-4f6a-8b1e-388fc911ccaa"] = __vars["__return_value"]
 		__next_logic = 6
 		__save_session_A()
 		__logic_session_A_6()
@@ -206,13 +204,7 @@ def __logic_session_A_7():
 	global __vars
 	global __next_logic
 	global __vars
-	__vars["953abc86-7428-450c-91f6-a45e5861ce02"] = copy.deepcopy(__vars)
 	__logic_fn_add_1(10, __vars["counter_12_8"])
-	return_val = __vars["__return_value"]
-	call_stack = __vars["__call_stack"]
-	__vars = __vars["953abc86-7428-450c-91f6-a45e5861ce02"]
-	__vars["__return_value"] = return_val
-	__vars["__call_stack"] = call_stack
 	__next_logic = 8
 	__save_session_A()
 	__logic_session_A_8()
@@ -222,7 +214,7 @@ def __logic_session_A_8():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["e38bca72-1260-4fa9-8b44-e659f65bf031"] = __vars["__return_value"]
+		__vars["1df4c727-f539-4a32-92c5-3b85144fb354"] = __vars["__return_value"]
 		__next_logic = 9
 		__save_session_A()
 		__logic_session_A_9()
@@ -232,7 +224,7 @@ def __logic_session_A_8():
 def __logic_session_A_9():
 	global __vars
 	global __next_logic
-	print(__layout(__a({'gap':__vars["e38bca72-1260-4fa9-8b44-e659f65bf031"]})))
+	print(__layout(__a({'gap':__vars["1df4c727-f539-4a32-92c5-3b85144fb354"]})))
 	__next_logic = 10
 	__save_session_A()
 def __logic_session_A_10():
@@ -245,7 +237,7 @@ def __logic_session_A_10():
 def __logic_session_A_6():
 	global __vars
 	global __next_logic
-	if __vars["635f8014-57fa-4e7e-943b-c2d86f46a248"] > 0 and __vars["f2b249ad-c9e4-436a-a07b-cf0e92d46485"] > 1:
+	if __vars["8a5f1cbe-dd07-4fd6-b2f5-3c5fa003575f"] > 0 and __vars["fe50dc2d-5c33-4f6a-8b1e-388fc911ccaa"] > 1:
 		__next_logic = 7
 		__save_session_A()
 		__logic_session_A_7()
@@ -258,13 +250,7 @@ def __logic_session_A_11():
 	global __vars
 	global __next_logic
 	global __vars
-	__vars["025c596e-44f1-4c3b-a97a-0cb0a069568d"] = copy.deepcopy(__vars)
 	__logic_fn_f_1(3)
-	return_val = __vars["__return_value"]
-	call_stack = __vars["__call_stack"]
-	__vars = __vars["025c596e-44f1-4c3b-a97a-0cb0a069568d"]
-	__vars["__return_value"] = return_val
-	__vars["__call_stack"] = call_stack
 	__next_logic = 12
 	__save_session_A()
 	__logic_session_A_12()
@@ -274,7 +260,7 @@ def __logic_session_A_12():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["5426486a-3208-4eeb-a783-e4aaba2e3ea8"] = __vars["__return_value"]
+		__vars["3bd4f470-787a-4119-82b3-32a2213a29a5"] = __vars["__return_value"]
 		__next_logic = 13
 		__save_session_A()
 		__logic_session_A_13()
@@ -284,7 +270,7 @@ def __logic_session_A_12():
 def __logic_session_A_13():
 	global __vars
 	global __next_logic
-	print(__layout(__a({'gap':__vars["5426486a-3208-4eeb-a783-e4aaba2e3ea8"]})))
+	print(__layout(__a({'gap':__vars["3bd4f470-787a-4119-82b3-32a2213a29a5"]})))
 	__next_logic = 14
 	__save_session_A()
 def __logic_session_A_14():

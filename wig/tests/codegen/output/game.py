@@ -87,7 +87,7 @@ def __List(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_b25895ea-025f-41a7-b47f-0c93c56c7479"
+	global_vars_file = "GLOBAL_0377c816-426b-4624-a4d1-a6143a577b1c"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -96,7 +96,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_b25895ea-025f-41a7-b47f-0c93c56c7479"
+	global_vars_file = "GLOBAL_0377c816-426b-4624-a4d1-a6143a577b1c"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -118,7 +118,11 @@ __returned_from_fn = False
 
 def __call_fn(fn_name):
 	global __vars
-	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
+	call_stack_copy = copy.deepcopy(__vars["__call_stack"])
+	del __vars["__call_stack"]
+	old_vars = copy.deepcopy(__vars)
+	__vars["__call_stack"] = call_stack_copy
+	__vars["__call_stack"].append({"name":fn_name,"next_logic":1, "old_vars":old_vars})
 
 def __set_fn_logic(n):
 	global __vars
@@ -127,29 +131,35 @@ def __set_fn_logic(n):
 def __return_from_fn(return_value):
 	global __returned_from_fn
 	global __vars
+	call_stack_copy = copy.deepcopy(__vars["__call_stack"])
+	__vars = __vars["__call_stack"][-1]["old_vars"]
+	call_stack_copy.pop()
+	__vars["__call_stack"] = call_stack_copy
 	__returned_from_fn = True
 	__vars["__return_value"] = return_value
-	__vars["__call_stack"].pop()
 
 def __continue_stack_execution():
-	if __vars["__call_stack"]:
-		fn_name = __vars["__call_stack"][-1]["name"]
-		fn_ln = __vars["__call_stack"][-1]["next_logic"]
-		print >>sys.stderr, "going to call " + fn_name + " "
-		print >>sys.stderr, fn_ln
-		globals()["__logic_fn_"+fn_name+"_"+str(fn_ln)]()
+	while True:
+		if __vars["__call_stack"]:
+			fn_name = __vars["__call_stack"][-1]["name"]
+			fn_ln = __vars["__call_stack"][-1]["next_logic"]
+			globals()["__logic_fn_"+fn_name+"_"+str(fn_ln)]()
+		else:
+			break
+		if not __returned_from_fn:
+			break
 
 def __logic_fn_nextRandom_1():
 	global __vars
 	global __next_logic
-	print "\n\n\n-------------"; print __vars; print ""; traceback.print_stack()
+	
 	__call_fn("nextRandom")
 	__set_fn_logic(2)
 	__logic_fn_nextRandom_2()
 def __logic_fn_nextRandom_2():
 	global __vars
 	global __next_logic
-	print "\n\n\n-------------"; print __vars; print ""; traceback.print_stack()
+	
 	__vars["seed_50_19"] = 25173 * __vars["seed_50_19"] + 13849 % 65536
 	__return_from_fn(__vars["seed_50_19"])
 def __save_session_Seed():
@@ -253,13 +263,7 @@ def __logic_session_Play_1():
 	global __vars
 	global __next_logic
 	global __vars
-	__vars["e6bdbfa4-1f8e-46fc-a324-fc53753ed273"] = copy.deepcopy(__vars)
 	__logic_fn_nextRandom_1()
-	return_val = __vars["__return_value"]
-	call_stack = __vars["__call_stack"]
-	__vars = __vars["e6bdbfa4-1f8e-46fc-a324-fc53753ed273"]
-	__vars["__return_value"] = return_val
-	__vars["__call_stack"] = call_stack
 	__next_logic = 2
 	__save_session_Play()
 	__logic_session_Play_2()
@@ -269,7 +273,7 @@ def __logic_session_Play_2():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["e9f68e83-738d-4dae-b6ed-12df3c971038"] = __vars["__return_value"]
+		__vars["2e50cb3f-da43-4439-9225-f24ede1b87ae"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_Play()
 		__logic_session_Play_3()
@@ -279,7 +283,7 @@ def __logic_session_Play_2():
 def __logic_session_Play_3():
 	global __vars
 	global __next_logic
-	__vars["number_66_24"] = __vars["e9f68e83-738d-4dae-b6ed-12df3c971038"] % 100
+	__vars["number_66_24"] = __vars["2e50cb3f-da43-4439-9225-f24ede1b87ae"] % 100
 	__vars["plays_49_19"] = __vars["plays_49_19"] + 1
 	__vars["guesses_66_24"] = 1
 	print(__layout(__Init({})))
