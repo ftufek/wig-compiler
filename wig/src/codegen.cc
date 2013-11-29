@@ -60,16 +60,9 @@ void CodeGenerator::PrintLabelStms(const int label,
 		cgout<<_t_session_stm_stack(_in_session, label, stms);
 	}else if(_in_fn.size()){
 		if(jump_to_next_label){
-			bool contains_return = false;
-			for(auto stm : stms){
-				if(stm.find("return") != std::string::npos){
-					contains_return = true;
-					break;
-				}
-			}
-			if(!contains_return){
-				stms.push_back(_t_next_fn(_in_fn, label+1));
-			}
+			stringstream ss;
+			ss<<"__set_fn_logic("<<label+1<<")";
+			stms.push_back(ss.str());
 		}
 		cgout<<_t_fn_decl(_in_fn, label, stms);
 	}
@@ -77,8 +70,6 @@ void CodeGenerator::PrintLabelStms(const int label,
 }
 
 void CodeGenerator::PrintFnCallStms(){
-	DEBUG("PRINT_FN_CALLS");
-
 	if(_label_stms.size() && _fn_call_stms.size()){
 		//print what was previously there
 		PrintLabelStms(NewLabel(), _label_stms, true);
@@ -86,20 +77,31 @@ void CodeGenerator::PrintFnCallStms(){
 	if(_fn_call_stms.size()){
 		for(auto call : _fn_call_stms){
 			_label_stms.push_back("global __vars");
-			_label_stms.push_back("copy_of_vars = copy.deepcopy(__vars)");
+			string copy_vars_id = boost::lexical_cast<std::string>(
+											boost::uuids::random_generator()());
+			_label_stms.push_back("__vars[\""+copy_vars_id + "\"] = copy.deepcopy(__vars)");
 			_label_stms.push_back(call.fn_call_exp);
 			_label_stms.push_back("return_val = __vars[\"__return_value\"]");
-			_label_stms.push_back("__vars = copy_of_vars");
+			_label_stms.push_back("call_stack = __vars[\"__call_stack\"]");
+			_label_stms.push_back("__vars = __vars[\""+copy_vars_id + "\"]");
 			_label_stms.push_back("__vars[\"__return_value\"] = return_val");
+			_label_stms.push_back("__vars[\"__call_stack\"] = call_stack");
 			_label_stms.push_back(CallNextLogic(_current_label+2));
 			PrintLabelStms(NewLabel(), _label_stms);
 
 			_label_stms.push_back("global __returned_from_fn");
+
+			list<string> else_stms{};
+			if(_in_session.size()){
+				else_stms.push_back("__save_session_"+_in_session+"()");
+			}
+
 			_label_stms.push_back(_t_if_stm("__returned_from_fn",
 									list<string>{
+										"__returned_from_fn = False",
 										_t_var(call.unique_key) + " = " + _t_var("__return_value"),
 										CallNextLogic(_current_label+2)},
-									list<string>{}));
+									else_stms));
 			PrintLabelStms(NewLabel(), _label_stms);
 		}
 	}
@@ -126,18 +128,11 @@ std::string CodeGenerator::ExpToStr(ast::Exp *s){
 	}
 }
 
-void CodeGenerator::DEBUG(const std::string msg){
-	if(_enable_debug){
-		_label_stms.push_back("#DEBUG: "+msg);
-	}
-}
-
 void CodeGenerator::visit(ast::Service *s){
-	DEBUG("SERVICE");
-
 	UpdateSymTable(s);
 	cgout<<_t_env()
-		 <<_t_imports(std::list<std::string> {"cgi","cgitb","os","uuid","pickle","copy"})
+		 <<_t_imports(std::list<std::string> {"cgi","cgitb","os","uuid",
+									"pickle","copy", "sys", "traceback"})
 		 <<_t_enable_cgi()<<_t_state_vars()<<endl;
 
 	s->schemas_->accept(this);
@@ -190,7 +185,6 @@ void CodeGenerator::visit(ast::Variable *s) {
 }
 
 void CodeGenerator::visit(ast::Function *s) {
-	DEBUG("FUNCTION");
 	UpdateSymTable(s->stm_);
 	_in_fn = s->id_;
 	_label_stms.clear();
@@ -290,11 +284,9 @@ void CodeGenerator::visit(ast::CompoundStm *s) {
 }
 
 void CodeGenerator::visit(ast::ShowStm *s) {
-	if(!_in_session.empty()){
-		s->doc_->accept(this);
-		if(s->receive_){
-			s->receive_->accept(this);
-		}
+	s->doc_->accept(this);
+	if(s->receive_){
+		s->receive_->accept(this);
 	}
 }
 
@@ -355,8 +347,6 @@ void CodeGenerator::visit(ast::ReturnStm *s){
 }
 
 void CodeGenerator::visit(ast::IfStm *s){
-	DEBUG("IF_STM");
-
 	int if_label;
 	if(_label_stms.size() > 0){
 		int before_if_label = NewLabel();
@@ -397,8 +387,6 @@ void CodeGenerator::visit(ast::IfStm *s){
 }
 
 void CodeGenerator::visit(ast::WhileStm *s){
-	DEBUG("WHILE_STM");
-
 	_label_stms.push_back(_t_call_next_logic(_in_session, _current_label+2));
 	PrintLabelStms(NewLabel(), _label_stms); //print everything before now
 	int while_label = _current_label+1;
@@ -417,8 +405,6 @@ void CodeGenerator::visit(ast::WhileStm *s){
 }
 
 void CodeGenerator::visit(ast::ExpStm *s){
-	DEBUG("EXP_STM");
-
 	string exp_str = ExpToStr(s->exp_);
 	PrintFnCallStms();
 	_label_stms.push_back(exp_str);
@@ -537,8 +523,6 @@ void CodeGenerator::visit(ast::TupleopExp *s){
 }
 
 void CodeGenerator::visit(ast::FunctionExp *s){
-	DEBUG("FN_CALL");
-
 	string fn_call_id = boost::lexical_cast<std::string>(
 								boost::uuids::random_generator()());
 

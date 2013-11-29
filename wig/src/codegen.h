@@ -109,10 +109,6 @@ private:
 
     //info for global variable generation
     bool _is_generating_global_variables;
-
-    //DEBUGGING helpers
-    void DEBUG(const std::string msg);
-    bool _enable_debug = false;
 };
 
 }

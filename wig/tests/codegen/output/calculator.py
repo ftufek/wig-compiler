@@ -5,9 +5,12 @@ import os
 import uuid
 import pickle
 import copy
+import sys
+import traceback
 cgitb.enable()
 __cgi_input = cgi.FieldStorage(keep_blank_values=1)
 __session = os.environ["QUERY_STRING"].split("&")[0]
+sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
@@ -57,7 +60,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_8b8982c2-1616-4f8d-95f7-bb55f2eece2a"
+	global_vars_file = "GLOBAL_53399b40-16d7-4e46-a078-14ba76d7329c"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -66,7 +69,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_8b8982c2-1616-4f8d-95f7-bb55f2eece2a"
+	global_vars_file = "GLOBAL_53399b40-16d7-4e46-a078-14ba76d7329c"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -84,9 +87,9 @@ def __call_fn(fn_name):
 	global __vars
 	__vars["__call_stack"].append({"name":fn_name,"next_logic":1})
 
-def __inc_fn_logic():
+def __set_fn_logic(n):
 	global __vars
-	__vars["__call_stack"][-1]["next_logic"] += 1
+	__vars["__call_stack"][-1]["next_logic"] = n
 
 def __return_from_fn(return_value):
 	global __returned_from_fn
@@ -94,6 +97,14 @@ def __return_from_fn(return_value):
 	__returned_from_fn = True
 	__vars["__return_value"] = return_value
 	__vars["__call_stack"].pop()
+
+def __continue_stack_execution():
+	if __vars["__call_stack"]:
+		fn_name = __vars["__call_stack"][-1]["name"]
+		fn_ln = __vars["__call_stack"][-1]["next_logic"]
+		print >>sys.stderr, "going to call " + fn_name + " "
+		print >>sys.stderr, fn_ln
+		globals()["__logic_fn_"+fn_name+"_"+str(fn_ln)]()
 
 def __save_session_Calculate():
 	session_file = "Calculate$"+str(__sid)
@@ -121,6 +132,7 @@ def __load_session_Calculate(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	__continue_stack_execution()
 	globals()["__logic_session_Calculate_"+str(__next_logic)]()
 
 def __session_Calculate():

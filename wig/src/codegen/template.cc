@@ -40,6 +40,10 @@ std::string deindent(const std::string &str, int number){
 	return copy;
 }
 
+std::string DEBUG_STR(){
+	return "print \"\\n\\n\\n-------------\"; print __vars; print \"\"; traceback.print_stack()";
+}
+
 std::string _t_py_fn_call(const std::string &name,
 						  std::list<std::string> args){
 	stringstream ss;
@@ -72,7 +76,8 @@ std::string _t_enable_cgi(){
 	stringstream ss;
 	ss<<"cgitb.enable()"<<endl
 		<<cgi_input<<" = cgi.FieldStorage(keep_blank_values=1)"<<endl
-		<<session<<" = os.environ[\"QUERY_STRING\"].split(\"&\")[0]"<<endl;
+		<<session<<" = os.environ[\"QUERY_STRING\"].split(\"&\")[0]"<<endl
+		<<"sys.stderr = sys.stdout"<<endl;
 	return ss.str();
 }
 
@@ -221,6 +226,7 @@ std::string _t_load_session(const std::string &name){
 		ss<<indent(2)<<load<<" = pickle.load(f)"<<endl;
 	}
 	ss<<indent(2)<<"__vars = dict(__vars.items() + session_vars.items())"<<endl;
+	ss<<indent(1)<<"__continue_stack_execution()"<<endl;
 	ss<<indent(1)<<"globals()[\"__logic_session_"<<name<<"_\"+str("<<next_logic<<")]()"<<endl;
 	return ss.str();
 }
@@ -277,16 +283,24 @@ std::string _t_fn_helpers(){
 			"	global __vars\n"
 			"	__vars[\"__call_stack\"].append({\"name\":fn_name,\"next_logic\":1})\n"
 			"\n"
-			"def __inc_fn_logic():\n"
+			"def __set_fn_logic(n):\n"
 			"	global __vars\n"
-			"	__vars[\"__call_stack\"][-1][\"next_logic\"] += 1\n"
+			"	__vars[\"__call_stack\"][-1][\"next_logic\"] = n\n"
 			"\n"
 			"def __return_from_fn(return_value):\n"
 			"	global __returned_from_fn\n"
 			"	global __vars\n"
 			"	__returned_from_fn = True\n"
 			"	__vars[\"__return_value\"] = return_value\n"
-			"	__vars[\"__call_stack\"].pop()\n";
+			"	__vars[\"__call_stack\"].pop()\n"
+			"\n"
+			"def __continue_stack_execution():\n"
+			"	if __vars[\"__call_stack\"]:\n"
+			"		fn_name = __vars[\"__call_stack\"][-1][\"name\"]\n"
+			"		fn_ln = __vars[\"__call_stack\"][-1][\"next_logic\"]\n"
+			"		print >>sys.stderr, \"going to call \" + fn_name + \" \"\n"
+			"		print >>sys.stderr, fn_ln\n"
+			"		globals()[\"__logic_fn_\"+fn_name+\"_\"+str(fn_ln)]()\n";
 }
 
 std::string _t_fn_decl(const std::string &name,
@@ -308,6 +322,7 @@ std::string _t_fn_decl(const std::string &name,
 	for(auto global : list<string>{vars, next_logic}){
 		ss<<indent(1)<<"global "<<global<<endl;
 	}
+	ss<<indent(1)<<DEBUG_STR()<<endl;
 	for(auto stm : stms){
 		ss<<indent(stm, 1)<<endl;
 	}
@@ -316,6 +331,7 @@ std::string _t_fn_decl(const std::string &name,
 
 std::string _t_next_fn(const std::string &fn_name, const int n){
 	stringstream ss;
+	ss<<"__set_fn_logic("<<n<<")"<<endl;
 	ss<<"__logic_fn_"<<fn_name<<"_"<<n<<"()";
 	return ss.str();
 }
