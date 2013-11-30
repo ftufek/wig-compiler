@@ -20,21 +20,30 @@ class Scm1():
 		for k, v in dict.items():
 			setattr(self, k, v)
 
-	def keep(self, list_to_keep):
-		__copy = copy.deepcopy(self)
+	def schema_vars(self):
 		__schema_vars = []
 		__schema_vars.append("b")
 		__schema_vars.append("i")
 		__schema_vars.append("s")
-		for keep in __schema_vars:
+		return __schema_vars
+
+	def keep(self, list_to_keep):
+		__copy = copy.deepcopy(self)
+		for keep in self.schema_vars():
 			if keep not in list_to_keep:
-				__copy.keep = None
+				setattr(__copy, keep, None)
 		return __copy
 
 	def discard(self, list_to_discard):
 		__copy = copy.deepcopy(self)
 		for discard in list_to_discard:
-			__copy.discard = None
+			setattr(__copy, discard, None)
+		return __copy
+
+	def combine(self, other):
+		__copy = copy.deepcopy(self)
+		for v in other.schema_vars():
+			setattr(__copy, v, getattr(other, v))
 		return __copy
 
 
@@ -43,20 +52,29 @@ class Scm2():
 		for k, v in dict.items():
 			setattr(self, k, v)
 
-	def keep(self, list_to_keep):
-		__copy = copy.deepcopy(self)
+	def schema_vars(self):
 		__schema_vars = []
 		__schema_vars.append("b")
 		__schema_vars.append("i")
-		for keep in __schema_vars:
+		return __schema_vars
+
+	def keep(self, list_to_keep):
+		__copy = copy.deepcopy(self)
+		for keep in self.schema_vars():
 			if keep not in list_to_keep:
-				__copy.keep = None
+				setattr(__copy, keep, None)
 		return __copy
 
 	def discard(self, list_to_discard):
 		__copy = copy.deepcopy(self)
 		for discard in list_to_discard:
-			__copy.discard = None
+			setattr(__copy, discard, None)
+		return __copy
+
+	def combine(self, other):
+		__copy = copy.deepcopy(self)
+		for v in other.schema_vars():
+			setattr(__copy, v, getattr(other, v))
 		return __copy
 
 
@@ -65,20 +83,29 @@ class Scm3():
 		for k, v in dict.items():
 			setattr(self, k, v)
 
-	def keep(self, list_to_keep):
-		__copy = copy.deepcopy(self)
+	def schema_vars(self):
 		__schema_vars = []
 		__schema_vars.append("b")
 		__schema_vars.append("s")
-		for keep in __schema_vars:
+		return __schema_vars
+
+	def keep(self, list_to_keep):
+		__copy = copy.deepcopy(self)
+		for keep in self.schema_vars():
 			if keep not in list_to_keep:
-				__copy.keep = None
+				setattr(__copy, keep, None)
 		return __copy
 
 	def discard(self, list_to_discard):
 		__copy = copy.deepcopy(self)
 		for discard in list_to_discard:
-			__copy.discard = None
+			setattr(__copy, discard, None)
+		return __copy
+
+	def combine(self, other):
+		__copy = copy.deepcopy(self)
+		for v in other.schema_vars():
+			setattr(__copy, v, getattr(other, v))
 		return __copy
 
 
@@ -117,7 +144,7 @@ def __Done(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_1e8b924f-9885-4344-8e06-b1af23716249"
+	global_vars_file = "GLOBAL_6adaf1f7-f2ae-4dc7-8fff-3356f4c64d0d"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -126,7 +153,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_1e8b924f-9885-4344-8e06-b1af23716249"
+	global_vars_file = "GLOBAL_6adaf1f7-f2ae-4dc7-8fff-3356f4c64d0d"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -311,7 +338,7 @@ def __logic_session_test2_2():
 def __logic_session_test2_3():
 	global __vars
 	global __next_logic
-	__vars["g1_49_20"] = __vars["g2_50_20"] << __vars["g3_51_20"]
+	__vars["g1_49_20"] = __vars["g2_50_20"].combine(__vars["g3_51_20"])
 	print(__layout(__ShowSchema1({'message':"g1 is: ",'b':__vars["g1_49_20"].b
 	,'i':__vars["g1_49_20"].i
 	,'s':__vars["g1_49_20"].s

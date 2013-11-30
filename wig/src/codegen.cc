@@ -486,7 +486,8 @@ void CodeGenerator::visit(ast::BinopExp *s){
 		break;
 
 	case ast::kBinopType::Combine:
-		op = "<<";
+		_exps.push_back(left+".combine("+right+")");
+		return;
 		break;
 	default:
 		break;
