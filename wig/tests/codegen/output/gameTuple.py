@@ -15,6 +15,41 @@ __vars = {}
 __sid = 0
 __next_logic = 1
 
+class infoS():
+	def __init__(self, dict):
+		setattr(self, "plays", 0)
+		setattr(self, "record", 0)
+		setattr(self, "holder", "")
+		for k, v in dict.items():
+			setattr(self, k, v)
+
+	def schema_vars(self):
+		__schema_vars = []
+		__schema_vars.append("plays")
+		__schema_vars.append("record")
+		__schema_vars.append("holder")
+		return __schema_vars
+
+	def keep(self, list_to_keep):
+		__copy = copy.deepcopy(self)
+		for keep in self.schema_vars():
+			if keep not in list_to_keep:
+				setattr(__copy, keep, None)
+		return __copy
+
+	def discard(self, list_to_discard):
+		__copy = copy.deepcopy(self)
+		for discard in list_to_discard:
+			setattr(__copy, discard, None)
+		return __copy
+
+	def combine(self, other):
+		__copy = copy.deepcopy(self)
+		for v in other.schema_vars():
+			setattr(__copy, v, getattr(other, v))
+		return __copy
+
+
 def __str_sid():
 	if __sid != 0:
 		return "&sid="+str(__sid)
@@ -31,14 +66,14 @@ def __layout(page):
 
 def __GetSeed(__varDict):
 	return """ <body>
-    Please enter an integer seed for the random number generator: 
-    <input name="seed" size=5 type="text">
-  </body> """.format(**(__varDict))
+    Please enter an integer seed for the random number generator:
+        <input name="seed" size=5 type="text">
+	  </body> """.format(**(__varDict))
 
 def __GameSeeded(__varDict):
 	return """ <body>
-    Ok, now the game can proceed, the generator is seeded. 
-  </body> """.format(**(__varDict))
+     Ok, now the game can proceed, the generator is seeded.
+       </body> """.format(**(__varDict))
 
 def __Init(__varDict):
 	return """ <body>
@@ -87,7 +122,7 @@ def __List(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_a66ab04d-1645-41ce-881e-87ebcb497a30"
+	global_vars_file = "GLOBAL_17c3357d-3917-4a47-b186-d11405d6d547"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -96,7 +131,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_a66ab04d-1645-41ce-881e-87ebcb497a30"
+	global_vars_file = "GLOBAL_17c3357d-3917-4a47-b186-d11405d6d547"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -104,14 +139,10 @@ def __load_global_vars():
 	except IOError:
 		return
 
-__vars["plays_49_19"] = 0
-__global_vars.append("plays_49_19")
-__vars["record_49_19"] = 0
-__global_vars.append("record_49_19")
-__vars["seed_50_19"] = 0
-__global_vars.append("seed_50_19")
-__vars["holder_51_19"] = ""
-__global_vars.append("holder_51_19")
+__vars["seed_55_21"] = 0
+__global_vars.append("seed_55_21")
+__vars["Info_57_21"] = infoS({})
+__global_vars.append("Info_57_21")
 __vars["__call_stack"] = []
 __vars["__return_value"] = 0
 __returned_from_fn = False
@@ -160,8 +191,8 @@ def __logic_fn_nextRandom_2():
 	global __vars
 	global __next_logic
 	
-	__vars["seed_50_19"] = 25173 * __vars["seed_50_19"] + 13849 % 65536
-	__return_from_fn(__vars["seed_50_19"])
+	__vars["seed_55_21"] = 25173 * __vars["seed_55_21"] + 13849 % 65536
+	__return_from_fn(__vars["seed_55_21"])
 def __save_session_Seed():
 	session_file = "Seed$"+str(__sid)
 	open(session_file, 'w').close()
@@ -207,7 +238,7 @@ def __logic_session_Seed_1():
 def __logic_session_Seed_2():
 	global __vars
 	global __next_logic
-	__vars["seed_50_19"] = int(__cgi_input.getvalue("seed"))
+	__vars["seed_55_21"] = int(__cgi_input.getvalue("seed"))
 	__next_logic = 3
 	__save_session_Seed()
 	__logic_session_Seed_3()
@@ -273,7 +304,7 @@ def __logic_session_Play_2():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["d8905257-917b-4530-824f-84da3efadc73"] = __vars["__return_value"]
+		__vars["52ff537a-b010-4f59-b0c4-aa555a870446"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_Play()
 		__logic_session_Play_3()
@@ -283,16 +314,16 @@ def __logic_session_Play_2():
 def __logic_session_Play_3():
 	global __vars
 	global __next_logic
-	__vars["number_66_24"] = __vars["d8905257-917b-4530-824f-84da3efadc73"] % 100
-	__vars["plays_49_19"] = __vars["plays_49_19"] + 1
-	__vars["guesses_66_24"] = 1
+	__vars["number_72_26"] = __vars["52ff537a-b010-4f59-b0c4-aa555a870446"] % 100
+	__vars["Info_57_21"].plays = __vars["Info_57_21"].plays + 1
+	__vars["guesses_72_26"] = 1
 	print(__layout(__Init({})))
 	__next_logic = 4
 	__save_session_Play()
 def __logic_session_Play_4():
 	global __vars
 	global __next_logic
-	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
+	__vars["guess_72_26"] = int(__cgi_input.getvalue("guess"))
 	__next_logic = 5
 	__save_session_Play()
 	__logic_session_Play_5()
@@ -311,7 +342,7 @@ def __logic_session_Play_7():
 def __logic_session_Play_8():
 	global __vars
 	global __next_logic
-	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
+	__vars["guess_72_26"] = int(__cgi_input.getvalue("guess"))
 	__next_logic = 9
 	__save_session_Play()
 	__logic_session_Play_9()
@@ -324,7 +355,7 @@ def __logic_session_Play_9():
 def __logic_session_Play_6():
 	global __vars
 	global __next_logic
-	if __vars["guess_66_24"] > 99:
+	if __vars["guess_72_26"] > 99:
 		__next_logic = 7
 		__save_session_Play()
 		__logic_session_Play_7()
@@ -342,7 +373,7 @@ def __logic_session_Play_10():
 def __logic_session_Play_12():
 	global __vars
 	global __next_logic
-	__vars["guesses_66_24"] = __vars["guesses_66_24"] + 1
+	__vars["guesses_72_26"] = __vars["guesses_72_26"] + 1
 	__next_logic = 13
 	__save_session_Play()
 	__logic_session_Play_13()
@@ -355,7 +386,7 @@ def __logic_session_Play_14():
 def __logic_session_Play_15():
 	global __vars
 	global __next_logic
-	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
+	__vars["guess_72_26"] = int(__cgi_input.getvalue("guess"))
 	__next_logic = 16
 	__save_session_Play()
 	__logic_session_Play_16()
@@ -368,7 +399,7 @@ def __logic_session_Play_16():
 def __logic_session_Play_17():
 	global __vars
 	global __next_logic
-	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
+	__vars["guess_72_26"] = int(__cgi_input.getvalue("guess"))
 	__next_logic = 18
 	__save_session_Play()
 	__logic_session_Play_18()
@@ -387,7 +418,7 @@ def __logic_session_Play_19():
 def __logic_session_Play_13():
 	global __vars
 	global __next_logic
-	if __vars["guess_66_24"] > __vars["number_66_24"]:
+	if __vars["guess_72_26"] > __vars["number_72_26"]:
 		__next_logic = 14
 		__save_session_Play()
 		__logic_session_Play_14()
@@ -411,7 +442,7 @@ def __logic_session_Play_22():
 def __logic_session_Play_23():
 	global __vars
 	global __next_logic
-	__vars["guess_66_24"] = int(__cgi_input.getvalue("guess"))
+	__vars["guess_72_26"] = int(__cgi_input.getvalue("guess"))
 	__next_logic = 24
 	__save_session_Play()
 	__logic_session_Play_24()
@@ -424,7 +455,7 @@ def __logic_session_Play_24():
 def __logic_session_Play_21():
 	global __vars
 	global __next_logic
-	if __vars["guess_66_24"] > 99:
+	if __vars["guess_72_26"] > 99:
 		__next_logic = 22
 		__save_session_Play()
 		__logic_session_Play_22()
@@ -442,7 +473,7 @@ def __logic_session_Play_25():
 def __logic_session_Play_11():
 	global __vars
 	global __next_logic
-	if __vars["guess_66_24"] != __vars["number_66_24"]:
+	if __vars["guess_72_26"] != __vars["number_72_26"]:
 		__next_logic = 12
 		__save_session_Play()
 		__logic_session_Play_12()
@@ -454,34 +485,34 @@ def __logic_session_Play_11():
 def __logic_session_Play_26():
 	global __vars
 	global __next_logic
-	print(__layout(__Done({'trys':__vars["guesses_66_24"]})))
+	print(__layout(__Done({'trys':__vars["guesses_72_26"]})))
 	__next_logic = 27
 	__save_session_Play()
 def __logic_session_Play_28():
 	global __vars
 	global __next_logic
-	print(__layout(__Record({'old':__vars["record_49_19"]})))
+	print(__layout(__Record({'old':__vars["Info_57_21"].record})))
 	__next_logic = 29
 	__save_session_Play()
 def __logic_session_Play_29():
 	global __vars
 	global __next_logic
-	__vars["localholder_67_24"] = __cgi_input.getvalue("name")
+	__vars["localholder_73_26"] = __cgi_input.getvalue("name")
 	__next_logic = 30
 	__save_session_Play()
 	__logic_session_Play_30()
 def __logic_session_Play_30():
 	global __vars
 	global __next_logic
-	__vars["holder_51_19"] = __vars["localholder_67_24"]
-	__vars["record_49_19"] = __vars["guesses_66_24"]
+	__vars["Info_57_21"].holder = __vars["localholder_73_26"]
+	__vars["Info_57_21"].record = __vars["guesses_72_26"]
 	__next_logic = 31
 	__save_session_Play()
 	__logic_session_Play_31()
 def __logic_session_Play_27():
 	global __vars
 	global __next_logic
-	if __vars["record_49_19"] == 0 or __vars["record_49_19"] > __vars["guesses_66_24"]:
+	if __vars["Info_57_21"].record == 0 or __vars["Info_57_21"].record > __vars["guesses_72_26"]:
 		__next_logic = 28
 		__save_session_Play()
 		__logic_session_Play_28()
@@ -541,8 +572,8 @@ def __session_HiScore():
 def __logic_session_HiScore_1():
 	global __vars
 	global __next_logic
-	print(__layout(__List({'plays':__vars["plays_49_19"],'holder':__vars["holder_51_19"]
-	,'record':__vars["record_49_19"]
+	print(__layout(__List({'plays':__vars["Info_57_21"].plays,'holder':__vars["Info_57_21"].holder
+	,'record':__vars["Info_57_21"].record
 	})))
 	__next_logic = 2
 	__save_session_HiScore()

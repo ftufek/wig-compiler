@@ -136,6 +136,9 @@ std::string _t_schema_class(const std::string &name,
 	std::stringstream ss;
 	ss<<"class "<<name<<"():"<<endl;
 	ss<<indent(1)<<"def __init__(self, dict):"<<endl;
+	for(auto field : fields){
+		ss<<indent(2)<<"setattr(self, \""<<field.first<<"\", "<<field.second<<")"<<endl;
+	}
 	ss<<indent(2)<<"for k, v in dict.items():"<<endl;
 	ss<<indent(3)<<"setattr(self, k, v)"<<endl;
 	ss<<endl;

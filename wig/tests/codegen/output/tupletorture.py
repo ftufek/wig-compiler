@@ -17,6 +17,9 @@ __next_logic = 1
 
 class Scm1():
 	def __init__(self, dict):
+		setattr(self, "b", False)
+		setattr(self, "i", 0)
+		setattr(self, "s", "")
 		for k, v in dict.items():
 			setattr(self, k, v)
 
@@ -49,6 +52,8 @@ class Scm1():
 
 class Scm2():
 	def __init__(self, dict):
+		setattr(self, "b", False)
+		setattr(self, "i", 0)
 		for k, v in dict.items():
 			setattr(self, k, v)
 
@@ -80,6 +85,8 @@ class Scm2():
 
 class Scm3():
 	def __init__(self, dict):
+		setattr(self, "b", False)
+		setattr(self, "s", "")
 		for k, v in dict.items():
 			setattr(self, k, v)
 
@@ -144,7 +151,7 @@ def __Done(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_6adaf1f7-f2ae-4dc7-8fff-3356f4c64d0d"
+	global_vars_file = "GLOBAL_c6c10d71-88a7-485f-8a3e-094e9aaf7211"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -153,7 +160,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_6adaf1f7-f2ae-4dc7-8fff-3356f4c64d0d"
+	global_vars_file = "GLOBAL_c6c10d71-88a7-485f-8a3e-094e9aaf7211"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)

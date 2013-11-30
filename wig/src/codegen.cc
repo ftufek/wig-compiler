@@ -153,29 +153,37 @@ void CodeGenerator::visit(ast::Service *s){
 
 void CodeGenerator::visit(ast::Whatever *s ) {}
 
+string TypeDefVal(ast::Type *type){
+	string def_val{"\"\""};
+	switch(type->type_){
+	//INT, BOOL, STRING, VOID, TUPLE, HTML, SCHEMA, UNDEFINED
+	case ast::kType::INT:
+		def_val = "0";
+		break;
+
+	case ast::kType::BOOL:
+		def_val = "False";
+		break;
+
+	case ast::kType::TUPLE:
+		def_val = type->tuple_id_ + "({})";
+		break;
+
+	default:
+		break;
+	}
+	return def_val;
+}
+
 void CodeGenerator::visit(ast::Variable *s) {
 	if(_is_generating_global_variables){
 		if(s->type_->type_ == ast::kType::HTML){
 			//Generate html function
 			cgout<<_t_html_function(s->name_, PrettyPrint(s->value_))<<endl;
 		}else{
-			string def_val{"\"\""};
-			switch(s->type_->type_){
-			//INT, BOOL, STRING, VOID, TUPLE, HTML, SCHEMA, UNDEFINED
-			case ast::kType::INT:
-				def_val = "0";
-				break;
-
-			case ast::kType::BOOL:
-				def_val = "False";
-				break;
-
-			default:
-				break;
-			}
 			auto key = _sym_table.GetUniqueKeySymbol(s->name_);
 			if(key){
-				cgout<<_t_global_var(key.get(), def_val)<<endl;
+				cgout<<_t_global_var(key.get(), TypeDefVal(s->type_))<<endl;
 			}else{
 				cerr<<"ERROR_IN_CODEGEN";
 			}
@@ -208,7 +216,7 @@ void CodeGenerator::visit(ast::Function *s) {
 }
 
 void CodeGenerator::visit(ast::Field *s) {
-	_fields.push_back(make_pair(s->id_, "None"));
+	_fields.push_back(make_pair(s->id_, TypeDefVal(s->type_)));
 }
 
 void CodeGenerator::visit(ast::Empty *) {}

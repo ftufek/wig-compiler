@@ -17,6 +17,9 @@ __next_logic = 1
 
 class Item():
 	def __init__(self, dict):
+		setattr(self, "name", "")
+		setattr(self, "available", False)
+		setattr(self, "price", 0)
 		for k, v in dict.items():
 			setattr(self, k, v)
 
@@ -69,7 +72,7 @@ def __b(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_807eccc6-0f73-4733-acca-5f2a0faf3ab0"
+	global_vars_file = "GLOBAL_92534e99-c62f-4b8b-802e-c00c8f97fd49"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -78,7 +81,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_807eccc6-0f73-4733-acca-5f2a0faf3ab0"
+	global_vars_file = "GLOBAL_92534e99-c62f-4b8b-802e-c00c8f97fd49"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
