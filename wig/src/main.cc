@@ -12,36 +12,42 @@
 #include "parser/y.tab.h"
 
 int yyparse();
-ast::Service *EXP;
-bool success = true;
+ast::Service *EXP; //AST of the input program
+bool success = true; //set to false if parsing fails
 extern FILE *yyin;
 
 using namespace std;
 
-namespace {
 void printHelp(){
 	cout<<"Usage: fwig [options] <input_wig_file> "<<endl;
 	cout<<endl;
 	cout<<"Options: "<<endl;
-	cout<<" -o [file] : output (the result of pretty-printing) to file instead of stdout"<<endl;
-	cout<<" -p : pretty-print (to stdout if -o [file] option isn't specified)"<<endl;
-	cout<<" -w : weed and output the report to stderr"<<endl;
+	cout<<" -o [file] : output the result to a file instead of stdout"<<endl;
+	cout<<" -p : enable pretty-printing"<<endl;
+	cout<<" -w : enable weeding"<<endl;
 	cout<<" -s : enable symbol table generation"<<endl;
-	cout<<" -t : enable typechecking (enables symbol table generation automatically)"<<endl;
-	cout<<" -v : verbose (prints symbol table and types when pretty-printing)"<<endl;
-	cout<<" -c : code generation (will disable pretty-printing)"<<endl;
+	cout<<" -t : enable typechecking (will enable symbol table generation)"
+			<<endl;
+	cout<<" -v : verbose (prints symbol table and types when pretty-printing)"
+			<<endl;
+	cout<<" -c : code generation (will disable pretty-printing and enable all "
+			"other phases)"<<endl;
+	cout<<endl;
+	cout<<" Errors during compiling are output to stderr"<<endl;
 	cout<<endl;
 	cout<<"Example usage: "<<endl;
-	cout<<"fwig -p -w -o test.out test.wig  # will output pretty print result to"<<endl;
+	cout<<"fwig -p -w -o test.out test.wig  # will output pretty print result to"
+			<<endl;
 	cout<<"			# test.out file and weed result to console"<<endl;
-}
 }
 
 int main(int argc, char **argv){
 	if(argc == 1){
+		//invalid arguments to the program
 		printHelp();
 		return 0;
 	}
+
 	// Parse arguments using getopt
 	bool prettyPrint = false;
 	bool weed = false;
@@ -69,13 +75,16 @@ int main(int argc, char **argv){
 			break;
 		case 't':
 			typecheck = true;
+			symbol = true;
 			break;
 		case 'v':
 			verbose = true;
 			break;
-
 		case 'c':
 			genCode = true;
+			weed = true;
+			symbol = true;
+			typecheck = true;
 			break;
 
 		case '?':
@@ -93,6 +102,7 @@ int main(int argc, char **argv){
 		}
 	}
 
+	//get input file
 	if(optind < argc){
 		infile = argv[argc-1];
 	}else{
@@ -108,6 +118,8 @@ int main(int argc, char **argv){
 
     yyparse();
     fclose(yyin);
+
+    //run compiler phases
     if(success){
     	if(symbol || typecheck){
     		auto tabler = visitors::SymTabler();
@@ -121,33 +133,30 @@ int main(int argc, char **argv){
 			auto typechecker = visitors::TypeChecker();
 			typechecker.visit(EXP);
     	}
+
+    	//Setup output stream
+    	std::streambuf * buf;
+		std::ofstream of;
+		if(outfile) {
+			of.open(outfile, std::fstream::out);
+			buf = of.rdbuf();
+		} else {
+			buf = std::cout.rdbuf();
+		}
+		std::ostream out(buf);
+
     	if(prettyPrint && !genCode){
-    		std::streambuf * buf;
-    		std::ofstream of;
-    		if(outfile) {
-    		    of.open(outfile, std::fstream::out);
-    		    buf = of.rdbuf();
-    		} else {
-    		    buf = std::cout.rdbuf();
-    		}
-    		std::ostream out(buf);
     		auto pp = visitors::PrettyPrinter(out, verbose);
 			pp.visit(EXP);
-			of.close();
     	}
-    	if(genCode){
-    		std::streambuf * buf;
-			std::ofstream of;
-			if(outfile && genCode) {
-				of.open(outfile, std::fstream::out);
-				buf = of.rdbuf();
-			} else {
-				buf = std::cout.rdbuf();
-			}
-			std::ostream out(buf);
+    	if(genCode && error::ErrorsPresent()){
+    		std::cerr<<"Errors happened during compiling: "<<std::endl;
+    		error::PrintErrors();
+    	}else if(genCode){
 			auto pp = visitors::CodeGenerator(out);
 			pp.visit(EXP);
-			of.close();
     	}
+
+		of.close();
     }
 }

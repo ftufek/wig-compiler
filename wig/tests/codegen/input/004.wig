@@ -9,8 +9,8 @@ service{
 	}
 	
 	session A(){
-		tuple Item a;
-		a = tuple {available=true, price=2, title="aaa"};
-		exit plug a[gap=a.price];
+		tuple Item b;
+		b = tuple {available=true, price=2, title="aaa"};
+		exit plug a[gap=b.price];
 	}
 }

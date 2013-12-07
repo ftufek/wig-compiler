@@ -67,6 +67,7 @@ public:
 
 	ErrorCode get_code();
 	std::string get_arg();
+	int get_line();
 private:
 	ErrorCode code_;
 	std::string arg_;
@@ -76,6 +77,7 @@ private:
 bool ErrorsPresent();
 void GenerateError(ErrorCode code, std::string str, int lineno);
 void PrintErrors(std::ostream &out);
+void PrintErrors();
 
 }
 

@@ -81,4 +81,8 @@ void ReturnCheck::visit(ast::IfStm *s){
         temp_ends_with_return_ = temp;
     }
 }
+void ReturnCheck::visit(ast::WhileStm *s){
+	s->condition_->accept(this);
+	s->stm_->accept(this);
+}
 }

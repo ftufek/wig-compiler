@@ -26,6 +26,10 @@ std::string Error::get_arg(){
 	return arg_;
 }
 
+int Error::get_line(){
+	return lineno_;
+}
+
 bool ErrorsPresent(){
 	return errors_.size() > 0;
 }
@@ -40,6 +44,11 @@ void PrintErrors(std::ostream &out){
 		out<<ToString(error.get_code())<<"("<<error.get_arg()<<")"<<std::endl;
 	}
 	out<<"*/"<<std::endl;
+}
+void PrintErrors(){
+	for(auto error : errors_){
+		std::cerr<<"At line "<<error.get_line()<<" : "<<ToString(error.get_code())<<"("<<error.get_arg()<<")"<<std::endl;
+	}
 }
 
 }

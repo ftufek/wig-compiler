@@ -8,7 +8,7 @@ clean:
 code:
 	cd $(BUILD_DIR)/; make; ln -sf $(BUILD_DIR)/fwig ../fwig;
 
-check: code unit pretty weed typecheck
+check: code unit pretty weed typecheck codegen_test
 
 pretty: code
 	cd tests/benchmarks/; python run.py;
@@ -20,6 +20,9 @@ typecheck: code
 
 bench_ng: code
 	cd tests/bench_ng/; python run.py;
+
+codegen_test: code
+	cd tests/codegen/; python run.py;
 
 unit:
 	@echo "I wrote my tests in python to test the entire program"

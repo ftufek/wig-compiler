@@ -12,7 +12,7 @@ bool available;
 int price;
 }
 int counter;
-session b(){
+session d(){
 int counter;
 int inner_counter;
 int a;

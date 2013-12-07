@@ -10,7 +10,7 @@ bool available;
 int price;
 }
 int counter;
-session b(){
+session d(){
 int counter;
 int a;
 counter = 4;
