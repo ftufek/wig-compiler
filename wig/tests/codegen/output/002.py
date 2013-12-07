@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 class Item():
 	def __init__(self, dict):
@@ -75,7 +76,7 @@ def __c(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_74e981aa-ffaa-40d7-9c6b-0728168f8db6"
+	global_vars_file = "GLOBAL_f260cf1c-2a64-4019-b4b0-a6e5c0597acf"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -84,7 +85,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_74e981aa-ffaa-40d7-9c6b-0728168f8db6"
+	global_vars_file = "GLOBAL_f260cf1c-2a64-4019-b4b0-a6e5c0597acf"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -157,6 +158,11 @@ def __load_session_d(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_d()
+		globals()["__logic_session_d_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_d_"+str(__next_logic)]()
 
@@ -179,14 +185,14 @@ def __logic_session_d_1():
 def __logic_session_d_3():
 	global __vars
 	global __next_logic
-	__vars["counter_16_10"] = __vars["counter_16_10"] - 1
+	__vars["counter_16_10"] = (__vars["counter_16_10"] - 1)
 	__next_logic = 4
 	__save_session_d()
 	__logic_session_d_4()
 def __logic_session_d_5():
 	global __vars
 	global __next_logic
-	__vars["inner_counter_17_10"] = __vars["inner_counter_17_10"] - 1
+	__vars["inner_counter_17_10"] = (__vars["inner_counter_17_10"] - 1)
 	print(__layout(__c({'g':__vars["counter_16_10"],'a':__vars["inner_counter_17_10"]
 	})))
 	__next_logic = 6
@@ -200,7 +206,7 @@ def __logic_session_d_6():
 def __logic_session_d_4():
 	global __vars
 	global __next_logic
-	if __vars["inner_counter_17_10"] > 0:
+	if (__vars["inner_counter_17_10"] > 0):
 		__next_logic = 5
 		__save_session_d()
 		__logic_session_d_5()
@@ -219,7 +225,7 @@ def __logic_session_d_7():
 def __logic_session_d_2():
 	global __vars
 	global __next_logic
-	if __vars["counter_16_10"] > 0:
+	if (__vars["counter_16_10"] > 0):
 		__next_logic = 3
 		__save_session_d()
 		__logic_session_d_3()
@@ -232,6 +238,7 @@ def __logic_session_d_8():
 	global __vars
 	global __next_logic
 	print(__layout(__b({'gap':__vars["counter_16_10"]})))
+	__vars["__exited_from"] = 8
 	__next_logic = 9
 	__save_session_d()
 def __logic_session_d_9():

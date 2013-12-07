@@ -120,6 +120,13 @@ public:
     virtual void visit(TupleExp *s) {};
 };
 
+/**
+ * The goal of MultipleVisitors is to be able to run a combination of Visitors
+ * as being a single Visitor. The theoretical advantage would have been that it
+ * would have been easier to keep track of the states. But in practice, it led to
+ * a lot of code duplication, so I abandoned it, but it's still used in the
+ * Weeder so I kept the class.
+ */
 class MultipleVisitors : public VisitorOptional
 {
 public:

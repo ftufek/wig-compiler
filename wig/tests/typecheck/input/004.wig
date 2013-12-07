@@ -1,10 +1,10 @@
 /* expected errors:
-TYPES_DONT_MATCH(b == s)
-SHOULD_BE_BOOL(b == s)
-TYPES_DONT_MATCH(s == b)
-SHOULD_BE_BOOL(s == b)
-TYPES_DONT_MATCH(i != b)
-SHOULD_BE_BOOL(i != b)
+TYPES_DONT_MATCH((b == s))
+SHOULD_BE_BOOL((b == s))
+TYPES_DONT_MATCH((s == b))
+SHOULD_BE_BOOL((s == b))
+TYPES_DONT_MATCH((i != b))
+SHOULD_BE_BOOL((i != b))
 */
 service{
 const html a = <html></html>;

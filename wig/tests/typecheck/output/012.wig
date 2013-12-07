@@ -9,7 +9,7 @@ service {
     bool b;
     int i1;
     int i2;
-    while (i1 == i2) { 
+    while ((i1 == i2)) { 
       }
 
     while (b) { 

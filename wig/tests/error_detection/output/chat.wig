@@ -40,17 +40,17 @@ service {
     written = 0;
     quit = "no";
     show Logon receive [name = name];
-    while (quit != "yes") { 
+    while ((quit != "yes")) { 
         show plug Update[msg0 = msg0, msg1 = msg1, msg2 = msg2, msg3 = msg3, msg4 = msg4, msg5 = msg5] receive [msg = msg, quit = quit];
-        connections = connections + 1;
-        if (msg != "") { 
-          written = written + 1;
+        connections = (connections + 1);
+        if ((msg != "")) { 
+          written = (written + 1);
           msg0 = msg1;
           msg1 = msg2;
           msg2 = msg3;
           msg3 = msg4;
           msg4 = msg5;
-          msg5 = name + "> " + msg;
+          msg5 = ((name + "> ") + msg);
         }
       }
 

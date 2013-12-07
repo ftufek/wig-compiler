@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 class infoS():
 	def __init__(self, dict):
@@ -122,7 +123,7 @@ def __List(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_203c10fd-639c-4c10-837b-b98db968155c"
+	global_vars_file = "GLOBAL_fc9d943f-c6fe-4160-a718-e20498cba77d"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -131,7 +132,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_203c10fd-639c-4c10-837b-b98db968155c"
+	global_vars_file = "GLOBAL_fc9d943f-c6fe-4160-a718-e20498cba77d"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -191,7 +192,7 @@ def __logic_fn_nextRandom_2():
 	global __vars
 	global __next_logic
 	
-	__vars["seed_55_21"] = 25173 * __vars["seed_55_21"] + 13849 % 65536
+	__vars["seed_55_21"] = (((25173 * __vars["seed_55_21"]) + 13849) % 65536)
 	__return_from_fn(__vars["seed_55_21"])
 def __save_session_Seed():
 	session_file = "Seed$"+str(__sid)
@@ -219,6 +220,11 @@ def __load_session_Seed(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Seed()
+		globals()["__logic_session_Seed_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Seed_"+str(__next_logic)]()
 
@@ -246,6 +252,7 @@ def __logic_session_Seed_3():
 	global __vars
 	global __next_logic
 	print(__layout(__GameSeeded({})))
+	__vars["__exited_from"] = 3
 	__next_logic = 4
 	__save_session_Seed()
 def __logic_session_Seed_4():
@@ -280,6 +287,11 @@ def __load_session_Play(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Play()
+		globals()["__logic_session_Play_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Play_"+str(__next_logic)]()
 
@@ -304,7 +316,7 @@ def __logic_session_Play_2():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["892331fc-76de-439a-8cbe-d622fb6fb668"] = __vars["__return_value"]
+		__vars["4d616ed9-2254-4e35-946a-66fe9cb23838"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_Play()
 		__logic_session_Play_3()
@@ -314,8 +326,8 @@ def __logic_session_Play_2():
 def __logic_session_Play_3():
 	global __vars
 	global __next_logic
-	__vars["number_72_26"] = __vars["892331fc-76de-439a-8cbe-d622fb6fb668"] % 100
-	__vars["Info_57_21"].plays = __vars["Info_57_21"].plays + 1
+	__vars["number_72_26"] = (__vars["4d616ed9-2254-4e35-946a-66fe9cb23838"] % 100)
+	__vars["Info_57_21"].plays = (__vars["Info_57_21"].plays + 1)
 	__vars["guesses_72_26"] = 1
 	print(__layout(__Init({})))
 	__next_logic = 4
@@ -355,7 +367,7 @@ def __logic_session_Play_9():
 def __logic_session_Play_6():
 	global __vars
 	global __next_logic
-	if __vars["guess_72_26"] > 99:
+	if (__vars["guess_72_26"] > 99):
 		__next_logic = 7
 		__save_session_Play()
 		__logic_session_Play_7()
@@ -373,7 +385,7 @@ def __logic_session_Play_10():
 def __logic_session_Play_12():
 	global __vars
 	global __next_logic
-	__vars["guesses_72_26"] = __vars["guesses_72_26"] + 1
+	__vars["guesses_72_26"] = (__vars["guesses_72_26"] + 1)
 	__next_logic = 13
 	__save_session_Play()
 	__logic_session_Play_13()
@@ -418,7 +430,7 @@ def __logic_session_Play_19():
 def __logic_session_Play_13():
 	global __vars
 	global __next_logic
-	if __vars["guess_72_26"] > __vars["number_72_26"]:
+	if (__vars["guess_72_26"] > __vars["number_72_26"]):
 		__next_logic = 14
 		__save_session_Play()
 		__logic_session_Play_14()
@@ -455,7 +467,7 @@ def __logic_session_Play_24():
 def __logic_session_Play_21():
 	global __vars
 	global __next_logic
-	if __vars["guess_72_26"] > 99:
+	if (__vars["guess_72_26"] > 99):
 		__next_logic = 22
 		__save_session_Play()
 		__logic_session_Play_22()
@@ -473,7 +485,7 @@ def __logic_session_Play_25():
 def __logic_session_Play_11():
 	global __vars
 	global __next_logic
-	if __vars["guess_72_26"] != __vars["number_72_26"]:
+	if (__vars["guess_72_26"] != __vars["number_72_26"]):
 		__next_logic = 12
 		__save_session_Play()
 		__logic_session_Play_12()
@@ -512,7 +524,7 @@ def __logic_session_Play_30():
 def __logic_session_Play_27():
 	global __vars
 	global __next_logic
-	if __vars["Info_57_21"].record == 0 or __vars["Info_57_21"].record > __vars["guesses_72_26"]:
+	if ((__vars["Info_57_21"].record == 0) or (__vars["Info_57_21"].record > __vars["guesses_72_26"])):
 		__next_logic = 28
 		__save_session_Play()
 		__logic_session_Play_28()
@@ -525,6 +537,7 @@ def __logic_session_Play_31():
 	global __vars
 	global __next_logic
 	print(__layout(__Finish({})))
+	__vars["__exited_from"] = 31
 	__next_logic = 32
 	__save_session_Play()
 def __logic_session_Play_32():
@@ -559,6 +572,11 @@ def __load_session_HiScore(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_HiScore()
+		globals()["__logic_session_HiScore_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_HiScore_"+str(__next_logic)]()
 
@@ -575,6 +593,7 @@ def __logic_session_HiScore_1():
 	print(__layout(__List({'plays':__vars["Info_57_21"].plays,'holder':__vars["Info_57_21"].holder
 	,'record':__vars["Info_57_21"].record
 	})))
+	__vars["__exited_from"] = 1
 	__next_logic = 2
 	__save_session_HiScore()
 def __logic_session_HiScore_2():

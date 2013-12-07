@@ -1,5 +1,5 @@
 /* Produced errors: 
-OP_INT_OR_STR_ONLY(2 + true)
+OP_INT_OR_STR_ONLY((2 + true))
 PLUG_TYPE_UNDEFINED(gap)
 */
 service{

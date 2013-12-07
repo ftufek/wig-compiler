@@ -10,6 +10,11 @@
 
 namespace visitors {
 
+/**
+ * Represents a function call expression. It's needed because a function call
+ * is replaced by a variable, but that variable's value needs to be computed
+ * before use.
+ */
 class FnCall{
 public:
 	FnCall(std::string fn_name,
@@ -70,7 +75,7 @@ public:
 private:
     std::ostream &cgout;
 
-    std::string PrettyPrint(ast::Base *s);
+    std::string PrettyPrint(ast::Base *s); //used for printing html values
 
     //info for schema to python class generation
     std::list<std::pair<std::string, std::string>> _fields;
@@ -78,26 +83,43 @@ private:
     std::list<std::string> _fields_for_tupleopexp = {};
     bool _is_tupleopexp_keep = false;
 
-    //info for main print stm generation
-    std::list<std::string> _sessions;
-
     //info for session generation
+    std::list<std::string> _sessions;
     std::string _in_session;
-    int _current_label;
+    int _current_label; //note: python doesn't have labels or gotos. I still call
+    		//them labels, but it's basically function name followed by a number
+    		//that represents the label, for example: def logic_a_2() is the label
+    		// 2.
     int NewLabel();
     void ResetLabel();
-    std::list<std::string> _label_stms;
+    std::list<std::string> _label_stms; //keeps the stms encountered so far,
+    		//when a statement like WHILE or IF is reached, we will need to create
+    		//new labels and add jumps, etc. in order to do that, we will print
+    		//everthing in _label_stms and than add new labels
     void ClearStms();
     void PrintLabelStms(const int label,
     					std::list<std::string> stms,
     					bool jump_to_next_label = false);
+    bool _is_exit_stm = false;
 
     //info for function generation
     std::string _in_fn;
     std::list<FnCall> _fn_call_stms;
-    void PrintFnCallStms();
+    void PrintFnCallStms(); //when a function call is detected, it's replaced
+    		//by a unique identified variable. the function call is replaced by
+    		//that variable and that variable's value is computed before it's used
+    		//example: add(2,3) will be replaced by
+    		// label1: [uniq_id] = add(2,3)
+    		// label2: if [uniq_id] was computed: use it.
+    		//
+    		// this seems complex, but it's needed because functions can have
+    		// show and exit statements inside, so their call stack can be suspended
+    		// and resumed, so that's the "machinery" that I use to solve that problem
 
     std::string CallNextLogic(const int label, const bool with_set = true);
+    		//functions are divided into labels like sessions, at the end of each
+    		//label we need to add jump to next label (because python doesn't support
+    		//gotos and labels by default)
 
     //info for DocumentStm generation
     std::list<std::string> _plugs;

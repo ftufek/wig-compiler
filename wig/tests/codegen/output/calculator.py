@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -60,7 +61,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_4dd2865a-3cbe-44ad-8497-69afdb761452"
+	global_vars_file = "GLOBAL_21832d69-7f93-4d3a-ac5f-97de9c8b1f1a"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -69,7 +70,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_4dd2865a-3cbe-44ad-8497-69afdb761452"
+	global_vars_file = "GLOBAL_21832d69-7f93-4d3a-ac5f-97de9c8b1f1a"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -142,6 +143,11 @@ def __load_session_Calculate(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Calculate()
+		globals()["__logic_session_Calculate_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Calculate_"+str(__next_logic)]()
 
@@ -177,14 +183,14 @@ def __logic_session_Calculate_4():
 def __logic_session_Calculate_6():
 	global __vars
 	global __next_logic
-	__vars["Ans_28_7"] = __vars["int1_32_8"] + __vars["int2_32_8"]
+	__vars["Ans_28_7"] = (__vars["int1_32_8"] + __vars["int2_32_8"])
 	__next_logic = 7
 	__save_session_Calculate()
 	__logic_session_Calculate_7()
 def __logic_session_Calculate_5():
 	global __vars
 	global __next_logic
-	if __vars["operator_33_8"] == "+":
+	if (__vars["operator_33_8"] == "+"):
 		__next_logic = 6
 		__save_session_Calculate()
 		__logic_session_Calculate_6()
@@ -196,14 +202,14 @@ def __logic_session_Calculate_5():
 def __logic_session_Calculate_8():
 	global __vars
 	global __next_logic
-	__vars["Ans_28_7"] = __vars["int1_32_8"] - __vars["int2_32_8"]
+	__vars["Ans_28_7"] = (__vars["int1_32_8"] - __vars["int2_32_8"])
 	__next_logic = 9
 	__save_session_Calculate()
 	__logic_session_Calculate_9()
 def __logic_session_Calculate_7():
 	global __vars
 	global __next_logic
-	if __vars["operator_33_8"] == "-":
+	if (__vars["operator_33_8"] == "-"):
 		__next_logic = 8
 		__save_session_Calculate()
 		__logic_session_Calculate_8()
@@ -234,7 +240,7 @@ def __logic_session_Calculate_11():
 def __logic_session_Calculate_2():
 	global __vars
 	global __next_logic
-	if __vars["YorN_31_8"] != "no":
+	if (__vars["YorN_31_8"] != "no"):
 		__next_logic = 3
 		__save_session_Calculate()
 		__logic_session_Calculate_3()
@@ -247,6 +253,7 @@ def __logic_session_Calculate_12():
 	global __vars
 	global __next_logic
 	print(__layout(__ByeBye({})))
+	__vars["__exited_from"] = 12
 	__next_logic = 13
 	__save_session_Calculate()
 def __logic_session_Calculate_13():

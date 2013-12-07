@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -73,7 +74,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_02dc046e-fba6-42e4-a9fc-e1e55dfb3151"
+	global_vars_file = "GLOBAL_ca579426-5d76-4b31-9226-f92316ab231a"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -82,7 +83,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_02dc046e-fba6-42e4-a9fc-e1e55dfb3151"
+	global_vars_file = "GLOBAL_ca579426-5d76-4b31-9226-f92316ab231a"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -161,6 +162,11 @@ def __load_session_Talk(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Talk()
+		globals()["__logic_session_Talk_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Talk_"+str(__next_logic)]()
 
@@ -174,7 +180,7 @@ def __session_Talk():
 def __logic_session_Talk_1():
 	global __vars
 	global __next_logic
-	__vars["connections_42_9"] = __vars["connections_42_9"] + 1
+	__vars["connections_42_9"] = (__vars["connections_42_9"] + 1)
 	__vars["correct_47_10"] = False
 	__vars["written_46_10"] = 0
 	__next_logic = 2
@@ -204,7 +210,7 @@ def __logic_session_Talk_6():
 def __logic_session_Talk_5():
 	global __vars
 	global __next_logic
-	if __vars["username_45_10"] == "Ebrahim" and __vars["password_45_10"] == "group5" or __vars["username_45_10"] == "Abbas" and __vars["password_45_10"] == "password" or __vars["username_45_10"] == "guest" and __vars["password_45_10"] == "guest":
+	if ((((__vars["username_45_10"] == "Ebrahim") and (__vars["password_45_10"] == "group5")) or ((__vars["username_45_10"] == "Abbas") and (__vars["password_45_10"] == "password"))) or ((__vars["username_45_10"] == "guest") and (__vars["password_45_10"] == "guest"))):
 		__next_logic = 6
 		__save_session_Talk()
 		__logic_session_Talk_6()
@@ -228,7 +234,7 @@ def __logic_session_Talk_9():
 def __logic_session_Talk_7():
 	global __vars
 	global __next_logic
-	if not __vars["correct_47_10"]:
+	if (not __vars["correct_47_10"]):
 		__next_logic = 8
 		__save_session_Talk()
 		__logic_session_Talk_8()
@@ -246,7 +252,7 @@ def __logic_session_Talk_10():
 def __logic_session_Talk_2():
 	global __vars
 	global __next_logic
-	if not __vars["correct_47_10"]:
+	if (not __vars["correct_47_10"]):
 		__next_logic = 3
 		__save_session_Talk()
 		__logic_session_Talk_3()
@@ -281,17 +287,17 @@ def __logic_session_Talk_14():
 def __logic_session_Talk_16():
 	global __vars
 	global __next_logic
-	__vars["written_46_10"] = __vars["written_46_10"] + 1
+	__vars["written_46_10"] = (__vars["written_46_10"] + 1)
 	__vars["msg0_41_9"] = __vars["msg1_41_9"]
 	__vars["msg1_41_9"] = __vars["msg2_41_9"]
-	__vars["msg2_41_9"] = __vars["username_45_10"] + "> " + __vars["msg_45_10"]
+	__vars["msg2_41_9"] = ((__vars["username_45_10"] + "> ") + __vars["msg_45_10"])
 	__next_logic = 17
 	__save_session_Talk()
 	__logic_session_Talk_17()
 def __logic_session_Talk_15():
 	global __vars
 	global __next_logic
-	if __vars["msg_45_10"] != "":
+	if (__vars["msg_45_10"] != ""):
 		__next_logic = 16
 		__save_session_Talk()
 		__logic_session_Talk_16()
@@ -309,7 +315,7 @@ def __logic_session_Talk_17():
 def __logic_session_Talk_12():
 	global __vars
 	global __next_logic
-	if __vars["quit_45_10"] != "yes":
+	if (__vars["quit_45_10"] != "yes"):
 		__next_logic = 13
 		__save_session_Talk()
 		__logic_session_Talk_13()
@@ -324,6 +330,7 @@ def __logic_session_Talk_18():
 	print(__layout(__ByeBye({'username':__vars["username_45_10"],'conns':__vars["connections_42_9"]
 	,'msgs':__vars["written_46_10"]
 	})))
+	__vars["__exited_from"] = 18
 	__next_logic = 19
 	__save_session_Talk()
 def __logic_session_Talk_19():

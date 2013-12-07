@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -204,7 +205,7 @@ def __Fin(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_b8920453-6d47-41ca-bcbc-123459b87c1a"
+	global_vars_file = "GLOBAL_6a0734b3-eae1-4b1a-adf7-903c687257d6"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -213,7 +214,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_b8920453-6d47-41ca-bcbc-123459b87c1a"
+	global_vars_file = "GLOBAL_6a0734b3-eae1-4b1a-adf7-903c687257d6"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -286,6 +287,11 @@ def __load_session_Guess(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Guess()
+		globals()["__logic_session_Guess_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Guess_"+str(__next_logic)]()
 
@@ -350,7 +356,7 @@ def __logic_session_Guess_10():
 def __logic_session_Guess_7():
 	global __vars
 	global __next_logic
-	if __vars["i_165_32"] > 5 or __vars["i_165_32"] == 0:
+	if ((__vars["i_165_32"] > 5) or (__vars["i_165_32"] == 0)):
 		__next_logic = 8
 		__save_session_Guess()
 		__logic_session_Guess_8()
@@ -380,7 +386,7 @@ def __logic_session_Guess_14():
 def __logic_session_Guess_11():
 	global __vars
 	global __next_logic
-	if __vars["i_165_32"] == 1:
+	if (__vars["i_165_32"] == 1):
 		__next_logic = 12
 		__save_session_Guess()
 		__logic_session_Guess_12()
@@ -410,7 +416,7 @@ def __logic_session_Guess_18():
 def __logic_session_Guess_15():
 	global __vars
 	global __next_logic
-	if __vars["i_165_32"] == 2:
+	if (__vars["i_165_32"] == 2):
 		__next_logic = 16
 		__save_session_Guess()
 		__logic_session_Guess_16()
@@ -440,7 +446,7 @@ def __logic_session_Guess_22():
 def __logic_session_Guess_19():
 	global __vars
 	global __next_logic
-	if __vars["i_165_32"] == 3:
+	if (__vars["i_165_32"] == 3):
 		__next_logic = 20
 		__save_session_Guess()
 		__logic_session_Guess_20()
@@ -470,7 +476,7 @@ def __logic_session_Guess_26():
 def __logic_session_Guess_23():
 	global __vars
 	global __next_logic
-	if __vars["i_165_32"] == 4:
+	if (__vars["i_165_32"] == 4):
 		__next_logic = 24
 		__save_session_Guess()
 		__logic_session_Guess_24()
@@ -500,7 +506,7 @@ def __logic_session_Guess_30():
 def __logic_session_Guess_27():
 	global __vars
 	global __next_logic
-	if __vars["i_165_32"] == 5:
+	if (__vars["i_165_32"] == 5):
 		__next_logic = 28
 		__save_session_Guess()
 		__logic_session_Guess_28()
@@ -512,7 +518,7 @@ def __logic_session_Guess_27():
 def __logic_session_Guess_31():
 	global __vars
 	global __next_logic
-	__vars["total_164_32"] = __vars["total_164_32"] + 1
+	__vars["total_164_32"] = (__vars["total_164_32"] + 1)
 	print(__layout(__Trials({'trials':__vars["total_164_32"]})))
 	__next_logic = 32
 	__save_session_Guess()
@@ -520,6 +526,7 @@ def __logic_session_Guess_33():
 	global __vars
 	global __next_logic
 	print(__layout(__Fin({})))
+	__vars["__exited_from"] = 33
 	__next_logic = 34
 	__save_session_Guess()
 def __logic_session_Guess_34():
@@ -531,7 +538,7 @@ def __logic_session_Guess_34():
 def __logic_session_Guess_32():
 	global __vars
 	global __next_logic
-	if __vars["total_164_32"] == 3:
+	if (__vars["total_164_32"] == 3):
 		__next_logic = 33
 		__save_session_Guess()
 		__logic_session_Guess_33()
@@ -549,7 +556,7 @@ def __logic_session_Guess_35():
 def __logic_session_Guess_2():
 	global __vars
 	global __next_logic
-	if __vars["total_164_32"] != 3:
+	if (__vars["total_164_32"] != 3):
 		__next_logic = 3
 		__save_session_Guess()
 		__logic_session_Guess_3()

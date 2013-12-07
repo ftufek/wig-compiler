@@ -1,5 +1,5 @@
 /* Produced errors: 
-TYPES_DONT_MATCH(b1 = i2 + i3)
+TYPES_DONT_MATCH(b1 = (i2 + i3))
 */
 service {
   const html a = <html></html>;
@@ -11,12 +11,12 @@ service {
     bool b2;
     string s1;
     string s2;
-    i1 = i2 + i3;
-    i1 = i2 - i3 * i2;
-    i1 = i2 * i3 / i1;
-    i1 = i2 % i1 + i2;
-    b1 = i2 + i3;
-    s1 = s1 + s2;
+    i1 = (i2 + i3);
+    i1 = ((i2 - i3) * i2);
+    i1 = ((i2 * i3) / i1);
+    i1 = (i2 % (i1 + i2));
+    b1 = (i2 + i3);
+    s1 = (s1 + s2);
     exit a;
   }
 }

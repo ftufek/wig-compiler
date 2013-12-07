@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -47,7 +48,7 @@ def __Total(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_2165cf86-7a2f-470b-9c52-2dfeffe53a2a"
+	global_vars_file = "GLOBAL_6c79c797-fcb4-4698-b0b4-113fd2edb3df"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -56,7 +57,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_2165cf86-7a2f-470b-9c52-2dfeffe53a2a"
+	global_vars_file = "GLOBAL_6c79c797-fcb4-4698-b0b4-113fd2edb3df"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -129,6 +130,11 @@ def __load_session_Contribute(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Contribute()
+		globals()["__logic_session_Contribute_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Contribute_"+str(__next_logic)]()
 
@@ -162,8 +168,9 @@ def __logic_session_Contribute_3():
 def __logic_session_Contribute_4():
 	global __vars
 	global __next_logic
-	__vars["amount_15_7"] = __vars["amount_15_7"] + __vars["i_18_8"]
+	__vars["amount_15_7"] = (__vars["amount_15_7"] + __vars["i_18_8"])
 	print(__layout(__Total({'total':__vars["amount_15_7"]})))
+	__vars["__exited_from"] = 4
 	__next_logic = 5
 	__save_session_Contribute()
 def __logic_session_Contribute_5():

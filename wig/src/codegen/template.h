@@ -42,6 +42,7 @@ std::string _t_session_stm_stack(const std::string &session_name,
 std::string _t_var(const std::string &uniq_key);
 std::string _t_next_logic(const std::string &session_name, const int n);
 std::string _t_call_next_logic(const std::string &session_name, const int n);
+std::string _t_exit_from(const int n);
 
 std::string _t_fn_helpers();
 std::string _t_fn_decl(const std::string &name,

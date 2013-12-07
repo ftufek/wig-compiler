@@ -306,6 +306,9 @@ void PrettyPrinter::visit(ast::LValExp *s){
 }
 
 void PrettyPrinter::visit(ast::BinopExp *s){
+	if(s->type_ != ast::kBinopType::Assignment){
+		ppout<<"(";
+	}
     s->left_->accept(this);
 
     switch (s->type_) {
@@ -374,11 +377,14 @@ void PrettyPrinter::visit(ast::BinopExp *s){
     }
 
     s->right_->accept(this);
-
+    if(s->type_ != ast::kBinopType::Assignment){
+    	ppout<<")";
+    }
     PrintType(s);
 }
 
 void PrettyPrinter::visit(ast::UnopExp *s){
+	ppout<<"(";
     switch (s->type_) {
     case ast::kUnopType::LogicNegate:
         ppout<<"!";
@@ -393,11 +399,13 @@ void PrettyPrinter::visit(ast::UnopExp *s){
     }
 
     s->exp_->accept(this);
+    ppout<<")";
 
     PrintType(s);
 }
 
 void PrettyPrinter::visit(ast::TupleopExp *s){
+	ppout<<"(";
     s->exp_->accept(this);
 
     switch (s->type_) {
@@ -423,6 +431,7 @@ void PrettyPrinter::visit(ast::TupleopExp *s){
         ppout<<", "<<(*it);
     }
     ppout<<")";
+    ppout<<")";
 }
 
 void PrettyPrinter::visit(ast::FunctionExp *s){
@@ -440,7 +449,6 @@ void PrettyPrinter::visit(ast::FunctionExp *s){
         (*it)->accept(this);
     }
     ppout<<")";
-
     PrintType(s);
 }
 

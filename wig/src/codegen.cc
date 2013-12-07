@@ -153,7 +153,7 @@ void CodeGenerator::visit(ast::Service *s){
 
 void CodeGenerator::visit(ast::Whatever *s ) {}
 
-string TypeDefVal(ast::Type *type){
+string TypeDefaultVal(ast::Type *type){
 	string def_val{"\"\""};
 	switch(type->type_){
 	//INT, BOOL, STRING, VOID, TUPLE, HTML, SCHEMA, UNDEFINED
@@ -183,7 +183,7 @@ void CodeGenerator::visit(ast::Variable *s) {
 		}else{
 			auto key = _sym_table.GetUniqueKeySymbol(s->name_);
 			if(key){
-				cgout<<_t_global_var(key.get(), TypeDefVal(s->type_))<<endl;
+				cgout<<_t_global_var(key.get(), TypeDefaultVal(s->type_))<<endl;
 			}else{
 				cerr<<"ERROR_IN_CODEGEN";
 			}
@@ -216,7 +216,7 @@ void CodeGenerator::visit(ast::Function *s) {
 }
 
 void CodeGenerator::visit(ast::Field *s) {
-	_fields.push_back(make_pair(s->id_, TypeDefVal(s->type_)));
+	_fields.push_back(make_pair(s->id_, TypeDefaultVal(s->type_)));
 }
 
 void CodeGenerator::visit(ast::Empty *) {}
@@ -288,6 +288,9 @@ void CodeGenerator::visit(ast::DocumentStm *s){
 	}
 	PrintFnCallStms();
 	_label_stms.push_back(_t_print_html(s->id_,_plugs));
+	if(_is_exit_stm){
+		_label_stms.push_back(_t_exit_from(_current_label+1));
+	}
 	PrintLabelStms(NewLabel(), _label_stms, DEF_JUMP_NEXT_LABEL);
 }
 
@@ -325,9 +328,9 @@ void CodeGenerator::visit(ast::InputStm *s){
 }
 
 void CodeGenerator::visit(ast::ExitStm *s){
-	if(!_in_session.empty()){
-		s->doc_->accept(this);
-	}
+	_is_exit_stm = true;
+	s->doc_->accept(this);
+	_is_exit_stm = false;
 }
 
 void CodeGenerator::visit(ast::ReturnStm *s){
@@ -433,12 +436,14 @@ void CodeGenerator::visit(ast::LValExp *s){
 }
 
 void CodeGenerator::visit(ast::BinopExp *s){
+	bool print_paren = true;
 	auto left = ExpToStr(s->left_);
 	auto right = ExpToStr(s->right_);
 	auto op = "";
 	switch(s->type_){
 	case ast::kBinopType::Assignment:{
 		op = "=";
+		print_paren = false;
 		break;
 	}
 	case ast::kBinopType::Equals:
@@ -500,17 +505,21 @@ void CodeGenerator::visit(ast::BinopExp *s){
 	default:
 		break;
 	}
-	_exps.push_back(left + " " + op + " " + right);
+	if(print_paren){
+		_exps.push_back("(" + left + " " + op + " " + right + ")");
+	}else{
+		_exps.push_back(left + " " + op + " " + right);
+	}
 }
 
 void CodeGenerator::visit(ast::UnopExp *s){
 	auto val = ExpToStr(s->exp_);
 	switch(s->type_){
 	case ast::kUnopType::LogicNegate:
-		_exps.push_back("not "+val);
+		_exps.push_back("(not "+val+")");
 		break;
 	case ast::kUnopType::Minus:
-		_exps.push_back("-"+val);
+		_exps.push_back("(-"+val+")");
 		break;
 	default:
 		break;
@@ -543,7 +552,7 @@ void CodeGenerator::visit(ast::TupleopExp *s){
 		ss<<"\""<<*it<<"\"";
 	}
 	ss<<"])";
-	_exps.push_back(ss.str());
+	_exps.push_back("("+ss.str()+")");
 }
 
 void CodeGenerator::visit(ast::FunctionExp *s){

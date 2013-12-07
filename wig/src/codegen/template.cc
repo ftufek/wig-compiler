@@ -93,7 +93,8 @@ std::string _t_state_vars(){
 	stringstream ss;
 	ss<<vars<<" = {}"<<endl
 		<<sid<<" = 0"<<endl
-		<<next_logic<<" = 1"<<endl;
+		<<next_logic<<" = 1"<<endl
+		<<"__vars[\"__exited_from\"] = -1"<<endl;
 	return ss.str();
 }
 
@@ -253,6 +254,14 @@ std::string _t_load_session(const std::string &name){
 		ss<<indent(2)<<load<<" = pickle.load(f)"<<endl;
 	}
 	ss<<indent(2)<<"__vars = dict(__vars.items() + session_vars.items())"<<endl;
+
+	ss<<indent(1)<<"if __vars[\"__exited_from\"] != -1:"<<endl;
+	ss<<indent(2)<<"__next_logic = __vars[\"__exited_from\"]"<<endl;
+	ss<<indent(2)<<"__save_session_"<<name<<"()"<<endl;
+	ss<<indent(2)<<"globals()[\"__logic_session_"<<name
+					<<"_\"+str(__vars[\"__exited_from\"])]()"<<endl;
+	ss<<indent(2)<<"return"<<endl;
+
 	ss<<indent(1)<<"__continue_stack_execution()"<<endl;
 	ss<<indent(1)<<"globals()[\"__logic_session_"<<name<<"_\"+str("<<next_logic<<")]()"<<endl;
 	return ss.str();
@@ -298,6 +307,12 @@ std::string _t_call_next_logic(const std::string &session_name, const int n){
 	stringstream ss;
 	ss<<_t_next_logic(session_name, n)<<endl;
 	ss<<"__logic_session_"<<session_name<<"_"<<n<<"()";
+	return ss.str();
+}
+
+std::string _t_exit_from(const int n){
+	stringstream ss;
+	ss<<"__vars[\"__exited_from\"] = "<<n;
 	return ss.str();
 }
 

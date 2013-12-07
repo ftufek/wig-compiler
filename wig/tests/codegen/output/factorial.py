@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -40,7 +41,7 @@ def __right(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_5579f582-f86f-407e-a346-175e96ac0af5"
+	global_vars_file = "GLOBAL_dbfe1aba-085e-4022-9f6a-daaa68d96c86"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -49,7 +50,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_5579f582-f86f-407e-a346-175e96ac0af5"
+	global_vars_file = "GLOBAL_dbfe1aba-085e-4022-9f6a-daaa68d96c86"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -123,7 +124,7 @@ def __logic_fn_factorial_2():
 	global __vars
 	global __next_logic
 	
-	if __vars["n_9_8"] == 0:
+	if (__vars["n_9_8"] == 0):
 		__set_fn_logic(3)
 		__logic_fn_factorial_3()
 	else:
@@ -137,7 +138,7 @@ def __logic_fn_factorial_6():
 	global __vars
 	__set_fn_logic(7)
 	
-	__logic_fn_factorial_1(__vars["n_9_8"] - 1)
+	__logic_fn_factorial_1((__vars["n_9_8"] - 1))
 	__logic_fn_factorial_7()
 def __logic_fn_factorial_7():
 	global __vars
@@ -146,7 +147,7 @@ def __logic_fn_factorial_7():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["4ca80da9-b278-4de6-abc4-d377c22ab02f"] = __vars["__return_value"]
+		__vars["8b41e4be-7664-4b30-a77f-c8027a807501"] = __vars["__return_value"]
 		__set_fn_logic(8)
 		__logic_fn_factorial_8()
 	
@@ -154,7 +155,7 @@ def __logic_fn_factorial_8():
 	global __vars
 	global __next_logic
 	
-	__return_from_fn(__vars["n_9_8"] * __vars["4ca80da9-b278-4de6-abc4-d377c22ab02f"])
+	__return_from_fn((__vars["n_9_8"] * __vars["8b41e4be-7664-4b30-a77f-c8027a807501"]))
 def __save_session_Test():
 	session_file = "Test$"+str(__sid)
 	open(session_file, 'w').close()
@@ -181,6 +182,11 @@ def __load_session_Test(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Test()
+		globals()["__logic_session_Test_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Test_"+str(__next_logic)]()
 
@@ -205,7 +211,7 @@ def __logic_session_Test_2():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["d14e66a2-49c9-4658-9e4c-8db10db71d9b"] = __vars["__return_value"]
+		__vars["e696da4c-049b-4507-ab8f-35da12781eee"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_Test()
 		__logic_session_Test_3()
@@ -215,7 +221,7 @@ def __logic_session_Test_2():
 def __logic_session_Test_3():
 	global __vars
 	global __next_logic
-	__vars["n_21_12"] = __vars["d14e66a2-49c9-4658-9e4c-8db10db71d9b"]
+	__vars["n_21_12"] = __vars["e696da4c-049b-4507-ab8f-35da12781eee"]
 	__next_logic = 4
 	__save_session_Test()
 	__logic_session_Test_4()
@@ -223,6 +229,7 @@ def __logic_session_Test_5():
 	global __vars
 	global __next_logic
 	print(__layout(__wrong({'n':__vars["n_21_12"]})))
+	__vars["__exited_from"] = 5
 	__next_logic = 6
 	__save_session_Test()
 def __logic_session_Test_6():
@@ -234,7 +241,7 @@ def __logic_session_Test_6():
 def __logic_session_Test_4():
 	global __vars
 	global __next_logic
-	if __vars["n_21_12"] != 3628800:
+	if (__vars["n_21_12"] != 3628800):
 		__next_logic = 5
 		__save_session_Test()
 		__logic_session_Test_5()
@@ -247,6 +254,7 @@ def __logic_session_Test_7():
 	global __vars
 	global __next_logic
 	print(__layout(__right({'n':__vars["n_21_12"]})))
+	__vars["__exited_from"] = 7
 	__next_logic = 8
 	__save_session_Test()
 def __logic_session_Test_8():

@@ -12,5 +12,7 @@ service{
 		tuple Item b;
 		b = tuple {available=true, price=2, title="aaa"};
 		exit plug a[gap=b.price];
+		show plug a[gap="ERROR!!!"];
+		exit plug a[gap=b.price];
 	}
 }

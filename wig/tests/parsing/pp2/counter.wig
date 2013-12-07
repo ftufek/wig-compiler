@@ -6,7 +6,7 @@ service {
   </body> </html>;
   int counter;
   session Access () { 
-    counter = counter + 1;
+    counter = (counter + 1);
     exit plug Nikolaj[no = counter];
   }
 }

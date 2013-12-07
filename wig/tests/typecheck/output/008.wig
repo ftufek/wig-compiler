@@ -18,11 +18,11 @@ service {
   }
 
   bool fc(bool d, string a) { 
-    return a == a;
+    return (a == a);
   }
 
   string concatenate(string a, string b) { 
-    return a + b;
+    return (a + b);
   }
 
   session test () { 

@@ -145,11 +145,11 @@ service {
   session Access () { 
     int man;
     show Init receive [man = man];
-    while (man != 5) { 
-        if (man == 1)        show Red receive [man = man];
-        else        if (man == 2)        show Blue receive [man = man];
-        else        if (man == 3)        show Green receive [man = man];
-        else        if (man == 4)        show Purple receive [man = man];
+    while ((man != 5)) { 
+        if ((man == 1))        show Red receive [man = man];
+        else        if ((man == 2))        show Blue receive [man = man];
+        else        if ((man == 3))        show Green receive [man = man];
+        else        if ((man == 4))        show Purple receive [man = man];
       }
 
     exit End;

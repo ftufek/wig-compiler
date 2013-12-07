@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 class Item():
 	def __init__(self, dict):
@@ -72,7 +73,7 @@ def __b(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_963adcbe-9e20-432f-ba98-cea039b5d9fb"
+	global_vars_file = "GLOBAL_fe18d9b8-c349-4e8c-90a8-2f032cf76821"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -81,7 +82,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_963adcbe-9e20-432f-ba98-cea039b5d9fb"
+	global_vars_file = "GLOBAL_fe18d9b8-c349-4e8c-90a8-2f032cf76821"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -154,6 +155,11 @@ def __load_session_d(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_d()
+		globals()["__logic_session_d_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_d_"+str(__next_logic)]()
 
@@ -175,7 +181,7 @@ def __logic_session_d_1():
 def __logic_session_d_3():
 	global __vars
 	global __next_logic
-	__vars["counter_14_8"] = __vars["counter_14_8"] - 1
+	__vars["counter_14_8"] = (__vars["counter_14_8"] - 1)
 	print(__layout(__b({'gap':__vars["counter_14_8"]})))
 	__next_logic = 4
 	__save_session_d()
@@ -188,7 +194,7 @@ def __logic_session_d_4():
 def __logic_session_d_2():
 	global __vars
 	global __next_logic
-	if __vars["counter_14_8"] > 0:
+	if (__vars["counter_14_8"] > 0):
 		__next_logic = 3
 		__save_session_d()
 		__logic_session_d_3()
@@ -201,6 +207,7 @@ def __logic_session_d_5():
 	global __vars
 	global __next_logic
 	print(__layout(__b({'gap':__vars["counter_14_8"]})))
+	__vars["__exited_from"] = 5
 	__next_logic = 6
 	__save_session_d()
 def __logic_session_d_6():

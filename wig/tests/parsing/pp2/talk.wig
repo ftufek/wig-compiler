@@ -44,23 +44,23 @@ service {
     string quit;
     int written;
     bool correct;
-    connections = connections + 1;
+    connections = (connections + 1);
     correct = false;
     written = 0;
-    while (!correct) { 
+    while ((!correct)) { 
         show Login receive [username = username, password = password];
-        if (username == "Ebrahim" && password == "group5" || username == "Abbas" && password == "password" || username == "guest" && password == "guest")        correct = true;
-        if (!correct)        show plug incorrect[username = username];
+        if (((((username == "Ebrahim") && (password == "group5")) || ((username == "Abbas") && (password == "password"))) || ((username == "guest") && (password == "guest"))))        correct = true;
+        if ((!correct))        show plug incorrect[username = username];
       }
 
     quit = "no";
-    while (quit != "yes") { 
+    while ((quit != "yes")) { 
         show plug Update[msg0 = msg0, msg1 = msg1, msg2 = msg2] receive [msg = msg, quit = quit];
-        if (msg != "") { 
-          written = written + 1;
+        if ((msg != "")) { 
+          written = (written + 1);
           msg0 = msg1;
           msg1 = msg2;
-          msg2 = username + "> " + msg;
+          msg2 = ((username + "> ") + msg);
         }
       }
 

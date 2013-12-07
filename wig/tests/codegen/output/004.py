@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 class Item():
 	def __init__(self, dict):
@@ -69,7 +70,7 @@ def __a(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_e37d8149-aa03-4a22-9a88-6fd0abc9f0d7"
+	global_vars_file = "GLOBAL_2555392a-b30d-4b01-9fa5-c8b2521218a5"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -78,7 +79,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_e37d8149-aa03-4a22-9a88-6fd0abc9f0d7"
+	global_vars_file = "GLOBAL_2555392a-b30d-4b01-9fa5-c8b2521218a5"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -149,6 +150,11 @@ def __load_session_A(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_A()
+		globals()["__logic_session_A_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_A_"+str(__next_logic)]()
 
@@ -167,14 +173,28 @@ def __logic_session_A_1():
 			'price':2, 
 			'title':"aaa"})
 	print(__layout(__a({'gap':__vars["b_12_6"].price})))
+	__vars["__exited_from"] = 1
 	__next_logic = 2
 	__save_session_A()
 def __logic_session_A_2():
 	global __vars
 	global __next_logic
-	__next_logic = 1
+	print(__layout(__a({'gap':"ERROR!!!"})))
+	__next_logic = 3
 	__save_session_A()
-	__logic_session_A_1()
+def __logic_session_A_3():
+	global __vars
+	global __next_logic
+	print(__layout(__a({'gap':__vars["b_12_6"].price})))
+	__vars["__exited_from"] = 3
+	__next_logic = 4
+	__save_session_A()
+def __logic_session_A_4():
+	global __vars
+	global __next_logic
+	__next_logic = 3
+	__save_session_A()
+	__logic_session_A_3()
 print "Content-type: text/html"
 print
 __load_global_vars()

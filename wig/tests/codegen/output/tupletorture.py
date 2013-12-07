@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 class Scm1():
 	def __init__(self, dict):
@@ -151,7 +152,7 @@ def __Done(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_93fa5259-0941-4d6b-8b32-564657a4065b"
+	global_vars_file = "GLOBAL_2aee7c50-a6b8-4ed5-a92e-00143f809f45"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -160,7 +161,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_93fa5259-0941-4d6b-8b32-564657a4065b"
+	global_vars_file = "GLOBAL_2aee7c50-a6b8-4ed5-a92e-00143f809f45"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -231,6 +232,11 @@ def __load_session_test1(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_test1()
+		globals()["__logic_session_test1_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_test1_"+str(__next_logic)]()
 
@@ -257,7 +263,7 @@ def __logic_session_test1_1():
 def __logic_session_test1_2():
 	global __vars
 	global __next_logic
-	__vars["t2_35_18"] = __vars["t1_34_18"].keep(["b", "i"])
+	__vars["t2_35_18"] = (__vars["t1_34_18"].keep(["b", "i"]))
 	print(__layout(__ShowSchema2({'message':"t2 is: ",'b':__vars["t2_35_18"].b
 	,'i':__vars["t2_35_18"].i
 	})))
@@ -266,7 +272,7 @@ def __logic_session_test1_2():
 def __logic_session_test1_3():
 	global __vars
 	global __next_logic
-	__vars["t3_35_18"] = __vars["t1_34_18"].discard(["s"])
+	__vars["t3_35_18"] = (__vars["t1_34_18"].discard(["s"]))
 	print(__layout(__ShowSchema2({'message':"t3 is: ",'b':__vars["t3_35_18"].b
 	,'i':__vars["t3_35_18"].i
 	})))
@@ -276,6 +282,7 @@ def __logic_session_test1_4():
 	global __vars
 	global __next_logic
 	print(__layout(__Done({})))
+	__vars["__exited_from"] = 4
 	__next_logic = 5
 	__save_session_test1()
 def __logic_session_test1_5():
@@ -310,6 +317,11 @@ def __load_session_test2(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_test2()
+		globals()["__logic_session_test2_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_test2_"+str(__next_logic)]()
 
@@ -356,6 +368,7 @@ def __logic_session_test2_4():
 	global __vars
 	global __next_logic
 	print(__layout(__Done({})))
+	__vars["__exited_from"] = 4
 	__next_logic = 5
 	__save_session_test2()
 def __logic_session_test2_5():

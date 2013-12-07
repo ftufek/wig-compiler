@@ -29,10 +29,10 @@ service {
     int int2;
     string operator;
     YorN = "";
-    while (YorN != "no") { 
+    while ((YorN != "no")) { 
         show Setup receive [operator = operator, int1 = int1, int2 = int2];
-        if (operator == "+")        Ans = int1 + int2;
-        if (operator == "-")        Ans = int1 - int2;
+        if ((operator == "+"))        Ans = (int1 + int2);
+        if ((operator == "-"))        Ans = (int1 - int2);
         show plug Return[Ans = Ans] receive [YorN = YorN];
       }
 

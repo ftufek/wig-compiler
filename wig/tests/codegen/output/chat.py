@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -62,7 +63,7 @@ def __ByeBye(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_9924f185-278b-4391-b863-ed9a74ff8477"
+	global_vars_file = "GLOBAL_31d5bd37-6475-4a67-a217-860cf202e629"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -71,7 +72,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_9924f185-278b-4391-b863-ed9a74ff8477"
+	global_vars_file = "GLOBAL_31d5bd37-6475-4a67-a217-860cf202e629"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -154,6 +155,11 @@ def __load_session_Chat(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Chat()
+		globals()["__logic_session_Chat_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Chat_"+str(__next_logic)]()
 
@@ -208,27 +214,27 @@ def __logic_session_Chat_6():
 def __logic_session_Chat_7():
 	global __vars
 	global __next_logic
-	__vars["connections_34_8"] = __vars["connections_34_8"] + 1
+	__vars["connections_34_8"] = (__vars["connections_34_8"] + 1)
 	__next_logic = 8
 	__save_session_Chat()
 	__logic_session_Chat_8()
 def __logic_session_Chat_9():
 	global __vars
 	global __next_logic
-	__vars["written_34_8"] = __vars["written_34_8"] + 1
+	__vars["written_34_8"] = (__vars["written_34_8"] + 1)
 	__vars["msg0_30_7"] = __vars["msg1_30_7"]
 	__vars["msg1_30_7"] = __vars["msg2_30_7"]
 	__vars["msg2_30_7"] = __vars["msg3_30_7"]
 	__vars["msg3_30_7"] = __vars["msg4_30_7"]
 	__vars["msg4_30_7"] = __vars["msg5_30_7"]
-	__vars["msg5_30_7"] = __vars["name_33_8"] + "> " + __vars["msg_33_8"]
+	__vars["msg5_30_7"] = ((__vars["name_33_8"] + "> ") + __vars["msg_33_8"])
 	__next_logic = 10
 	__save_session_Chat()
 	__logic_session_Chat_10()
 def __logic_session_Chat_8():
 	global __vars
 	global __next_logic
-	if __vars["msg_33_8"] != "":
+	if (__vars["msg_33_8"] != ""):
 		__next_logic = 9
 		__save_session_Chat()
 		__logic_session_Chat_9()
@@ -246,7 +252,7 @@ def __logic_session_Chat_10():
 def __logic_session_Chat_4():
 	global __vars
 	global __next_logic
-	if __vars["quit_33_8"] != "yes":
+	if (__vars["quit_33_8"] != "yes"):
 		__next_logic = 5
 		__save_session_Chat()
 		__logic_session_Chat_5()
@@ -260,6 +266,7 @@ def __logic_session_Chat_11():
 	global __next_logic
 	print(__layout(__ByeBye({'conns':__vars["connections_34_8"],'msgs':__vars["written_34_8"]
 	})))
+	__vars["__exited_from"] = 11
 	__next_logic = 12
 	__save_session_Chat()
 def __logic_session_Chat_12():

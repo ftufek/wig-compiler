@@ -1,8 +1,8 @@
 /* Produced errors: 
-OP_BOOL_ONLY(b1 || i1)
-SHOULD_BE_BOOL(b1 || i1)
-OP_BOOL_ONLY(i1 && b2)
-SHOULD_BE_BOOL(i1 && b2)
+OP_BOOL_ONLY((b1 || i1))
+SHOULD_BE_BOOL((b1 || i1))
+OP_BOOL_ONLY((i1 && b2))
+SHOULD_BE_BOOL((i1 && b2))
 */
 service {
 const html a = <html></html>;

@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -38,7 +39,7 @@ def __Nikolaj(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_ecf3b67b-6262-4bf2-9060-6b58c348e505"
+	global_vars_file = "GLOBAL_1bebc1ea-f6c9-423b-99b2-5bb9da3eddea"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -47,7 +48,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_ecf3b67b-6262-4bf2-9060-6b58c348e505"
+	global_vars_file = "GLOBAL_1bebc1ea-f6c9-423b-99b2-5bb9da3eddea"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -120,6 +121,11 @@ def __load_session_Access(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Access()
+		globals()["__logic_session_Access_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Access_"+str(__next_logic)]()
 
@@ -133,8 +139,9 @@ def __session_Access():
 def __logic_session_Access_1():
 	global __vars
 	global __next_logic
-	__vars["counter_8_3"] = __vars["counter_8_3"] + 1
+	__vars["counter_8_3"] = (__vars["counter_8_3"] + 1)
 	print(__layout(__Nikolaj({'no':__vars["counter_8_3"]})))
+	__vars["__exited_from"] = 1
 	__next_logic = 2
 	__save_session_Access()
 def __logic_session_Access_2():

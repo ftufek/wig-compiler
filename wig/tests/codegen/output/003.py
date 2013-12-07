@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -45,7 +46,7 @@ def __only_positive(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_ee31c9ba-4076-4cbd-9886-6107376bef92"
+	global_vars_file = "GLOBAL_8faf2158-d8cd-464d-bbf4-96d1504d2e88"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -54,7 +55,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_ee31c9ba-4076-4cbd-9886-6107376bef92"
+	global_vars_file = "GLOBAL_8faf2158-d8cd-464d-bbf4-96d1504d2e88"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -133,7 +134,7 @@ def __logic_fn_recursive_add_7():
 	global __vars
 	__set_fn_logic(8)
 	
-	__logic_fn_recursive_add_1(__vars["a_13_10"], __vars["b_13_10"] - 1)
+	__logic_fn_recursive_add_1(__vars["a_13_10"], (__vars["b_13_10"] - 1))
 	__logic_fn_recursive_add_8()
 def __logic_fn_recursive_add_8():
 	global __vars
@@ -142,7 +143,7 @@ def __logic_fn_recursive_add_8():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["a3bc5ddc-1552-47ee-a215-d656fa31f9e9"] = __vars["__return_value"]
+		__vars["da3fc6d5-d757-43f5-af34-9d60da1ca184"] = __vars["__return_value"]
 		__set_fn_logic(9)
 		__logic_fn_recursive_add_9()
 	
@@ -150,7 +151,7 @@ def __logic_fn_recursive_add_9():
 	global __vars
 	global __next_logic
 	
-	__return_from_fn(__vars["a3bc5ddc-1552-47ee-a215-d656fa31f9e9"] + 1)
+	__return_from_fn((__vars["da3fc6d5-d757-43f5-af34-9d60da1ca184"] + 1))
 def __logic_fn_recursive_add_10():
 	global __vars
 	global __next_logic
@@ -172,7 +173,7 @@ def __logic_fn_recursive_add_6():
 	global __vars
 	global __next_logic
 	
-	if __vars["b_13_10"] > 0:
+	if (__vars["b_13_10"] > 0):
 		__set_fn_logic(7)
 		__logic_fn_recursive_add_7()
 	else:
@@ -195,7 +196,7 @@ def __logic_fn_recursive_add_2():
 	global __vars
 	global __next_logic
 	
-	if __vars["a_13_10"] < 0 or __vars["b_13_10"] < 0:
+	if ((__vars["a_13_10"] < 0) or (__vars["b_13_10"] < 0)):
 		__set_fn_logic(3)
 		__logic_fn_recursive_add_3()
 	else:
@@ -228,6 +229,11 @@ def __load_session_A(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_A()
+		globals()["__logic_session_A_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_A_"+str(__next_logic)]()
 
@@ -252,7 +258,7 @@ def __logic_session_A_2():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["42a88b95-8f33-4cdf-b5d6-dfa858180fd5"] = __vars["__return_value"]
+		__vars["2290dfe4-ecdb-4afc-8a8e-3f717b66ac0d"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_A()
 		__logic_session_A_3()
@@ -262,8 +268,9 @@ def __logic_session_A_2():
 def __logic_session_A_3():
 	global __vars
 	global __next_logic
-	__vars["result_28_20"] = __vars["42a88b95-8f33-4cdf-b5d6-dfa858180fd5"]
+	__vars["result_28_20"] = __vars["2290dfe4-ecdb-4afc-8a8e-3f717b66ac0d"]
 	print(__layout(__a({'gap':__vars["result_28_20"]})))
+	__vars["__exited_from"] = 3
 	__next_logic = 4
 	__save_session_A()
 def __logic_session_A_4():

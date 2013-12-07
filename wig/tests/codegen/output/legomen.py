@@ -14,6 +14,7 @@ sys.stderr = sys.stdout
 __vars = {}
 __sid = 0
 __next_logic = 1
+__vars["__exited_from"] = -1
 
 def __str_sid():
 	if __sid != 0:
@@ -186,7 +187,7 @@ def __End(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_f68f7570-ca2a-4a45-8b23-fbbc2f086156"
+	global_vars_file = "GLOBAL_a37790f4-f5f7-4f91-9e17-cbf0b79e2dd7"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -195,7 +196,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_f68f7570-ca2a-4a45-8b23-fbbc2f086156"
+	global_vars_file = "GLOBAL_a37790f4-f5f7-4f91-9e17-cbf0b79e2dd7"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -266,6 +267,11 @@ def __load_session_Access(session_id):
 		session_vars = pickle.load(f)
 		__next_logic = pickle.load(f)
 		__vars = dict(__vars.items() + session_vars.items())
+	if __vars["__exited_from"] != -1:
+		__next_logic = __vars["__exited_from"]
+		__save_session_Access()
+		globals()["__logic_session_Access_"+str(__vars["__exited_from"])]()
+		return
 	__continue_stack_execution()
 	globals()["__logic_session_Access_"+str(__next_logic)]()
 
@@ -356,7 +362,7 @@ def __logic_session_Access_17():
 def __logic_session_Access_14():
 	global __vars
 	global __next_logic
-	if __vars["man_157_14"] == 4:
+	if (__vars["man_157_14"] == 4):
 		__next_logic = 15
 		__save_session_Access()
 		__logic_session_Access_15()
@@ -380,7 +386,7 @@ def __logic_session_Access_19():
 def __logic_session_Access_11():
 	global __vars
 	global __next_logic
-	if __vars["man_157_14"] == 3:
+	if (__vars["man_157_14"] == 3):
 		__next_logic = 12
 		__save_session_Access()
 		__logic_session_Access_12()
@@ -404,7 +410,7 @@ def __logic_session_Access_21():
 def __logic_session_Access_8():
 	global __vars
 	global __next_logic
-	if __vars["man_157_14"] == 2:
+	if (__vars["man_157_14"] == 2):
 		__next_logic = 9
 		__save_session_Access()
 		__logic_session_Access_9()
@@ -428,7 +434,7 @@ def __logic_session_Access_23():
 def __logic_session_Access_5():
 	global __vars
 	global __next_logic
-	if __vars["man_157_14"] == 1:
+	if (__vars["man_157_14"] == 1):
 		__next_logic = 6
 		__save_session_Access()
 		__logic_session_Access_6()
@@ -446,7 +452,7 @@ def __logic_session_Access_24():
 def __logic_session_Access_4():
 	global __vars
 	global __next_logic
-	if __vars["man_157_14"] != 5:
+	if (__vars["man_157_14"] != 5):
 		__next_logic = 5
 		__save_session_Access()
 		__logic_session_Access_5()
@@ -459,6 +465,7 @@ def __logic_session_Access_25():
 	global __vars
 	global __next_logic
 	print(__layout(__End({})))
+	__vars["__exited_from"] = 25
 	__next_logic = 26
 	__save_session_Access()
 def __logic_session_Access_26():

@@ -5,7 +5,7 @@ NO_RETURN(a)
 service {
   const html a = <html><div></div></html>;
   session a () { 
-    return 1 + 1;
+    return (1 + 1);
     ;
   }
 }

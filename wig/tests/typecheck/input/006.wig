@@ -1,5 +1,5 @@
 /* Produced errors:
-TYPES_DONT_MATCH(b1 = i2 + i3)
+TYPES_DONT_MATCH(b1 = (i2 + i3))
 */
 service {
 const html a = <html></html>;
