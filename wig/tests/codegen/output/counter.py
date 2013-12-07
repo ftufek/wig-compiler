@@ -38,7 +38,7 @@ def __Nikolaj(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_cc60b54f-f4cc-4d1b-951a-d0115e40d00d"
+	global_vars_file = "GLOBAL_ecf3b67b-6262-4bf2-9060-6b58c348e505"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -47,7 +47,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_cc60b54f-f4cc-4d1b-951a-d0115e40d00d"
+	global_vars_file = "GLOBAL_ecf3b67b-6262-4bf2-9060-6b58c348e505"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)

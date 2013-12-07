@@ -40,7 +40,7 @@ def __right(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_230d6420-ef9b-4518-8a02-2099bb07c654"
+	global_vars_file = "GLOBAL_5579f582-f86f-407e-a346-175e96ac0af5"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -49,7 +49,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_230d6420-ef9b-4518-8a02-2099bb07c654"
+	global_vars_file = "GLOBAL_5579f582-f86f-407e-a346-175e96ac0af5"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -146,7 +146,7 @@ def __logic_fn_factorial_7():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["74ff44f5-250b-4e59-a9d9-a1755051ab5e"] = __vars["__return_value"]
+		__vars["4ca80da9-b278-4de6-abc4-d377c22ab02f"] = __vars["__return_value"]
 		__set_fn_logic(8)
 		__logic_fn_factorial_8()
 	
@@ -154,7 +154,7 @@ def __logic_fn_factorial_8():
 	global __vars
 	global __next_logic
 	
-	__return_from_fn(__vars["n_9_8"] * __vars["74ff44f5-250b-4e59-a9d9-a1755051ab5e"])
+	__return_from_fn(__vars["n_9_8"] * __vars["4ca80da9-b278-4de6-abc4-d377c22ab02f"])
 def __save_session_Test():
 	session_file = "Test$"+str(__sid)
 	open(session_file, 'w').close()
@@ -205,7 +205,7 @@ def __logic_session_Test_2():
 	global __returned_from_fn
 	if __returned_from_fn:
 		__returned_from_fn = False
-		__vars["7ed07f34-f704-4117-8489-586c9ece1b07"] = __vars["__return_value"]
+		__vars["d14e66a2-49c9-4658-9e4c-8db10db71d9b"] = __vars["__return_value"]
 		__next_logic = 3
 		__save_session_Test()
 		__logic_session_Test_3()
@@ -215,7 +215,7 @@ def __logic_session_Test_2():
 def __logic_session_Test_3():
 	global __vars
 	global __next_logic
-	__vars["n_21_12"] = __vars["7ed07f34-f704-4117-8489-586c9ece1b07"]
+	__vars["n_21_12"] = __vars["d14e66a2-49c9-4658-9e4c-8db10db71d9b"]
 	__next_logic = 4
 	__save_session_Test()
 	__logic_session_Test_4()

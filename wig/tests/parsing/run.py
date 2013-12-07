@@ -1,10 +1,11 @@
 from os import listdir, system
 from os.path import isfile, join
 from sys import exit
-from collections import Counter
+from filecmp import cmpfiles
 
 idir = "input/"
-odir = "output/"
+pp1dir = "pp1/"
+pp2dir = "pp2/"
 fwig = "../../fwig"
 
 # Code from:
@@ -26,14 +27,21 @@ class bc:
 
 check = u'\u2713'
 
-files = [ f for f in listdir(idir) if isfile(join(idir,f)) ]
-compare = compare = lambda x, y: Counter(x) == Counter(y)
+files = [ f for f in listdir(idir) if isfile(join(idir, f)) ]
 
-print bc.HEADER + "Test fwig compiler codegen system" + bc.ENDC
 for f in files:
-  py_out = f.split(".wig")[0]
-  system(fwig+" -c -t -s -w -p -o "+odir+py_out+".py "+idir+f)
-  system("chmod +x "+odir+py_out+".py")
-  print bc.OKGREEN + "[" + check + "] " + f + bc.ENDC
+  system(fwig+" -p "+idir+f+" > "+pp1dir+f)
+
+for f in files:
+  system(fwig+" -p "+pp1dir+f+" > "+pp2dir+f)
+
+
+print bc.HEADER + "Test fwig compiler parsing phase: " + bc.ENDC
+for f in files:
+  if not open(pp1dir+f).readlines() == open(pp2dir+f).readlines():
+    print bc.FAIL + "[X] " + f + " (failed parsing)" + bc.ENDC
+    exit(1)
+  else:
+    print bc.OKGREEN + "[" + check + "] " + f + bc.ENDC
 
 print

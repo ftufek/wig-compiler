@@ -69,7 +69,7 @@ def __a(__varDict):
 
 __global_vars = []
 def __save_global_vars():
-	global_vars_file = "GLOBAL_a2b9f2ae-2029-4e6d-b31c-957d4a8738be"
+	global_vars_file = "GLOBAL_e37d8149-aa03-4a22-9a88-6fd0abc9f0d7"
 	open(global_vars_file, 'w').close()
 	global_vars = dict((k, __vars[k]) for k in __global_vars if k in __vars)
 	with open(global_vars_file, "w") as f:
@@ -78,7 +78,7 @@ def __save_global_vars():
 
 def __load_global_vars():
 	global __vars
-	global_vars_file = "GLOBAL_a2b9f2ae-2029-4e6d-b31c-957d4a8738be"
+	global_vars_file = "GLOBAL_e37d8149-aa03-4a22-9a88-6fd0abc9f0d7"
 	try:
 		with open(global_vars_file, "r") as f:
 			global_vars = pickle.load(f)
@@ -162,11 +162,11 @@ def __session_A():
 def __logic_session_A_1():
 	global __vars
 	global __next_logic
-	__vars["a_12_6"] = Item({
+	__vars["b_12_6"] = Item({
 			'available':True, 
 			'price':2, 
 			'title':"aaa"})
-	print(__layout(__a({'gap':__vars["a_12_6"].price})))
+	print(__layout(__a({'gap':__vars["b_12_6"].price})))
 	__next_logic = 2
 	__save_session_A()
 def __logic_session_A_2():
