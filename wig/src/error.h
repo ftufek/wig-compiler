@@ -13,7 +13,7 @@
 #include <list>
 #include <initializer_list>
 
-// The following code for error code generation comes from:
+// The following macro for error code generation comes from:
 // http://stackoverflow.com/questions/5093460/how-to-convert-an-enum-type-variable-to-a-string
 #define X_DEFINE_ENUM_WITH_STRING_CONVERSIONS_TOSTRING_CASE(r, data, elem)    \
 	case elem : return BOOST_PP_STRINGIZE(elem);
@@ -42,7 +42,7 @@ DEFINE_ENUM_WITH_STRING_CONVERSIONS(ErrorCode,
 		(NO_RETURN)
 		(SYMBOL_ALREADY_PRESENT)
 		(HTML_TAG_NOT_A_SYMBOL)
-		/* typecheck error codes: */
+		/* following are typecheck error codes: */
 		(SHOULD_BE_BOOL)
 		(TYPES_DONT_MATCH)
 		(CAN_COMPARE_INTEGERS_ONLY)
