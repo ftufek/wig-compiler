@@ -7,8 +7,6 @@ will generate an "fwig" executable in the current directory
 > make check
 will run all the tests displaying success or failure
 
-A report describing the compiler can be found in the report.pdf file.
-
 Compiled code samples can be found in tests/codegen/ folder. It contains
 folders named input/, which contains .wig files, and output/, which contains
 corresponding compiled python cgi files. You can execute them on a cgi
