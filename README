@@ -1,18 +1,16 @@
-In order to build, it requires g++ (>= 4.7) for c++11 support.
+Building requires g++ (>= 4.7) for c++11 support.
+Tests are placed under tests/ folder.
 
-You can than just execute:
-> make code;
-It will generate an "fwig" executable in the current directory.
-
-The tests are placed under tests/ folder. 
-They are python scripts.
-There's run.py inside each folder.
-
-You can run them directly or from the makefile with:
+> make code
+will generate an "fwig" executable in the current directory
 
 > make check
+will run all the tests displaying success or failure
 
-I didn't implement any unit tests as of now. Because the python
-test scripts execute the entire compiler already and if there's
-any bug, it's easily visible. It isn't worth putting all the
-effort into unit-testing for now...
+A report describing the compiler can be found in the report.pdf file.
+
+Compiled code samples can be found in tests/codegen/ folder. It contains
+folders named input/, which contains .wig files, and output/, which contains
+corresponding compiled python cgi files. You can execute them on a cgi
+server with python support or just execute the server.py script inside
+codegen folder and visit "localhost:8000/output/<name_of_the_script>.py".
